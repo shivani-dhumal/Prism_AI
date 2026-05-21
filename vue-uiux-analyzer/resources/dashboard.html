@@ -1,0 +1,1232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PrismAI — Dashboard</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..900;1,9..144,300..900&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <script src="https://unpkg.com/vue@3/dist/vue.global.prod.js"></script>
+
+  <style>
+    :root {
+      --bg:        #F5F1EA;
+      --bg-warm:   #EFE9DD;
+      --paper:     #FBF8F3;
+      --paper-2:   #FFFFFF;
+      --ink:       #1A1815;
+      --ink-2:     #3A352E;
+      --ink-3:     #6B6258;
+      --ink-4:     #9A9087;
+      --line:      #E4DCCC;
+      --line-2:    #D5C9B3;
+      --accent:    #2D5A3D;
+      --accent-2:  #3F7A56;
+      --accent-soft:#DCE9DF;
+      --high:      #B0413E;
+      --high-soft: #F4DAD8;
+      --med:       #B87333;
+      --med-soft:  #F5E4CB;
+      --low:       #4A6FA5;
+      --low-soft:  #DBE4F0;
+      --shadow-sm: 0 1px 2px rgba(45,40,30,0.04);
+      --shadow:    0 4px 12px -2px rgba(45,40,30,0.08), 0 1px 3px rgba(45,40,30,0.04);
+      --shadow-lg: 0 24px 60px -16px rgba(45,40,30,0.18), 0 8px 24px -8px rgba(45,40,30,0.08);
+      --radius:    10px;
+      --serif:     "Fraunces", Georgia, serif;
+      --sans:      "Inter", -apple-system, BlinkMacSystemFont, sans-serif;
+      --mono:      "JetBrains Mono", ui-monospace, "SF Mono", monospace;
+    }
+
+    * { box-sizing: border-box; }
+    html, body { height: 100%; margin: 0; }
+    body {
+      font-family: var(--sans);
+      background: var(--bg);
+      color: var(--ink);
+      font-size: 14px;
+      line-height: 1.5;
+      -webkit-font-smoothing: antialiased;
+      overflow: hidden;
+      background-image:
+        radial-gradient(circle at 20% 30%, rgba(255,255,255,0.6) 0, transparent 50%),
+        radial-gradient(circle at 80% 80%, rgba(220,210,190,0.3) 0, transparent 40%);
+    }
+
+    button {
+      font-family: inherit;
+      border: none;
+      cursor: pointer;
+      background: none;
+      color: inherit;
+    }
+
+    #app {
+      display: flex;
+      flex-direction: column;
+      height: 100vh;
+      overflow: hidden;
+    }
+
+    /* ============ HEADER ============ */
+    header.topbar {
+      padding: 22px 32px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 20px;
+      background: var(--paper);
+      border-bottom: 1px solid var(--line);
+      flex-shrink: 0;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+    .brand-mark {
+      width: 40px; height: 40px;
+      border-radius: 10px;
+      background: linear-gradient(135deg, var(--accent), var(--accent-2));
+      color: #fff;
+      display: grid;
+      place-items: center;
+      font-family: var(--serif);
+      font-style: italic;
+      font-weight: 600;
+      font-size: 22px;
+      letter-spacing: -0.02em;
+      box-shadow: 0 4px 12px -2px rgba(45,90,61,0.35);
+    }
+    .brand-text h1 {
+      margin: 0;
+      font-family: var(--serif);
+      font-weight: 500;
+      font-size: 22px;
+      letter-spacing: -0.02em;
+      line-height: 1;
+    }
+    .brand-text h1 em {
+      font-style: italic;
+      color: var(--accent);
+    }
+    .brand-text p {
+      margin: 4px 0 0;
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      color: var(--ink-3);
+      font-weight: 500;
+    }
+
+    .actions { display: flex; gap: 8px; }
+
+    .btn {
+      height: 38px;
+      padding: 0 16px;
+      border-radius: 8px;
+      font-size: 13px;
+      font-weight: 500;
+      letter-spacing: -0.01em;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      transition: all .18s ease;
+      white-space: nowrap;
+    }
+    .btn.primary {
+      background: var(--ink);
+      color: var(--paper);
+    }
+    .btn.primary:hover { background: var(--accent); }
+    .btn.primary:active { transform: translateY(1px); }
+    .btn.secondary {
+      background: var(--paper-2);
+      color: var(--ink-2);
+      border: 1px solid var(--line);
+    }
+    .btn.secondary:hover { background: var(--bg-warm); border-color: var(--line-2); }
+    .btn.ghost {
+      color: var(--ink-3);
+    }
+    .btn.ghost:hover { color: var(--ink); background: var(--bg-warm); }
+    .btn.small {
+      height: 28px;
+      padding: 0 10px;
+      font-size: 12px;
+    }
+    .btn:disabled { opacity: .45; cursor: not-allowed; }
+
+    /* ============ TABS ============ */
+    .tabs {
+      display: flex;
+      gap: 4px;
+      padding: 0 32px;
+      background: var(--paper);
+      border-bottom: 1px solid var(--line);
+      flex-shrink: 0;
+    }
+    .tab {
+      padding: 14px 4px 12px;
+      margin-right: 24px;
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--ink-3);
+      letter-spacing: -0.005em;
+      border-bottom: 2px solid transparent;
+      transition: color .15s, border-color .15s;
+      position: relative;
+      top: 1px;
+    }
+    .tab:hover { color: var(--ink-2); }
+    .tab.active {
+      color: var(--ink);
+      border-bottom-color: var(--accent);
+    }
+    .tab small {
+      margin-left: 6px;
+      font-family: var(--mono);
+      font-size: 11px;
+      color: var(--ink-3);
+      background: var(--bg-warm);
+      padding: 1px 6px;
+      border-radius: 8px;
+    }
+
+    /* ============ MAIN LAYOUT ============ */
+    .main {
+      flex: 1;
+      display: grid;
+      grid-template-columns: 280px 1fr;
+      min-height: 0;
+      overflow: hidden;
+    }
+
+    /* ============ SIDEBAR ============ */
+    .sidebar {
+      background: var(--paper);
+      border-right: 1px solid var(--line);
+      overflow-y: auto;
+      padding: 22px 22px 28px;
+    }
+
+    .stat-hero {
+      padding: 20px 22px 22px;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      background: var(--paper-2);
+      text-align: left;
+      box-shadow: var(--shadow-sm);
+      position: relative;
+      overflow: hidden;
+    }
+    .stat-hero::before {
+      content: '';
+      position: absolute;
+      top: -40px;
+      right: -40px;
+      width: 120px;
+      height: 120px;
+      background: radial-gradient(circle, var(--accent-soft) 0%, transparent 70%);
+      opacity: 0.6;
+    }
+    .stat-hero .label {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--ink-3);
+      font-weight: 500;
+      margin-bottom: 6px;
+      position: relative;
+    }
+    .stat-hero .value {
+      font-family: var(--serif);
+      font-weight: 400;
+      font-size: 56px;
+      line-height: 1;
+      letter-spacing: -0.04em;
+      color: var(--ink);
+      position: relative;
+    }
+    .stat-hero .value em {
+      font-style: italic;
+      color: var(--accent);
+    }
+    .stat-hero .sub {
+      margin-top: 8px;
+      font-size: 12px;
+      color: var(--ink-3);
+      position: relative;
+    }
+
+    .section-title {
+      margin: 24px 0 10px;
+      font-family: var(--serif);
+      font-style: italic;
+      font-weight: 400;
+      font-size: 13px;
+      color: var(--ink-3);
+      letter-spacing: -0.005em;
+    }
+
+    .severity-list {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    .severity-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 12px;
+      background: var(--paper-2);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      font-size: 13px;
+    }
+    .severity-row .dot {
+      width: 8px; height: 8px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+    .severity-row .dot.high { background: var(--high); box-shadow: 0 0 0 3px var(--high-soft); }
+    .severity-row .dot.medium { background: var(--med); box-shadow: 0 0 0 3px var(--med-soft); }
+    .severity-row .dot.low { background: var(--low); box-shadow: 0 0 0 3px var(--low-soft); }
+    .severity-row .name {
+      flex: 1;
+      color: var(--ink-2);
+      font-weight: 500;
+    }
+    .severity-row .count {
+      font-family: var(--mono);
+      font-size: 13px;
+      color: var(--ink);
+      font-weight: 600;
+    }
+
+    .meta-list {
+      display: flex;
+      flex-direction: column;
+      gap: 1px;
+      background: var(--line);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      overflow: hidden;
+    }
+    .meta-row {
+      background: var(--paper-2);
+      padding: 10px 14px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 12.5px;
+    }
+    .meta-row .k {
+      color: var(--ink-3);
+    }
+    .meta-row .v {
+      font-family: var(--mono);
+      color: var(--ink);
+      font-weight: 600;
+    }
+
+    /* ============ CONTENT ============ */
+    .content {
+      overflow-y: auto;
+      padding: 24px 32px 32px;
+      position: relative;
+    }
+
+    /* ============ EMPTY STATES ============ */
+    .empty-state {
+      max-width: 480px;
+      margin: 80px auto;
+      text-align: center;
+    }
+    .empty-state .mark {
+      width: 64px; height: 64px;
+      margin: 0 auto 18px;
+      border-radius: 16px;
+      background: var(--accent-soft);
+      color: var(--accent);
+      display: grid;
+      place-items: center;
+      font-family: var(--serif);
+      font-style: italic;
+      font-size: 32px;
+      font-weight: 500;
+    }
+    .empty-state h2 {
+      margin: 0 0 8px;
+      font-family: var(--serif);
+      font-weight: 500;
+      font-size: 26px;
+      letter-spacing: -0.025em;
+      color: var(--ink);
+    }
+    .empty-state h2 em {
+      font-style: italic;
+      color: var(--accent);
+    }
+    .empty-state p {
+      margin: 0 0 22px;
+      color: var(--ink-3);
+      font-size: 14px;
+      line-height: 1.55;
+    }
+
+    /* ============ FILE GROUPS ============ */
+    .file-group {
+      margin-bottom: 16px;
+      background: var(--paper-2);
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .file-header {
+      padding: 14px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+      cursor: pointer;
+      background: var(--paper-2);
+      transition: background .15s;
+      border: none;
+      width: 100%;
+      text-align: left;
+    }
+    .file-header:hover { background: var(--bg-warm); }
+    .file-path {
+      font-family: var(--mono);
+      font-size: 13px;
+      flex: 1;
+      min-width: 0;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+    .file-path .dir {
+      color: var(--ink-4);
+    }
+    .file-path .name {
+      color: var(--ink);
+      font-weight: 600;
+    }
+    .file-meta {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-shrink: 0;
+    }
+    .chevron {
+      width: 18px;
+      height: 18px;
+      display: grid;
+      place-items: center;
+      color: var(--ink-4);
+      font-size: 10px;
+      transition: transform .25s ease;
+    }
+    .chevron.open { transform: rotate(90deg); }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      padding: 2px 9px;
+      border-radius: 20px;
+      font-size: 10.5px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      white-space: nowrap;
+    }
+    .badge.high { background: var(--high-soft); color: var(--high); }
+    .badge.medium { background: var(--med-soft); color: var(--med); }
+    .badge.low { background: var(--low-soft); color: var(--low); }
+    .badge.neutral {
+      background: var(--bg-warm);
+      color: var(--ink-3);
+      border: 1px solid var(--line);
+    }
+    .badge.count {
+      font-family: var(--mono);
+      letter-spacing: 0;
+      background: var(--paper);
+      color: var(--ink-2);
+      border: 1px solid var(--line);
+    }
+
+    /* ============ ISSUE ============ */
+    .issue-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      border-top: 1px solid var(--line);
+    }
+    .issue-item {
+      padding: 18px 20px 16px;
+      border-top: 1px solid var(--line);
+      transition: background .15s;
+    }
+    .issue-item:first-child { border-top: none; }
+    .issue-item.ignored {
+      opacity: 0.55;
+      background: var(--bg);
+    }
+
+    .issue-row-top {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      margin-bottom: 6px;
+      flex-wrap: wrap;
+    }
+    .issue-title {
+      flex: 1;
+      min-width: 200px;
+      font-family: var(--serif);
+      font-weight: 500;
+      font-size: 16px;
+      line-height: 1.3;
+      letter-spacing: -0.01em;
+      color: var(--ink);
+    }
+    .issue-location {
+      font-family: var(--mono);
+      font-size: 11.5px;
+      color: var(--ink-3);
+      background: var(--bg);
+      padding: 3px 9px;
+      border-radius: 6px;
+      border: 1px solid var(--line);
+      cursor: pointer;
+      transition: all .15s;
+      text-decoration: none;
+      align-self: flex-start;
+    }
+    .issue-location:hover {
+      color: var(--accent);
+      border-color: var(--accent);
+      background: var(--accent-soft);
+    }
+    .issue-description {
+      font-size: 13.5px;
+      color: var(--ink-2);
+      line-height: 1.55;
+      margin-bottom: 12px;
+    }
+
+    .fix-block {
+      background: var(--bg);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 14px 16px;
+      margin-bottom: 12px;
+    }
+    .fix-label {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 10px;
+    }
+    .fix-label strong {
+      font-family: var(--serif);
+      font-style: italic;
+      font-weight: 500;
+      font-size: 13px;
+      color: var(--accent);
+      letter-spacing: -0.005em;
+    }
+    .fix-label span {
+      font-size: 12.5px;
+      color: var(--ink-3);
+    }
+    .diff {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      font-family: var(--mono);
+      font-size: 12.5px;
+      line-height: 1.55;
+    }
+    .diff > div {
+      padding: 6px 12px;
+      border-radius: 6px;
+      overflow-x: auto;
+      white-space: pre;
+      border-left: 3px solid transparent;
+    }
+    .diff .rem {
+      background: var(--high-soft);
+      color: #6e2422;
+      border-left-color: var(--high);
+    }
+    .diff .add {
+      background: var(--accent-soft);
+      color: #1f3d2a;
+      border-left-color: var(--accent);
+    }
+
+    .issue-actions {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    /* ============ HISTORY TABLE ============ */
+    .history-card {
+      background: var(--paper-2);
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: var(--shadow-sm);
+    }
+    table.history {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 13px;
+    }
+    table.history th {
+      text-align: left;
+      padding: 14px 18px;
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--ink-3);
+      font-weight: 600;
+      background: var(--bg);
+      border-bottom: 1px solid var(--line);
+    }
+    table.history td {
+      padding: 16px 18px;
+      border-bottom: 1px solid var(--line);
+      color: var(--ink-2);
+      vertical-align: middle;
+    }
+    table.history tr:last-child td { border-bottom: none; }
+    table.history tr:hover td { background: var(--bg-warm); }
+    table.history .date {
+      font-family: var(--mono);
+      font-size: 12px;
+      color: var(--ink-3);
+    }
+    table.history .project {
+      font-family: var(--mono);
+      font-weight: 600;
+      color: var(--ink);
+    }
+    table.history .total {
+      font-family: var(--serif);
+      font-weight: 500;
+      font-size: 18px;
+      color: var(--ink);
+      letter-spacing: -0.02em;
+    }
+
+    /* ============ LOADING OVERLAY ============ */
+    .overlay {
+      position: absolute;
+      inset: 0;
+      background: rgba(245,241,234,0.85);
+      backdrop-filter: blur(8px);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 16px;
+      z-index: 50;
+    }
+    .spinner {
+      width: 36px; height: 36px;
+      border: 2px solid var(--line);
+      border-top-color: var(--accent);
+      border-radius: 50%;
+      animation: spin .8s linear infinite;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    .overlay strong {
+      font-family: var(--serif);
+      font-weight: 500;
+      font-size: 18px;
+      letter-spacing: -0.015em;
+      color: var(--ink);
+    }
+    .progress {
+      width: 240px;
+      height: 4px;
+      background: var(--line);
+      border-radius: 2px;
+      overflow: hidden;
+    }
+    .progress > div {
+      height: 100%;
+      background: var(--accent);
+      border-radius: 2px;
+      transition: width .35s ease;
+    }
+
+    /* scrollbars */
+    ::-webkit-scrollbar { width: 10px; height: 10px; }
+    ::-webkit-scrollbar-track { background: transparent; }
+    ::-webkit-scrollbar-thumb {
+      background: var(--line-2);
+      border-radius: 10px;
+      border: 2px solid var(--paper);
+    }
+    ::-webkit-scrollbar-thumb:hover { background: var(--ink-4); }
+
+    /* responsive */
+    @media (max-width: 880px) {
+      .main { grid-template-columns: 1fr; }
+      .sidebar { display: none; }
+      .content { padding: 20px 18px; }
+      header.topbar { padding: 16px 18px; }
+      .tabs { padding: 0 18px; }
+    }
+  </style>
+</head>
+<body>
+  <div id="app">
+
+    <!-- HEADER -->
+    <header class="topbar">
+      <div class="brand">
+        <div class="brand-mark">P</div>
+        <div class="brand-text">
+          <h1>PrismAI<em>.</em></h1>
+          <p>Vue UI/UX Analyzer</p>
+        </div>
+      </div>
+      <div class="actions">
+        <button class="btn ghost" @click="loadDemo" v-if="!isScanning">Demo</button>
+        <button class="btn secondary" @click="exportReport" v-if="hasResults && currentTab==='results'">
+          <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M3.5 10.5V12C3.5 12.55 3.95 13 4.5 13H11.5C12.05 13 12.5 12.55 12.5 12V10.5M8 3V10M8 10L5.5 7.5M8 10L10.5 7.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          Export
+        </button>
+        <button class="btn primary" @click="scanProject" :disabled="isScanning">
+          <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M11 11L14 14M12.5 7.5C12.5 10.26 10.26 12.5 7.5 12.5C4.74 12.5 2.5 10.26 2.5 7.5C2.5 4.74 4.74 2.5 7.5 2.5C10.26 2.5 12.5 4.74 12.5 7.5Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+          Scan Project
+        </button>
+      </div>
+    </header>
+
+    <!-- TABS -->
+    <nav class="tabs">
+      <button class="tab" :class="{active: currentTab==='results'}" @click="currentTab='results'">
+        Current Scan
+        <small v-if="hasResults">{{ stats.total }}</small>
+      </button>
+      <button class="tab" :class="{active: currentTab==='history'}" @click="currentTab='history'">
+        History
+        <small v-if="history.length">{{ history.length }}</small>
+      </button>
+    </nav>
+
+    <!-- MAIN -->
+    <div class="main">
+
+      <!-- ============ RESULTS TAB ============ -->
+      <template v-if="currentTab === 'results'">
+
+        <!-- SIDEBAR (only when results exist) -->
+        <aside class="sidebar" v-if="hasResults">
+          <div class="stat-hero">
+            <div class="label">Total Issues</div>
+            <div class="value">{{ stats.total }}<em v-if="stats.total > 0">.</em></div>
+            <div class="sub">{{ stats.total > 0 ? `${stats.fixable} have automated fixes` : 'Your code is clean.' }}</div>
+          </div>
+
+          <div class="section-title">Severity</div>
+          <div class="severity-list">
+            <div class="severity-row">
+              <span class="dot high"></span>
+              <span class="name">High</span>
+              <span class="count">{{ stats.high }}</span>
+            </div>
+            <div class="severity-row">
+              <span class="dot medium"></span>
+              <span class="name">Medium</span>
+              <span class="count">{{ stats.medium }}</span>
+            </div>
+            <div class="severity-row">
+              <span class="dot low"></span>
+              <span class="name">Low</span>
+              <span class="count">{{ stats.low }}</span>
+            </div>
+          </div>
+
+          <div class="section-title">Scan Details</div>
+          <div class="meta-list">
+            <div class="meta-row"><span class="k">Files scanned</span><span class="v">{{ result.file_count }}</span></div>
+            <div class="meta-row"><span class="k">Duration</span><span class="v">{{ result.scan_duration }}s</span></div>
+            <div class="meta-row"><span class="k">Categories</span><span class="v">{{ categoryCount }}</span></div>
+          </div>
+        </aside>
+
+        <!-- if no sidebar, give content full width -->
+        <aside class="sidebar" v-else style="display: none;"></aside>
+
+        <!-- CONTENT -->
+        <main class="content" :style="!hasResults ? 'grid-column: 1 / -1;' : ''">
+
+          <!-- LOADING OVERLAY -->
+          <div class="overlay" v-if="isScanning">
+            <div class="spinner"></div>
+            <strong>{{ scanMessage }}</strong>
+            <div class="progress" v-if="scanPercent > 0">
+              <div :style="{ width: scanPercent + '%' }"></div>
+            </div>
+          </div>
+
+          <!-- NO RESULTS YET -->
+          <div class="empty-state" v-if="!hasResults && !isScanning">
+            <div class="mark">✦</div>
+            <h2>Ready to analyze<em>.</em></h2>
+            <p>Run a scan on your Vue.js project to find UI, UX, and accessibility issues — with AI-generated fixes where safe.</p>
+            <button class="btn primary" @click="scanProject">Start Project Scan</button>
+          </div>
+
+          <!-- PERFECT SCORE -->
+          <div class="empty-state" v-else-if="hasResults && stats.total === 0">
+            <div class="mark">✓</div>
+            <h2>Perfect score<em>.</em></h2>
+            <p>No UI/UX or accessibility issues found in the scanned files.</p>
+          </div>
+
+          <!-- FILE GROUPS -->
+          <template v-else-if="hasResults">
+            <div v-for="(group, file) in groupedIssues" :key="file" class="file-group">
+              <button class="file-header" @click="toggleFile(file)">
+                <div class="file-path">
+                  <span class="dir">{{ getDirname(file) }}/</span><span class="name">{{ getBasename(file) }}</span>
+                </div>
+                <div class="file-meta">
+                  <span class="badge" :class="group.severity">{{ group.issues.length }} {{ group.issues.length === 1 ? 'issue' : 'issues' }}</span>
+                  <button v-if="group.hasFixes" @click.stop="fixAllInFile(file)" class="btn secondary small">Fix All</button>
+                  <span class="chevron" :class="{open: group.expanded}">▸</span>
+                </div>
+              </button>
+
+              <ul class="issue-list" v-show="group.expanded">
+                <li v-for="issue in group.issues" :key="issue.id" class="issue-item" :class="{ ignored: issue.ignored }">
+                  <div class="issue-row-top">
+                    <span class="badge" :class="issue.severity">{{ issue.severity }}</span>
+                    <span class="badge neutral">{{ issue.category }}</span>
+                    <span class="issue-title">{{ issue.message }}</span>
+                    <span class="issue-location" @click="openFile(issue.file, issue.line)" :title="'Open at line ' + issue.line">
+                      Line {{ issue.line }}
+                    </span>
+                  </div>
+
+                  <div class="issue-description">{{ issue.description }}</div>
+
+                  <div v-if="issue.fix && !issue.ignored" class="fix-block">
+                    <div class="fix-label">
+                      <strong>Suggested fix</strong>
+                      <span>· {{ issue.fix.description }}</span>
+                    </div>
+                    <div class="diff">
+                      <div class="rem">- {{ issue.fix.original }}</div>
+                      <div class="add">+ {{ issue.fix.replacement }}</div>
+                    </div>
+                  </div>
+
+                  <div class="issue-actions">
+                    <button v-if="issue.fix && !issue.ignored" class="btn primary small" @click="applyFix(issue)">Apply Fix</button>
+                    <button class="btn secondary small" @click="toggleIgnore(issue)">
+                      {{ issue.ignored ? 'Unignore' : 'Ignore' }}
+                    </button>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </template>
+        </main>
+      </template>
+
+      <!-- ============ HISTORY TAB ============ -->
+      <template v-if="currentTab === 'history'">
+        <aside class="sidebar">
+          <div class="stat-hero">
+            <div class="label">Total Scans</div>
+            <div class="value">{{ history.length }}<em v-if="history.length">.</em></div>
+            <div class="sub">{{ historyTotalIssues }} issues across all scans</div>
+          </div>
+          <div class="section-title">Scope</div>
+          <div class="meta-list">
+            <div class="meta-row"><span class="k">Latest</span><span class="v">{{ latestScanDate }}</span></div>
+            <div class="meta-row"><span class="k">Avg issues</span><span class="v">{{ avgIssuesPerScan }}</span></div>
+          </div>
+        </aside>
+
+        <main class="content">
+          <div class="empty-state" v-if="history.length === 0">
+            <div class="mark">∅</div>
+            <h2>No history yet<em>.</em></h2>
+            <p>Past scans will appear here automatically after you analyze a project.</p>
+          </div>
+
+          <div class="history-card" v-else>
+            <table class="history">
+              <thead>
+                <tr>
+                  <th>Date / Time</th>
+                  <th>Project</th>
+                  <th>Total</th>
+                  <th>High</th>
+                  <th>Medium</th>
+                  <th>Files</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr v-for="entry in history" :key="entry.id">
+                  <td class="date">{{ formatDate(entry.timestamp) }}</td>
+                  <td class="project">{{ getBasename(entry.project_path) }}</td>
+                  <td class="total">{{ entry.total_issues }}</td>
+                  <td><span class="badge high" v-if="entry.high_count > 0">{{ entry.high_count }}</span><span v-else style="color: var(--ink-4)">—</span></td>
+                  <td><span class="badge medium" v-if="entry.medium_count > 0">{{ entry.medium_count }}</span><span v-else style="color: var(--ink-4)">—</span></td>
+                  <td>{{ entry.file_count }}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </main>
+      </template>
+
+    </div>
+  </div>
+
+  <script>
+    /* =================================================================
+       VS Code webview API — gracefully fall back when previewing
+       outside of VS Code (e.g. just opening the file in a browser).
+       ================================================================= */
+    const vscode = (typeof acquireVsCodeApi === 'function')
+      ? acquireVsCodeApi()
+      : {
+          _state: null,
+          postMessage(msg) { console.log('[mock vscode]', msg); },
+          setState(s) { this._state = s; },
+          getState() { return this._state; }
+        };
+
+    const IS_BROWSER_PREVIEW = !(typeof acquireVsCodeApi === 'function');
+
+    /* =================================================================
+       Demo data for browser preview only.
+       ================================================================= */
+    const DEMO_RESULT = {
+      project_path: '/workspace/demo-vue-app',
+      file_count: 14,
+      scan_duration: 2.3,
+      issues: [
+        { id: 'i1', file: 'src/components/UserCard.vue', line: 12, severity: 'high', category: 'accessibility', rule_id: 'a11y/img-alt', ignored: false,
+          message: 'Image missing alt attribute', description: 'Screen readers cannot describe this avatar to users who depend on assistive technology.',
+          fix: { description: 'Add descriptive alt text', original: '<img :src="user.avatar">', replacement: `<img :src="user.avatar" :alt="user.name + ' avatar'">` } },
+        { id: 'i2', file: 'src/components/UserCard.vue', line: 34, severity: 'medium', category: 'ui_consistency', rule_id: 'ui/inline-style', ignored: false,
+          message: 'Inline style breaks design tokens', description: 'Hard-coded colors bypass the shared theme and create visual inconsistency.',
+          fix: { description: 'Replace inline color with token class', original: 'style="color: #336699"', replacement: 'class="text-brand-primary"' } },
+        { id: 'i3', file: 'src/views/Login.vue', line: 8, severity: 'high', category: 'security', rule_id: 'sec/v-html', ignored: false,
+          message: 'v-html with user-controlled string', description: 'Rendering raw HTML from an untrusted source allows cross-site scripting attacks.',
+          fix: { description: 'Render as interpolated text', original: '<div v-html="userBio"></div>', replacement: '<div>{{ userBio }}</div>' } },
+        { id: 'i4', file: 'src/views/Login.vue', line: 22, severity: 'low', category: 'code_quality', rule_id: 'qa/console-log', ignored: false,
+          message: 'Stray console.log in production', description: 'Logging may leak debug information and adds runtime noise.',
+          fix: { description: 'Remove debug logging', original: `console.log('logging in', email)`, replacement: '' } },
+        { id: 'i5', file: 'src/composables/useAuth.js', line: 45, severity: 'medium', category: 'performance', rule_id: 'perf/repeated-call', ignored: false,
+          message: 'Watcher fires API call on every keystroke', description: 'Without debouncing, this watcher creates a network request for each character typed.',
+          fix: { description: 'Debounce the watcher by 300ms', original: 'watch(query, fetchUsers)', replacement: 'watch(query, debounce(fetchUsers, 300))' } },
+        { id: 'i6', file: 'src/router/index.js', line: 28, severity: 'medium', category: 'architecture', rule_id: 'arch/route-import', ignored: false,
+          message: 'Lazy route loading not used', description: 'Eagerly importing routes inflates the initial bundle for users who never reach those pages.',
+          fix: { description: 'Convert to dynamic import', original: "component: AdminDashboard", replacement: "component: () => import('@/views/AdminDashboard.vue')" } },
+        { id: 'i7', file: 'src/components/NavBar.vue', line: 5, severity: 'medium', category: 'accessibility', rule_id: 'a11y/landmark', ignored: false,
+          message: 'Use semantic <nav> element', description: 'A bare <div> for navigation loses landmark semantics for assistive technology.',
+          fix: { description: 'Replace wrapping div with nav', original: '<div class="navbar">', replacement: '<nav class="navbar" aria-label="Primary">' } },
+        { id: 'i8', file: 'src/store/cart.js', line: 41, severity: 'high', category: 'logic', rule_id: 'logic/null-check', ignored: false,
+          message: 'Possible null dereference', description: 'Accessing .quantity on a cart item that may be null will throw at runtime.',
+          fix: null }
+      ]
+    };
+
+    const DEMO_HISTORY = [
+      { id: 'h1', timestamp: Math.floor(Date.now()/1000) - 60*30, project_path: '/workspace/demo-vue-app', total_issues: 8, high_count: 3, medium_count: 3, low_count: 2, file_count: 14 },
+      { id: 'h2', timestamp: Math.floor(Date.now()/1000) - 60*60*4, project_path: '/workspace/demo-vue-app', total_issues: 12, high_count: 4, medium_count: 5, low_count: 3, file_count: 14 },
+      { id: 'h3', timestamp: Math.floor(Date.now()/1000) - 60*60*24, project_path: '/workspace/customer-portal', total_issues: 23, high_count: 6, medium_count: 11, low_count: 6, file_count: 42 },
+      { id: 'h4', timestamp: Math.floor(Date.now()/1000) - 60*60*24*3, project_path: '/workspace/marketing-site', total_issues: 4, high_count: 0, medium_count: 2, low_count: 2, file_count: 9 }
+    ];
+
+    /* =================================================================
+       Vue app
+       ================================================================= */
+    Vue.createApp({
+      data() {
+        return {
+          currentTab: 'results',
+          isScanning: false,
+          scanMessage: 'Analyzing files…',
+          scanPercent: 0,
+          result: null,
+          history: [],
+          // file group expansion state, kept outside `groupedIssues`
+          // so we can mutate without triggering computed recompute weirdness
+          expansion: {}
+        };
+      },
+
+      computed: {
+        hasResults() {
+          return this.result !== null;
+        },
+        stats() {
+          if (!this.result || !this.result.issues) {
+            return { total: 0, high: 0, medium: 0, low: 0, fixable: 0 };
+          }
+          const issues = this.result.issues.filter(i => !i.ignored);
+          return {
+            total: issues.length,
+            high: issues.filter(i => i.severity === 'high').length,
+            medium: issues.filter(i => i.severity === 'medium').length,
+            low: issues.filter(i => i.severity === 'low').length,
+            fixable: issues.filter(i => i.fix).length
+          };
+        },
+        categoryCount() {
+          if (!this.result || !this.result.issues) return 0;
+          return new Set(this.result.issues.filter(i => !i.ignored).map(i => i.category)).size;
+        },
+        groupedIssues() {
+          if (!this.result || !this.result.issues) return {};
+          const groups = {};
+          for (const issue of this.result.issues) {
+            if (!groups[issue.file]) {
+              groups[issue.file] = {
+                file: issue.file,
+                issues: [],
+                severity: 'low',
+                hasFixes: false,
+                expanded: this.expansion[issue.file] !== false // default open
+              };
+            }
+            groups[issue.file].issues.push(issue);
+            if (issue.fix && !issue.ignored) groups[issue.file].hasFixes = true;
+            const s = issue.severity;
+            const cur = groups[issue.file].severity;
+            if (s === 'high' || (s === 'medium' && cur === 'low')) {
+              groups[issue.file].severity = s;
+            }
+          }
+          for (const key in groups) {
+            groups[key].issues.sort((a, b) => {
+              const sev = { high: 3, medium: 2, low: 1 };
+              if (sev[a.severity] !== sev[b.severity]) return sev[b.severity] - sev[a.severity];
+              return a.line - b.line;
+            });
+          }
+          return groups;
+        },
+        historyTotalIssues() {
+          return this.history.reduce((sum, h) => sum + (h.total_issues || 0), 0);
+        },
+        latestScanDate() {
+          if (!this.history.length) return '—';
+          const latest = this.history[0];
+          const d = new Date(latest.timestamp * 1000);
+          return d.toLocaleDateString(undefined, { month: 'short', day: 'numeric' });
+        },
+        avgIssuesPerScan() {
+          if (!this.history.length) return '—';
+          return Math.round(this.historyTotalIssues / this.history.length);
+        }
+      },
+
+      mounted() {
+        window.addEventListener('message', event => {
+          const message = event.data;
+          if (!message || !message.command) return;
+          switch (message.command) {
+            case 'scanResults':
+              this.result = message.data;
+              this.isScanning = false;
+              this.scanPercent = 0;
+              break;
+            case 'scanProgress':
+              this.isScanning = true;
+              this.scanMessage = message.message;
+              this.scanPercent = message.percent;
+              break;
+            case 'history':
+              this.history = message.data;
+              break;
+            case 'error':
+              this.isScanning = false;
+              break;
+            case 'fixApplied':
+              break;
+          }
+        });
+
+        vscode.postMessage({ command: 'getHistory' });
+
+        const state = vscode.getState();
+        if (state && state.result) {
+          this.result = state.result;
+          if (state.expansion) this.expansion = state.expansion;
+        }
+
+        // browser preview: auto-load demo so the UI feels alive
+        if (IS_BROWSER_PREVIEW && !this.result) {
+          this.loadDemo();
+        }
+      },
+
+      watch: {
+        result: {
+          handler() {
+            vscode.setState({ result: this.result, expansion: this.expansion });
+          },
+          deep: true
+        },
+        expansion: {
+          handler() {
+            vscode.setState({ result: this.result, expansion: this.expansion });
+          },
+          deep: true
+        }
+      },
+
+      methods: {
+        loadDemo() {
+          this.result = JSON.parse(JSON.stringify(DEMO_RESULT));
+          this.history = JSON.parse(JSON.stringify(DEMO_HISTORY));
+        },
+
+        scanProject() {
+          this.isScanning = true;
+          this.scanMessage = 'Discovering files…';
+          this.scanPercent = 0;
+          vscode.postMessage({ command: 'scan' });
+
+          // browser preview animation
+          if (IS_BROWSER_PREVIEW) {
+            this.simulateScan();
+          }
+        },
+
+        simulateScan() {
+          let p = 0;
+          const steps = [
+            { p: 15, msg: 'Discovering files…' },
+            { p: 40, msg: 'Parsing components…' },
+            { p: 70, msg: 'Running AI analysis…' },
+            { p: 95, msg: 'Generating fixes…' }
+          ];
+          let i = 0;
+          const tick = () => {
+            if (i >= steps.length) {
+              this.loadDemo();
+              this.isScanning = false;
+              this.scanPercent = 0;
+              return;
+            }
+            this.scanPercent = steps[i].p;
+            this.scanMessage = steps[i].msg;
+            i++;
+            setTimeout(tick, 450);
+          };
+          tick();
+        },
+
+        exportReport() {
+          vscode.postMessage({ command: 'exportReport', format: 'html' });
+          if (IS_BROWSER_PREVIEW) {
+            alert('Export triggered. (In VS Code, this opens a Save dialog.)');
+          }
+        },
+
+        applyFix(issue) {
+          vscode.postMessage({ command: 'fix', file: issue.file, issueId: issue.id });
+          if (IS_BROWSER_PREVIEW) {
+            // optimistic local update
+            this.isScanning = true;
+            this.scanMessage = 'Applying fix…';
+            this.scanPercent = 50;
+            setTimeout(() => {
+              issue.ignored = true;
+              this.isScanning = false;
+              this.scanPercent = 0;
+            }, 600);
+          } else {
+            this.isScanning = true;
+            this.scanMessage = 'Applying fix…';
+          }
+        },
+
+        fixAllInFile(file) {
+          vscode.postMessage({ command: 'fixAll', file });
+          if (IS_BROWSER_PREVIEW) {
+            this.isScanning = true;
+            this.scanMessage = 'Applying fixes…';
+            setTimeout(() => {
+              this.result.issues.forEach(i => {
+                if (i.file === file && i.fix) i.ignored = true;
+              });
+              this.isScanning = false;
+            }, 800);
+          } else {
+            this.isScanning = true;
+            this.scanMessage = 'Applying fixes…';
+          }
+        },
+
+        toggleIgnore(issue) {
+          issue.ignored = !issue.ignored;
+          vscode.postMessage({ command: 'ignore', issueId: issue.id, ruleId: issue.rule_id });
+        },
+
+        openFile(file, line) {
+          vscode.postMessage({ command: 'openFile', file, line });
+        },
+
+        toggleFile(file) {
+          // toggle in expansion map; default groups are expanded (true)
+          const current = this.expansion[file] !== false;
+          this.expansion[file] = !current;
+        },
+
+        getBasename(path) {
+          if (!path) return '';
+          const parts = path.split(/[\/\\]/);
+          return parts[parts.length - 1];
+        },
+
+        getDirname(path) {
+          if (!path) return '';
+          const parts = path.split(/[\/\\]/);
+          parts.pop();
+          const dir = parts.join('/');
+          const dirParts = dir.split('/');
+          if (dirParts.length > 2) return '…/' + dirParts.slice(-2).join('/');
+          return dir;
+        },
+
+        formatDate(timestamp) {
+          if (!timestamp) return '';
+          const d = new Date(timestamp * 1000);
+          const now = new Date();
+          const diffMs = now - d;
+          const diffMin = Math.floor(diffMs / 60000);
+          const diffH = Math.floor(diffMin / 60);
+          if (diffMin < 60) return `${diffMin}m ago`;
+          if (diffH < 24) return `${diffH}h ago`;
+          return d.toLocaleString(undefined, { month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' });
+        }
+      }
+    }).mount('#app');
+  </script>
+</body>
+</html>

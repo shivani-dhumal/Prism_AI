@@ -1,0 +1,1122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Code Review Report — ShivaniD / StudentLogin</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #f7f6f3;
+    --surface: #ffffff;
+    --surface-2: #f2f1ee;
+    --border: #e4e2dc;
+    --border-strong: #ccc9c0;
+    --text-primary: #1a1916;
+    --text-secondary: #6b6860;
+    --text-tertiary: #9c9a94;
+    --accent: #2c5f8a;
+    --accent-light: #e8f1f8;
+    --red: #c0392b;
+    --red-bg: #fdf3f2;
+    --red-border: #f5c6c2;
+    --orange: #b45309;
+    --orange-bg: #fef9ee;
+    --orange-border: #fcd48a;
+    --blue: #1a5276;
+    --blue-bg: #eef5fb;
+    --blue-border: #a8cce5;
+    --green: #1d5e3a;
+    --green-bg: #f0f9f4;
+    --green-border: #a3d4b8;
+    --radius: 10px;
+    --radius-sm: 6px;
+    --shadow: 0 1px 4px rgba(0,0,0,0.07), 0 4px 16px rgba(0,0,0,0.04);
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--bg);
+    color: var(--text-primary);
+    min-height: 100vh;
+    line-height: 1.6;
+  }
+
+  /* Layout */
+  .page { display: flex; min-height: 100vh; }
+
+  .sidebar {
+    width: 240px;
+    flex-shrink: 0;
+    position: fixed;
+    top: 0; left: 0; bottom: 0;
+    background: var(--surface);
+    border-right: 1px solid var(--border);
+    padding: 28px 0;
+    overflow-y: auto;
+    z-index: 10;
+  }
+
+  .sidebar-logo {
+    padding: 0 20px 24px;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 20px;
+  }
+  .sidebar-logo .proj { font-size: 13px; font-weight: 600; color: var(--text-primary); }
+  .sidebar-logo .sub { font-size: 11px; color: var(--text-tertiary); margin-top: 2px; }
+
+  .nav-section { padding: 0 12px; margin-bottom: 8px; }
+  .nav-label { font-size: 10px; font-weight: 600; letter-spacing: 0.08em; color: var(--text-tertiary); text-transform: uppercase; padding: 0 8px; margin-bottom: 4px; }
+  .nav-link {
+    display: flex; align-items: center; gap: 8px;
+    padding: 7px 10px; border-radius: var(--radius-sm);
+    font-size: 13px; color: var(--text-secondary);
+    text-decoration: none; cursor: pointer;
+    transition: background 0.15s, color 0.15s;
+  }
+  .nav-link:hover { background: var(--surface-2); color: var(--text-primary); }
+  .nav-link.active { background: var(--accent-light); color: var(--accent); font-weight: 500; }
+  .nav-dot { width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0; }
+
+  .main {
+    margin-left: 240px;
+    flex: 1;
+    padding: 40px 48px 120px;
+    max-width: 960px;
+  }
+
+  /* Header */
+  .page-header { margin-bottom: 40px; padding-bottom: 28px; border-bottom: 1px solid var(--border); }
+  .page-header .eyebrow { font-size: 11px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--accent); margin-bottom: 10px; }
+  .page-header h1 { font-size: 28px; font-weight: 600; color: var(--text-primary); letter-spacing: -0.3px; }
+  .page-header .meta { font-size: 13px; color: var(--text-secondary); margin-top: 6px; display: flex; gap: 16px; flex-wrap: wrap; }
+  .meta-chip { display: inline-flex; align-items: center; gap: 5px; }
+  .meta-chip::before { content: ''; width: 5px; height: 5px; background: var(--border-strong); border-radius: 50%; }
+
+  /* Score strip */
+  .score-strip {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    gap: 12px;
+    margin-bottom: 32px;
+  }
+  .score-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 16px 18px;
+    box-shadow: var(--shadow);
+  }
+  .score-card .sc-label { font-size: 11px; color: var(--text-tertiary); font-weight: 500; text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 6px; }
+  .score-card .sc-val { font-size: 30px; font-weight: 600; line-height: 1; }
+  .sc-val.red { color: var(--red); }
+  .sc-val.orange { color: var(--orange); }
+  .sc-val.blue { color: var(--blue); }
+  .sc-val.green { color: var(--green); }
+  .sc-val.neutral { color: var(--text-primary); }
+
+  /* Health score */
+  .health-panel {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 24px 28px;
+    margin-bottom: 36px;
+    box-shadow: var(--shadow);
+  }
+  .health-top { display: flex; align-items: flex-end; justify-content: space-between; margin-bottom: 14px; }
+  .health-top .ht-label { font-size: 13px; color: var(--text-secondary); font-weight: 500; }
+  .health-top .ht-score { font-size: 42px; font-weight: 600; color: var(--red); line-height: 1; letter-spacing: -1px; }
+  .health-top .ht-denom { font-size: 18px; color: var(--text-tertiary); font-weight: 400; }
+  .progress-track { height: 8px; background: var(--surface-2); border-radius: 4px; overflow: hidden; border: 1px solid var(--border); }
+  .progress-fill { height: 100%; border-radius: 4px; width: 0%; transition: width 1.2s cubic-bezier(.4,0,.2,1); }
+  .health-note { font-size: 13px; color: var(--text-secondary); margin-top: 12px; line-height: 1.6; }
+
+  .grade-pills { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 16px; }
+  .grade-pill { font-size: 12px; padding: 4px 12px; border-radius: 20px; font-weight: 500; display: flex; align-items: center; gap: 5px; }
+  .grade-pill.gp-red { background: var(--red-bg); color: var(--red); border: 1px solid var(--red-border); }
+  .grade-pill.gp-orange { background: var(--orange-bg); color: var(--orange); border: 1px solid var(--orange-border); }
+  .grade-pill.gp-blue { background: var(--blue-bg); color: var(--blue); border: 1px solid var(--blue-border); }
+  .grade-pill.gp-green { background: var(--green-bg); color: var(--green); border: 1px solid var(--green-border); }
+
+  /* Section headings */
+  .section { margin-bottom: 40px; }
+  .section-head { display: flex; align-items: center; gap: 10px; margin-bottom: 16px; }
+  .section-head h2 { font-size: 15px; font-weight: 600; color: var(--text-primary); }
+  .section-head .sh-line { flex: 1; height: 1px; background: var(--border); }
+  .section-head .sh-count { font-size: 12px; color: var(--text-tertiary); background: var(--surface-2); padding: 2px 8px; border-radius: 10px; border: 1px solid var(--border); }
+
+  /* File blocks */
+  .file-block {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    margin-bottom: 10px;
+    overflow: hidden;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+    transition: box-shadow 0.2s;
+  }
+  .file-block:hover { box-shadow: var(--shadow); }
+
+  .file-header {
+    display: flex; align-items: center; gap: 12px;
+    padding: 13px 18px;
+    cursor: pointer;
+    user-select: none;
+    transition: background 0.15s;
+  }
+  .file-header:hover { background: var(--surface-2); }
+
+  .fh-sev { width: 3px; height: 28px; border-radius: 2px; flex-shrink: 0; }
+  .sev-red { background: var(--red); }
+  .sev-orange { background: var(--orange); }
+  .sev-blue { background: #3b82f6; }
+  .sev-green { background: #16a34a; }
+
+  .fh-info { flex: 1; min-width: 0; }
+  .fh-filename { font-family: 'DM Mono', monospace; font-size: 13px; font-weight: 500; color: var(--text-primary); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .fh-path { font-size: 11px; color: var(--text-tertiary); margin-top: 1px; font-family: 'DM Mono', monospace; }
+  .fh-right { display: flex; align-items: center; gap: 8px; flex-shrink: 0; }
+
+  .badge { font-size: 11px; font-weight: 600; padding: 3px 9px; border-radius: 4px; text-transform: uppercase; letter-spacing: 0.04em; }
+  .badge-critical { background: var(--red-bg); color: var(--red); border: 1px solid var(--red-border); }
+  .badge-high { background: var(--orange-bg); color: var(--orange); border: 1px solid var(--orange-border); }
+  .badge-medium { background: var(--blue-bg); color: var(--blue); border: 1px solid var(--blue-border); }
+  .badge-low { background: var(--green-bg); color: var(--green); border: 1px solid var(--green-border); }
+
+  .toggle-btn {
+    width: 26px; height: 26px; border-radius: 6px;
+    background: var(--surface-2); border: 1px solid var(--border);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 12px; color: var(--text-secondary);
+    transition: background 0.15s, transform 0.2s;
+  }
+  .file-block.open .toggle-btn { background: var(--accent-light); color: var(--accent); border-color: var(--blue-border); }
+  .toggle-btn svg { transition: transform 0.25s; }
+  .file-block.open .toggle-btn svg { transform: rotate(90deg); }
+
+  /* Issue list */
+  .issue-list {
+    display: none;
+    border-top: 1px solid var(--border);
+  }
+  .file-block.open .issue-list { display: block; }
+
+  .issue-row {
+    display: flex; gap: 14px; align-items: flex-start;
+    padding: 13px 18px;
+    border-bottom: 1px solid var(--border);
+  }
+  .issue-row:last-child { border-bottom: none; }
+  .issue-sev-icon { width: 22px; height: 22px; border-radius: 50%; flex-shrink: 0; margin-top: 1px; display: flex; align-items: center; justify-content: center; font-size: 10px; font-weight: 700; }
+  .isi-critical { background: var(--red-bg); color: var(--red); border: 1px solid var(--red-border); }
+  .isi-high { background: var(--orange-bg); color: var(--orange); border: 1px solid var(--orange-border); }
+  .isi-medium { background: var(--blue-bg); color: var(--blue); border: 1px solid var(--blue-border); }
+  .isi-low { background: var(--green-bg); color: var(--green); border: 1px solid var(--green-border); }
+
+  .issue-body { flex: 1; }
+  .issue-text { font-size: 13.5px; color: var(--text-primary); line-height: 1.65; }
+  .issue-text code { font-family: 'DM Mono', monospace; font-size: 12px; background: var(--surface-2); padding: 1px 6px; border-radius: 4px; border: 1px solid var(--border); }
+  .issue-cat { font-size: 11.5px; color: var(--text-tertiary); margin-top: 4px; display: flex; gap: 8px; align-items: center; }
+  .issue-cat .dot { width: 3px; height: 3px; background: var(--border-strong); border-radius: 50%; }
+
+  /* AI Chat Panel */
+  .chat-fab {
+    position: fixed;
+    bottom: 28px; right: 28px;
+    z-index: 1000;
+  }
+  .fab-btn {
+    background: var(--accent);
+    color: #fff;
+    border: none;
+    border-radius: 50px;
+    padding: 13px 22px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    box-shadow: 0 4px 20px rgba(44,95,138,0.35);
+    display: flex; align-items: center; gap: 9px;
+    transition: transform 0.15s, box-shadow 0.15s;
+    letter-spacing: -0.1px;
+  }
+  .fab-btn:hover { transform: translateY(-2px); box-shadow: 0 6px 28px rgba(44,95,138,0.45); }
+  .fab-btn svg { width: 18px; height: 18px; }
+
+  .chat-panel {
+    position: fixed;
+    bottom: 88px; right: 28px;
+    width: 400px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    box-shadow: 0 8px 40px rgba(0,0,0,0.12), 0 2px 8px rgba(0,0,0,0.06);
+    display: flex; flex-direction: column;
+    overflow: hidden;
+    z-index: 999;
+    max-height: 560px;
+    transform: scale(0.95) translateY(12px);
+    opacity: 0;
+    pointer-events: none;
+    transition: transform 0.22s cubic-bezier(.4,0,.2,1), opacity 0.22s;
+  }
+  .chat-panel.open {
+    transform: scale(1) translateY(0);
+    opacity: 1;
+    pointer-events: all;
+  }
+
+  .chat-header {
+    padding: 16px 18px;
+    border-bottom: 1px solid var(--border);
+    display: flex; align-items: center; justify-content: space-between;
+    background: var(--surface);
+  }
+  .ch-left { display: flex; align-items: center; gap: 10px; }
+  .ch-avatar { width: 32px; height: 32px; border-radius: 50%; background: var(--accent-light); border: 1px solid var(--blue-border); display: flex; align-items: center; justify-content: center; }
+  .ch-avatar svg { width: 16px; height: 16px; color: var(--accent); }
+  .ch-title { font-size: 14px; font-weight: 600; color: var(--text-primary); }
+  .ch-subtitle { font-size: 11px; color: var(--text-tertiary); margin-top: 1px; }
+  .ch-close { background: none; border: none; cursor: pointer; color: var(--text-tertiary); padding: 4px; border-radius: 6px; display: flex; transition: background 0.15s; }
+  .ch-close:hover { background: var(--surface-2); color: var(--text-primary); }
+
+  .chat-messages {
+    flex: 1;
+    overflow-y: auto;
+    padding: 16px 18px;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    min-height: 200px;
+    max-height: 360px;
+  }
+  .chat-messages::-webkit-scrollbar { width: 4px; }
+  .chat-messages::-webkit-scrollbar-thumb { background: var(--border-strong); border-radius: 2px; }
+
+  .msg { display: flex; gap: 9px; align-items: flex-start; }
+  .msg.user { flex-direction: row-reverse; }
+  .msg-avatar { width: 26px; height: 26px; border-radius: 50%; flex-shrink: 0; display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 600; }
+  .msg-avatar.ai-av { background: var(--accent-light); color: var(--accent); border: 1px solid var(--blue-border); }
+  .msg-avatar.user-av { background: var(--surface-2); color: var(--text-secondary); border: 1px solid var(--border); }
+  .msg-bubble { max-width: 78%; padding: 10px 13px; border-radius: 12px; font-size: 13px; line-height: 1.6; }
+  .msg.ai .msg-bubble { background: var(--surface-2); color: var(--text-primary); border: 1px solid var(--border); border-top-left-radius: 4px; }
+  .msg.user .msg-bubble { background: var(--accent); color: #fff; border-top-right-radius: 4px; }
+
+  .typing-dots { display: flex; gap: 4px; padding: 4px 0; }
+  .typing-dots span { width: 6px; height: 6px; background: var(--text-tertiary); border-radius: 50%; animation: dot 1.2s infinite; }
+  .typing-dots span:nth-child(2) { animation-delay: 0.2s; }
+  .typing-dots span:nth-child(3) { animation-delay: 0.4s; }
+  @keyframes dot { 0%,80%,100% { opacity: 0.3; transform: scale(0.85); } 40% { opacity: 1; transform: scale(1); } }
+
+  .quick-questions { padding: 0 18px 14px; display: flex; flex-direction: column; gap: 6px; }
+  .qq-label { font-size: 11px; color: var(--text-tertiary); font-weight: 500; text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 2px; }
+  .qq-btn {
+    background: var(--surface-2); border: 1px solid var(--border);
+    padding: 8px 12px; border-radius: 8px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 12.5px; color: var(--text-secondary); text-align: left;
+    cursor: pointer; transition: background 0.15s, color 0.15s, border-color 0.15s;
+    line-height: 1.4;
+  }
+  .qq-btn:hover { background: var(--accent-light); color: var(--accent); border-color: var(--blue-border); }
+
+  .chat-input-area { padding: 12px 14px; border-top: 1px solid var(--border); display: flex; gap: 8px; align-items: flex-end; background: var(--surface); }
+  .chat-input {
+    flex: 1;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 13px;
+    padding: 9px 12px;
+    background: var(--surface-2);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    color: var(--text-primary);
+    resize: none;
+    outline: none;
+    line-height: 1.5;
+    max-height: 100px;
+    min-height: 36px;
+    transition: border-color 0.15s;
+  }
+  .chat-input:focus { border-color: var(--accent); background: var(--surface); }
+  .chat-input::placeholder { color: var(--text-tertiary); }
+  .send-btn {
+    background: var(--accent); border: none;
+    width: 36px; height: 36px; border-radius: 8px;
+    cursor: pointer; display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0; transition: background 0.15s, transform 0.1s;
+  }
+  .send-btn:hover { background: #1e4a6e; transform: scale(1.05); }
+  .send-btn svg { width: 16px; height: 16px; color: #fff; }
+  .send-btn:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
+
+  /* Animations */
+  @keyframes fadeUp { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
+  .animate-in { animation: fadeUp 0.4s ease both; }
+
+  /* Responsive */
+  @media (max-width: 768px) {
+    .sidebar { display: none; }
+    .main { margin-left: 0; padding: 24px 20px 100px; }
+    .chat-panel { width: calc(100vw - 24px); right: 12px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="page">
+
+  <!-- Sidebar -->
+  <nav class="sidebar">
+    <div class="sidebar-logo">
+      <div class="proj">ShivaniD / StudentLogin</div>
+      <div class="sub">Vue 3 · Vite · Pinia · PrimeVue</div>
+    </div>
+    <div class="nav-section">
+      <div class="nav-label">Overview</div>
+      <a class="nav-link active" onclick="scrollTo('summary')">
+        <div class="nav-dot" style="background:#3b82f6;"></div> Summary
+      </a>
+    </div>
+    <div class="nav-section">
+      <div class="nav-label">Issues</div>
+      <a class="nav-link" onclick="scrollTo('security')">
+        <div class="nav-dot" style="background:#c0392b;"></div> Security
+      </a>
+      <a class="nav-link" onclick="scrollTo('quality')">
+        <div class="nav-dot" style="background:#b45309;"></div> Code Quality
+      </a>
+      <a class="nav-link" onclick="scrollTo('architecture')">
+        <div class="nav-dot" style="background:#3b82f6;"></div> Architecture
+      </a>
+    </div>
+  </nav>
+
+  <!-- Main content -->
+  <main class="main">
+
+    <!-- Page header -->
+    <div class="page-header animate-in" id="summary">
+      <div class="eyebrow">Static Code Review Report</div>
+      <h1>StudentLogin — Client App</h1>
+      <div class="meta">
+        <span class="meta-chip">264 files scanned</span>
+        <span class="meta-chip">Vue 3 + Vite + Pinia + PrimeVue</span>
+        <span class="meta-chip">Generated April 28, 2026</span>
+      </div>
+    </div>
+
+    <!-- Score strip -->
+    <div class="score-strip animate-in" style="animation-delay:.05s">
+      <div class="score-card">
+        <div class="sc-label">Critical</div>
+        <div class="sc-val red">5</div>
+      </div>
+      <div class="score-card">
+        <div class="sc-label">High</div>
+        <div class="sc-val orange">8</div>
+      </div>
+      <div class="score-card">
+        <div class="sc-label">Medium</div>
+        <div class="sc-val blue">9</div>
+      </div>
+      <div class="score-card">
+        <div class="sc-label">Low</div>
+        <div class="sc-val green">7</div>
+      </div>
+      <div class="score-card">
+        <div class="sc-label">Files affected</div>
+        <div class="sc-val neutral">18</div>
+      </div>
+    </div>
+
+    <!-- Health Panel -->
+    <div class="health-panel animate-in" style="animation-delay:.1s">
+      <div class="health-top">
+        <div>
+          <div class="ht-label">Overall health score</div>
+        </div>
+        <div>
+          <span class="ht-score">42</span>
+          <span class="ht-denom"> / 100</span>
+        </div>
+      </div>
+      <div class="progress-track">
+        <div class="progress-fill" id="healthBar" style="background: linear-gradient(90deg, #c0392b, #e07b5a);"></div>
+      </div>
+      <p class="health-note">
+        The project requires significant attention before production release. Critical security vulnerabilities — including a hardcoded encryption key and an exposed API credential — must be addressed immediately. Code quality is significantly impacted by extensive debug logging and large volumes of commented-out dead code across multiple high-traffic files.
+      </p>
+      <div class="grade-pills">
+        <span class="grade-pill gp-red">Security: Critical</span>
+        <span class="grade-pill gp-orange">Reliability: Poor</span>
+        <span class="grade-pill gp-orange">Maintainability: Poor</span>
+        <span class="grade-pill gp-blue">Architecture: Needs Work</span>
+      </div>
+    </div>
+
+    <!-- SECURITY SECTION -->
+    <div class="section animate-in" style="animation-delay:.15s" id="security">
+      <div class="section-head">
+        <h2>Security</h2>
+        <div class="sh-line"></div>
+        <div class="sh-count">4 issues</div>
+      </div>
+
+      <div class="file-block" id="fb1">
+        <div class="file-header" onclick="toggleBlock('fb1')">
+          <div class="fh-sev sev-red"></div>
+          <div class="fh-info">
+            <div class="fh-filename">Encryption.js</div>
+            <div class="fh-path">src/plugins/Encryption.js</div>
+          </div>
+          <div class="fh-right">
+            <span class="badge badge-critical">Critical</span>
+            <div class="toggle-btn"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 4l4 4-4 4"/></svg></div>
+          </div>
+        </div>
+        <div class="issue-list">
+          <div class="issue-row">
+            <div class="issue-sev-icon isi-critical">!</div>
+            <div class="issue-body">
+              <div class="issue-text">The AES encryption key is hardcoded as <code>"portal"</code> — a trivially guessable 6-character string. The commented-out <code>process.env.VUE_APP_SECRET_KEY</code> was the correct approach and must be restored immediately. Any user inspecting the JS bundle can decrypt all session-stored user data, menus, and tokens.</div>
+              <div class="issue-cat"><span>Security</span><span class="dot"></span><span>Hardcoded encryption key</span></div>
+            </div>
+          </div>
+          <div class="issue-row">
+            <div class="issue-sev-icon isi-critical">!</div>
+            <div class="issue-body">
+              <div class="issue-text">The same hardcoded key is duplicated in <code>main.js</code> line 350 within the global <code>Decryption</code> mixin method, further expanding the attack surface.</div>
+              <div class="issue-cat"><span>Security</span><span class="dot"></span><span>Secret duplicated in global mixin</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="file-block" id="fb2">
+        <div class="file-header" onclick="toggleBlock('fb2')">
+          <div class="fh-sev sev-red"></div>
+          <div class="fh-info">
+            <div class="fh-filename">axiosApi.js</div>
+            <div class="fh-path">src/axiosApi.js</div>
+          </div>
+          <div class="fh-right">
+            <span class="badge badge-critical">Critical</span>
+            <div class="toggle-btn"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 4l4 4-4 4"/></svg></div>
+          </div>
+        </div>
+        <div class="issue-list">
+          <div class="issue-row">
+            <div class="issue-sev-icon isi-critical">!</div>
+            <div class="issue-body">
+              <div class="issue-text">A long Base64 <code>Authorization: Basic</code> credential is committed verbatim in source. This credential is now permanently in version history and must be rotated immediately, then moved to an environment variable or a backend proxy pattern so it is never included in client-side bundles.</div>
+              <div class="issue-cat"><span>Security</span><span class="dot"></span><span>Exposed credential committed to VCS</span></div>
+            </div>
+          </div>
+          <div class="issue-row">
+            <div class="issue-sev-icon isi-high">▲</div>
+            <div class="issue-body">
+              <div class="issue-text">The API URL is hardcoded to the test environment endpoint <code>solartest1.mkcl.org</code> with the client name <code>BAMUA</code> hardcoded. The parameterised version using the <code>clientnames</code> argument is commented out directly below — it should replace this line.</div>
+              <div class="issue-cat"><span>High</span><span class="dot"></span><span>Hardcoded test environment URL</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="file-block" id="fb3">
+        <div class="file-header" onclick="toggleBlock('fb3')">
+          <div class="fh-sev sev-red"></div>
+          <div class="fh-info">
+            <div class="fh-filename">vite.config.js</div>
+            <div class="fh-path">vite.config.js</div>
+          </div>
+          <div class="fh-right">
+            <span class="badge badge-critical">Critical</span>
+            <div class="toggle-btn"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 4l4 4-4 4"/></svg></div>
+          </div>
+        </div>
+        <div class="issue-list">
+          <div class="issue-row">
+            <div class="issue-sev-icon isi-critical">!</div>
+            <div class="issue-body">
+              <div class="issue-text"><code>build.sourcemap: true</code> ships full source maps to production. This allows any user to reconstruct the original Vue component source code from the deployed bundle. Set to <code>false</code> or <code>'hidden'</code> (server-side only) for production builds.</div>
+              <div class="issue-cat"><span>Security</span><span class="dot"></span><span>Source map exposure in production</span></div>
+            </div>
+          </div>
+          <div class="issue-row">
+            <div class="issue-sev-icon isi-medium">i</div>
+            <div class="issue-body">
+              <div class="issue-text">The dev proxy entry <code>/examinationserver</code> targets <code>http://localhost:3004</code> — a development-only URL sitting alongside production proxy targets. This should be conditionally included based on <code>NODE_ENV</code>.</div>
+              <div class="issue-cat"><span>Medium</span><span class="dot"></span><span>Stale localhost proxy in production config</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="file-block" id="fb4">
+        <div class="file-header" onclick="toggleBlock('fb4')">
+          <div class="fh-sev sev-orange"></div>
+          <div class="fh-info">
+            <div class="fh-filename">main.js</div>
+            <div class="fh-path">src/main.js</div>
+          </div>
+          <div class="fh-right">
+            <span class="badge badge-high">High</span>
+            <div class="toggle-btn"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 4l4 4-4 4"/></svg></div>
+          </div>
+        </div>
+        <div class="issue-list">
+          <div class="issue-row">
+            <div class="issue-sev-icon isi-high">▲</div>
+            <div class="issue-body">
+              <div class="issue-text"><code>window.app = vm</code> exposes the entire Vue application instance as a global. Any third-party script, browser extension, or injected code can read reactive state, call methods, and inspect session data including decrypted user objects.</div>
+              <div class="issue-cat"><span>High</span><span class="dot"></span><span>Vue instance exposed on window</span></div>
+            </div>
+          </div>
+          <div class="issue-row">
+            <div class="issue-sev-icon isi-medium">i</div>
+            <div class="issue-body">
+              <div class="issue-text"><code>vm.use(defaultConfig)</code> (FormKit) is registered twice on lines 62 and 63. The second call overwrites the first with an empty config, which may silently disable custom FormKit validation rules and themes.</div>
+              <div class="issue-cat"><span>Medium</span><span class="dot"></span><span>Duplicate plugin registration</span></div>
+            </div>
+          </div>
+          <div class="issue-row">
+            <div class="issue-sev-icon isi-medium">i</div>
+            <div class="issue-body">
+              <div class="issue-text">18 active <code>console.log</code> calls in the application bootstrap file leak internal data structures (menu items, user objects, token values) to the browser console in production environments.</div>
+              <div class="issue-cat"><span>Medium</span><span class="dot"></span><span>Production debug logging</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- CODE QUALITY SECTION -->
+    <div class="section animate-in" style="animation-delay:.2s" id="quality">
+      <div class="section-head">
+        <h2>Code Quality &amp; Dead Code</h2>
+        <div class="sh-line"></div>
+        <div class="sh-count">7 issues</div>
+      </div>
+
+      <div class="file-block" id="fb5">
+        <div class="file-header" onclick="toggleBlock('fb5')">
+          <div class="fh-sev sev-orange"></div>
+          <div class="fh-info">
+            <div class="fh-filename">FeeDetails.vue</div>
+            <div class="fh-path">src/views/Result/FeeDetails.vue</div>
+          </div>
+          <div class="fh-right">
+            <span class="badge badge-high">High</span>
+            <div class="toggle-btn"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 4l4 4-4 4"/></svg></div>
+          </div>
+        </div>
+        <div class="issue-list">
+          <div class="issue-row">
+            <div class="issue-sev-icon isi-high">▲</div>
+            <div class="issue-body">
+              <div class="issue-text">72 active <code>console.log</code> calls — the highest count in the codebase — including statements that print fee payload data, selected subject arrays, and full transaction detail objects. These expose PII and business data in browser devtools and must all be removed before any release.</div>
+              <div class="issue-cat"><span>High</span><span class="dot"></span><span>Production PII in console</span></div>
+            </div>
+          </div>
+          <div class="issue-row">
+            <div class="issue-sev-icon isi-medium">i</div>
+            <div class="issue-body">
+              <div class="issue-text">533 commented-out lines — more than half the file. Large blocks of deprecated, duplicated, and experimental code are interleaved throughout. Version control exists to preserve history; these blocks should be deleted entirely to restore readability.</div>
+              <div class="issue-cat"><span>Medium</span><span class="dot"></span><span>Excessive dead code — 533 commented lines</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="file-block" id="fb6">
+        <div class="file-header" onclick="toggleBlock('fb6')">
+          <div class="fh-sev sev-orange"></div>
+          <div class="fh-info">
+            <div class="fh-filename">ExamFormSubmission.vue</div>
+            <div class="fh-path">src/views/Result/ExamFormSubmission.vue</div>
+          </div>
+          <div class="fh-right">
+            <span class="badge badge-high">High</span>
+            <div class="toggle-btn"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 4l4 4-4 4"/></svg></div>
+          </div>
+        </div>
+        <div class="issue-list">
+          <div class="issue-row">
+            <div class="issue-sev-icon isi-high">▲</div>
+            <div class="issue-body">
+              <div class="issue-text">292 commented-out lines including several full API call chains and business logic blocks that appear to have been quietly retired without cleanup. Signals a pattern of code abandonment rather than structured refactoring.</div>
+              <div class="issue-cat"><span>High</span><span class="dot"></span><span>292 commented-out lines of dead code</span></div>
+            </div>
+          </div>
+          <div class="issue-row">
+            <div class="issue-sev-icon isi-medium">i</div>
+            <div class="issue-body">
+              <div class="issue-text">9 active console logs including the debug string <code>"resetAppearedFlag API call me aapka swagat hai"</code> — indicative of work-in-progress code shipped to the repository without cleanup.</div>
+              <div class="issue-cat"><span>Medium</span><span class="dot"></span><span>Debug statements in production code</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="file-block" id="fb7">
+        <div class="file-header" onclick="toggleBlock('fb7')">
+          <div class="fh-sev sev-orange"></div>
+          <div class="fh-info">
+            <div class="fh-filename">login.js</div>
+            <div class="fh-path">src/store/modules/login.js</div>
+          </div>
+          <div class="fh-right">
+            <span class="badge badge-high">High</span>
+            <div class="toggle-btn"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 4l4 4-4 4"/></svg></div>
+          </div>
+        </div>
+        <div class="issue-list">
+          <div class="issue-row">
+            <div class="issue-sev-icon isi-high">▲</div>
+            <div class="issue-body">
+              <div class="issue-text">The entire <code>AUTH_REQUEST</code> action body is commented out. The live implementation simply calls <code>sessionStorage.setItem('user-token', 'token')</code> — writing a literal dummy string. If this store is used by any route guard, it grants authenticated access to every protected page without verifying credentials.</div>
+              <div class="issue-cat"><span>High</span><span class="dot"></span><span>Authentication logic non-functional — dummy token written</span></div>
+            </div>
+          </div>
+          <div class="issue-row">
+            <div class="issue-sev-icon isi-medium">i</div>
+            <div class="issue-body">
+              <div class="issue-text">141 commented-out lines contain the original MQL-based login flow. The migration to Pinia (<code>loginPn.js</code>) appears incomplete — this legacy file should either be fully replaced or removed.</div>
+              <div class="issue-cat"><span>Medium</span><span class="dot"></span><span>Incomplete Pinia migration</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="file-block" id="fb8">
+        <div class="file-header" onclick="toggleBlock('fb8')">
+          <div class="fh-sev sev-orange"></div>
+          <div class="fh-info">
+            <div class="fh-filename">adminLogin.vue</div>
+            <div class="fh-path">src/views/adminLogin.vue</div>
+          </div>
+          <div class="fh-right">
+            <span class="badge badge-high">High</span>
+            <div class="toggle-btn"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 4l4 4-4 4"/></svg></div>
+          </div>
+        </div>
+        <div class="issue-list">
+          <div class="issue-row">
+            <div class="issue-sev-icon isi-high">▲</div>
+            <div class="issue-body">
+              <div class="issue-text">Multiple <code>.fetch()</code> chains (at lines 526, 597, 690, 725, 889, 912, 934) have no <code>.catch()</code> handler. Network failures silently swallow errors — the user receives no feedback, and application state is left partially initialised.</div>
+              <div class="issue-cat"><span>High</span><span class="dot"></span><span>Missing error handling on 7 API calls</span></div>
+            </div>
+          </div>
+          <div class="issue-row">
+            <div class="issue-sev-icon isi-medium">i</div>
+            <div class="issue-body">
+              <div class="issue-text">51 active console logs exposing decrypted user objects, OTP values, and token details. Sensitive authentication data is visible in browser devtools in production.</div>
+              <div class="issue-cat"><span>Medium</span><span class="dot"></span><span>PII and auth data in console — 51 statements</span></div>
+            </div>
+          </div>
+          <div class="issue-row">
+            <div class="issue-sev-icon isi-medium">i</div>
+            <div class="issue-body">
+              <div class="issue-text">180 commented-out lines including entire alternate login flows, copy-pasted component blocks, and multiple complete feature implementations that were never cleaned up.</div>
+              <div class="issue-cat"><span>Medium</span><span class="dot"></span><span>180 commented-out lines</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="file-block" id="fb9">
+        <div class="file-header" onclick="toggleBlock('fb9')">
+          <div class="fh-sev sev-blue"></div>
+          <div class="fh-info">
+            <div class="fh-filename">store.js</div>
+            <div class="fh-path">src/store/modules/store.js</div>
+          </div>
+          <div class="fh-right">
+            <span class="badge badge-medium">Medium</span>
+            <div class="toggle-btn"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 4l4 4-4 4"/></svg></div>
+          </div>
+        </div>
+        <div class="issue-list">
+          <div class="issue-row">
+            <div class="issue-sev-icon isi-medium">i</div>
+            <div class="issue-body">
+              <div class="issue-text">4 <code>.fetch()</code> calls at lines 59, 80, 101, and 132 have no <code>.catch()</code> handler. Store actions that fail silently will leave Pinia state partially populated, causing unpredictable UI behaviour.</div>
+              <div class="issue-cat"><span>Medium</span><span class="dot"></span><span>Missing error handling on store actions</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ARCHITECTURE SECTION -->
+    <div class="section animate-in" style="animation-delay:.25s" id="architecture">
+      <div class="section-head">
+        <h2>Architecture &amp; Maintainability</h2>
+        <div class="sh-line"></div>
+        <div class="sh-count">7 issues</div>
+      </div>
+
+      <div class="file-block" id="fb10">
+        <div class="file-header" onclick="toggleBlock('fb10')">
+          <div class="fh-sev sev-blue"></div>
+          <div class="fh-info">
+            <div class="fh-filename">package.json</div>
+            <div class="fh-path">package.json</div>
+          </div>
+          <div class="fh-right">
+            <span class="badge badge-medium">Medium</span>
+            <div class="toggle-btn"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 4l4 4-4 4"/></svg></div>
+          </div>
+        </div>
+        <div class="issue-list">
+          <div class="issue-row">
+            <div class="issue-sev-icon isi-medium">i</div>
+            <div class="issue-body">
+              <div class="issue-text">Both <code>vuex@4</code> and <code>pinia@2</code> are listed as production dependencies. Running two state management libraries simultaneously adds unnecessary bundle weight (~10KB gzip combined) and creates confusion about which is the authoritative state source. Complete the migration to Pinia and remove Vuex entirely.</div>
+              <div class="issue-cat"><span>Medium</span><span class="dot"></span><span>Dual state management libraries</span></div>
+            </div>
+          </div>
+          <div class="issue-row">
+            <div class="issue-sev-icon isi-medium">i</div>
+            <div class="issue-body">
+              <div class="issue-text">Both <code>vuex-persistedstate</code> and <code>pinia-plugin-persistedstate</code> are installed — a direct symptom of the incomplete Vuex-to-Pinia migration. Remove <code>vuex-persistedstate</code> when Vuex is removed.</div>
+              <div class="issue-cat"><span>Medium</span><span class="dot"></span><span>Duplicate persistence plugins</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="file-block" id="fb11">
+        <div class="file-header" onclick="toggleBlock('fb11')">
+          <div class="fh-sev sev-blue"></div>
+          <div class="fh-info">
+            <div class="fh-filename">router.js</div>
+            <div class="fh-path">src/router.js</div>
+          </div>
+          <div class="fh-right">
+            <span class="badge badge-medium">Medium</span>
+            <div class="toggle-btn"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 4l4 4-4 4"/></svg></div>
+          </div>
+        </div>
+        <div class="issue-list">
+          <div class="issue-row">
+            <div class="issue-sev-icon isi-medium">i</div>
+            <div class="issue-body">
+              <div class="issue-text">Route <code>/formKit-component</code> maps to <code>formKitComponent.vue</code> which does not exist in <code>src/views/</code>. Navigating to this route will produce an unhandled module resolution error at runtime.</div>
+              <div class="issue-cat"><span>Medium</span><span class="dot"></span><span>Missing view file — route will fail at runtime</span></div>
+            </div>
+          </div>
+          <div class="issue-row">
+            <div class="issue-sev-icon isi-low">✓</div>
+            <div class="issue-body">
+              <div class="issue-text">Helper functions <code>loadAffiliation</code> and <code>loadDefinition</code> are defined but referenced by no routes. They point to <code>views/collegeAffiliation/</code> and <code>views/collegeDefinition/</code> directories that do not exist. These are unused code and should be removed.</div>
+              <div class="issue-cat"><span>Low</span><span class="dot"></span><span>Unused route loader functions</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="file-block" id="fb12">
+        <div class="file-header" onclick="toggleBlock('fb12')">
+          <div class="fh-sev sev-blue"></div>
+          <div class="fh-info">
+            <div class="fh-filename">Login.vue</div>
+            <div class="fh-path">src/views/Login.vue</div>
+          </div>
+          <div class="fh-right">
+            <span class="badge badge-medium">Medium</span>
+            <div class="toggle-btn"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 4l4 4-4 4"/></svg></div>
+          </div>
+        </div>
+        <div class="issue-list">
+          <div class="issue-row">
+            <div class="issue-sev-icon isi-medium">i</div>
+            <div class="issue-body">
+              <div class="issue-text">All API calls use <code>http://localhost:8080/portalManagement/</code>. This file is not reachable from any route definition — it is an orphaned legacy component that should be deleted entirely.</div>
+              <div class="issue-cat"><span>Medium</span><span class="dot"></span><span>Orphaned legacy file with dev URLs</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="file-block" id="fb13">
+        <div class="file-header" onclick="toggleBlock('fb13')">
+          <div class="fh-sev sev-green"></div>
+          <div class="fh-info">
+            <div class="fh-filename">.env files (13 files)</div>
+            <div class="fh-path">.env · .env.production · .env.development · .env.* (13 total)</div>
+          </div>
+          <div class="fh-right">
+            <span class="badge badge-low">Low</span>
+            <div class="toggle-btn"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 4l4 4-4 4"/></svg></div>
+          </div>
+        </div>
+        <div class="issue-list">
+          <div class="issue-row">
+            <div class="issue-sev-icon isi-low">✓</div>
+            <div class="issue-body">
+              <div class="issue-text">13 environment files are committed to version control including <code>.env.production</code> with CDN bucket IDs and university identifiers. Only a <code>.env.example</code> template with placeholder values should be tracked; all real <code>.env.*</code> files should be in <code>.gitignore</code>.</div>
+              <div class="issue-cat"><span>Low</span><span class="dot"></span><span>Env files committed to VCS</span></div>
+            </div>
+          </div>
+          <div class="issue-row">
+            <div class="issue-sev-icon isi-low">✓</div>
+            <div class="issue-body">
+              <div class="issue-text"><code>.env.production</code> contains commented-out URLs for multiple universities (staging2-srtmuops, gugops, kannurops). Multi-tenant configuration of this kind should live in a deployment pipeline or CI variables, not a committed source file.</div>
+              <div class="issue-cat"><span>Low</span><span class="dot"></span><span>Multi-tenant config sprawl in env file</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="file-block" id="fb14">
+        <div class="file-header" onclick="toggleBlock('fb14')">
+          <div class="fh-sev sev-green"></div>
+          <div class="fh-info">
+            <div class="fh-filename">mql.js · mqlAssetFDB.js · mqlOptions.js · response.js</div>
+            <div class="fh-path">src/plugins/</div>
+          </div>
+          <div class="fh-right">
+            <span class="badge badge-low">Low</span>
+            <div class="toggle-btn"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 4l4 4-4 4"/></svg></div>
+          </div>
+        </div>
+        <div class="issue-list">
+          <div class="issue-row">
+            <div class="issue-sev-icon isi-low">✓</div>
+            <div class="issue-body">
+              <div class="issue-text">8 <code>TODO</code> comments across plugin files flag unresolved design decisions: uncommenting dispatch logic, adding param validation helpers, verifying environment values, and implementing local cache. These are not notes — they are incomplete features that affect runtime behaviour.</div>
+              <div class="issue-cat"><span>Low</span><span class="dot"></span><span>8 unresolved TODO comments</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </main>
+</div>
+
+<!-- AI Chat FAB -->
+<div class="chat-fab">
+  <button class="fab-btn" onclick="toggleChat()" id="fabBtn">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/>
+    </svg>
+    Ask AI about this report
+  </button>
+</div>
+
+<!-- Chat Panel -->
+<div class="chat-panel" id="chatPanel">
+  <div class="chat-header">
+    <div class="ch-left">
+      <div class="ch-avatar">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 8v4m0 4h.01"/></svg>
+      </div>
+      <div>
+        <div class="ch-title">Code Review Assistant</div>
+        <div class="ch-subtitle">Answers based on this report</div>
+      </div>
+    </div>
+    <button class="ch-close" onclick="toggleChat()">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18"><path d="M18 6L6 18M6 6l12 12"/></svg>
+    </button>
+  </div>
+
+  <div class="chat-messages" id="chatMessages">
+    <div class="msg ai">
+      <div class="msg-avatar ai-av">AI</div>
+      <div class="msg-bubble">Hello! I've reviewed the ShivaniD / StudentLogin codebase. The project scored <strong>42/100</strong>. Ask me anything about the findings — I can explain issues, suggest fixes, or help you prioritise what to tackle first.</div>
+    </div>
+  </div>
+
+  <div class="quick-questions" id="quickQuestions">
+    <div class="qq-label">Suggested questions</div>
+    <button class="qq-btn" onclick="sendQuick('What are the most critical issues I need to fix first?')">What are the most critical issues to fix first?</button>
+    <button class="qq-btn" onclick="sendQuick('How do I fix the hardcoded encryption key issue?')">How do I fix the hardcoded encryption key?</button>
+    <button class="qq-btn" onclick="sendQuick('Give me a full action plan to bring the health score above 80.')">Give me a full action plan to reach 80+ health score</button>
+  </div>
+
+  <div class="chat-input-area">
+    <textarea class="chat-input" id="chatInput" placeholder="Ask about any issue in this report…" rows="1" onkeydown="handleKey(event)" oninput="autoResize(this)"></textarea>
+    <button class="send-btn" id="sendBtn" onclick="sendMessage()">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M22 2L11 13"/><path d="M22 2L15 22 11 13 2 9l20-7z"/></svg>
+    </button>
+  </div>
+</div>
+
+<script>
+const REPORT_CONTEXT = `
+You are a professional code reviewer assistant. You have just reviewed the ShivaniD / StudentLogin Vue 3 client application.
+
+PROJECT: ShivaniD / StudentLogin, Vue 3 + Vite + Pinia + PrimeVue, 264 files.
+HEALTH SCORE: 42/100
+
+CRITICAL ISSUES:
+1. [Encryption.js] AES encryption key hardcoded as "portal" - trivially guessable. Commented-out process.env.VUE_APP_SECRET_KEY was the correct approach. Same key duplicated in main.js mixin.
+2. [axiosApi.js] Long Base64 Authorization: Basic credential committed to source code / VCS. Must be rotated immediately and moved to env variable or backend proxy. API URL hardcoded to solartest1.mkcl.org test server.
+3. [vite.config.js] sourcemap: true in production build exposes full Vue source code to users. Should be false or 'hidden'. Localhost proxy target for /examinationserver left in production config.
+
+HIGH ISSUES:
+4. [main.js] window.app = vm exposes entire Vue instance globally. 18 console.log calls leak internal data. Duplicate vm.use(defaultConfig) registration.
+5. [FeeDetails.vue] 72 active console.log calls including PII (fee data, subjects, transactions). 533 commented-out lines (more than half the file).
+6. [ExamFormSubmission.vue] 292 commented-out lines. 9 debug logs including "resetAppearedFlag API call me aapka swagat hai".
+7. [login.js store] AUTH_REQUEST action is a stub - writes literal string 'token' to sessionStorage. Real auth logic commented out. If used by guards, bypasses authentication entirely.
+8. [adminLogin.vue] 7 .fetch() calls with no .catch() handler. 51 console logs exposing OTP, tokens, user objects. 180 commented-out lines.
+
+MEDIUM ISSUES:
+9. [store.js] 4 .fetch() calls with no .catch().
+10. [package.json] Both vuex@4 and pinia@2 installed. Dual state management. Also both vuex-persistedstate and pinia-plugin-persistedstate installed.
+11. [router.js] /formKit-component route maps to formKitComponent.vue which does not exist. loadAffiliation and loadDefinition unused functions referencing non-existent directories.
+12. [Login.vue] Orphaned legacy file with all API calls pointing to localhost:8080. Not reachable from any route.
+
+LOW ISSUES:
+13. [.env files] 13 env files committed to VCS including .env.production. Should only have .env.example in git.
+14. [plugins/] 8 TODO comments flagging incomplete features.
+
+Respond in a professional, clear, and actionable tone. When suggesting code fixes, provide short code snippets. Keep answers concise but complete. If asked for a prioritised action plan, structure it in phases (immediate / short-term / medium-term).
+`;
+
+let chatOpen = false;
+let isTyping = false;
+
+function toggleChat() {
+  chatOpen = !chatOpen;
+  document.getElementById('chatPanel').classList.toggle('open', chatOpen);
+  document.getElementById('fabBtn').textContent = chatOpen ? '✕ Close' : '';
+  if (chatOpen) {
+    const btn = document.getElementById('fabBtn');
+    btn.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:18px;height:18px;"><path d="M18 6L6 18M6 6l12 12"/></svg> Close';
+    setTimeout(() => document.getElementById('chatInput').focus(), 250);
+  } else {
+    const btn = document.getElementById('fabBtn');
+    btn.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:18px;height:18px;"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg> Ask AI about this report';
+  }
+}
+
+function scrollTo(id) {
+  document.getElementById(id).scrollIntoView({ behavior: 'smooth', block: 'start' });
+  document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
+  event.target.closest('.nav-link').classList.add('active');
+}
+
+function toggleBlock(id) {
+  const block = document.getElementById(id);
+  block.classList.toggle('open');
+}
+
+function autoResize(el) {
+  el.style.height = 'auto';
+  el.style.height = Math.min(el.scrollHeight, 100) + 'px';
+}
+
+function handleKey(e) {
+  if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); sendMessage(); }
+}
+
+function addMessage(text, role) {
+  const container = document.getElementById('chatMessages');
+  const div = document.createElement('div');
+  div.className = 'msg ' + role;
+  const av = document.createElement('div');
+  av.className = 'msg-avatar ' + (role === 'ai' ? 'ai-av' : 'user-av');
+  av.textContent = role === 'ai' ? 'AI' : 'You';
+  const bubble = document.createElement('div');
+  bubble.className = 'msg-bubble';
+  bubble.innerHTML = text.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>').replace(/`([^`]+)`/g, '<code style="font-family:monospace;font-size:12px;background:rgba(0,0,0,0.08);padding:1px 5px;border-radius:3px;">$1</code>').replace(/\n/g, '<br>');
+  div.appendChild(av);
+  div.appendChild(bubble);
+  container.appendChild(div);
+  container.scrollTop = container.scrollHeight;
+  return bubble;
+}
+
+function showTyping() {
+  const container = document.getElementById('chatMessages');
+  const div = document.createElement('div');
+  div.className = 'msg ai';
+  div.id = 'typingIndicator';
+  const av = document.createElement('div');
+  av.className = 'msg-avatar ai-av';
+  av.textContent = 'AI';
+  const bubble = document.createElement('div');
+  bubble.className = 'msg-bubble';
+  bubble.innerHTML = '<div class="typing-dots"><span></span><span></span><span></span></div>';
+  div.appendChild(av);
+  div.appendChild(bubble);
+  container.appendChild(div);
+  container.scrollTop = container.scrollHeight;
+}
+
+function removeTyping() {
+  const t = document.getElementById('typingIndicator');
+  if (t) t.remove();
+}
+
+function hideQuickQuestions() {
+  const qq = document.getElementById('quickQuestions');
+  if (qq) { qq.style.display = 'none'; }
+}
+
+async function sendQuick(text) {
+  hideQuickQuestions();
+  document.getElementById('chatInput').value = text;
+  await sendMessage();
+}
+
+async function sendMessage() {
+  if (isTyping) return;
+  const input = document.getElementById('chatInput');
+  const text = input.value.trim();
+  if (!text) return;
+
+  hideQuickQuestions();
+  input.value = '';
+  input.style.height = 'auto';
+  addMessage(text, 'user');
+  isTyping = true;
+  document.getElementById('sendBtn').disabled = true;
+  showTyping();
+
+  const messages = [
+    { role: 'user', content: REPORT_CONTEXT + '\n\nUser question: ' + text }
+  ];
+
+  try {
+    const res = await fetch('https://api.anthropic.com/v1/messages', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        model: 'claude-sonnet-4-20250514',
+        max_tokens: 1000,
+        messages
+      })
+    });
+    const data = await res.json();
+    removeTyping();
+    const reply = data.content?.find(b => b.type === 'text')?.text || 'Sorry, I could not get a response.';
+    addMessage(reply, 'ai');
+  } catch (e) {
+    removeTyping();
+    addMessage('Sorry, there was a network error. Please try again.', 'ai');
+  } finally {
+    isTyping = false;
+    document.getElementById('sendBtn').disabled = false;
+  }
+}
+
+// Animate health bar on load
+window.addEventListener('load', () => {
+  setTimeout(() => {
+    document.getElementById('healthBar').style.width = '42%';
+  }, 400);
+});
+</script>
+</body>
+</html>

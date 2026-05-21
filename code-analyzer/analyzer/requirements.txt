@@ -1,0 +1,9 @@
+openai
+flask
+python-dotenv
+mcp[cli]
+
+openai
+flask
+mcp[cli]
+python-dotenv

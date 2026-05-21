@@ -1,0 +1,852 @@
+[
+    {
+        "id": 1,
+        "component_id": 29,
+        "file_path": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\components\\sessionmanager\\deleteData.vue",
+        "rule_name": "Color-only error indicator",
+        "status": "FAIL",
+        "actual_result": "<button> with error styling uses color only to convey meaning",
+        "severity": "HIGH",
+        "line_number": "39-155"
+    },
+    {
+        "id": 2,
+        "component_id": 34,
+        "file_path": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\views\\adminLogin.vue",
+        "rule_name": "Missing focus style",
+        "status": "FAIL",
+        "actual_result": "No focus style defined for 'a'",
+        "severity": "MEDIUM",
+        "line_number": "0-0"
+    },
+    {
+        "id": 3,
+        "component_id": 34,
+        "file_path": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\views\\adminLogin.vue",
+        "rule_name": "Link missing accessible text",
+        "status": "FAIL",
+        "actual_result": "<a class='resend'> has no accessible text",
+        "severity": "HIGH",
+        "line_number": "121-174"
+    },
+    {
+        "id": 4,
+        "component_id": 34,
+        "file_path": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\views\\adminLogin.vue",
+        "rule_name": "Input missing label",
+        "status": "FAIL",
+        "actual_result": "<input id='first' type='text'> has no associated label",
+        "severity": "HIGH",
+        "line_number": "108-108"
+    },
+    {
+        "id": 5,
+        "component_id": 34,
+        "file_path": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\views\\adminLogin.vue",
+        "rule_name": "Input missing label",
+        "status": "FAIL",
+        "actual_result": "<input id='second' type='text'> has no associated label",
+        "severity": "HIGH",
+        "line_number": "109-109"
+    },
+    {
+        "id": 6,
+        "component_id": 34,
+        "file_path": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\views\\adminLogin.vue",
+        "rule_name": "Input missing label",
+        "status": "FAIL",
+        "actual_result": "<input id='third' type='text'> has no associated label",
+        "severity": "HIGH",
+        "line_number": "110-110"
+    },
+    {
+        "id": 7,
+        "component_id": 34,
+        "file_path": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\views\\adminLogin.vue",
+        "rule_name": "Input missing label",
+        "status": "FAIL",
+        "actual_result": "<input id='fourth' type='text'> has no associated label",
+        "severity": "HIGH",
+        "line_number": "111-111"
+    },
+    {
+        "id": 8,
+        "component_id": 34,
+        "file_path": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\views\\adminLogin.vue",
+        "rule_name": "Input missing label",
+        "status": "FAIL",
+        "actual_result": "<input id='fifth' type='text'> has no associated label",
+        "severity": "HIGH",
+        "line_number": "112-112"
+    },
+    {
+        "id": 9,
+        "component_id": 34,
+        "file_path": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\views\\adminLogin.vue",
+        "rule_name": "No media queries found",
+        "status": "FAIL",
+        "actual_result": "No @media queries detected in component styles",
+        "severity": "MEDIUM",
+        "line_number": "0-0"
+    },
+    {
+        "id": 10,
+        "component_id": 36,
+        "file_path": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\views\\CdnUpload.vue",
+        "rule_name": "Image missing alt text",
+        "status": "FAIL",
+        "actual_result": "<img> is missing alt attribute",
+        "severity": "HIGH",
+        "line_number": "99-99"
+    },
+    {
+        "id": 11,
+        "component_id": 40,
+        "file_path": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\views\\StudentData.vue",
+        "rule_name": "WCAG contrast ratio violation",
+        "status": "FAIL",
+        "actual_result": "CSS '.formkit-submit' has contrast ratio 3.98:1 (fg:#fff, bg:#007bff)",
+        "severity": "HIGH",
+        "line_number": "0-0"
+    },
+    {
+        "id": 12,
+        "component_id": 40,
+        "file_path": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\views\\StudentData.vue",
+        "rule_name": "Button missing hover state",
+        "status": "FAIL",
+        "actual_result": "No :hover style found for '.formkit-button'",
+        "severity": "MEDIUM",
+        "line_number": "0-0"
+    },
+    {
+        "id": 13,
+        "component_id": 40,
+        "file_path": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\views\\StudentData.vue",
+        "rule_name": "Button missing focus state",
+        "status": "FAIL",
+        "actual_result": "No :focus style found for '.formkit-button'",
+        "severity": "MEDIUM",
+        "line_number": "0-0"
+    },
+    {
+        "id": 14,
+        "component_id": 40,
+        "file_path": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\views\\StudentData.vue",
+        "rule_name": "Missing focus style",
+        "status": "FAIL",
+        "actual_result": "No focus style defined for 'button'",
+        "severity": "MEDIUM",
+        "line_number": "0-0"
+    },
+    {
+        "id": 15,
+        "component_id": 40,
+        "file_path": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\views\\StudentData.vue",
+        "rule_name": "Missing focus style",
+        "status": "FAIL",
+        "actual_result": "No focus style defined for 'a'",
+        "severity": "MEDIUM",
+        "line_number": "0-0"
+    },
+    {
+        "id": 16,
+        "component_id": 40,
+        "file_path": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\views\\StudentData.vue",
+        "rule_name": "Fixed font-size in px",
+        "status": "FAIL",
+        "actual_result": "CSS '.formkit-submit' uses fixed font-size: 16px \u2014 won't scale for low-vision users",
+        "severity": "LOW",
+        "line_number": "0-0"
+    },
+    {
+        "id": 17,
+        "component_id": 40,
+        "file_path": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\views\\StudentData.vue",
+        "rule_name": "No media queries found",
+        "status": "FAIL",
+        "actual_result": "No @media queries detected in component styles",
+        "severity": "MEDIUM",
+        "line_number": "0-0"
+    },
+    {
+        "id": 18,
+        "component_id": 49,
+        "file_path": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\views\\Result\\ApplicationServices.vue",
+        "rule_name": "WCAG contrast ratio violation",
+        "status": "FAIL",
+        "actual_result": "CSS '.download-btn' has contrast ratio 2.54:1 (fg:#ffffff, bg:#10b981)",
+        "severity": "HIGH",
+        "line_number": "0-0"
+    },
+    {
+        "id": 19,
+        "component_id": 49,
+        "file_path": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\views\\Result\\ApplicationServices.vue",
+        "rule_name": "WCAG contrast ratio violation",
+        "status": "FAIL",
+        "actual_result": "CSS '.btn.btn-blue' has contrast ratio 3.68:1 (fg:#fff, bg:#3b82f6)",
+        "severity": "HIGH",
+        "line_number": "0-0"
+    },
+    {
+        "id": 20,
+        "component_id": 49,
+        "file_path": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\views\\Result\\ApplicationServices.vue",
+        "rule_name": "Low contrast inline style",
+        "status": "FAIL",
+        "actual_result": "<h1> inline style has contrast ratio 4.00:1 (fg:#ff0000, bg:#ffffff)",
+        "severity": "HIGH",
+        "line_number": "83"
+    },
+    {
+        "id": 21,
+        "component_id": 49,
+        "file_path": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\views\\Result\\ApplicationServices.vue",
+        "rule_name": "Button missing focus state",
+        "status": "FAIL",
+        "actual_result": "No :focus style found for '.download-btn'",
+        "severity": "MEDIUM",
+        "line_number": "0-0"
+    },
+    {
+        "id": 22,
+        "component_id": 49,
+        "file_path": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\views\\Result\\ApplicationServices.vue",
+        "rule_name": "Button missing focus state",
+        "status": "FAIL",
+        "actual_result": "No :focus style found for '.btn.btn-blue'",
+        "severity": "MEDIUM",
+        "line_number": "0-0"
+    },
+    {
+        "id": 23,
+        "component_id": 49,
+        "file_path": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\views\\Result\\ApplicationServices.vue",
+        "rule_name": "Button missing hover state",
+        "status": "FAIL",
+        "actual_result": "No :hover style found for '.download-btn:hover'",
+        "severity": "MEDIUM",
+        "line_number": "0-0"
+    },
+    {
+        "id": 24,
+        "component_id": 49,
+        "file_path": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\views\\Result\\ApplicationServices.vue",
+        "rule_name": "Button missing focus state",
+        "status": "FAIL",
+        "actual_result": "No :focus style found for '.download-btn:hover'",
+        "severity": "MEDIUM",
+        "line_number": "0-0"
+    },
+    {
+        "id": 25,
+        "component_id": 49,
+        "file_path": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\views\\Result\\ApplicationServices.vue",
+        "rule_name": "Button missing hover state",
+        "status": "FAIL",
+        "actual_result": "No :hover style found for '.btn.btn-blue:hover'",
+        "severity": "MEDIUM",
+        "line_number": "0-0"
+    },
+    {
+        "id": 26,
+        "component_id": 49,
+        "file_path": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\views\\Result\\ApplicationServices.vue",
+        "rule_name": "Button missing focus state",
+        "status": "FAIL",
+        "actual_result": "No :focus style found for '.btn.btn-blue:hover'",
+        "severity": "MEDIUM",
+        "line_number": "0-0"
+    },
+    {
+        "id": 27,
+        "component_id": 49,
+        "file_path": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\views\\Result\\ApplicationServices.vue",
+        "rule_name": "Missing focus style",
+        "status": "FAIL",
+        "actual_result": "No focus style defined for 'button'",
+        "severity": "MEDIUM",
+        "line_number": "0-0"
+    },
+    {
+        "id": 28,
+        "component_id": 49,
+        "file_path": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\views\\Result\\ApplicationServices.vue",
+        "rule_name": "Missing focus style",
+        "status": "FAIL",
+        "actual_result": "No focus style defined for 'input'",
+        "severity": "MEDIUM",
+        "line_number": "0-0"
+    },
+    {
+        "id": 29,
+        "component_id": 49,
+        "file_path": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\views\\Result\\ApplicationServices.vue",
+        "rule_name": "Missing focus style",
+        "status": "FAIL",
+        "actual_result": "No focus style defined for '.btn'",
+        "severity": "MEDIUM",
+        "line_number": "0-0"
+    },
+    {
+        "id": 30,
+        "component_id": 49,
+        "file_path": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\views\\Result\\ApplicationServices.vue",
+        "rule_name": "Missing focus style",
+        "status": "FAIL",
+        "actual_result": "No focus style defined for 'a'",
+        "severity": "MEDIUM",
+        "line_number": "0-0"
+    },
+    {
+        "id": 31,
+        "component_id": 49,
+        "file_path": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\views\\Result\\ApplicationServices.vue",
+        "rule_name": "Input missing label",
+        "status": "FAIL",
+        "actual_result": "<input type='checkbox'> has no associated label",
+        "severity": "HIGH",
+        "line_number": "151-151"
+    },
+    {
+        "id": 32,
+        "component_id": 49,
+        "file_path": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\views\\Result\\ApplicationServices.vue",
+        "rule_name": "Overflow hidden may clip content",
+        "status": "FAIL",
+        "actual_result": "CSS '.collapse-enter,\n.collapse-leave-to' uses overflow:hidden which may clip content when zoomed",
+        "severity": "LOW",
+        "line_number": "0-0"
+    },
+    {
+        "id": 33,
+        "component_id": 49,
+        "file_path": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\views\\Result\\ApplicationServices.vue",
+        "rule_name": "Overflow hidden may clip content",
+        "status": "FAIL",
+        "actual_result": "CSS '.collapsible-content' uses overflow:hidden which may clip content when zoomed",
+        "severity": "LOW",
+        "line_number": "0-0"
+    },
+    {
+        "id": 34,
+        "component_id": 49,
+        "file_path": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\views\\Result\\ApplicationServices.vue",
+        "rule_name": "No media queries found",
+        "status": "FAIL",
+        "actual_result": "No @media queries detected in component styles",
+        "severity": "MEDIUM",
+        "line_number": "0-0"
+    },
+    {
+        "id": 35,
+        "component_id": 50,
+        "file_path": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\views\\Result\\ExamFormSubmission.vue",
+        "rule_name": "Missing focus style",
+        "status": "FAIL",
+        "actual_result": "No focus style defined for 'a'",
+        "severity": "MEDIUM",
+        "line_number": "0-0"
+    },
+    {
+        "id": 36,
+        "component_id": 50,
+        "file_path": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\views\\Result\\ExamFormSubmission.vue",
+        "rule_name": "Icon button missing accessible label",
+        "status": "FAIL",
+        "actual_result": "<button class='btn btn-success btn-solid'> is an icon-only button without accessible name",
+        "severity": "HIGH",
+        "line_number": "311-325"
+    },
+    {
+        "id": 37,
+        "component_id": 50,
+        "file_path": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\views\\Result\\ExamFormSubmission.vue",
+        "rule_name": "Input missing label",
+        "status": "FAIL",
+        "actual_result": "<input type='checkbox'> has no associated label",
+        "severity": "HIGH",
+        "line_number": "129-129"
+    },
+    {
+        "id": 38,
+        "component_id": 50,
+        "file_path": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\views\\Result\\ExamFormSubmission.vue",
+        "rule_name": "Fixed font-size in px",
+        "status": "FAIL",
+        "actual_result": "CSS '.section-title' uses fixed font-size: 13px \u2014 won't scale for low-vision users",
+        "severity": "LOW",
+        "line_number": "0-0"
+    },
+    {
+        "id": 39,
+        "component_id": 50,
+        "file_path": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\views\\Result\\ExamFormSubmission.vue",
+        "rule_name": "Fixed font-size in px",
+        "status": "FAIL",
+        "actual_result": "CSS '.fee-table th,\n.fee-table td' uses fixed font-size: 11px \u2014 won't scale for low-vision users",
+        "severity": "LOW",
+        "line_number": "0-0"
+    },
+    {
+        "id": 40,
+        "component_id": 50,
+        "file_path": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\views\\Result\\ExamFormSubmission.vue",
+        "rule_name": "Fixed font-size in px",
+        "status": "FAIL",
+        "actual_result": "CSS '.university-name' uses fixed font-size: 15px \u2014 won't scale for low-vision users",
+        "severity": "LOW",
+        "line_number": "0-0"
+    },
+    {
+        "id": 41,
+        "component_id": 50,
+        "file_path": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\views\\Result\\ExamFormSubmission.vue",
+        "rule_name": "Fixed font-size in px",
+        "status": "FAIL",
+        "actual_result": "CSS '.university-address' uses fixed font-size: 11px \u2014 won't scale for low-vision users",
+        "severity": "LOW",
+        "line_number": "0-0"
+    },
+    {
+        "id": 42,
+        "component_id": 50,
+        "file_path": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\views\\Result\\ExamFormSubmission.vue",
+        "rule_name": "Fixed font-size in px",
+        "status": "FAIL",
+        "actual_result": "CSS '.receipt-title' uses fixed font-size: 15px \u2014 won't scale for low-vision users",
+        "severity": "LOW",
+        "line_number": "0-0"
+    },
+    {
+        "id": 43,
+        "component_id": 50,
+        "file_path": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\views\\Result\\ExamFormSubmission.vue",
+        "rule_name": "Fixed font-size in px",
+        "status": "FAIL",
+        "actual_result": "CSS '.footer' uses fixed font-size: 10px \u2014 won't scale for low-vision users",
+        "severity": "LOW",
+        "line_number": "0-0"
+    },
+    {
+        "id": 44,
+        "component_id": 50,
+        "file_path": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\views\\Result\\ExamFormSubmission.vue",
+        "rule_name": "Fixed font-size in px",
+        "status": "FAIL",
+        "actual_result": "CSS '.fee-table th,\n.fee-table td' uses fixed font-size: 11px \u2014 won't scale for low-vision users",
+        "severity": "LOW",
+        "line_number": "0-0"
+    },
+    {
+        "id": 45,
+        "component_id": 50,
+        "file_path": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\views\\Result\\ExamFormSubmission.vue",
+        "rule_name": "Small icon button",
+        "status": "FAIL",
+        "actual_result": "<button class='btn btn-success btn-solid'> is icon-only button without explicit min size",
+        "severity": "MEDIUM",
+        "line_number": "0-0"
+    },
+    {
+        "id": 46,
+        "component_id": 51,
+        "file_path": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\views\\Result\\FeeDetails.vue",
+        "rule_name": "Modal without keyboard close",
+        "status": "FAIL",
+        "actual_result": "Modal <dialog> has no Escape key handler or close button",
+        "severity": "HIGH",
+        "line_number": "10-21"
+    },
+    {
+        "id": 47,
+        "component_id": 51,
+        "file_path": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\views\\Result\\FeeDetails.vue",
+        "rule_name": "Modal without keyboard close",
+        "status": "FAIL",
+        "actual_result": "Modal <dialog> has no Escape key handler or close button",
+        "severity": "HIGH",
+        "line_number": "96-117"
+    },
+    {
+        "id": 48,
+        "component_id": 51,
+        "file_path": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\views\\Result\\FeeDetails.vue",
+        "rule_name": "Modal without keyboard close",
+        "status": "FAIL",
+        "actual_result": "Modal <dialog> has no Escape key handler or close button",
+        "severity": "HIGH",
+        "line_number": "10-21"
+    },
+    {
+        "id": 49,
+        "component_id": 51,
+        "file_path": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\views\\Result\\FeeDetails.vue",
+        "rule_name": "Modal without keyboard close",
+        "status": "FAIL",
+        "actual_result": "Modal <dialog> has no Escape key handler or close button",
+        "severity": "HIGH",
+        "line_number": "96-117"
+    },
+    {
+        "id": 50,
+        "component_id": 51,
+        "file_path": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\views\\Result\\FeeDetails.vue",
+        "rule_name": "Missing focus style",
+        "status": "FAIL",
+        "actual_result": "No focus style defined for 'a'",
+        "severity": "MEDIUM",
+        "line_number": "0-0"
+    },
+    {
+        "id": 51,
+        "component_id": 51,
+        "file_path": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\views\\Result\\FeeDetails.vue",
+        "rule_name": "No media queries found",
+        "status": "FAIL",
+        "actual_result": "No @media queries detected in component styles",
+        "severity": "MEDIUM",
+        "line_number": "0-0"
+    },
+    {
+        "id": 52,
+        "component_id": 52,
+        "file_path": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\views\\Result\\HallTicketPage.vue",
+        "rule_name": "Missing focus style",
+        "status": "FAIL",
+        "actual_result": "No focus style defined for 'a'",
+        "severity": "MEDIUM",
+        "line_number": "0-0"
+    },
+    {
+        "id": 53,
+        "component_id": 52,
+        "file_path": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\views\\Result\\HallTicketPage.vue",
+        "rule_name": "Fixed font-size in px",
+        "status": "FAIL",
+        "actual_result": "CSS '.card-content p' uses fixed font-size: 14px \u2014 won't scale for low-vision users",
+        "severity": "LOW",
+        "line_number": "0-0"
+    },
+    {
+        "id": 54,
+        "component_id": 52,
+        "file_path": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\views\\Result\\HallTicketPage.vue",
+        "rule_name": "No media queries found",
+        "status": "FAIL",
+        "actual_result": "No @media queries detected in component styles",
+        "severity": "MEDIUM",
+        "line_number": "0-0"
+    },
+    {
+        "id": 55,
+        "component_id": 53,
+        "file_path": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\views\\Result\\ResultPage.vue",
+        "rule_name": "Missing focus style",
+        "status": "FAIL",
+        "actual_result": "No focus style defined for 'a'",
+        "severity": "MEDIUM",
+        "line_number": "0-0"
+    },
+    {
+        "id": 56,
+        "component_id": 53,
+        "file_path": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\views\\Result\\ResultPage.vue",
+        "rule_name": "No media queries found",
+        "status": "FAIL",
+        "actual_result": "No @media queries detected in component styles",
+        "severity": "MEDIUM",
+        "line_number": "0-0"
+    },
+    {
+        "id": 57,
+        "component_id": 54,
+        "file_path": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\views\\Result\\SelectedApplicationService.vue",
+        "rule_name": "WCAG contrast ratio violation",
+        "status": "FAIL",
+        "actual_result": "CSS '.download-btn' has contrast ratio 2.54:1 (fg:#ffffff, bg:#10b981)",
+        "severity": "HIGH",
+        "line_number": "0-0"
+    },
+    {
+        "id": 58,
+        "component_id": 54,
+        "file_path": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\views\\Result\\SelectedApplicationService.vue",
+        "rule_name": "WCAG contrast ratio violation",
+        "status": "FAIL",
+        "actual_result": "CSS '.btn.btn-blue' has contrast ratio 3.68:1 (fg:#fff, bg:#3b82f6)",
+        "severity": "HIGH",
+        "line_number": "0-0"
+    },
+    {
+        "id": 59,
+        "component_id": 54,
+        "file_path": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\views\\Result\\SelectedApplicationService.vue",
+        "rule_name": "Button missing focus state",
+        "status": "FAIL",
+        "actual_result": "No :focus style found for '.download-btn'",
+        "severity": "MEDIUM",
+        "line_number": "0-0"
+    },
+    {
+        "id": 60,
+        "component_id": 54,
+        "file_path": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\views\\Result\\SelectedApplicationService.vue",
+        "rule_name": "Button missing focus state",
+        "status": "FAIL",
+        "actual_result": "No :focus style found for '.btn.btn-blue'",
+        "severity": "MEDIUM",
+        "line_number": "0-0"
+    },
+    {
+        "id": 61,
+        "component_id": 54,
+        "file_path": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\views\\Result\\SelectedApplicationService.vue",
+        "rule_name": "Button missing hover state",
+        "status": "FAIL",
+        "actual_result": "No :hover style found for '.download-btn:hover'",
+        "severity": "MEDIUM",
+        "line_number": "0-0"
+    },
+    {
+        "id": 62,
+        "component_id": 54,
+        "file_path": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\views\\Result\\SelectedApplicationService.vue",
+        "rule_name": "Button missing focus state",
+        "status": "FAIL",
+        "actual_result": "No :focus style found for '.download-btn:hover'",
+        "severity": "MEDIUM",
+        "line_number": "0-0"
+    },
+    {
+        "id": 63,
+        "component_id": 54,
+        "file_path": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\views\\Result\\SelectedApplicationService.vue",
+        "rule_name": "Button missing hover state",
+        "status": "FAIL",
+        "actual_result": "No :hover style found for '.btn.btn-blue:hover'",
+        "severity": "MEDIUM",
+        "line_number": "0-0"
+    },
+    {
+        "id": 64,
+        "component_id": 54,
+        "file_path": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\views\\Result\\SelectedApplicationService.vue",
+        "rule_name": "Button missing focus state",
+        "status": "FAIL",
+        "actual_result": "No :focus style found for '.btn.btn-blue:hover'",
+        "severity": "MEDIUM",
+        "line_number": "0-0"
+    },
+    {
+        "id": 65,
+        "component_id": 54,
+        "file_path": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\views\\Result\\SelectedApplicationService.vue",
+        "rule_name": "Modal without keyboard close",
+        "status": "FAIL",
+        "actual_result": "Modal <dialog> has no Escape key handler or close button",
+        "severity": "HIGH",
+        "line_number": "60-78"
+    },
+    {
+        "id": 66,
+        "component_id": 54,
+        "file_path": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\views\\Result\\SelectedApplicationService.vue",
+        "rule_name": "Missing focus style",
+        "status": "FAIL",
+        "actual_result": "No focus style defined for 'button'",
+        "severity": "MEDIUM",
+        "line_number": "0-0"
+    },
+    {
+        "id": 67,
+        "component_id": 54,
+        "file_path": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\views\\Result\\SelectedApplicationService.vue",
+        "rule_name": "Missing focus style",
+        "status": "FAIL",
+        "actual_result": "No focus style defined for 'input'",
+        "severity": "MEDIUM",
+        "line_number": "0-0"
+    },
+    {
+        "id": 68,
+        "component_id": 54,
+        "file_path": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\views\\Result\\SelectedApplicationService.vue",
+        "rule_name": "Missing focus style",
+        "status": "FAIL",
+        "actual_result": "No focus style defined for '.btn'",
+        "severity": "MEDIUM",
+        "line_number": "0-0"
+    },
+    {
+        "id": 69,
+        "component_id": 54,
+        "file_path": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\views\\Result\\SelectedApplicationService.vue",
+        "rule_name": "Missing focus style",
+        "status": "FAIL",
+        "actual_result": "No focus style defined for 'a'",
+        "severity": "MEDIUM",
+        "line_number": "0-0"
+    },
+    {
+        "id": 70,
+        "component_id": 54,
+        "file_path": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\views\\Result\\SelectedApplicationService.vue",
+        "rule_name": "Overflow hidden may clip content",
+        "status": "FAIL",
+        "actual_result": "CSS '.collapse-enter,\n.collapse-leave-to' uses overflow:hidden which may clip content when zoomed",
+        "severity": "LOW",
+        "line_number": "0-0"
+    },
+    {
+        "id": 71,
+        "component_id": 54,
+        "file_path": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\views\\Result\\SelectedApplicationService.vue",
+        "rule_name": "Overflow hidden may clip content",
+        "status": "FAIL",
+        "actual_result": "CSS '.collapsible-content' uses overflow:hidden which may clip content when zoomed",
+        "severity": "LOW",
+        "line_number": "0-0"
+    },
+    {
+        "id": 72,
+        "component_id": 54,
+        "file_path": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\views\\Result\\SelectedApplicationService.vue",
+        "rule_name": "No media queries found",
+        "status": "FAIL",
+        "actual_result": "No @media queries detected in component styles",
+        "severity": "MEDIUM",
+        "line_number": "0-0"
+    },
+    {
+        "id": 73,
+        "component_id": 55,
+        "file_path": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\views\\Result\\Transactions.vue",
+        "rule_name": "Button missing focus state",
+        "status": "FAIL",
+        "actual_result": "No :focus style found for 'button.text-blue-600'",
+        "severity": "MEDIUM",
+        "line_number": "0-0"
+    },
+    {
+        "id": 74,
+        "component_id": 55,
+        "file_path": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\views\\Result\\Transactions.vue",
+        "rule_name": "Button missing hover state",
+        "status": "FAIL",
+        "actual_result": "No :hover style found for 'button:disabled'",
+        "severity": "MEDIUM",
+        "line_number": "0-0"
+    },
+    {
+        "id": 75,
+        "component_id": 55,
+        "file_path": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\views\\Result\\Transactions.vue",
+        "rule_name": "Button missing focus state",
+        "status": "FAIL",
+        "actual_result": "No :focus style found for 'button:disabled'",
+        "severity": "MEDIUM",
+        "line_number": "0-0"
+    },
+    {
+        "id": 76,
+        "component_id": 55,
+        "file_path": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\views\\Result\\Transactions.vue",
+        "rule_name": "Button missing hover state",
+        "status": "FAIL",
+        "actual_result": "No :hover style found for 'button.text-blue-600:hover'",
+        "severity": "MEDIUM",
+        "line_number": "0-0"
+    },
+    {
+        "id": 77,
+        "component_id": 55,
+        "file_path": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\views\\Result\\Transactions.vue",
+        "rule_name": "Button missing focus state",
+        "status": "FAIL",
+        "actual_result": "No :focus style found for 'button.text-blue-600:hover'",
+        "severity": "MEDIUM",
+        "line_number": "0-0"
+    },
+    {
+        "id": 78,
+        "component_id": 55,
+        "file_path": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\views\\Result\\Transactions.vue",
+        "rule_name": "Missing focus style",
+        "status": "FAIL",
+        "actual_result": "No focus style defined for 'button'",
+        "severity": "MEDIUM",
+        "line_number": "0-0"
+    },
+    {
+        "id": 79,
+        "component_id": 55,
+        "file_path": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\views\\Result\\Transactions.vue",
+        "rule_name": "Missing focus style",
+        "status": "FAIL",
+        "actual_result": "No focus style defined for 'a'",
+        "severity": "MEDIUM",
+        "line_number": "0-0"
+    },
+    {
+        "id": 80,
+        "component_id": 55,
+        "file_path": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\views\\Result\\Transactions.vue",
+        "rule_name": "Overflow hidden may clip content",
+        "status": "FAIL",
+        "actual_result": "CSS '.custom-datatable' uses overflow:hidden which may clip content when zoomed",
+        "severity": "LOW",
+        "line_number": "0-0"
+    },
+    {
+        "id": 81,
+        "component_id": 55,
+        "file_path": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\views\\Result\\Transactions.vue",
+        "rule_name": "No media queries found",
+        "status": "FAIL",
+        "actual_result": "No @media queries detected in component styles",
+        "severity": "MEDIUM",
+        "line_number": "0-0"
+    },
+    {
+        "id": 82,
+        "component_id": 56,
+        "file_path": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\views\\Result\\viewExamTimeTable.vue",
+        "rule_name": "Missing focus style",
+        "status": "FAIL",
+        "actual_result": "No focus style defined for 'a'",
+        "severity": "MEDIUM",
+        "line_number": "0-0"
+    },
+    {
+        "id": 83,
+        "component_id": 56,
+        "file_path": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\views\\Result\\viewExamTimeTable.vue",
+        "rule_name": "No media queries found",
+        "status": "FAIL",
+        "actual_result": "No @media queries detected in component styles",
+        "severity": "MEDIUM",
+        "line_number": "0-0"
+    },
+    {
+        "id": 84,
+        "component_id": 57,
+        "file_path": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\views\\Result\\viewMarksheet.vue",
+        "rule_name": "Missing focus style",
+        "status": "FAIL",
+        "actual_result": "No focus style defined for 'a'",
+        "severity": "MEDIUM",
+        "line_number": "0-0"
+    },
+    {
+        "id": 85,
+        "component_id": 57,
+        "file_path": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\views\\Result\\viewMarksheet.vue",
+        "rule_name": "No media queries found",
+        "status": "FAIL",
+        "actual_result": "No @media queries detected in component styles",
+        "severity": "MEDIUM",
+        "line_number": "0-0"
+    }
+]

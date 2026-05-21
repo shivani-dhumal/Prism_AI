@@ -1,0 +1,9 @@
+.vscode/**
+.vscode-test/**
+out/test/**
+src/**
+.gitignore
+*.map
+*.ts
+node_modules/**
+.prettierrc

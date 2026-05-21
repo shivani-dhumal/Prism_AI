@@ -1,0 +1,912 @@
+[
+    {
+        "id": 1,
+        "component_id": 2,
+        "tag_name": "vuedatepicker",
+        "action_type": "update:model-value",
+        "action_handler": "handleInput"
+    },
+    {
+        "id": 2,
+        "component_id": 4,
+        "tag_name": "multiselect",
+        "action_type": "change",
+        "action_handler": "handleInput"
+    },
+    {
+        "id": 3,
+        "component_id": 5,
+        "tag_name": "i",
+        "action_type": "click",
+        "action_handler": "$router.go(-1)"
+    },
+    {
+        "id": 4,
+        "component_id": 5,
+        "tag_name": "button",
+        "action_type": "click.prevent",
+        "action_handler": "updateObjectUsingBLAndSave"
+    },
+    {
+        "id": 5,
+        "component_id": 6,
+        "tag_name": "i",
+        "action_type": "click",
+        "action_handler": "$router.go(-1)"
+    },
+    {
+        "id": 6,
+        "component_id": 6,
+        "tag_name": "button",
+        "action_type": "click.prevent",
+        "action_handler": "updateObjectUsingBL"
+    },
+    {
+        "id": 7,
+        "component_id": 10,
+        "tag_name": "div",
+        "action_type": "click",
+        "action_handler": "showDropdown"
+    },
+    {
+        "id": 8,
+        "component_id": 10,
+        "tag_name": "div",
+        "action_type": "click",
+        "action_handler": "logout()"
+    },
+    {
+        "id": 9,
+        "component_id": 11,
+        "tag_name": "input",
+        "action_type": "None",
+        "action_handler": "None"
+    },
+    {
+        "id": 10,
+        "component_id": 11,
+        "tag_name": "input",
+        "action_type": "click",
+        "action_handler": "$router.push(to)"
+    },
+    {
+        "id": 11,
+        "component_id": 13,
+        "tag_name": "div",
+        "action_type": "click",
+        "action_handler": "mainStore.toggleSidebar()"
+    },
+    {
+        "id": 12,
+        "component_id": 14,
+        "tag_name": "div",
+        "action_type": "click",
+        "action_handler": "toggleSidebar()"
+    },
+    {
+        "id": 13,
+        "component_id": 16,
+        "tag_name": "i",
+        "action_type": "click",
+        "action_handler": "$router.go(-1)"
+    },
+    {
+        "id": 14,
+        "component_id": 16,
+        "tag_name": "button",
+        "action_type": "click.prevent",
+        "action_handler": "downloadFile"
+    },
+    {
+        "id": 15,
+        "component_id": 17,
+        "tag_name": "i",
+        "action_type": "click",
+        "action_handler": "$router.go(-1)"
+    },
+    {
+        "id": 16,
+        "component_id": 17,
+        "tag_name": "button",
+        "action_type": "click",
+        "action_handler": "checkDownloadProgress"
+    },
+    {
+        "id": 17,
+        "component_id": 18,
+        "tag_name": "i",
+        "action_type": "click",
+        "action_handler": "$router.go(-1)"
+    },
+    {
+        "id": 18,
+        "component_id": 18,
+        "tag_name": "button",
+        "action_type": "click",
+        "action_handler": "saveClientDataUsingExcel"
+    },
+    {
+        "id": 19,
+        "component_id": 19,
+        "tag_name": "i",
+        "action_type": "click",
+        "action_handler": "$router.go(-1)"
+    },
+    {
+        "id": 20,
+        "component_id": 19,
+        "tag_name": "button",
+        "action_type": "click.prevent",
+        "action_handler": "saveExcelDataUsingActivity"
+    },
+    {
+        "id": 21,
+        "component_id": 20,
+        "tag_name": "i",
+        "action_type": "click",
+        "action_handler": "$router.go(-1)"
+    },
+    {
+        "id": 22,
+        "component_id": 20,
+        "tag_name": "button",
+        "action_type": "click.prevent",
+        "action_handler": "updateData"
+    },
+    {
+        "id": 23,
+        "component_id": 21,
+        "tag_name": "button",
+        "action_type": "click",
+        "action_handler": "changeLanguage('en')"
+    },
+    {
+        "id": 24,
+        "component_id": 21,
+        "tag_name": "button",
+        "action_type": "click",
+        "action_handler": "changeLanguage('hi')"
+    },
+    {
+        "id": 25,
+        "component_id": 21,
+        "tag_name": "button",
+        "action_type": "click",
+        "action_handler": "changeLanguage('mr')"
+    },
+    {
+        "id": 26,
+        "component_id": 22,
+        "tag_name": "button",
+        "action_type": "click",
+        "action_handler": "changeLanguage('en')"
+    },
+    {
+        "id": 27,
+        "component_id": 22,
+        "tag_name": "button",
+        "action_type": "click",
+        "action_handler": "changeLanguage('hi')"
+    },
+    {
+        "id": 28,
+        "component_id": 22,
+        "tag_name": "button",
+        "action_type": "click",
+        "action_handler": "changeLanguage('mr')"
+    },
+    {
+        "id": 29,
+        "component_id": 23,
+        "tag_name": "i",
+        "action_type": "click",
+        "action_handler": "$router.go(-1)"
+    },
+    {
+        "id": 30,
+        "component_id": 23,
+        "tag_name": "button",
+        "action_type": "click.prevent",
+        "action_handler": "decryptData"
+    },
+    {
+        "id": 31,
+        "component_id": 24,
+        "tag_name": "i",
+        "action_type": "click",
+        "action_handler": "$router.go(-1)"
+    },
+    {
+        "id": 32,
+        "component_id": 24,
+        "tag_name": "button",
+        "action_type": "click.prevent",
+        "action_handler": "encryptData"
+    },
+    {
+        "id": 33,
+        "component_id": 25,
+        "tag_name": "i",
+        "action_type": "click",
+        "action_handler": "$router.go(-1)"
+    },
+    {
+        "id": 34,
+        "component_id": 25,
+        "tag_name": "button",
+        "action_type": "click.prevent",
+        "action_handler": "hashData"
+    },
+    {
+        "id": 35,
+        "component_id": 26,
+        "tag_name": "i",
+        "action_type": "click",
+        "action_handler": "$router.go(-1)"
+    },
+    {
+        "id": 36,
+        "component_id": 26,
+        "tag_name": "button",
+        "action_type": "click.prevent",
+        "action_handler": "generateSalt"
+    },
+    {
+        "id": 37,
+        "component_id": 27,
+        "tag_name": "i",
+        "action_type": "click",
+        "action_handler": "$router.go(-1)"
+    },
+    {
+        "id": 38,
+        "component_id": 27,
+        "tag_name": "button",
+        "action_type": "click",
+        "action_handler": "saveCustomId"
+    },
+    {
+        "id": 39,
+        "component_id": 28,
+        "tag_name": "i",
+        "action_type": "click",
+        "action_handler": "$router.go(-1)"
+    },
+    {
+        "id": 40,
+        "component_id": 28,
+        "tag_name": "button",
+        "action_type": "click.prevent",
+        "action_handler": "saveCustomHexId"
+    },
+    {
+        "id": 41,
+        "component_id": 29,
+        "tag_name": "i",
+        "action_type": "click",
+        "action_handler": "$router.go(-1)"
+    },
+    {
+        "id": 42,
+        "component_id": 29,
+        "tag_name": "formkit",
+        "action_type": "submit",
+        "action_handler": "deleteSessionData"
+    },
+    {
+        "id": 43,
+        "component_id": 29,
+        "tag_name": "button",
+        "action_type": "None",
+        "action_handler": "None"
+    },
+    {
+        "id": 44,
+        "component_id": 30,
+        "tag_name": "i",
+        "action_type": "click",
+        "action_handler": "$router.go(-1)"
+    },
+    {
+        "id": 45,
+        "component_id": 30,
+        "tag_name": "formkit",
+        "action_type": "submit",
+        "action_handler": "fetchSessionData"
+    },
+    {
+        "id": 46,
+        "component_id": 31,
+        "tag_name": "i",
+        "action_type": "click",
+        "action_handler": "$router.go(-1)"
+    },
+    {
+        "id": 47,
+        "component_id": 31,
+        "tag_name": "formkit",
+        "action_type": "submit",
+        "action_handler": "saveSessionData"
+    },
+    {
+        "id": 48,
+        "component_id": 32,
+        "tag_name": "i",
+        "action_type": "click",
+        "action_handler": "$router.go(-1)"
+    },
+    {
+        "id": 49,
+        "component_id": 32,
+        "tag_name": "formkit",
+        "action_type": "submit",
+        "action_handler": "uploadFile"
+    },
+    {
+        "id": 50,
+        "component_id": 33,
+        "tag_name": "i",
+        "action_type": "click",
+        "action_handler": "$router.go(-1)"
+    },
+    {
+        "id": 51,
+        "component_id": 33,
+        "tag_name": "formkit",
+        "action_type": "submit",
+        "action_handler": "checkUploadProgress"
+    },
+    {
+        "id": 52,
+        "component_id": 34,
+        "tag_name": "dropdown",
+        "action_type": "change",
+        "action_handler": "changeinLang(selectedLanguage)"
+    },
+    {
+        "id": 53,
+        "component_id": 34,
+        "tag_name": "inputtext",
+        "action_type": "keypress",
+        "action_handler": "login"
+    },
+    {
+        "id": 54,
+        "component_id": 34,
+        "tag_name": "button",
+        "action_type": "click",
+        "action_handler": "userLoginForStudent()"
+    },
+    {
+        "id": 55,
+        "component_id": 34,
+        "tag_name": "input",
+        "action_type": "keyup",
+        "action_handler": "keyup"
+    },
+    {
+        "id": 56,
+        "component_id": 34,
+        "tag_name": "input",
+        "action_type": "keyup",
+        "action_handler": "keyup1"
+    },
+    {
+        "id": 57,
+        "component_id": 34,
+        "tag_name": "input",
+        "action_type": "keyup",
+        "action_handler": "keyup2"
+    },
+    {
+        "id": 58,
+        "component_id": 34,
+        "tag_name": "input",
+        "action_type": "keyup",
+        "action_handler": "keyup3"
+    },
+    {
+        "id": 59,
+        "component_id": 34,
+        "tag_name": "input",
+        "action_type": "keyup",
+        "action_handler": "keyup4"
+    },
+    {
+        "id": 60,
+        "component_id": 34,
+        "tag_name": "div",
+        "action_type": "click",
+        "action_handler": "sendOTP"
+    },
+    {
+        "id": 61,
+        "component_id": 34,
+        "tag_name": "button",
+        "action_type": "click",
+        "action_handler": "back()"
+    },
+    {
+        "id": 62,
+        "component_id": 34,
+        "tag_name": "button",
+        "action_type": "click",
+        "action_handler": "verifyOtp()"
+    },
+    {
+        "id": 63,
+        "component_id": 35,
+        "tag_name": "i",
+        "action_type": "click",
+        "action_handler": "$router.go(-1)"
+    },
+    {
+        "id": 64,
+        "component_id": 35,
+        "tag_name": "button",
+        "action_type": "click.prevent",
+        "action_handler": "autoblDemo"
+    },
+    {
+        "id": 65,
+        "component_id": 36,
+        "tag_name": "i",
+        "action_type": "click",
+        "action_handler": "$router.go(-1)"
+    },
+    {
+        "id": 66,
+        "component_id": 36,
+        "tag_name": "formkit",
+        "action_type": "click",
+        "action_handler": "cdnProfileUpload"
+    },
+    {
+        "id": 67,
+        "component_id": 36,
+        "tag_name": "formkit",
+        "action_type": "click",
+        "action_handler": "downloadFile"
+    },
+    {
+        "id": 68,
+        "component_id": 37,
+        "tag_name": "button",
+        "action_type": "click",
+        "action_handler": "isCollegeActive()"
+    },
+    {
+        "id": 69,
+        "component_id": 38,
+        "tag_name": "i",
+        "action_type": "click",
+        "action_handler": "$router.go(-1)"
+    },
+    {
+        "id": 70,
+        "component_id": 38,
+        "tag_name": "formkit",
+        "action_type": "submit",
+        "action_handler": "logInMethod()"
+    },
+    {
+        "id": 71,
+        "component_id": 39,
+        "tag_name": "i",
+        "action_type": "click",
+        "action_handler": "$router.go(-1)"
+    },
+    {
+        "id": 72,
+        "component_id": 39,
+        "tag_name": "div",
+        "action_type": "click.prevent",
+        "action_handler": "storeDataPush"
+    },
+    {
+        "id": 73,
+        "component_id": 39,
+        "tag_name": "div",
+        "action_type": "click.prevent",
+        "action_handler": "fetchDataPush"
+    },
+    {
+        "id": 74,
+        "component_id": 39,
+        "tag_name": "div",
+        "action_type": "click.prevent",
+        "action_handler": "deleteDataPush"
+    },
+    {
+        "id": 75,
+        "component_id": 40,
+        "tag_name": "form",
+        "action_type": "None",
+        "action_handler": "None"
+    },
+    {
+        "id": 76,
+        "component_id": 40,
+        "tag_name": "button",
+        "action_type": "None",
+        "action_handler": "None"
+    },
+    {
+        "id": 77,
+        "component_id": 41,
+        "tag_name": "input",
+        "action_type": "None",
+        "action_handler": "None"
+    },
+    {
+        "id": 78,
+        "component_id": 41,
+        "tag_name": "input",
+        "action_type": "None",
+        "action_handler": "None"
+    },
+    {
+        "id": 79,
+        "component_id": 41,
+        "tag_name": "input",
+        "action_type": "None",
+        "action_handler": "None"
+    },
+    {
+        "id": 80,
+        "component_id": 41,
+        "tag_name": "button",
+        "action_type": "click",
+        "action_handler": "saveStudentData"
+    },
+    {
+        "id": 81,
+        "component_id": 41,
+        "tag_name": "input",
+        "action_type": "None",
+        "action_handler": "None"
+    },
+    {
+        "id": 82,
+        "component_id": 41,
+        "tag_name": "button",
+        "action_type": "click",
+        "action_handler": "updateStudentData"
+    },
+    {
+        "id": 83,
+        "component_id": 41,
+        "tag_name": "button",
+        "action_type": "click",
+        "action_handler": "fetchAllStudent"
+    },
+    {
+        "id": 84,
+        "component_id": 41,
+        "tag_name": "input",
+        "action_type": "None",
+        "action_handler": "None"
+    },
+    {
+        "id": 85,
+        "component_id": 41,
+        "tag_name": "button",
+        "action_type": "click",
+        "action_handler": "deleteStudentData"
+    },
+    {
+        "id": 86,
+        "component_id": 42,
+        "tag_name": "i",
+        "action_type": "click",
+        "action_handler": "$router.go(-1)"
+    },
+    {
+        "id": 87,
+        "component_id": 43,
+        "tag_name": "div",
+        "action_type": "click",
+        "action_handler": "goBackMenu()"
+    },
+    {
+        "id": 88,
+        "component_id": 43,
+        "tag_name": "div",
+        "action_type": "click",
+        "action_handler": "!recordFound && selectCategory(slotProps.data.trackId)"
+    },
+    {
+        "id": 89,
+        "component_id": 44,
+        "tag_name": "div",
+        "action_type": "click",
+        "action_handler": "showAnotherCourse"
+    },
+    {
+        "id": 90,
+        "component_id": 44,
+        "tag_name": "div",
+        "action_type": "click",
+        "action_handler": "selectCategory(slotProps.data.trackId)"
+    },
+    {
+        "id": 91,
+        "component_id": 45,
+        "tag_name": "div",
+        "action_type": "click",
+        "action_handler": "mod.enabled ? handleCardClick(mod.name) : null"
+    },
+    {
+        "id": 92,
+        "component_id": 46,
+        "tag_name": "div",
+        "action_type": "click",
+        "action_handler": "goBack()"
+    },
+    {
+        "id": 93,
+        "component_id": 46,
+        "tag_name": "div",
+        "action_type": "click",
+        "action_handler": "IsGroupCourseIlikeOrNot(semester)"
+    },
+    {
+        "id": 94,
+        "component_id": 47,
+        "tag_name": "header",
+        "action_type": "sslide",
+        "action_handler": "toggleSlide($event)"
+    },
+    {
+        "id": 95,
+        "component_id": 49,
+        "tag_name": "div",
+        "action_type": "click",
+        "action_handler": "goBack()"
+    },
+    {
+        "id": 96,
+        "component_id": 49,
+        "tag_name": "div",
+        "action_type": "click",
+        "action_handler": "showTab(tab)"
+    },
+    {
+        "id": 97,
+        "component_id": 49,
+        "tag_name": "div",
+        "action_type": "click",
+        "action_handler": "selectProgramTerm(program)"
+    },
+    {
+        "id": 98,
+        "component_id": 49,
+        "tag_name": "div",
+        "action_type": "click",
+        "action_handler": "toggleOption(option.type, option.id)"
+    },
+    {
+        "id": 99,
+        "component_id": 49,
+        "tag_name": "input",
+        "action_type": "change",
+        "action_handler": "\n                          toggleSubjectSelection(\n                            subject,\n                            option.id,\n                            option.type\n                          )\n                        "
+    },
+    {
+        "id": 100,
+        "component_id": 49,
+        "tag_name": "button",
+        "action_type": "click",
+        "action_handler": "proceed()"
+    },
+    {
+        "id": 101,
+        "component_id": 50,
+        "tag_name": "div",
+        "action_type": "click",
+        "action_handler": "goBack()"
+    },
+    {
+        "id": 102,
+        "component_id": 50,
+        "tag_name": "div",
+        "action_type": "click",
+        "action_handler": "showTab(tab)"
+    },
+    {
+        "id": 103,
+        "component_id": 50,
+        "tag_name": "div",
+        "action_type": "click",
+        "action_handler": "selectProgram(card)"
+    },
+    {
+        "id": 104,
+        "component_id": 50,
+        "tag_name": "form",
+        "action_type": "None",
+        "action_handler": "None"
+    },
+    {
+        "id": 105,
+        "component_id": 50,
+        "tag_name": "input",
+        "action_type": "click.stop",
+        "action_handler": "None"
+    },
+    {
+        "id": 106,
+        "component_id": 50,
+        "tag_name": "button",
+        "action_type": "click",
+        "action_handler": "goToFee()"
+    },
+    {
+        "id": 107,
+        "component_id": 50,
+        "tag_name": "button",
+        "action_type": "click",
+        "action_handler": "GoToTransactions(application)"
+    },
+    {
+        "id": 108,
+        "component_id": 50,
+        "tag_name": "button",
+        "action_type": "click",
+        "action_handler": "downloadReceipt(application)"
+    },
+    {
+        "id": 109,
+        "component_id": 51,
+        "tag_name": "button",
+        "action_type": "click",
+        "action_handler": "YES()"
+    },
+    {
+        "id": 110,
+        "component_id": 51,
+        "tag_name": "button",
+        "action_type": "click",
+        "action_handler": "No()"
+    },
+    {
+        "id": 111,
+        "component_id": 51,
+        "tag_name": "button",
+        "action_type": "click",
+        "action_handler": "proceed"
+    },
+    {
+        "id": 112,
+        "component_id": 51,
+        "tag_name": "button",
+        "action_type": "click",
+        "action_handler": "proceed"
+    },
+    {
+        "id": 113,
+        "component_id": 51,
+        "tag_name": "button",
+        "action_type": "click",
+        "action_handler": "proceed"
+    },
+    {
+        "id": 114,
+        "component_id": 51,
+        "tag_name": "button",
+        "action_type": "click",
+        "action_handler": "proceed"
+    },
+    {
+        "id": 115,
+        "component_id": 51,
+        "tag_name": "button",
+        "action_type": "click",
+        "action_handler": "goBack"
+    },
+    {
+        "id": 116,
+        "component_id": 51,
+        "tag_name": "button",
+        "action_type": "click",
+        "action_handler": "cancelDeclaration"
+    },
+    {
+        "id": 117,
+        "component_id": 51,
+        "tag_name": "button",
+        "action_type": "click",
+        "action_handler": "confirmDeclaration()"
+    },
+    {
+        "id": 118,
+        "component_id": 52,
+        "tag_name": "div",
+        "action_type": "click",
+        "action_handler": "goBack()"
+    },
+    {
+        "id": 119,
+        "component_id": 52,
+        "tag_name": "div",
+        "action_type": "click",
+        "action_handler": "downloadHallTicket(program)"
+    },
+    {
+        "id": 120,
+        "component_id": 53,
+        "tag_name": "div",
+        "action_type": "click",
+        "action_handler": "goBack()"
+    },
+    {
+        "id": 121,
+        "component_id": 53,
+        "tag_name": "div",
+        "action_type": "click",
+        "action_handler": "downloadApplication(program)"
+    },
+    {
+        "id": 122,
+        "component_id": 54,
+        "tag_name": "button",
+        "action_type": "click",
+        "action_handler": "Submit"
+    },
+    {
+        "id": 123,
+        "component_id": 54,
+        "tag_name": "button",
+        "action_type": "click",
+        "action_handler": "goBack"
+    },
+    {
+        "id": 124,
+        "component_id": 54,
+        "tag_name": "button",
+        "action_type": "click",
+        "action_handler": "cancelDeclaration()"
+    },
+    {
+        "id": 125,
+        "component_id": 54,
+        "tag_name": "button",
+        "action_type": "click",
+        "action_handler": "confirmDeclaration()"
+    },
+    {
+        "id": 126,
+        "component_id": 55,
+        "tag_name": "button",
+        "action_type": "click",
+        "action_handler": "goBack()"
+    },
+    {
+        "id": 127,
+        "component_id": 56,
+        "tag_name": "div",
+        "action_type": "click",
+        "action_handler": "goBack()"
+    },
+    {
+        "id": 128,
+        "component_id": 56,
+        "tag_name": "button",
+        "action_type": "click",
+        "action_handler": "downloadPDF"
+    },
+    {
+        "id": 129,
+        "component_id": 57,
+        "tag_name": "div",
+        "action_type": "click",
+        "action_handler": "goBack()"
+    },
+    {
+        "id": 130,
+        "component_id": 57,
+        "tag_name": "div",
+        "action_type": "click",
+        "action_handler": "viewMarksheet(term, term.academicYearId, term.programTermUId, term.collegeId)"
+    }
+]

@@ -1,0 +1,579 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>AI Audit Report — StudentLogin</title>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&family=Syne:wght@400;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#f5f7fb;--surface:#ffffff;--surface2:#f0f3f9;--border:#dde2ee;--border2:#c8d0e4;--text:#1a2035;--muted:#5a6380;--accent:#3b5fe2;--high:#dc2626;--medium:#d97706;--low:#0284c7;--pass:#16a34a;--fp:#7c3aed;--high-bg:rgba(220,38,38,.08);--medium-bg:rgba(217,119,6,.08);--low-bg:rgba(2,132,199,.08);--pass-bg:rgba(22,163,74,.07);--fp-bg:rgba(124,58,237,.08)}
+*{margin:0;padding:0;box-sizing:border-box}html{scroll-behavior:smooth}
+body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;font-size:13px;line-height:1.6}
+.hdr{background:linear-gradient(135deg,#eef1fb 0%,#f0f4ff 40%,#e8edf8 100%);border-bottom:1px solid var(--border2);padding:40px 56px 32px;position:relative;overflow:hidden}
+.hdr::before{content:'';position:absolute;top:-80px;right:-80px;width:400px;height:400px;background:radial-gradient(circle,rgba(59,95,226,.06) 0%,transparent 70%);pointer-events:none}
+.hdr-top{display:flex;align-items:flex-start;justify-content:space-between;flex-wrap:wrap;gap:20px}
+.hdr-title{font-family:'Syne',sans-serif}
+.hdr-title h1{font-size:26px;font-weight:800;letter-spacing:-.5px;color:#1a2035;display:flex;align-items:center;gap:10px}
+.hdr-title p{color:var(--muted);font-size:12px;margin-top:6px}
+.hdr-title .target{font-family:'IBM Plex Mono',monospace;font-size:11px;color:#6c8fff;background:rgba(108,143,255,.1);border:1px solid rgba(108,143,255,.25);padding:3px 10px;border-radius:4px;display:inline-block;margin-top:8px}
+.score-ring-wrap{display:flex;align-items:center;gap:24px}
+.score-ring{width:90px;height:90px;position:relative}
+.score-ring svg{transform:rotate(-90deg)}
+.score-ring .val{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;font-family:'Syne',sans-serif;font-size:22px;font-weight:800;color:#1a2035}
+.score-ring .val span{font-size:9px;font-family:'Inter',sans-serif;color:var(--muted);font-weight:500;letter-spacing:.5px;text-transform:uppercase;margin-top:-2px}
+.score-meta{font-family:'Syne',sans-serif}.score-meta .risk{font-size:18px;font-weight:700;color:var(--medium)}.score-meta p{font-size:11px;color:var(--muted);margin-top:3px}
+.statbar{display:flex;gap:1px;background:var(--border);border-bottom:1px solid var(--border2);overflow-x:auto}
+.stat{flex:1;min-width:100px;padding:18px 24px;background:var(--surface);text-align:center;transition:.2s}
+.stat:hover{background:var(--surface2)}
+.stat .v{font-family:'Syne',sans-serif;font-size:24px;font-weight:800;line-height:1}
+.stat .l{font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:.7px;margin-top:5px}
+.stat .v.high{color:var(--high)}.stat .v.med{color:var(--medium)}.stat .v.low{color:var(--low)}.stat .v.fp{color:var(--fp)}.stat .v.pass{color:var(--pass)}.stat .v.neutral{color:var(--accent)}
+.main{max-width:1560px;margin:0 auto;padding:32px 56px 64px}
+.sec{background:var(--surface);border:1px solid var(--border);border-radius:10px;margin-bottom:24px;overflow:hidden;animation:fadeIn .3s ease both}
+.sec-body{overflow-x:auto}
+.tabs{display:flex;gap:4px;padding:16px 22px 0;border-bottom:1px solid var(--border);background:var(--surface2);overflow-x:auto}
+.tab-btn{padding:8px 18px;border-radius:6px 6px 0 0;font-size:12px;font-weight:600;cursor:pointer;border:1px solid transparent;border-bottom:none;transition:.15s;color:var(--muted);white-space:nowrap;background:none}
+.tab-btn.active{background:var(--surface);border-color:var(--border2);color:var(--text)}.tab-btn:hover:not(.active){background:rgba(59,95,226,.05);color:var(--text)}
+.tab-pane{display:none}.tab-pane.active{display:block}
+.summary-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;padding:24px}
+.sum-card{background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:18px 20px}
+.sum-card h3{font-family:'Syne',sans-serif;font-size:13px;font-weight:700;margin-bottom:10px;display:flex;align-items:center;gap:8px}
+.sum-card .bullets{list-style:none;display:flex;flex-direction:column;gap:5px}
+.sum-card .bullets li{font-size:12px;color:var(--muted);padding-left:14px;position:relative}
+.sum-card .bullets li::before{content:'→';position:absolute;left:0;color:var(--accent);font-size:10px}
+table{width:100%;border-collapse:collapse}
+th{background:#eef1f8;text-align:left;padding:10px 16px;font-size:11px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.6px;border-bottom:2px solid var(--border2);white-space:nowrap;position:sticky;top:0;z-index:1}
+td{padding:11px 16px;border-bottom:1px solid var(--border);vertical-align:top}
+tr:last-child td{border-bottom:none}tr:hover td{background:rgba(59,95,226,.03)}
+.file-cell{font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--accent);max-width:200px;word-break:break-all}
+.rule-cell{font-size:12px;font-weight:600;color:var(--text)}
+.finding-cell{font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--muted);max-width:260px;word-break:break-word}
+.badge{display:inline-flex;align-items:center;gap:5px;padding:3px 10px;border-radius:20px;font-size:10px;font-weight:700;letter-spacing:.4px;text-transform:uppercase;white-space:nowrap}
+.b-high{background:var(--high-bg);color:var(--high);border:1px solid rgba(255,92,92,.3)}
+.b-medium{background:var(--medium-bg);color:var(--medium);border:1px solid rgba(245,158,11,.3)}
+.b-low{background:var(--low-bg);color:var(--low);border:1px solid rgba(56,189,248,.3)}
+.b-fp{background:var(--fp-bg);color:var(--fp);border:1px solid rgba(192,132,252,.3)}
+.b-pass{background:var(--pass-bg);color:var(--pass);border:1px solid rgba(34,197,94,.3)}
+.b-info{background:rgba(108,143,255,.1);color:var(--accent);border:1px solid rgba(108,143,255,.3)}
+.rec-cell{max-width:380px;font-size:12px;line-height:1.65;color:var(--text)}
+.rec-cell code{font-family:'IBM Plex Mono',monospace;background:#f0f3fb;color:#5b21b6;padding:1px 5px;border-radius:3px;font-size:11px;border:1px solid var(--border2)}
+.rec-cell pre{background:#f6f8ff;border:1px solid var(--border2);border-radius:6px;padding:10px 14px;margin:7px 0;overflow-x:auto;font-size:11px;line-height:1.5;color:#2d3a5e}
+.rec-cell pre code{background:none;color:inherit;padding:0;border:none;font-size:11px}
+.fp-note{background:var(--fp-bg);border:1px solid rgba(192,132,252,.25);border-radius:6px;padding:8px 12px;margin-top:6px;font-size:11px;color:var(--fp)}
+.fp-note strong{display:block;margin-bottom:3px;font-size:11px;letter-spacing:.3px}
+.score-bar-wrap{display:flex;align-items:center;gap:8px;min-width:140px}
+.score-bar-bg{flex:1;height:6px;background:var(--border2);border-radius:3px;overflow:hidden}
+.score-bar-fill{height:100%;border-radius:3px}
+.score-num{font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:600;min-width:28px;text-align:right}
+.flag-chips{display:flex;flex-wrap:wrap;gap:4px}
+.flag-chip{font-size:9px;font-weight:700;padding:2px 7px;border-radius:10px;letter-spacing:.3px;background:rgba(245,158,11,.1);color:var(--medium);border:1px solid rgba(245,158,11,.2)}
+.flag-chip.sev{background:rgba(255,92,92,.1);color:var(--high);border-color:rgba(255,92,92,.2)}
+@keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+footer{text-align:center;padding:28px;color:var(--muted);font-size:11px;border-top:1px solid var(--border);font-family:'IBM Plex Mono',monospace}
+@media(max-width:900px){.hdr,.main{padding:20px}.statbar{flex-wrap:wrap}.hdr-top{flex-direction:column}}
+</style>
+</head>
+<body>
+
+<div class="hdr">
+  <div class="hdr-top">
+    <div class="hdr-title">
+      <h1>&#128737; AI Code Audit Report</h1>
+      <p>RAG-powered static analysis &middot; Vue 3 &middot; StudentLogin Portal</p>
+      <span class="target">&#128193; StudentLogin/client/app/src &mdash; 57 components &middot; 38 JS files</span>
+    </div>
+    <div class="score-ring-wrap">
+      <div class="score-ring">
+        <svg width="90" height="90" viewBox="0 0 90 90">
+          <circle cx="45" cy="45" r="37" fill="none" stroke="#dde2ee" stroke-width="8"/>
+          <circle cx="45" cy="45" r="37" fill="none" stroke="#f59e0b" stroke-width="8"
+            stroke-dasharray="232.48" stroke-dashoffset="64.7" stroke-linecap="round"/>
+        </svg>
+        <div class="val">68<span>/ 100</span></div>
+      </div>
+      <div class="score-meta">
+        <div class="risk">MEDIUM RISK</div>
+        <p>Overall Health Score</p>
+        <p style="margin-top:6px;font-size:11px;color:#5a6380">Generated 2026-03-29</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="statbar">
+  <div class="stat"><div class="v neutral">57</div><div class="l">Vue Files</div></div>
+  <div class="stat"><div class="v neutral">38</div><div class="l">JS Files</div></div>
+  <div class="stat"><div class="v high">76</div><div class="l">High Issues</div></div>
+  <div class="stat"><div class="v med">69</div><div class="l">Medium Issues</div></div>
+  <div class="stat"><div class="v low">16</div><div class="l">Low Issues</div></div>
+  <div class="stat"><div class="v fp">18</div><div class="l">False Positives</div></div>
+  <div class="stat"><div class="v neutral">45</div><div class="l">UI Issues</div></div>
+  <div class="stat"><div class="v neutral">147</div><div class="l">A11y Issues</div></div>
+  <div class="stat"><div class="v neutral">9</div><div class="l">Complex Files</div></div>
+</div>
+
+<div class="main">
+<div class="sec">
+  <div class="tabs">
+    <button class="tab-btn active" onclick="switchTab('summary',this)">&#128202; Summary</button>
+    <button class="tab-btn" onclick="switchTab('ui',this)">&#127912; UI Consistency (45)</button>
+    <button class="tab-btn" onclick="switchTab('a11y',this)">&#9855; Accessibility (147)</button>
+    <button class="tab-btn" onclick="switchTab('complexity',this)">&#9881; Complexity (9)</button>
+    <button class="tab-btn" onclick="switchTab('filescores',this)">&#128196; File Scores</button>
+  </div>
+
+  <!-- SUMMARY -->
+  <div id="tab-summary" class="tab-pane active">
+    <div class="summary-grid">
+      <div class="sum-card">
+        <h3><span>&#128680;</span> Critical Actions &mdash; Fix Now</h3>
+        <ul class="bullets">
+          <li>adminLogin.vue &mdash; 11 accessibility violations (inputs without labels, missing ARIA)</li>
+          <li>ApplicationServices.vue &mdash; 3 WCAG contrast failures + 10 keyboard access issues</li>
+          <li>SessionManager.vue &mdash; 6 div click handlers with no tabindex or keyboard support</li>
+          <li>Toast.vue &mdash; Dynamic alerts missing <code>aria-live</code> regions</li>
+          <li>StudentDemo.vue &mdash; 5 inputs with no associated label element</li>
+          <li>Home.vue &mdash; Real typo: <strong>"cource"</strong> should be <strong>"course"</strong> (user-visible)</li>
+        </ul>
+      </div>
+      <div class="sum-card">
+        <h3><span>&#9888;</span> Structural Concerns</h3>
+        <ul class="bullets">
+          <li>FeeDetails.vue (1586 LOC) &mdash; split into sub-components</li>
+          <li>ExamFormSubmission.vue &mdash; 7 fixed px font-sizes; print styles mixed with screen</li>
+          <li>8+ components missing responsive @media queries</li>
+          <li>Widespread missing :focus/:hover states across Result views</li>
+          <li>adminLogin.vue (977 LOC, 22 API calls) &mdash; too much responsibility in one file</li>
+        </ul>
+      </div>
+      <div class="sum-card">
+        <h3><span style="color:var(--fp)">&#9672;</span> False Positives Confirmed (18)</h3>
+        <ul class="bullets">
+          <li><code>PRN</code> &mdash; Permanent Registration Number (Indian university domain term)</li>
+          <li><code>cdn</code>, <code>url</code>, <code>pdf</code> &mdash; Standard technical abbreviations</li>
+          <li><code>mongodb</code> &mdash; Proper noun / technology brand name</li>
+          <li><code>multipart</code> &mdash; RFC-2046 MIME type standard term</li>
+          <li><code>validator</code> &mdash; Valid English word (spell-checker bug)</li>
+          <li><code>bl</code> &mdash; Established "Business Logic" project convention</li>
+          <li><code>marksheet</code> &mdash; Standard Indian academic terminology</li>
+          <li>Footer.vue header rule &mdash; footers are not supposed to have headings</li>
+          <li>Toast.vue header rule &mdash; transient notifications must not have headings</li>
+        </ul>
+      </div>
+      <div class="sum-card">
+        <h3><span>&#128161;</span> Top Recommendations</h3>
+        <ul class="bullets">
+          <li>Configure spell-checker whitelist: PRN, CDN, URL, PDF, MongoDB, BL, multipart, marksheet</li>
+          <li>Add global focus styles in main CSS (reduces ~30 individual violations)</li>
+          <li>Replace all <code>&lt;div @click&gt;</code> with <code>&lt;button&gt;</code> elements project-wide</li>
+          <li>Scope "Header Presence" rule to views only, not layout/notification components</li>
+          <li>Split FeeDetails.vue and ExamFormSubmission.vue into composable sub-components</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- UI CONSISTENCY -->
+  <div id="tab-ui" class="tab-pane">
+  <div class="sec-body"><table>
+    <thead><tr><th>#</th><th>File</th><th>Rule</th><th>Finding</th><th>Severity</th><th>Status</th><th>Recommendation</th></tr></thead>
+    <tbody>
+
+    <tr><td>1</td><td class="file-cell">updateDbSave.vue<br><span style="color:#7a86a8">components/BL/</span></td><td class="rule-cell">Spell &amp; Grammar</td><td class="finding-cell">&lt;p id='updateAndSave'&gt; &mdash; multiple consecutive spaces</td><td><span class="badge b-medium">Medium</span></td><td><span class="badge b-pass">&#10003; Genuine</span></td>
+    <td class="rec-cell">Remove the double space between sentences. In Vue templates extra whitespace renders literally in the browser.
+    <pre><code>&lt;p&gt;
+  This feature updates the user age.
+  Server can add 5 for given age and
+  saves data in database.
+&lt;/p&gt;</code></pre></td></tr>
+
+    <tr><td>2</td><td class="file-cell">Footer.vue<br><span style="color:#7a86a8">components/common/</span></td><td class="rule-cell">Header Presence</td><td class="finding-cell">Header missing</td><td><span class="badge b-medium">Medium</span></td><td><span class="badge b-fp">&#9672; False Positive</span></td>
+    <td class="rec-cell"><div class="fp-note"><strong>&#9888; FALSE POSITIVE</strong>Footer components are intentionally non-headered. A footer's role (landmark, copyright, links) does not require an H-tag by any accessibility or HTML standard. Scope this rule to page-level views and content panels only, not structural layout components (header, footer, nav).</div></td></tr>
+
+    <tr><td>3</td><td class="file-cell">programBar.vue<br><span style="color:#7a86a8">components/common/</span></td><td class="rule-cell">Spell &amp; Grammar</td><td class="finding-cell">"Program:&nbsp;&nbsp; Event:" &mdash; consecutive spaces</td><td><span class="badge b-medium">Medium</span></td><td><span class="badge b-pass">&#10003; Genuine</span></td>
+    <td class="rec-cell">The template has double spaces around the dynamic values. Normalise and use a separator:
+    <pre><code>&lt;p class="text-sm font-bold text-white"&gt;
+  Program: {{ fullProgramTerm || '' }}
+  &amp;nbsp;&middot;&amp;nbsp;
+  Event: {{ displayName || '' }}
+&lt;/p&gt;</code></pre></td></tr>
+
+    <tr><td>4</td><td class="file-cell">programBar.vue</td><td class="rule-cell">Header Presence</td><td class="finding-cell">Header missing</td><td><span class="badge b-medium">Medium</span></td><td><span class="badge b-pass">&#10003; Genuine</span></td>
+    <td class="rec-cell">This bar is displayed across multiple views as a context strip. Add a visually-hidden heading for screen reader navigation:
+    <pre><code>&lt;h3 class="sr-only"&gt;Current Program Context&lt;/h3&gt;
+&lt;p aria-live="polite" class="text-sm font-bold text-white"&gt;
+  Program: {{ fullProgramTerm }} &middot; Event: {{ displayName }}
+&lt;/p&gt;</code></pre></td></tr>
+
+    <tr><td>5</td><td class="file-cell">Toast.vue<br><span style="color:#7a86a8">components/DaiseUI/</span></td><td class="rule-cell">Header Presence</td><td class="finding-cell">Header missing</td><td><span class="badge b-medium">Medium</span></td><td><span class="badge b-fp">&#9672; False Positive</span></td>
+    <td class="rec-cell"><div class="fp-note"><strong>&#9888; FALSE POSITIVE</strong>Toast/notification components are transient UI feedback elements &mdash; adding a heading would pollute the document outline and confuse screen readers. The correct fix is <code>aria-live</code> (tracked in Accessibility #1-2), not a heading element.</div></td></tr>
+
+    <tr><td>6</td><td class="file-cell">saveWActivity.vue<br><span style="color:#7a86a8">components/excel/</span></td><td class="rule-cell">Spell Check</td><td class="finding-cell">"cdn" flagged as misspelled</td><td><span class="badge b-medium">Medium</span></td><td><span class="badge b-fp">&#9672; False Positive</span></td>
+    <td class="rec-cell"><div class="fp-note"><strong>&#9888; FALSE POSITIVE</strong>"CDN" (Content Delivery Network) is a universally-recognised technical abbreviation. Add to spell-checker whitelist. No code change required.</div></td></tr>
+
+    <tr><td>7</td><td class="file-cell">hexID.vue<br><span style="color:#7a86a8">components/mongodbID/</span></td><td class="rule-cell">Spell Check</td><td class="finding-cell">"mongodb" flagged as misspelled</td><td><span class="badge b-medium">Medium</span></td><td><span class="badge b-fp">&#9672; False Positive</span></td>
+    <td class="rec-cell"><div class="fp-note"><strong>&#9888; FALSE POSITIVE</strong>MongoDB is a registered trademark and the database technology used in this project. The entire <code>components/mongodbID/</code> directory is named after it. Add "mongodb" and "MongoDB" to the whitelist.</div></td></tr>
+
+    <tr><td>8&ndash;10</td><td class="file-cell">uploadFile.vue<br><span style="color:#7a86a8">components/upload-manager/</span></td><td class="rule-cell">Spell Check</td><td class="finding-cell">"cdn", "url" flagged (3 instances)</td><td><span class="badge b-medium">Medium</span></td><td><span class="badge b-fp">&#9672; False Positive</span></td>
+    <td class="rec-cell"><div class="fp-note"><strong>&#9888; FALSE POSITIVE</strong>"CDN" and "URL" are standard web infrastructure terms used in button labels like "CDN URL". Whitelist both. The label text is correct and meaningful to users.</div></td></tr>
+
+    <tr><td>11</td><td class="file-cell">uploadFile.vue</td><td class="rule-cell">Spell Check</td><td class="finding-cell">"multipart" flagged as misspelled</td><td><span class="badge b-medium">Medium</span></td><td><span class="badge b-fp">&#9672; False Positive</span></td>
+    <td class="rec-cell"><div class="fp-note"><strong>&#9888; FALSE POSITIVE</strong>"multipart" is an official MIME type prefix defined in RFC 2046 (multipart/form-data). It is standard HTTP vocabulary. Add to whitelist.</div></td></tr>
+
+    <tr><td>12&ndash;14</td><td class="file-cell">adminLogin.vue<br><span style="color:#7a86a8">views/</span></td><td class="rule-cell">Spell Check</td><td class="finding-cell">"prn" + consecutive spaces in &lt;h5&gt;</td><td><span class="badge b-medium">Medium</span></td><td><span class="badge b-info">&#8853; Mixed</span></td>
+    <td class="rec-cell"><strong>PRN:</strong> <span style="color:var(--fp)">False Positive</span> &mdash; "PRN" = Permanent Registration Number, the standard student ID in Indian university systems. Whitelist it.<br><br>
+    <strong>Consecutive spaces:</strong> <span style="color:var(--pass)">Genuine</span> &mdash; trailing spaces exist in the &lt;h5&gt; and the university name binding. Clean up:
+    <pre><code>&lt;h5 class="Un-name"&gt;{{ universityName }}&lt;/h5&gt;</code></pre></td></tr>
+
+    <tr><td>15</td><td class="file-cell">autoBL.vue</td><td class="rule-cell">Spell Check</td><td class="finding-cell">"bl" flagged as misspelled</td><td><span class="badge b-medium">Medium</span></td><td><span class="badge b-fp">&#9672; False Positive</span></td>
+    <td class="rec-cell"><div class="fp-note"><strong>&#9888; FALSE POSITIVE</strong>"BL" is this project's established abbreviation for Business Logic layer (evidenced by the <code>/components/BL/</code> directory). It is intentional domain vocabulary &mdash; not a typo.</div></td></tr>
+
+    <tr><td>16&ndash;17</td><td class="file-cell">CdnUpload.vue</td><td class="rule-cell">Spell Check</td><td class="finding-cell">"cdnserver" flagged (2 occurrences)</td><td><span class="badge b-medium">Medium</span></td><td><span class="badge b-info">&#8853; Mixed</span></td>
+    <td class="rec-cell"><strong>"cdnserver" as a compound</strong> is not a standard term &mdash; while the intent is clear, user-facing labels should be readable. Improve display text:
+    <pre><code>// Before: "cdnserver"
+// After:  "CDN Server"</code></pre>
+    This is a minor UX improvement. The spell-check flag itself is borderline.</td></tr>
+
+    <tr><td>18&ndash;19</td><td class="file-cell">Home.vue</td><td class="rule-cell">Spell Check</td><td class="finding-cell">"cource" in heading and button</td><td><span class="badge b-high">High</span></td><td><span class="badge b-pass">&#10003; Genuine &mdash; Real Typo</span></td>
+    <td class="rec-cell"><strong>This is a real spelling error visible to end users.</strong> "cource" is not a word &mdash; the correct spelling is <strong>"course"</strong>. Appears in both a heading and a CTA button.
+    <pre><code>// Fix both occurrences in Home.vue:
+"iLike Cource"     → "iLike Course"
+"Go To Cource"     → "Go To Course"</code></pre></td></tr>
+
+    <tr><td>20&ndash;26</td><td class="file-cell">StudentData.vue</td><td class="rule-cell">Spell Check</td><td class="finding-cell">"fullname", "passingyear", "passingmonth", "seatnumber"</td><td><span class="badge b-medium">Medium</span></td><td><span class="badge b-fp">&#9672; False Positive</span></td>
+    <td class="rec-cell"><div class="fp-note"><strong>&#9888; FALSE POSITIVE (compound field names)</strong>These are camelCase/concatenated form field names used as label text. The spell-checker treats them as single unknown words. They are intentional. For better UX however, display these as spaced words: "Full Name", "Passing Year", "Passing Month", "Seat Number".</div></td></tr>
+
+    <tr><td>27</td><td class="file-cell">StudentDemo.vue</td><td class="rule-cell">Spell Check</td><td class="finding-cell">"fetchallstudent" in button</td><td><span class="badge b-medium">Medium</span></td><td><span class="badge b-fp">&#9672; False Positive</span></td>
+    <td class="rec-cell"><div class="fp-note"><strong>&#9888; FALSE POSITIVE</strong>This button label mirrors the API method name fetchAllStudent. It is developer-intent naming. For UX however, the visible label should be improved to "Fetch All Students" for readability.</div></td></tr>
+
+    <tr><td>28</td><td class="file-cell">Validator.vue</td><td class="rule-cell">Spell Check</td><td class="finding-cell">"validator" flagged as misspelled</td><td><span class="badge b-medium">Medium</span></td><td><span class="badge b-fp">&#9672; False Positive</span></td>
+    <td class="rec-cell"><div class="fp-note"><strong>&#9888; FALSE POSITIVE</strong>"validator" is a perfectly valid English word and a common programming term (form validation, data validation). The spell-checker incorrectly flagged it. No action required.</div></td></tr>
+
+    <tr><td>29&ndash;31</td><td class="file-cell">iLikeCoursesNew.vue<br><span style="color:#7a86a8">views/iLike/</span></td><td class="rule-cell">Spell + Header</td><td class="finding-cell">&lt;span&gt; consecutive spaces; Header missing</td><td><span class="badge b-medium">Medium</span></td><td><span class="badge b-info">&#8853; Mixed</span></td>
+    <td class="rec-cell"><strong>Spaces:</strong> Genuine &mdash; clean up extra spaces in span text content.<br><strong>Header:</strong> Genuine &mdash; this is a full course listing page. Add a semantic heading:
+    <pre><code>&lt;h2 class="sr-only"&gt;Available Courses&lt;/h2&gt;</code></pre></td></tr>
+
+    <tr><td>33&ndash;34</td><td class="file-cell">ExamFormSubmission.vue</td><td class="rule-cell">Spell Check</td><td class="finding-cell">"prn" in &lt;span&gt;</td><td><span class="badge b-medium">Medium</span></td><td><span class="badge b-fp">&#9672; False Positive</span></td>
+    <td class="rec-cell"><div class="fp-note"><strong>&#9888; FALSE POSITIVE</strong>PRN = Permanent Registration Number. Domain acronym used throughout the student portal. Whitelist project-wide.</div></td></tr>
+
+    <tr><td>35</td><td class="file-cell">ExamFormSubmission.vue</td><td class="rule-cell">Font Consistency</td><td class="finding-cell">Too many font style classes</td><td><span class="badge b-medium">Medium</span></td><td><span class="badge b-pass">&#10003; Genuine</span></td>
+    <td class="rec-cell">This 1310-line component has inconsistent typography. Define a shared type scale:
+    <pre><code>/* In a shared CSS or Tailwind config: */
+.text-label { @apply text-xs font-semibold text-gray-600; }
+.text-value  { @apply text-sm font-normal text-gray-800; }
+.text-title  { @apply text-base font-bold text-slate-700; }</code></pre></td></tr>
+
+    <tr><td>36</td><td class="file-cell">FeeDetails.vue</td><td class="rule-cell">Spell Check</td><td class="finding-cell">"totalfee", "btn" + consecutive spaces</td><td><span class="badge b-medium">Medium</span></td><td><span class="badge b-info">&#8853; Mixed</span></td>
+    <td class="rec-cell"><strong>btn, totalfee:</strong> <span style="color:var(--fp)">False Positives</span> &mdash; CSS class names, not user-visible text.<br><strong>Spaces:</strong> <span style="color:var(--pass)">Genuine</span> &mdash; fix trailing spaces in button labels displayed to users.</td></tr>
+
+    <tr><td>37&ndash;38</td><td class="file-cell">FeeDetails.vue</td><td class="rule-cell">Font Consistency + Header</td><td class="finding-cell">Too many font styles; Header missing</td><td><span class="badge b-medium">Medium</span></td><td><span class="badge b-pass">&#10003; Genuine</span></td>
+    <td class="rec-cell">This 1586-line view needs a page heading and typography consolidation. Add:
+    <pre><code>&lt;h1 class="text-xl font-bold text-slate-800 mb-6"&gt;Fee Details&lt;/h1&gt;</code></pre></td></tr>
+
+    <tr><td>39&ndash;43</td><td class="file-cell">HallTicket, ResultPage,<br>Transactions, viewExamTT</td><td class="rule-cell">Header Presence</td><td class="finding-cell">Header missing in multiple result views</td><td><span class="badge b-medium">Medium</span></td><td><span class="badge b-pass">&#10003; Genuine</span></td>
+    <td class="rec-cell">All full-page views should have a page heading. At minimum add visually-hidden headings:
+    <pre><code>&lt;h1 class="sr-only"&gt;Hall Ticket&lt;/h1&gt;
+&lt;h1 class="sr-only"&gt;Exam Results&lt;/h1&gt;
+&lt;h1 class="sr-only"&gt;Transactions&lt;/h1&gt;</code></pre></td></tr>
+
+    <tr><td>41&ndash;42</td><td class="file-cell">SelectedApplicationService.vue</td><td class="rule-cell">Spell Check</td><td class="finding-cell">"prn" in &lt;h1&gt;</td><td><span class="badge b-medium">Medium</span></td><td><span class="badge b-fp">&#9672; False Positive</span></td>
+    <td class="rec-cell"><div class="fp-note"><strong>&#9888; FALSE POSITIVE</strong>PRN = Permanent Registration Number. Domain acronym. Whitelist project-wide.</div></td></tr>
+
+    <tr><td>44</td><td class="file-cell">viewExamTimeTable.vue</td><td class="rule-cell">Spell Check</td><td class="finding-cell">"pdf" flagged</td><td><span class="badge b-medium">Medium</span></td><td><span class="badge b-fp">&#9672; False Positive</span></td>
+    <td class="rec-cell"><div class="fp-note"><strong>&#9888; FALSE POSITIVE</strong>PDF (Portable Document Format) is a universally-understood file format acronym appearing in button labels like "Download PDF". Add to whitelist.</div></td></tr>
+
+    <tr><td>45</td><td class="file-cell">viewMarksheet.vue</td><td class="rule-cell">Spell Check</td><td class="finding-cell">"marksheet" flagged</td><td><span class="badge b-medium">Medium</span></td><td><span class="badge b-fp">&#9672; False Positive</span></td>
+    <td class="rec-cell"><div class="fp-note"><strong>&#9888; FALSE POSITIVE</strong>"Marksheet" is the standard Indian academic term for a grade/marks record (equivalent to "transcript" in other regions). It is the correct, intentional domain terminology for this student portal. Add to whitelist.</div></td></tr>
+
+    </tbody>
+  </table></div>
+  </div>
+
+  <!-- ACCESSIBILITY -->
+  <div id="tab-a11y" class="tab-pane">
+  <div class="sec-body"><table>
+    <thead><tr><th>#</th><th>File</th><th>Rule</th><th>Finding</th><th>Sev</th><th>Recommendation</th></tr></thead>
+    <tbody>
+
+    <tr><td>1&ndash;2</td><td class="file-cell">Toast.vue</td><td class="rule-cell">Dynamic content missing aria-live</td><td class="finding-cell">.alert-info/.alert-success have no aria-live</td><td><span class="badge b-high">High</span></td>
+    <td class="rec-cell">Screen readers won't announce toasts without live regions:
+    <pre><code>&lt;div class="alert alert-success"
+     role="status"
+     aria-live="polite"
+     aria-atomic="true"&gt;
+  {{ message }}
+&lt;/div&gt;
+&lt;!-- Use aria-live="assertive" for errors --&gt;</code></pre></td></tr>
+
+    <tr><td>3&ndash;7</td><td class="file-cell">adminLogin.vue</td><td class="rule-cell">Non-interactive elements with @click</td><td class="finding-cell">&lt;span class='eye-abs'&gt;, &lt;div class='resend-otp'&gt;, &lt;div class='language-dropdown'&gt; not keyboard-reachable</td><td><span class="badge b-high">High</span></td>
+    <td class="rec-cell">Replace non-button click targets with proper semantic elements:
+    <pre><code>&lt;!-- Password toggle --&gt;
+&lt;button type="button" class="eye-abs"
+        @click="toggleVisibility"
+        aria-label="Toggle password visibility"&gt;
+  &lt;i class="isax isax-eye"&gt;&lt;/i&gt;
+&lt;/button&gt;
+&lt;!-- Language selector --&gt;
+&lt;!-- Use native &lt;select&gt; or add role="combobox" --&gt;</code></pre></td></tr>
+
+    <tr><td>8</td><td class="file-cell">adminLogin.vue</td><td class="rule-cell">Missing focus style for 'a'</td><td class="finding-cell">No focus style on anchor elements</td><td><span class="badge b-medium">Medium</span></td>
+    <td class="rec-cell"><pre><code>a:focus-visible {
+  outline: 2px solid var(--primary, #3b82f6);
+  outline-offset: 2px;
+  border-radius: 2px;
+}</code></pre></td></tr>
+
+    <tr><td>9</td><td class="file-cell">adminLogin.vue</td><td class="rule-cell">Link missing accessible text</td><td class="finding-cell">&lt;a class='resend'&gt; has no text content or aria-label</td><td><span class="badge b-high">High</span></td>
+    <td class="rec-cell">The resend link has no accessible name. Replace with a button containing translated text:
+    <pre><code>&lt;button type="button"
+        class="resend btn-link"
+        @click="sendOTP"&gt;
+  {{ $t('login.resendCode') }}
+&lt;/button&gt;</code></pre></td></tr>
+
+    <tr><td>10&ndash;15</td><td class="file-cell">adminLogin.vue</td><td class="rule-cell">Input missing label (×6)</td><td class="finding-cell">#PRN, #first&ndash;#fifth OTP inputs unlabelled</td><td><span class="badge b-high">High</span></td>
+    <td class="rec-cell"><pre><code>&lt;label for="PRN"&gt;PRN No&lt;/label&gt;
+&lt;InputText id="PRN" type="text" ... /&gt;
+
+&lt;!-- OTP digit inputs --&gt;
+&lt;label for="otp1" class="sr-only"&gt;OTP digit 1&lt;/label&gt;
+&lt;input id="otp1" type="text" maxlength="1"
+       inputmode="numeric" autocomplete="one-time-code"/&gt;</code></pre></td></tr>
+
+    <tr><td>16</td><td class="file-cell">adminLogin.vue</td><td class="rule-cell">Placeholder instead of label</td><td class="finding-cell">Inputs rely solely on placeholder text</td><td><span class="badge b-medium">Medium</span></td>
+    <td class="rec-cell">Placeholders disappear on focus and are not reliably announced. Always add a visible or sr-only <code>&lt;label&gt;</code> element linked via <code>for</code>/<code>id</code>.</td></tr>
+
+    <tr><td>17</td><td class="file-cell">adminLogin.vue</td><td class="rule-cell">No media queries</td><td class="finding-cell">No @media queries in component CSS</td><td><span class="badge b-medium">Medium</span></td>
+    <td class="rec-cell">The login card has fixed widths in custom CSS. Add breakpoints:
+    <pre><code>@media (max-width: 768px) {
+  .card-wrapper { width: 100%; padding: 16px; }
+  .login-inputs { gap: 12px; }
+}</code></pre></td></tr>
+
+    <tr><td>18</td><td class="file-cell">CdnUpload.vue</td><td class="rule-cell">Image missing alt text</td><td class="finding-cell">&lt;img&gt; missing alt attribute</td><td><span class="badge b-high">High</span></td>
+    <td class="rec-cell"><pre><code>&lt;!-- Decorative --&gt;
+&lt;img src="..." alt="" role="presentation" /&gt;
+&lt;!-- Meaningful --&gt;
+&lt;img src="..." alt="Uploaded file thumbnail" /&gt;</code></pre></td></tr>
+
+    <tr><td>19&ndash;30</td><td class="file-cell">SessionManager.vue</td><td class="rule-cell">Non-interactive divs + missing keyboard (×12)</td><td class="finding-cell">&lt;div class='card p-8'&gt; &amp; &lt;div class='p-card'&gt; clickable but not reachable via Tab</td><td><span class="badge b-high">High</span></td>
+    <td class="rec-cell">Session manager uses clickable cards as &lt;div&gt;s. Add full keyboard support or refactor to &lt;button&gt;:
+    <pre><code>&lt;div class="card p-8"
+     tabindex="0"
+     role="button"
+     :aria-label="'Navigate to ' + card.title"
+     @click="navigate(card)"
+     @keydown.enter.prevent="navigate(card)"
+     @keydown.space.prevent="navigate(card)"&gt;
+&lt;/div&gt;</code></pre></td></tr>
+
+    <tr><td>31</td><td class="file-cell">StudentData.vue</td><td class="rule-cell">WCAG contrast violation</td><td class="finding-cell">.formkit-submit: #fff on #007bff = 3.98:1 (min 4.5:1)</td><td><span class="badge b-high">High</span></td>
+    <td class="rec-cell">Replace with a darker blue that meets WCAG AA:
+    <pre><code>.formkit-submit {
+  /* Before: #007bff (3.98:1) ✗ */
+  background-color: #0057d9; /* 6.2:1 ✓ */
+  color: #ffffff;
+}</code></pre></td></tr>
+
+    <tr><td>32&ndash;35</td><td class="file-cell">StudentData.vue</td><td class="rule-cell">Button missing hover/focus (×4)</td><td class="finding-cell">No :hover or :focus for button, 'a'</td><td><span class="badge b-medium">Medium</span></td>
+    <td class="rec-cell"><pre><code>button:hover { background: #0046b0; }
+button:focus-visible,
+a:focus-visible {
+  outline: 2px solid #0046b0;
+  outline-offset: 2px;
+}</code></pre></td></tr>
+
+    <tr><td>37</td><td class="file-cell">StudentData.vue</td><td class="rule-cell">Fixed font-size in px</td><td class="finding-cell">font-size: 16px on .formkit-submit</td><td><span class="badge b-low">Low</span></td>
+    <td class="rec-cell"><code>font-size: 1rem;</code> scales with browser font-size preferences (16px default). Use <code>rem</code> throughout.</td></tr>
+
+    <tr><td>38</td><td class="file-cell">StudentData.vue</td><td class="rule-cell">Horizontal scroll risk</td><td class="finding-cell">.container width: 800px</td><td><span class="badge b-medium">Medium</span></td>
+    <td class="rec-cell"><pre><code>.container {
+  width: 100%;
+  max-width: 800px; /* not fixed width */
+}</code></pre></td></tr>
+
+    <tr><td>39&ndash;48</td><td class="file-cell">StudentDemo.vue</td><td class="rule-cell">Input missing label (×5) + aria-required (×5)</td><td class="finding-cell">5 inputs with no labels or type; 5 required fields missing aria-required</td><td><span class="badge b-high">High</span></td>
+    <td class="rec-cell"><pre><code>&lt;label for="studentName"&gt;Student Name&lt;/label&gt;
+&lt;input id="studentName"
+       type="text"
+       required
+       aria-required="true"
+       v-model="name" /&gt;</code></pre>
+    Also set explicit <code>type</code> attributes &mdash; empty <code>type=""</code> is invalid HTML.</td></tr>
+
+    <tr><td>49&ndash;52</td><td class="file-cell">iLikeCoursesNew.vue</td><td class="rule-cell">Non-interactive click + keyboard (×4)</td><td class="finding-cell">.custom-chip and .cc-box have @click, no tabindex/keydown</td><td><span class="badge b-high">High</span></td>
+    <td class="rec-cell"><pre><code>&lt;div class="custom-chip"
+     tabindex="0"
+     role="button"
+     :aria-pressed="isSelected(course)"
+     @click="selectCourse(course)"
+     @keydown.enter.prevent="selectCourse(course)"
+     @keydown.space.prevent="selectCourse(course)"&gt;
+  {{ course.name }}
+&lt;/div&gt;</code></pre></td></tr>
+
+    <tr><td>53&ndash;55</td><td class="file-cell">ApplicationServices.vue</td><td class="rule-cell">WCAG contrast (×3)</td><td class="finding-cell">.download-btn 2.54:1; .btn-blue 3.68:1; &lt;h1&gt; inline red 4.00:1</td><td><span class="badge b-high">High</span></td>
+    <td class="rec-cell"><pre><code>/* .download-btn: #fff on #10b981 = 2.54:1 ✗ */
+.download-btn { background: #047857; } /* 6.7:1 ✓ */
+
+/* .btn-blue: #fff on #3b82f6 = 3.68:1 ✗ */
+.btn.btn-blue { background: #1d4ed8; } /* 8.6:1 ✓ */
+
+/* Inline h1 red #ff0000 = 4.00:1 ✗ */
+/* style="color:#c00000" → 5.9:1 ✓ */</code></pre></td></tr>
+
+    <tr><td>56&ndash;77</td><td class="file-cell">ApplicationServices.vue</td><td class="rule-cell">Non-interactive clicks + focus styles (×22)</td><td class="finding-cell">tooltip, tab, hr-card, option-card divs not keyboard-accessible; 6 missing focus styles</td><td><span class="badge b-high">High</span></td>
+    <td class="rec-cell">Systemic pattern. Create a reusable composable to avoid repeating this across the file:
+    <pre><code>// composables/useKeyClick.js
+export function useKeyClick(fn) {
+  return {
+    tabindex: 0, role: 'button',
+    onClick: fn,
+    onKeydown(e) {
+      if(e.key==='Enter'||e.key===' '){
+        e.preventDefault(); fn(e);
+      }
+    }
+  }
+}
+// Usage:
+&lt;div v-bind="useKeyClick(handleTab)"
+     class="tab-lifted tab"&gt;</code></pre></td></tr>
+
+    <tr><td>78, 89&ndash;90</td><td class="file-cell">ApplicationServices.vue + ExamFormSubmission.vue</td><td class="rule-cell">Input missing label (checkbox)</td><td class="finding-cell">&lt;input type='checkbox'&gt; no label</td><td><span class="badge b-high">High</span></td>
+    <td class="rec-cell"><pre><code>&lt;label&gt;
+  &lt;input type="checkbox" v-model="agreed" /&gt;
+  I agree to the exam terms
+&lt;/label&gt;</code></pre></td></tr>
+
+    <tr><td>91&ndash;97</td><td class="file-cell">ExamFormSubmission.vue</td><td class="rule-cell">Fixed font-size (×7)</td><td class="finding-cell">10px&ndash;15px fixed sizes throughout</td><td><span class="badge b-low">Low</span></td>
+    <td class="rec-cell">This file contains printable receipt HTML. Fixed px is acceptable <em>inside</em> <code>@media print</code>. Separate print and screen styles:
+    <pre><code>@media print {
+  .receipt-container { font-size: 11.5px; }
+}
+@media screen {
+  .receipt-container { font-size: 0.875rem; }
+}</code></pre></td></tr>
+
+    <tr><td>98</td><td class="file-cell">ExamFormSubmission.vue</td><td class="rule-cell">Horizontal scroll risk</td><td class="finding-cell">.receipt-container width: 800px</td><td><span class="badge b-medium">Medium</span></td>
+    <td class="rec-cell">Use <code>max-width: 800px</code> for screen and <code>width: 800px</code> only for <code>@media print</code>.</td></tr>
+
+    <tr><td>100&ndash;101</td><td class="file-cell">FeeDetails.vue</td><td class="rule-cell">Missing focus style + no media queries</td><td class="finding-cell">No focus on 'a'; no responsive breakpoints</td><td><span class="badge b-medium">Medium</span></td>
+    <td class="rec-cell">Add global focus styles in main CSS and at least one mobile breakpoint in this 1586-line component.</td></tr>
+
+    <tr><td>102&ndash;114</td><td class="file-cell">HallTicket, ResultPage, viewExamTT, viewMarksheet</td><td class="rule-cell">Non-interactive clicks + focus + media queries</td><td class="finding-cell">Tooltip divs, card divs with @click; no keyboard; no media queries</td><td><span class="badge b-high">High</span></td>
+    <td class="rec-cell">Same tooltip/card pattern as ApplicationServices. Apply the <code>useKeyClick</code> composable and add missing focus/hover styles. Add <code>@media (max-width:768px)</code> breakpoints.</td></tr>
+
+    <tr><td>115&ndash;116</td><td class="file-cell">SelectedApplicationService.vue</td><td class="rule-cell">WCAG contrast (×2)</td><td class="finding-cell">.download-btn 2.54:1; .btn-blue 3.68:1</td><td><span class="badge b-high">High</span></td>
+    <td class="rec-cell">Same shared CSS as ApplicationServices.vue. Fix once in a shared stylesheet:
+    <pre><code>/* shared/buttons.css */
+.download-btn { background:#047857; color:#fff; }
+.btn.btn-blue  { background:#1d4ed8; color:#fff; }</code></pre></td></tr>
+
+    <tr><td>117&ndash;131</td><td class="file-cell">SelectedApplicationService.vue</td><td class="rule-cell">Button hover/focus + focus styles + overflow + media queries</td><td class="finding-cell">Missing hover/focus on .btn, button; no media queries; overflow:hidden</td><td><span class="badge b-medium">Medium</span></td>
+    <td class="rec-cell">Add global button states in main CSS to resolve this class of issues across all Result views. The <code>overflow:hidden</code> on <code>.collapsible-content</code> is acceptable for collapse animations but wrap with a zoom-aware check.</td></tr>
+
+    <tr><td>132&ndash;137</td><td class="file-cell">Transactions.vue</td><td class="rule-cell">Button hover/focus + overflow + media queries</td><td class="finding-cell">No hover/focus states; overflow:hidden; no media queries</td><td><span class="badge b-medium">Medium</span></td>
+    <td class="rec-cell">Apply global button styles. The <code>overflow:hidden</code> on <code>.custom-datatable</code> may clip table content at browser zoom &gt;200%.</td></tr>
+
+    <tr><td>138&ndash;147</td><td class="file-cell">viewExamTimeTable.vue + viewMarksheet.vue</td><td class="rule-cell">Non-interactive clicks + focus + media queries</td><td class="finding-cell">Tooltip divs, ilike-card divs with @click; no keyboard; no focus; no media queries</td><td><span class="badge b-high">High</span></td>
+    <td class="rec-cell">Apply <code>useKeyClick</code> composable to all clickable divs. Add focus styles and one mobile breakpoint. The <code>.ilike-card</code> that navigates on click should be a <code>&lt;router-link&gt;</code> or <code>&lt;button&gt;</code>.</td></tr>
+
+    </tbody>
+  </table></div>
+  </div>
+
+  <!-- COMPLEXITY -->
+  <div id="tab-complexity" class="tab-pane">
+  <div class="sec-body"><table>
+    <thead><tr><th>Component</th><th>LOC</th><th>Methods</th><th>API Calls</th><th>Template Lines</th><th>Max Nesting</th><th>Flags</th><th>Score</th></tr></thead>
+    <tbody>
+    <tr><td class="file-cell">FeeDetails.vue<br><span style="color:#7a86a8">views/Result/</span></td><td><span style="color:var(--high);font-weight:700">1,586</span></td><td>63</td><td style="color:var(--high);font-weight:600">28</td><td>122</td><td style="color:var(--high)">58</td>
+    <td><div class="flag-chips"><span class="flag-chip sev">VERY_LARGE</span><span class="flag-chip sev">EXCESSIVE_API</span></div></td>
+    <td><div class="score-bar-wrap"><div class="score-bar-bg"><div class="score-bar-fill" style="width:18%;background:var(--high)"></div></div><span class="score-num" style="color:var(--high)">18</span></div></td></tr>
+
+    <tr><td class="file-cell">ExamFormSubmission.vue</td><td><span style="color:var(--high);font-weight:700">1,310</span></td><td>35</td><td style="color:var(--high);font-weight:600">20</td><td>332</td><td style="color:var(--high)">208</td>
+    <td><div class="flag-chips"><span class="flag-chip sev">VERY_LARGE</span><span class="flag-chip sev">COMPLEX_TEMPLATE</span><span class="flag-chip sev">DEEP_NESTED</span></div></td>
+    <td><div class="score-bar-wrap"><div class="score-bar-bg"><div class="score-bar-fill" style="width:14%;background:var(--high)"></div></div><span class="score-num" style="color:var(--high)">14</span></div></td></tr>
+
+    <tr><td class="file-cell">adminLogin.vue</td><td><span style="color:var(--high);font-weight:700">977</span></td><td>64</td><td style="color:var(--high);font-weight:600">22</td><td>131</td><td>57</td>
+    <td><div class="flag-chips"><span class="flag-chip sev">VERY_LARGE</span><span class="flag-chip sev">EXCESSIVE_API</span></div></td>
+    <td><div class="score-bar-wrap"><div class="score-bar-bg"><div class="score-bar-fill" style="width:30%;background:var(--medium)"></div></div><span class="score-num" style="color:var(--medium)">30</span></div></td></tr>
+
+    <tr><td class="file-cell">iLikeCourses.vue</td><td><span style="color:var(--high);font-weight:700">865</span></td><td>65</td><td style="color:var(--high);font-weight:600">16</td><td>23</td><td>77</td>
+    <td><div class="flag-chips"><span class="flag-chip sev">VERY_LARGE</span><span class="flag-chip sev">EXCESSIVE_API</span></div></td>
+    <td><div class="score-bar-wrap"><div class="score-bar-bg"><div class="score-bar-fill" style="width:32%;background:var(--medium)"></div></div><span class="score-num" style="color:var(--medium)">32</span></div></td></tr>
+
+    <tr><td class="file-cell">iLikeCoursesNew.vue</td><td><span style="color:var(--high);font-weight:700">849</span></td><td>50</td><td style="color:var(--medium);font-weight:600">14</td><td>32</td><td>64</td>
+    <td><div class="flag-chips"><span class="flag-chip sev">VERY_LARGE</span><span class="flag-chip">VERY_HIGH_API</span></div></td>
+    <td><div class="score-bar-wrap"><div class="score-bar-bg"><div class="score-bar-fill" style="width:34%;background:var(--medium)"></div></div><span class="score-num" style="color:var(--medium)">34</span></div></td></tr>
+
+    <tr><td class="file-cell">ApplicationServices.vue</td><td>754</td><td>35</td><td>8</td><td>247</td><td style="color:var(--high)">105</td>
+    <td><div class="flag-chips"><span class="flag-chip sev">LARGE</span><span class="flag-chip sev">COMPLEX_TEMPLATE</span><span class="flag-chip sev">DEEP_NESTED</span></div></td>
+    <td><div class="score-bar-wrap"><div class="score-bar-bg"><div class="score-bar-fill" style="width:40%;background:var(--medium)"></div></div><span class="score-num" style="color:var(--medium)">40</span></div></td></tr>
+
+    <tr><td class="file-cell">Sidebar.vue</td><td>568</td><td>21</td><td>0</td><td>92</td><td>49</td>
+    <td><div class="flag-chips"><span class="flag-chip">LARGE</span><span class="flag-chip">DEEP_NESTED</span></div></td>
+    <td><div class="score-bar-wrap"><div class="score-bar-bg"><div class="score-bar-fill" style="width:55%;background:#eab308"></div></div><span class="score-num" style="color:#eab308">55</span></div></td></tr>
+
+    <tr><td class="file-cell">SelectedApplicationService.vue</td><td>543</td><td>24</td><td>10</td><td>76</td><td>36</td>
+    <td><div class="flag-chips"><span class="flag-chip">LARGE</span><span class="flag-chip">HIGH_API</span><span class="flag-chip">HEAVY</span></div></td>
+    <td><div class="score-bar-wrap"><div class="score-bar-bg"><div class="score-bar-fill" style="width:50%;background:#eab308"></div></div><span class="score-num" style="color:#eab308">50</span></div></td></tr>
+
+    <tr><td class="file-cell">Validator.vue</td><td>261</td><td>1</td><td>0</td><td>225</td><td>46</td>
+    <td><div class="flag-chips"><span class="flag-chip">COMPLEX_TEMPLATE</span></div></td>
+    <td><div class="score-bar-wrap"><div class="score-bar-bg"><div class="score-bar-fill" style="width:60%;background:#84cc16"></div></div><span class="score-num" style="color:#84cc16">60</span></div></td></tr>
+    </tbody>
+  </table></div>
+  </div>
+
+  <!-- FILE SCORES -->
+  <div id="tab-filescores" class="tab-pane">
+  <div class="sec-body"><table>
+    <thead><tr><th>File</th><th>Path</th><th>LOC</th><th>Total Issues</th><th>Score /100</th><th>Grade</th></tr></thead>
+    <tbody>
+    <tr><td class="file-cell">FeeDetails.vue</td><td style="color:#7a86a8;font-size:11px">views/Result/</td><td>1,586</td><td style="color:var(--high)">3 flagged</td><td><div class="score-bar-wrap"><div class="score-bar-bg"><div class="score-bar-fill" style="width:22%;background:var(--high)"></div></div><span class="score-num" style="color:var(--high)">22</span></div></td><td><span class="badge b-high">F</span></td></tr>
+    <tr><td class="file-cell">ExamFormSubmission.vue</td><td style="color:#7a86a8;font-size:11px">views/Result/</td><td>1,310</td><td style="color:var(--high)">18</td><td><div class="score-bar-wrap"><div class="score-bar-bg"><div class="score-bar-fill" style="width:18%;background:var(--high)"></div></div><span class="score-num" style="color:var(--high)">18</span></div></td><td><span class="badge b-high">F</span></td></tr>
+    <tr><td class="file-cell">adminLogin.vue</td><td style="color:#7a86a8;font-size:11px">views/</td><td>977</td><td style="color:var(--high)">17</td><td><div class="score-bar-wrap"><div class="score-bar-bg"><div class="score-bar-fill" style="width:28%;background:var(--high)"></div></div><span class="score-num" style="color:var(--high)">28</span></div></td><td><span class="badge b-high">F</span></td></tr>
+    <tr><td class="file-cell">ApplicationServices.vue</td><td style="color:#7a86a8;font-size:11px">views/Result/</td><td>754</td><td style="color:var(--high)">30</td><td><div class="score-bar-wrap"><div class="score-bar-bg"><div class="score-bar-fill" style="width:25%;background:var(--high)"></div></div><span class="score-num" style="color:var(--high)">25</span></div></td><td><span class="badge b-high">F</span></td></tr>
+    <tr><td class="file-cell">SelectedApplicationService.vue</td><td style="color:#7a86a8;font-size:11px">views/Result/</td><td>543</td><td style="color:var(--high)">18</td><td><div class="score-bar-wrap"><div class="score-bar-bg"><div class="score-bar-fill" style="width:32%;background:var(--medium)"></div></div><span class="score-num" style="color:var(--medium)">32</span></div></td><td><span class="badge b-medium">D</span></td></tr>
+    <tr><td class="file-cell">SessionManager.vue</td><td style="color:#7a86a8;font-size:11px">views/</td><td>133</td><td style="color:var(--high)">12</td><td><div class="score-bar-wrap"><div class="score-bar-bg"><div class="score-bar-fill" style="width:38%;background:var(--medium)"></div></div><span class="score-num" style="color:var(--medium)">38</span></div></td><td><span class="badge b-medium">D</span></td></tr>
+    <tr><td class="file-cell">iLikeCoursesNew.vue</td><td style="color:#7a86a8;font-size:11px">views/iLike/</td><td>849</td><td style="color:var(--medium)">7</td><td><div class="score-bar-wrap"><div class="score-bar-bg"><div class="score-bar-fill" style="width:42%;background:var(--medium)"></div></div><span class="score-num" style="color:var(--medium)">42</span></div></td><td><span class="badge b-medium">D</span></td></tr>
+    <tr><td class="file-cell">StudentData.vue</td><td style="color:#7a86a8;font-size:11px">views/</td><td>204</td><td style="color:var(--medium)">8</td><td><div class="score-bar-wrap"><div class="score-bar-bg"><div class="score-bar-fill" style="width:45%;background:var(--medium)"></div></div><span class="score-num" style="color:var(--medium)">45</span></div></td><td><span class="badge b-medium">D</span></td></tr>
+    <tr><td class="file-cell">StudentDemo.vue</td><td style="color:#7a86a8;font-size:11px">views/</td><td>123</td><td style="color:var(--medium)">10</td><td><div class="score-bar-wrap"><div class="score-bar-bg"><div class="score-bar-fill" style="width:43%;background:var(--medium)"></div></div><span class="score-num" style="color:var(--medium)">43</span></div></td><td><span class="badge b-medium">D</span></td></tr>
+    <tr><td class="file-cell">HallTicketPage.vue</td><td style="color:#7a86a8;font-size:11px">views/Result/</td><td>265</td><td style="color:var(--medium)">6</td><td><div class="score-bar-wrap"><div class="score-bar-bg"><div class="score-bar-fill" style="width:50%;background:#eab308"></div></div><span class="score-num" style="color:#eab308">50</span></div></td><td><span class="badge b-medium">C</span></td></tr>
+    <tr><td class="file-cell">ResultPage.vue</td><td style="color:#7a86a8;font-size:11px">views/Result/</td><td>340</td><td style="color:var(--medium)">6</td><td><div class="score-bar-wrap"><div class="score-bar-bg"><div class="score-bar-fill" style="width:52%;background:#eab308"></div></div><span class="score-num" style="color:#eab308">52</span></div></td><td><span class="badge b-medium">C</span></td></tr>
+    <tr><td class="file-cell">Transactions.vue</td><td style="color:#7a86a8;font-size:11px">views/Result/</td><td>300</td><td style="color:var(--medium)">6</td><td><div class="score-bar-wrap"><div class="score-bar-bg"><div class="score-bar-fill" style="width:55%;background:#eab308"></div></div><span class="score-num" style="color:#eab308">55</span></div></td><td><span class="badge b-medium">C</span></td></tr>
+    <tr><td class="file-cell">Sidebar.vue</td><td style="color:#7a86a8;font-size:11px">components/common/</td><td>568</td><td style="color:var(--medium)">2</td><td><div class="score-bar-wrap"><div class="score-bar-bg"><div class="score-bar-fill" style="width:55%;background:#eab308"></div></div><span class="score-num" style="color:#eab308">55</span></div></td><td><span class="badge b-medium">C</span></td></tr>
+    <tr><td class="file-cell">viewMarksheet.vue</td><td style="color:#7a86a8;font-size:11px">views/Result/</td><td>270</td><td style="color:var(--medium)">7</td><td><div class="score-bar-wrap"><div class="score-bar-bg"><div class="score-bar-fill" style="width:53%;background:#eab308"></div></div><span class="score-num" style="color:#eab308">53</span></div></td><td><span class="badge b-medium">C</span></td></tr>
+    <tr><td class="file-cell">Toast.vue</td><td style="color:#7a86a8;font-size:11px">components/DaiseUI/</td><td>&mdash;</td><td style="color:var(--high)">2</td><td><div class="score-bar-wrap"><div class="score-bar-bg"><div class="score-bar-fill" style="width:55%;background:#eab308"></div></div><span class="score-num" style="color:#eab308">55</span></div></td><td><span class="badge b-medium">C</span></td></tr>
+    <tr><td class="file-cell">viewExamTimeTable.vue</td><td style="color:#7a86a8;font-size:11px">views/Result/</td><td>171</td><td style="color:var(--medium)">4</td><td><div class="score-bar-wrap"><div class="score-bar-bg"><div class="score-bar-fill" style="width:62%;background:#84cc16"></div></div><span class="score-num" style="color:#84cc16">62</span></div></td><td><span class="badge b-info">C+</span></td></tr>
+    <tr><td class="file-cell">iLikeCourses.vue</td><td style="color:#7a86a8;font-size:11px">views/iLike/</td><td>865</td><td style="color:var(--medium)">1</td><td><div class="score-bar-wrap"><div class="score-bar-bg"><div class="score-bar-fill" style="width:60%;background:#84cc16"></div></div><span class="score-num" style="color:#84cc16">60</span></div></td><td><span class="badge b-info">C+</span></td></tr>
+    <tr><td class="file-cell">CdnUpload.vue</td><td style="color:#7a86a8;font-size:11px">views/</td><td>155</td><td style="color:var(--medium)">3 (1 FP)</td><td><div class="score-bar-wrap"><div class="score-bar-bg"><div class="score-bar-fill" style="width:65%;background:#84cc16"></div></div><span class="score-num" style="color:#84cc16">65</span></div></td><td><span class="badge b-info">B-</span></td></tr>
+    <tr><td class="file-cell">Home.vue</td><td style="color:#7a86a8;font-size:11px">views/</td><td>&mdash;</td><td style="color:var(--high)">2 (real typo)</td><td><div class="score-bar-wrap"><div class="score-bar-bg"><div class="score-bar-fill" style="width:65%;background:#84cc16"></div></div><span class="score-num" style="color:#84cc16">65</span></div></td><td><span class="badge b-info">B-</span></td></tr>
+    <tr><td class="file-cell">programBar.vue</td><td style="color:#7a86a8;font-size:11px">components/common/</td><td>42</td><td style="color:var(--medium)">2 (1 FP)</td><td><div class="score-bar-wrap"><div class="score-bar-bg"><div class="score-bar-fill" style="width:72%;background:#84cc16"></div></div><span class="score-num" style="color:#84cc16">72</span></div></td><td><span class="badge b-info">B</span></td></tr>
+    <tr><td class="file-cell">updateDbSave.vue</td><td style="color:#7a86a8;font-size:11px">components/BL/</td><td>75</td><td style="color:var(--medium)">1</td><td><div class="score-bar-wrap"><div class="score-bar-bg"><div class="score-bar-fill" style="width:80%;background:var(--pass)"></div></div><span class="score-num" style="color:var(--pass)">80</span></div></td><td><span class="badge b-pass">B+</span></td></tr>
+    <tr><td class="file-cell">deleteData.vue</td><td style="color:#7a86a8;font-size:11px">components/sessionmanager/</td><td>&mdash;</td><td style="color:var(--pass)">0 verified</td><td><div class="score-bar-wrap"><div class="score-bar-bg"><div class="score-bar-fill" style="width:85%;background:var(--pass)"></div></div><span class="score-num" style="color:var(--pass)">85</span></div></td><td><span class="badge b-pass">A</span></td></tr>
+    <tr><td class="file-cell">Header.vue, Footer.vue, Login.vue, SidebarNew.vue + others</td><td style="color:#7a86a8;font-size:11px">components/common/ + views/</td><td>&mdash;</td><td style="color:var(--pass)">0&ndash;1</td><td><div class="score-bar-wrap"><div class="score-bar-bg"><div class="score-bar-fill" style="width:90%;background:var(--pass)"></div></div><span class="score-num" style="color:var(--pass)">90</span></div></td><td><span class="badge b-pass">A</span></td></tr>
+    </tbody>
+  </table></div>
+  </div>
+
+</div><!-- .sec -->
+</div><!-- .main -->
+
+<footer>
+  &#128737; AI Audit Report &nbsp;&middot;&nbsp; RAG Engine + Google Gemini &nbsp;&middot;&nbsp; StudentLogin Portal &nbsp;&middot;&nbsp; Generated 2026-03-29 &nbsp;&middot;&nbsp;
+  <span style="color:var(--fp)">18 false positives confirmed</span> &nbsp;&middot;&nbsp; 57 Vue components &middot; 38 JS files analysed
+</footer>
+
+<script>
+function switchTab(id, btn) {
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.querySelectorAll('.tab-pane').forEach(p => p.classList.remove('active'));
+  document.getElementById('tab-' + id).classList.add('active');
+  btn.classList.add('active');
+}
+</script>
+</body>
+</html>

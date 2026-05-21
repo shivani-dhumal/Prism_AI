@@ -1,0 +1,1524 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PrismAI — Code Analyzer</title>
+<meta name="description" content="An editorial dashboard for frontend code analysis">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..900;1,9..144,300..900&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<script src="https://unpkg.com/vue@3/dist/vue.global.prod.js"></script>
+<style>
+  :root {
+    --bg:        #F5F1EA;
+    --bg-warm:   #EFE9DD;
+    --paper:    #FBF8F3;
+    --paper-2:  #FFFFFF;
+    --ink:      #1A1815;
+    --ink-2:    #3A352E;
+    --ink-3:    #6B6258;
+    --ink-4:    #9A9087;
+    --line:     #E4DCCC;
+    --line-2:   #D5C9B3;
+    --accent:   #2D5A3D;       /* deep forest */
+    --accent-2: #3F7A56;
+    --accent-soft: #DCE9DF;
+    --high:     #B0413E;
+    --high-soft:#F4DAD8;
+    --med:      #B87333;
+    --med-soft: #F5E4CB;
+    --low:      #4A6FA5;
+    --low-soft: #DBE4F0;
+    --neutral:  #6B6258;
+    --shadow-sm: 0 1px 2px rgba(45,40,30,0.04);
+    --shadow:    0 4px 12px -2px rgba(45,40,30,0.08), 0 1px 3px rgba(45,40,30,0.04);
+    --shadow-lg: 0 24px 60px -16px rgba(45,40,30,0.18), 0 8px 24px -8px rgba(45,40,30,0.08);
+    --radius: 10px;
+    --serif: "Fraunces", Georgia, serif;
+    --sans:  "Inter", -apple-system, BlinkMacSystemFont, sans-serif;
+    --mono:  "JetBrains Mono", ui-monospace, "SF Mono", monospace;
+  }
+
+  * { box-sizing: border-box; }
+  html, body { height: 100%; margin: 0; }
+  body {
+    font-family: var(--sans);
+    background: var(--bg);
+    color: var(--ink);
+    font-size: 14px;
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+    overflow: hidden;
+    /* subtle paper grain */
+    background-image:
+      radial-gradient(circle at 20% 30%, rgba(255,255,255,0.6) 0, transparent 50%),
+      radial-gradient(circle at 80% 80%, rgba(220,210,190,0.3) 0, transparent 40%);
+  }
+
+  button {
+    font-family: inherit;
+    border: none;
+    cursor: pointer;
+    background: none;
+    color: inherit;
+  }
+
+  .shell {
+    display: grid;
+    grid-template-columns: 280px 1fr 360px;
+    height: 100vh;
+    gap: 0;
+  }
+
+  /* ===================== EXPLORER (LEFT) ===================== */
+  .explorer {
+    background: var(--paper);
+    border-right: 1px solid var(--line);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
+
+  .brand {
+    padding: 26px 24px 22px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    border-bottom: 1px solid var(--line);
+  }
+  .brand-mark {
+    width: 38px; height: 38px;
+    border-radius: 9px;
+    background: linear-gradient(135deg, var(--accent), var(--accent-2));
+    color: #fff;
+    display: grid;
+    place-items: center;
+    font-family: var(--serif);
+    font-style: italic;
+    font-weight: 600;
+    font-size: 22px;
+    letter-spacing: -0.02em;
+    box-shadow: 0 4px 12px -2px rgba(45,90,61,0.35);
+  }
+  .brand h1 {
+    margin: 0;
+    font-family: var(--serif);
+    font-weight: 500;
+    font-size: 20px;
+    letter-spacing: -0.02em;
+    line-height: 1;
+  }
+  .brand p {
+    margin: 3px 0 0;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    color: var(--ink-3);
+    font-weight: 500;
+  }
+
+  .scan-actions {
+    padding: 18px 20px 14px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .btn {
+    height: 38px;
+    padding: 0 16px;
+    border-radius: 8px;
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: -0.01em;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    transition: all .18s ease;
+    white-space: nowrap;
+  }
+  .btn.primary {
+    background: var(--ink);
+    color: var(--paper);
+  }
+  .btn.primary:hover { background: var(--accent); }
+  .btn.primary:active { transform: translateY(1px); }
+  .btn.secondary {
+    background: var(--paper-2);
+    color: var(--ink-2);
+    border: 1px solid var(--line);
+  }
+  .btn.secondary:hover { background: var(--bg-warm); border-color: var(--line-2); }
+  .btn.ghost {
+    color: var(--ink-3);
+    background: transparent;
+  }
+  .btn.ghost:hover { color: var(--ink); background: var(--bg-warm); }
+  .btn.wide { width: 100%; }
+  .btn:disabled { opacity: .45; cursor: not-allowed; }
+
+  .metric-grid {
+    margin: 6px 20px 18px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1px;
+    background: var(--line);
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    overflow: hidden;
+  }
+  .metric-grid > div {
+    background: var(--paper-2);
+    padding: 14px 14px 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+  .metric-grid strong {
+    font-family: var(--serif);
+    font-weight: 400;
+    font-size: 26px;
+    letter-spacing: -0.03em;
+    color: var(--ink);
+    line-height: 1;
+  }
+  .metric-grid span {
+    font-size: 10.5px;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--ink-3);
+    font-weight: 500;
+  }
+
+  .panel {
+    background: var(--paper-2);
+  }
+  .panel.fill { flex: 1; display: flex; flex-direction: column; min-height: 0; }
+
+  .panel-title {
+    padding: 16px 22px 12px;
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 12px;
+    border-bottom: 1px solid var(--line);
+  }
+  .panel-title span:first-child {
+    font-family: var(--serif);
+    font-weight: 500;
+    font-size: 15px;
+    letter-spacing: -0.01em;
+    color: var(--ink);
+  }
+  .panel-title small {
+    font-size: 11px;
+    color: var(--ink-3);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    font-weight: 500;
+  }
+
+  .explorer .panel.fill { background: var(--paper); border-top: 1px solid var(--line); }
+
+  .tree {
+    flex: 1;
+    overflow-y: auto;
+    padding: 8px 0 16px;
+  }
+  .tree-item {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 18px 6px 10px;
+    border: none;
+    text-align: left;
+    background: transparent;
+    cursor: pointer;
+    font-size: 13px;
+    color: var(--ink-2);
+    transition: background .15s ease;
+    position: relative;
+  }
+  .tree-item:hover { background: var(--bg-warm); }
+  .tree-item.selected {
+    background: var(--accent-soft);
+    color: var(--accent);
+  }
+  .tree-item.selected::before {
+    content: '';
+    position: absolute;
+    left: 0; top: 4px; bottom: 4px;
+    width: 2px;
+    background: var(--accent);
+    border-radius: 2px;
+  }
+  .tree-item.flagged { color: var(--ink); }
+  .chevron {
+    width: 14px;
+    color: var(--ink-4);
+    font-size: 10px;
+    font-family: var(--mono);
+    flex-shrink: 0;
+  }
+  .file-icon {
+    font-family: var(--mono);
+    font-size: 9.5px;
+    font-weight: 600;
+    background: var(--bg-warm);
+    color: var(--ink-3);
+    padding: 2px 5px;
+    border-radius: 3px;
+    letter-spacing: 0.04em;
+    flex-shrink: 0;
+  }
+  .tree-item.folder .file-icon {
+    background: transparent;
+    color: var(--ink-4);
+  }
+  .tree-name {
+    flex: 1;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    font-size: 13px;
+  }
+  .tree-item b {
+    font-size: 10px;
+    font-weight: 600;
+    background: var(--high-soft);
+    color: var(--high);
+    padding: 1px 6px;
+    border-radius: 10px;
+    min-width: 18px;
+    text-align: center;
+    font-family: var(--mono);
+  }
+
+  /* ===================== WORKSPACE (CENTER) ===================== */
+  .workspace {
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    background: var(--bg);
+  }
+  .topbar {
+    padding: 20px 28px 18px;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 20px;
+    border-bottom: 1px solid var(--line);
+    background: var(--paper);
+  }
+  .topbar h2 {
+    margin: 0;
+    font-family: var(--serif);
+    font-weight: 400;
+    font-size: 26px;
+    letter-spacing: -0.025em;
+    line-height: 1.1;
+    color: var(--ink);
+  }
+  .topbar h2 em {
+    font-style: italic;
+    color: var(--accent);
+  }
+  .topbar p {
+    margin: 6px 0 0;
+    font-size: 13px;
+    color: var(--ink-3);
+    max-width: 60ch;
+  }
+  .topbar-actions { display: flex; gap: 8px; flex-shrink: 0; }
+
+  .issue-panel {
+    margin: 16px 16px 0;
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow-sm);
+    display: flex;
+    flex-direction: column;
+    max-height: 38vh;
+    overflow: hidden;
+  }
+
+  .filters {
+    display: flex;
+    gap: 4px;
+    padding: 12px 22px 12px;
+    border-bottom: 1px solid var(--line);
+    background: var(--paper-2);
+  }
+  .filters button {
+    padding: 5px 11px;
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--ink-3);
+    border-radius: 6px;
+    transition: all .15s;
+    letter-spacing: -0.005em;
+  }
+  .filters button:hover { color: var(--ink); background: var(--bg-warm); }
+  .filters button.active {
+    background: var(--ink);
+    color: var(--paper);
+  }
+
+  .issue-tree {
+    flex: 1;
+    overflow-y: auto;
+    padding: 4px 0 8px;
+  }
+  details {
+    border-bottom: 1px solid var(--line);
+  }
+  details:last-child { border-bottom: none; }
+  details summary {
+    list-style: none;
+    cursor: pointer;
+    padding: 12px 22px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--ink-3);
+    background: var(--bg);
+    transition: color .15s;
+  }
+  details summary::-webkit-details-marker { display: none; }
+  details summary:hover { color: var(--ink); }
+  details summary::before {
+    content: '+';
+    font-family: var(--mono);
+    font-size: 14px;
+    margin-right: 8px;
+    color: var(--ink-4);
+    transition: transform .2s;
+    display: inline-block;
+  }
+  details[open] summary::before {
+    content: '−';
+  }
+  details summary b {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--ink-2);
+    background: var(--paper-2);
+    border: 1px solid var(--line);
+    padding: 2px 8px;
+    border-radius: 10px;
+    font-weight: 600;
+    letter-spacing: 0;
+  }
+
+  .issue-row {
+    width: 100%;
+    text-align: left;
+    background: transparent;
+    border: none;
+    border-top: 1px solid var(--line);
+    border-left: 3px solid transparent;
+    padding: 14px 22px;
+    display: flex;
+    gap: 12px;
+    cursor: pointer;
+    transition: background .15s, border-color .2s;
+    align-items: flex-start;
+  }
+  .issue-row:hover { background: var(--bg-warm); }
+  .issue-row.sev-row-high:hover   { border-left-color: var(--high); }
+  .issue-row.sev-row-medium:hover { border-left-color: var(--med); }
+  .issue-row.sev-row-low:hover    { border-left-color: var(--low); }
+  .issue-row.selected {
+    background: var(--accent-soft);
+    border-left-color: var(--accent);
+  }
+  .severity-dot {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    margin-top: 6px;
+    flex-shrink: 0;
+  }
+  .severity-dot.high { background: var(--high); box-shadow: 0 0 0 3px var(--high-soft); }
+  .severity-dot.medium { background: var(--med); box-shadow: 0 0 0 3px var(--med-soft); }
+  .severity-dot.low { background: var(--low); box-shadow: 0 0 0 3px var(--low-soft); }
+  .issue-row > span:last-child {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+    flex: 1;
+    min-width: 0;
+  }
+  .issue-row strong {
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--ink);
+    letter-spacing: -0.005em;
+  }
+  .issue-row small {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--ink-3);
+  }
+
+  /* ===================== EDITOR ===================== */
+  .editor {
+    margin: 12px 16px 16px;
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow-sm);
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    background: var(--paper-2);
+    min-height: 0;
+  }
+  .editor-head {
+    padding: 14px 22px;
+    border-bottom: 1px solid var(--line);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: var(--bg);
+  }
+  .editor-head strong {
+    font-family: var(--mono);
+    font-size: 13px;
+    color: var(--ink);
+    font-weight: 600;
+  }
+  .editor-head small {
+    margin-left: 10px;
+    font-size: 11px;
+    color: var(--ink-3);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+  .code {
+    flex: 1;
+    overflow: auto;
+    padding: 14px 0;
+    font-family: var(--mono);
+    font-size: 13px;
+    line-height: 1.65;
+    background: var(--paper-2);
+  }
+  .code-line {
+    width: 100%;
+    display: grid;
+    grid-template-columns: 56px 1fr;
+    gap: 16px;
+    padding: 0 20px;
+    border: none;
+    background: transparent;
+    text-align: left;
+    cursor: pointer;
+    position: relative;
+    transition: background .12s;
+  }
+  .code-line:hover { background: var(--bg-warm); }
+  .code-line > span {
+    color: var(--ink-4);
+    text-align: right;
+    user-select: none;
+    font-size: 12px;
+  }
+  .code-line code {
+    color: var(--ink-2);
+    white-space: pre;
+    font-family: var(--mono);
+  }
+  .code-line.has-high { background: var(--high-soft); }
+  .code-line.has-medium { background: var(--med-soft); }
+  .code-line.has-low { background: var(--low-soft); }
+  .code-line.active-issue {
+    background: var(--accent-soft);
+  }
+  .code-line.active-issue::before {
+    content: '';
+    position: absolute;
+    left: 0; top: 0; bottom: 0;
+    width: 3px;
+    background: var(--accent);
+  }
+  .code-line.has-high::before, .code-line.has-medium::before, .code-line.has-low::before {
+    content: '';
+    position: absolute;
+    left: 0; top: 0; bottom: 0;
+    width: 3px;
+  }
+  .code-line.has-high::before { background: var(--high); }
+  .code-line.has-medium::before { background: var(--med); }
+  .code-line.has-low::before { background: var(--low); }
+
+  /* ===================== INSPECTOR (RIGHT) ===================== */
+  .inspector {
+    background: var(--paper);
+    border-left: 1px solid var(--line);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
+
+  .detail {
+    padding: 0 0 16px;
+    border-bottom: 1px solid var(--line);
+    flex-shrink: 0;
+    max-height: 60%;
+    overflow-y: auto;
+  }
+  .detail .issue-heading {
+    padding: 16px 22px 0;
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+  }
+  .pill {
+    display: inline-block;
+    padding: 3px 9px;
+    border-radius: 20px;
+    font-size: 10.5px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+  .pill.high { background: var(--high-soft); color: var(--high); }
+  .pill.medium { background: var(--med-soft); color: var(--med); }
+  .pill.low { background: var(--low-soft); color: var(--low); }
+  .pill.neutral { background: var(--bg-warm); color: var(--ink-3); border: 1px solid var(--line); }
+
+  .detail h3 {
+    margin: 12px 22px 6px;
+    font-family: var(--serif);
+    font-weight: 500;
+    font-size: 19px;
+    line-height: 1.25;
+    letter-spacing: -0.015em;
+    color: var(--ink);
+  }
+  .detail p {
+    margin: 0 22px 16px;
+    font-size: 13.5px;
+    color: var(--ink-2);
+    line-height: 1.55;
+  }
+  .detail dl {
+    margin: 0 22px 14px;
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 4px 16px;
+    padding: 12px 14px;
+    background: var(--bg);
+    border-radius: 8px;
+  }
+  .detail dl > div { display: contents; }
+  .detail dt {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--ink-3);
+    font-weight: 500;
+  }
+  .detail dd {
+    margin: 0;
+    font-size: 12.5px;
+    color: var(--ink);
+    font-family: var(--mono);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  .recommendation {
+    margin: 0 22px 16px;
+    padding: 14px 16px;
+    background: linear-gradient(135deg, var(--accent-soft) 0%, rgba(220,233,223,0.4) 100%);
+    border-radius: 8px;
+    border-left: 3px solid var(--accent);
+  }
+  .recommendation strong {
+    font-family: var(--serif);
+    font-weight: 500;
+    font-style: italic;
+    font-size: 13px;
+    color: var(--accent);
+    display: block;
+    margin-bottom: 4px;
+    letter-spacing: -0.01em;
+  }
+  .recommendation p {
+    margin: 0;
+    font-size: 13px;
+    color: var(--ink-2);
+    line-height: 1.5;
+  }
+  .detail > button.wide { margin: 0 22px; width: calc(100% - 44px); }
+
+  /* ===================== CHAT ===================== */
+  .chat {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
+    overflow: hidden;
+  }
+  .messages {
+    flex: 1;
+    overflow-y: auto;
+    padding: 14px 18px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .message {
+    padding: 10px 14px;
+    border-radius: 12px;
+    font-size: 13px;
+    line-height: 1.5;
+    max-width: 92%;
+    word-wrap: break-word;
+  }
+  .message.assistant {
+    background: var(--paper-2);
+    border: 1px solid var(--line);
+    color: var(--ink-2);
+    align-self: flex-start;
+    border-top-left-radius: 4px;
+  }
+  .message.user {
+    background: var(--ink);
+    color: var(--paper);
+    align-self: flex-end;
+    border-top-right-radius: 4px;
+  }
+  .chat-form {
+    display: flex;
+    gap: 8px;
+    padding: 12px 18px 18px;
+    border-top: 1px solid var(--line);
+    background: var(--paper);
+  }
+  .chat-form input {
+    flex: 1;
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    padding: 9px 14px;
+    font-family: inherit;
+    font-size: 13px;
+    background: var(--paper-2);
+    color: var(--ink);
+    transition: border-color .15s;
+  }
+  .chat-form input:focus {
+    outline: none;
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px var(--accent-soft);
+  }
+  .chat-form .btn {
+    height: 38px;
+    padding: 0 14px;
+  }
+
+  /* ===================== EMPTY STATES ===================== */
+  .empty {
+    padding: 40px 24px;
+    text-align: center;
+    color: var(--ink-3);
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: 14px;
+    line-height: 1.5;
+  }
+  .empty.compact {
+    padding: 24px 18px;
+    font-size: 13px;
+  }
+
+  /* ===================== LOADING ===================== */
+  .loading {
+    position: fixed;
+    inset: 0;
+    background: rgba(245,241,234,0.85);
+    backdrop-filter: blur(8px);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 14px;
+    z-index: 100;
+  }
+  .spinner {
+    width: 36px; height: 36px;
+    border: 2px solid var(--line);
+    border-top-color: var(--accent);
+    border-radius: 50%;
+    animation: spin .8s linear infinite;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+  .loading strong {
+    font-family: var(--serif);
+    font-weight: 500;
+    font-size: 18px;
+    letter-spacing: -0.015em;
+    color: var(--ink);
+  }
+  .loading span {
+    font-size: 13px;
+    color: var(--ink-3);
+  }
+
+  /* ===================== MODAL ===================== */
+  .modal-backdrop {
+    position: fixed;
+    inset: 0;
+    background: rgba(26,24,21,0.4);
+    backdrop-filter: blur(4px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 200;
+    padding: 24px;
+    animation: fadeIn .2s ease;
+  }
+  @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+  .diff-modal {
+    background: var(--paper-2);
+    border-radius: 14px;
+    box-shadow: var(--shadow-lg);
+    width: 100%;
+    max-width: 880px;
+    max-height: 90vh;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    animation: slideUp .25s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  @keyframes slideUp {
+    from { opacity: 0; transform: translateY(20px) scale(0.98); }
+    to   { opacity: 1; transform: translateY(0) scale(1); }
+  }
+  .diff-modal > header {
+    padding: 22px 26px 18px;
+    border-bottom: 1px solid var(--line);
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 16px;
+  }
+  .diff-modal h3 {
+    margin: 0;
+    font-family: var(--serif);
+    font-weight: 500;
+    font-size: 22px;
+    letter-spacing: -0.02em;
+    color: var(--ink);
+  }
+  .diff-modal h3::before {
+    content: '✦ ';
+    color: var(--accent);
+    font-size: 18px;
+  }
+  .diff-modal > header p {
+    margin: 4px 0 0;
+    font-size: 13px;
+    color: var(--ink-3);
+  }
+  .icon-btn {
+    width: 32px; height: 32px;
+    border-radius: 8px;
+    color: var(--ink-3);
+    font-size: 16px;
+    display: grid;
+    place-items: center;
+    transition: all .15s;
+  }
+  .icon-btn:hover { background: var(--bg-warm); color: var(--ink); }
+  .diff-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1px;
+    background: var(--line);
+    overflow: auto;
+    flex: 1;
+  }
+  .diff-grid > div { background: var(--paper-2); padding: 18px 22px; }
+  .diff-grid h4 {
+    margin: 0 0 10px;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--ink-3);
+    font-weight: 600;
+  }
+  .diff-grid pre {
+    margin: 0;
+    font-family: var(--mono);
+    font-size: 12.5px;
+    line-height: 1.6;
+    padding: 12px 14px;
+    border-radius: 8px;
+    overflow-x: auto;
+    white-space: pre-wrap;
+    word-break: break-word;
+  }
+  pre.removed {
+    background: var(--high-soft);
+    color: #6e2422;
+    border-left: 3px solid var(--high);
+  }
+  pre.added {
+    background: var(--accent-soft);
+    color: #1f3d2a;
+    border-left: 3px solid var(--accent);
+  }
+  .diff-modal > footer {
+    padding: 16px 26px;
+    border-top: 1px solid var(--line);
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    background: var(--bg);
+  }
+
+  /* scrollbars */
+  ::-webkit-scrollbar { width: 10px; height: 10px; }
+  ::-webkit-scrollbar-track { background: transparent; }
+  ::-webkit-scrollbar-thumb {
+    background: var(--line-2);
+    border-radius: 10px;
+    border: 2px solid var(--paper);
+  }
+  ::-webkit-scrollbar-thumb:hover { background: var(--ink-4); }
+
+  /* responsive */
+  @media (max-width: 1200px) {
+    .shell { grid-template-columns: 240px 1fr 320px; }
+  }
+  @media (max-width: 980px) {
+    .shell { grid-template-columns: 1fr; grid-template-rows: auto 1fr; }
+    .inspector { display: none; }
+    .explorer { display: none; }
+  }
+</style>
+</head>
+<body>
+<div id="app" class="shell">
+
+  <!-- ============== EXPLORER ============== -->
+  <aside class="explorer">
+    <header class="brand">
+      <div class="brand-mark">P</div>
+      <div>
+        <h1>PrismAI</h1>
+        <p>Code Analyzer</p>
+      </div>
+    </header>
+
+    <div class="scan-actions">
+      <button class="btn primary" @click="scanWorkspace">
+        <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M11 11L14 14M12.5 7.5C12.5 10.26 10.26 12.5 7.5 12.5C4.74 12.5 2.5 10.26 2.5 7.5C2.5 4.74 4.74 2.5 7.5 2.5C10.26 2.5 12.5 4.74 12.5 7.5Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+        Scan Project
+      </button>
+      <button class="btn secondary" @click="$refs.folderInput.click()">Open Folder</button>
+      <input ref="folderInput" type="file" webkitdirectory directory multiple hidden @change="handleUpload">
+    </div>
+
+    <section class="metric-grid" v-if="summary">
+      <div><strong>{{summary.total}}</strong><span>Issues</span></div>
+      <div><strong>{{summary.files}}</strong><span>Files</span></div>
+      <div><strong>{{summary.high}}</strong><span>High</span></div>
+      <div><strong>{{summary.fixable}}</strong><span>Fixable</span></div>
+    </section>
+
+    <section class="panel fill">
+      <div class="panel-title">
+        <span>Explorer</span>
+        <small v-if="rootName">{{rootName}}</small>
+      </div>
+      <div v-if="fileTree" class="tree">
+        <tree-node :node="fileTree" :depth="0" :selected="currentPath" @select="selectFile"></tree-node>
+      </div>
+      <div v-else class="empty compact">Load a project to begin.</div>
+    </section>
+  </aside>
+
+  <!-- ============== WORKSPACE ============== -->
+  <main class="workspace">
+    <header class="topbar">
+      <div>
+        <h2>{{projectTitle}}<em v-if="scanResult">.</em></h2>
+        <p>{{statusText}}</p>
+      </div>
+      <div class="topbar-actions">
+        <button class="btn ghost" @click="demoScan">Demo</button>
+        <button class="btn primary" @click="scanWorkspace">Analyze</button>
+      </div>
+    </header>
+
+    <section class="issue-panel">
+      <div class="panel-title">
+        <span>Issue Navigator</span>
+        <small>{{filteredIssues.length}} shown</small>
+      </div>
+      <div class="filters">
+        <button v-for="sev in severities" :key="sev" :class="{active: severityFilter===sev}" @click="severityFilter=sev">{{sev}}</button>
+      </div>
+      <div class="issue-tree" v-if="filteredIssues.length">
+        <details v-for="group in groupedIssues" :key="group.key" open>
+          <summary>
+            <span>{{group.label}}</span>
+            <b>{{group.items.length}}</b>
+          </summary>
+          <button v-for="issue in group.items" :key="issueKey(issue)" class="issue-row" :class="{selected:selectedIssue===issue}" @click="focusIssue(issue)">
+            <span class="severity-dot" :class="issue.severity"></span>
+            <span>
+              <strong>{{issue.message}}</strong>
+              <small>{{shortFile(issue.file)}}:{{issue.line}} — {{typeLabel(issue.category)}}</small>
+            </span>
+          </button>
+        </details>
+      </div>
+      <div v-else class="empty compact">No issues to display yet.</div>
+    </section>
+
+    <section class="editor">
+      <div class="editor-head">
+        <div>
+          <strong>{{currentFile ? currentFile.filename : 'No file selected'}}</strong>
+          <small v-if="currentFile">{{currentFile.line_count}} lines · {{currentFile.issues.length}} issues</small>
+        </div>
+        <button class="btn secondary" v-if="currentFile && currentFile.issues.some(i=>i.fix)" @click="fixAll(currentFile.path)">Fix All</button>
+      </div>
+
+      <div v-if="currentFile" class="code" ref="codeBox">
+        <button v-for="(line,index) in currentFile.lines" :key="index" :id="'line-'+(index+1)" class="code-line" :class="lineClass(index+1)" @click="openEditor(currentFile.path,index+1)">
+          <span>{{index+1}}</span>
+          <code>{{line || ' '}}</code>
+        </button>
+      </div>
+      <div v-else class="empty">Select a file or issue to inspect.</div>
+    </section>
+  </main>
+
+  <!-- ============== INSPECTOR ============== -->
+  <aside class="inspector">
+    <section class="panel detail">
+      <div class="panel-title">
+        <span>Recommendation</span>
+        <small v-if="selectedIssue">{{selectedIssue.rule_id}}</small>
+      </div>
+      <template v-if="selectedIssue">
+        <div class="issue-heading">
+          <span class="pill" :class="selectedIssue.severity">{{selectedIssue.severity}}</span>
+          <span class="pill neutral">{{typeLabel(selectedIssue.category)}}</span>
+        </div>
+        <h3>{{selectedIssue.message}}</h3>
+        <p>{{selectedIssue.description}}</p>
+        <dl>
+          <div><dt>File</dt><dd>{{shortFile(selectedIssue.file)}}</dd></div>
+          <div><dt>Line</dt><dd>{{selectedIssue.line}}</dd></div>
+        </dl>
+        <div class="recommendation">
+          <strong>Suggested approach</strong>
+          <p>{{recommendation(selectedIssue)}}</p>
+        </div>
+        <button class="btn primary wide" :disabled="!selectedIssue.fix" @click="previewFix(selectedIssue)">
+          Apply AI Fix
+        </button>
+      </template>
+      <div v-else class="empty compact">Select an issue for details and suggested fixes.</div>
+    </section>
+
+    <section class="panel chat">
+      <div class="panel-title">
+        <span>Project Chat</span>
+        <small>Assistant</small>
+      </div>
+      <div class="messages" ref="messages">
+        <div v-for="msg in chat" :key="msg.id" class="message" :class="msg.role">{{msg.text}}</div>
+      </div>
+      <form class="chat-form" @submit.prevent="askChat">
+        <input v-model="chatInput" placeholder="Ask about files, issues, or fixes…">
+        <button class="btn primary">Ask</button>
+      </form>
+    </section>
+  </aside>
+
+  <!-- ============== LOADING ============== -->
+  <div v-if="loading" class="loading">
+    <div class="spinner"></div>
+    <strong>{{loadingTitle}}</strong>
+    <span>{{loadingDetail}}</span>
+  </div>
+
+  <!-- ============== DIFF MODAL ============== -->
+  <div v-if="diffIssue" class="modal-backdrop" @click.self="diffIssue=null">
+    <section class="diff-modal">
+      <header>
+        <div>
+          <h3>AI Fix Preview</h3>
+          <p>{{shortFile(diffIssue.file)}} — {{diffIssue.fix.description}}</p>
+        </div>
+        <button class="icon-btn" @click="diffIssue=null">✕</button>
+      </header>
+      <div class="diff-grid">
+        <div>
+          <h4>Original</h4>
+          <pre class="removed">{{diffIssue.fix.original}}</pre>
+        </div>
+        <div>
+          <h4>AI Fixed</h4>
+          <pre class="added">{{diffIssue.fix.replacement}}</pre>
+        </div>
+      </div>
+      <footer>
+        <button class="btn secondary" @click="diffIssue=null">Cancel</button>
+        <button class="btn primary" @click="applyFix(diffIssue)">Apply Fix</button>
+      </footer>
+    </section>
+  </div>
+</div>
+
+<script>
+const TreeNode = {
+  name: 'tree-node',
+  props: ['node', 'depth', 'selected'],
+  emits: ['select'],
+  data() { return { open: true }; },
+  computed: {
+    hasIssues() { return this.node.issue_count > 0; }
+  },
+  template: `
+    <div>
+      <button v-if="node.type==='directory'" class="tree-item folder" :style="{paddingLeft:(depth*14+10)+'px'}" @click="open=!open">
+        <span class="chevron">{{open ? '▾' : '▸'}}</span>
+        <span class="file-icon">DIR</span>
+        <span class="tree-name">{{node.name}}</span>
+        <b v-if="hasIssues">{{node.issue_count}}</b>
+      </button>
+      <button v-else class="tree-item" :class="{selected:selected===node.path, flagged:hasIssues}" :style="{paddingLeft:(depth*14+10)+'px'}" @click="$emit('select',node.path)">
+        <span class="chevron"></span>
+        <span class="file-icon">{{icon(node.extension)}}</span>
+        <span class="tree-name">{{node.name}}</span>
+        <b v-if="hasIssues">{{node.issue_count}}</b>
+      </button>
+      <div v-if="node.type==='directory'" v-show="open">
+        <tree-node v-for="child in node.children" :key="child.path" :node="child" :depth="depth+1" :selected="selected" @select="$emit('select',$event)" />
+      </div>
+    </div>
+  `,
+  methods: {
+    icon(ext) {
+      return ({'.vue':'VUE','.html':'HTM','.js':'JS','.ts':'TS','.css':'CSS','.scss':'SCS','.tsx':'TSX','.jsx':'JSX'}[ext] || 'FILE');
+    }
+  }
+};
+
+/* ================================================================
+   Demo data — used to show the UI even without a backend.
+   ================================================================ */
+const DEMO_DATA = {
+  project_path: '/demo/project',
+  file_count: 14,
+  summary: { high: 3, medium: 5, low: 4 },
+  issues: [
+    { file: 'src/components/UserCard.vue', line: 12, severity: 'high', category: 'accessibility', rule_id: 'a11y/img-alt',
+      message: 'Image missing alt attribute', description: 'Screen readers cannot describe this avatar to users who rely on assistive technology.',
+      fix: { description: 'Add descriptive alt text bound to the user name', original: '<img :src="user.avatar">', replacement: `<img :src="user.avatar" :alt="user.name + ' avatar'">` } },
+    { file: 'src/components/UserCard.vue', line: 34, severity: 'medium', category: 'ui_consistency', rule_id: 'ui/inline-style',
+      message: 'Inline style breaks design tokens', description: 'Hard-coded colors avoid the shared theme and create visual inconsistency.',
+      fix: { description: 'Replace inline color with a token-based class', original: 'style="color: #336699"', replacement: 'class="text-brand-primary"' } },
+    { file: 'src/views/Login.vue', line: 8, severity: 'high', category: 'security', rule_id: 'sec/v-html',
+      message: 'v-html with user-controlled string', description: 'Rendering raw HTML from an untrusted source allows cross-site scripting.',
+      fix: { description: 'Render as interpolated text instead', original: '<div v-html="userBio"></div>', replacement: '<div>{{ userBio }}</div>' } },
+    { file: 'src/views/Login.vue', line: 22, severity: 'low', category: 'code_quality', rule_id: 'qa/console-log',
+      message: 'Stray console.log in production code', description: 'Logging may leak debug information and adds noise to the runtime console.',
+      fix: { description: 'Remove debug logging', original: `console.log('logging in', email)`, replacement: '' } },
+    { file: 'src/composables/useAuth.js', line: 17, severity: 'high', category: 'logic', rule_id: 'logic/state-race',
+      message: 'Auth state set before token validation', description: 'A failed validation still flips the user into a logged-in state for a moment.',
+      fix: null },
+    { file: 'src/composables/useAuth.js', line: 45, severity: 'medium', category: 'performance', rule_id: 'perf/repeated-call',
+      message: 'Repeated API call inside watcher', description: 'The watcher triggers a network request on every keystroke without debouncing.',
+      fix: { description: 'Debounce the watcher by 300ms', original: 'watch(query, fetchUsers)', replacement: 'watch(query, debounce(fetchUsers, 300))' } },
+    { file: 'src/router/index.js', line: 28, severity: 'medium', category: 'architecture', rule_id: 'arch/route-import',
+      message: 'Lazy route loading not used', description: 'Eagerly importing routes increases initial bundle size for users who may never visit them.',
+      fix: { description: 'Convert to dynamic import', original: "component: AdminDashboard", replacement: "component: () => import('@/views/AdminDashboard.vue')" } },
+    { file: 'src/components/NavBar.vue', line: 5, severity: 'medium', category: 'accessibility', rule_id: 'a11y/landmark',
+      message: 'Use semantic <nav> element', description: 'A bare <div> for navigation loses landmark semantics for assistive tech.',
+      fix: { description: 'Replace wrapping div with nav', original: '<div class="navbar">', replacement: '<nav class="navbar" aria-label="Primary">' } },
+    { file: 'src/components/NavBar.vue', line: 19, severity: 'low', category: 'ui_consistency', rule_id: 'ui/spacing',
+      message: 'Inconsistent spacing scale', description: 'A 13px margin breaks the 4-point grid used elsewhere in the design system.',
+      fix: { description: 'Snap to 12px from the spacing scale', original: 'margin: 13px', replacement: 'margin: var(--space-3)' } },
+    { file: 'src/utils/format.js', line: 9, severity: 'low', category: 'code_quality', rule_id: 'qa/unused-import',
+      message: 'Unused import', description: 'The moment library is imported but never referenced in this module.',
+      fix: { description: 'Remove the unused import', original: "import moment from 'moment';", replacement: '' } },
+    { file: 'src/utils/format.js', line: 24, severity: 'low', category: 'logic', rule_id: 'logic/loose-equality',
+      message: 'Use strict equality', description: 'Loose equality can cause subtle bugs from type coercion.',
+      fix: { description: 'Switch to ===', original: 'if (count == 0)', replacement: 'if (count === 0)' } },
+    { file: 'src/store/cart.js', line: 41, severity: 'high', category: 'logic', rule_id: 'logic/null-check',
+      message: 'Possible null dereference', description: 'Accessing .quantity on a possibly null cart item will throw at runtime.',
+      fix: null }
+  ]
+};
+
+DEMO_DATA.issues.forEach(i => { i.ignored = false; });
+
+function buildTreeFromIssues(issues) {
+  const root = { type: 'directory', name: 'Demo Project', path: '/', children: [], issue_count: issues.length };
+  const fileMap = new Map();
+  for (const issue of issues) {
+    if (!fileMap.has(issue.file)) fileMap.set(issue.file, []);
+    fileMap.get(issue.file).push(issue);
+  }
+  const dirMap = new Map();
+  dirMap.set('', root);
+  for (const [filePath, fileIssues] of fileMap.entries()) {
+    const parts = filePath.split('/');
+    const filename = parts.pop();
+    let currentPath = '';
+    let parent = root;
+    for (const part of parts) {
+      currentPath = currentPath ? currentPath + '/' + part : part;
+      if (!dirMap.has(currentPath)) {
+        const dir = { type: 'directory', name: part, path: currentPath, children: [], issue_count: 0 };
+        parent.children.push(dir);
+        dirMap.set(currentPath, dir);
+      }
+      parent = dirMap.get(currentPath);
+      parent.issue_count += fileIssues.length;
+    }
+    const ext = '.' + filename.split('.').pop();
+    parent.children.push({
+      type: 'file', name: filename, path: filePath, extension: ext, issue_count: fileIssues.length
+    });
+  }
+  return root;
+}
+
+const DEMO_FILES = {
+  'src/components/UserCard.vue': [
+    '<template>', '  <article class="user-card">', '    <header>', '      <img :src="user.avatar">',
+    '      <h3>{{ user.name }}</h3>', '    </header>', '    <p>{{ user.bio }}</p>', '    <footer>',
+    '      <span>{{ user.role }}</span>', '    </footer>', '  </article>', '</template>', '',
+    '<script setup>', 'import { defineProps } from "vue";', 'const props = defineProps({', '  user: Object',
+    '});', '<\/script>', '', '<style scoped>', '.user-card {', '  padding: 16px;', '  border-radius: 8px;',
+    '}', '.user-card header {', '  display: flex;', '  align-items: center;', '  gap: 12px;', '}',
+    '.user-card h3 {', '  margin: 0;', '  font-size: 18px;', '  style="color: #336699"', '}', '</style>'
+  ],
+  'src/views/Login.vue': [
+    '<template>', '  <section class="login">', '    <h1>Sign in</h1>', '    <form @submit.prevent="submit">',
+    '      <input v-model="email" type="email" placeholder="Email">', '      <input v-model="password" type="password">',
+    '      <div v-html="userBio"></div>', '      <button type="submit">Sign in</button>', '    </form>',
+    '  </section>', '</template>', '', '<script setup>', 'import { ref } from "vue";', 'const email = ref("");',
+    'const password = ref("");', 'const userBio = ref("");', 'async function submit() {',
+    '  await login(email.value, password.value);', '  console.log("logging in", email.value);',
+    '  router.push("/dashboard");', '}', '<\/script>'
+  ],
+  'src/composables/useAuth.js': [
+    'import { ref, watch } from "vue";', 'import { api } from "@/api";', '',
+    'const user = ref(null);', 'const token = ref(null);', '',
+    'export function useAuth() {', '  async function login(email, password) {',
+    '    const result = await api.post("/auth/login", { email, password });', '    token.value = result.token;',
+    '    user.value = result.user;', '    return user.value;', '  }', '',
+    '  async function validate() {', '    if (!token.value) return false;',
+    '    user.value = await api.get("/me");  // race: user set before validation',
+    '    const ok = await api.get("/validate");', '    return ok;', '  }', '',
+    '  const query = ref("");', '  function fetchUsers() {', '    return api.get("/users?q=" + query.value);', '  }',
+    '  ', '  watch(query, fetchUsers); // not debounced', '', '  return { user, login, validate, query };', '}'
+  ],
+  'src/router/index.js': [
+    'import { createRouter, createWebHistory } from "vue-router";', 'import Home from "@/views/Home.vue";',
+    'import Login from "@/views/Login.vue";', 'import AdminDashboard from "@/views/AdminDashboard.vue";', '',
+    'const routes = [', '  { path: "/", component: Home },', '  { path: "/login", component: Login },',
+    '  { path: "/admin", component: AdminDashboard },', '  {', '    path: "/users",',
+    '    component: () => import("@/views/Users.vue"),', '    children: [', '      {',
+    '        path: ":id",', '        component: AdminDashboard, // eager import wastes bundle',
+    '      }', '    ]', '  }', '];', '',
+    'export default createRouter({', '  history: createWebHistory(),', '  routes', '});'
+  ],
+  'src/components/NavBar.vue': [
+    '<template>', '  <div class="navbar">', '    <router-link to="/">Home</router-link>',
+    '    <router-link to="/users">Users</router-link>', '    <router-link to="/admin">Admin</router-link>',
+    '  </div>', '</template>', '', '<style scoped>', '.navbar {', '  display: flex;', '  gap: 16px;',
+    '  padding: 12px 24px;', '}', '.navbar a {', '  color: var(--ink);',
+    '  margin: 13px;', '  text-decoration: none;', '}', '</style>'
+  ],
+  'src/utils/format.js': [
+    'import moment from "moment";', 'import { padStart } from "lodash";', '',
+    'export function formatPrice(amount, currency = "USD") {',
+    '  return new Intl.NumberFormat("en-US", {', '    style: "currency",', '    currency',
+    '  }).format(amount);', '}', '',
+    'export function pluralize(count, singular, plural) {',
+    '  if (count == 0) return "no " + plural;', '  return count + " " + (count === 1 ? singular : plural);',
+    '}'
+  ],
+  'src/store/cart.js': [
+    'import { defineStore } from "pinia";', '',
+    'export const useCartStore = defineStore("cart", {',
+    '  state: () => ({ items: [], selected: null }),', '  getters: {',
+    '    totalQuantity(state) {',
+    '      return state.items.reduce((sum, i) => sum + i.quantity, 0);', '    },',
+    '  },', '  actions: {', '    addItem(item) { this.items.push(item); },',
+    '    selectItem(id) {', '      this.selected = this.items.find(i => i.id === id);', '    },',
+    '    getSelectedQuantity() {',
+    '      return this.selected.quantity; // selected may be null', '    }', '  }', '});'
+  ]
+};
+
+Vue.createApp({
+  components: { TreeNode },
+  data() {
+    return {
+      fileTree: null,
+      currentFile: null,
+      currentPath: null,
+      rootName: '',
+      scanResult: null,
+      selectedIssue: null,
+      severityFilter: 'All',
+      severities: ['All', 'High', 'Medium', 'Low'],
+      loading: false,
+      loadingTitle: '',
+      loadingDetail: '',
+      diffIssue: null,
+      chatInput: '',
+      chat: [
+        { id: 1, role: 'assistant', text: 'Welcome to PrismAI. Open a folder, scan your workspace, or run the demo to see analysis in action.' }
+      ],
+      nextChatId: 2
+    };
+  },
+  computed: {
+    allIssues() {
+      return (this.scanResult && this.scanResult.issues ? this.scanResult.issues : []).filter(i => !i.ignored);
+    },
+    filteredIssues() {
+      if (this.severityFilter === 'All') return this.allIssues;
+      return this.allIssues.filter(i => i.severity === this.severityFilter.toLowerCase());
+    },
+    groupedIssues() {
+      const order = ['accessibility', 'security', 'logic', 'architecture', 'performance', 'ui_consistency', 'ui', 'code_quality'];
+      const groups = new Map();
+      for (const issue of this.filteredIssues) {
+        const key = this.normalizeType(issue.category);
+        if (!groups.has(key)) groups.set(key, []);
+        groups.get(key).push(issue);
+      }
+      return Array.from(groups.entries())
+        .sort((a,b) => {
+          const ai = order.indexOf(a[0]) === -1 ? 99 : order.indexOf(a[0]);
+          const bi = order.indexOf(b[0]) === -1 ? 99 : order.indexOf(b[0]);
+          return ai - bi;
+        })
+        .map(([key, items]) => ({ key, label: this.typeLabel(key), items }));
+    },
+    summary() {
+      if (!this.scanResult) return null;
+      const s = this.scanResult.summary || {};
+      return {
+        total: this.allIssues.length,
+        high: s.high || this.allIssues.filter(i => i.severity === 'high').length,
+        medium: s.medium || this.allIssues.filter(i => i.severity === 'medium').length,
+        low: s.low || this.allIssues.filter(i => i.severity === 'low').length,
+        files: this.scanResult.file_count || 0,
+        fixable: this.allIssues.filter(i => i.fix).length
+      };
+    },
+    projectTitle() {
+      return this.scanResult ? 'Analysis Dashboard' : 'Frontend Project Analysis';
+    },
+    statusText() {
+      if (!this.scanResult) return 'Open a folder, scan your workspace, or run the demo to begin.';
+      return `${this.summary.total} issues across ${this.summary.files} files · ${this.summary.fixable} AI fixes available.`;
+    }
+  },
+  mounted() {
+    // Auto-load demo so the UI feels alive on first view
+    this.loadDemo();
+  },
+  methods: {
+    loadDemo() {
+      this.scanResult = JSON.parse(JSON.stringify(DEMO_DATA));
+      this.fileTree = buildTreeFromIssues(this.scanResult.issues);
+      this.rootName = 'demo-project';
+      const first = this.allIssues[0];
+      if (first) this.focusIssueLocal(first);
+    },
+    focusIssueLocal(issue) {
+      this.selectedIssue = issue;
+      this.openLocalFile(issue.file);
+    },
+    openLocalFile(path) {
+      const lines = DEMO_FILES[path] || ['// File not available in demo'];
+      const fileIssues = this.allIssues.filter(i => i.file === path);
+      this.currentFile = {
+        filename: path.split('/').pop(),
+        path,
+        lines,
+        line_count: lines.length,
+        issues: fileIssues
+      };
+      this.currentPath = path;
+    },
+    async handleUpload(event) {
+      if (!event.target.files.length) return;
+      this.startLoading('Uploading project', `${event.target.files.length} files selected`);
+      setTimeout(() => { this.loading = false; this.loadDemo(); }, 800);
+    },
+    demoScan() {
+      this.startLoading('Running demo analysis', 'Loading precomputed PrismAI findings');
+      setTimeout(() => { this.loading = false; this.loadDemo(); }, 700);
+    },
+    scanWorkspace() {
+      this.startLoading('Scanning project', 'Analyzing files and retrieving recommendations');
+      setTimeout(() => { this.loading = false; this.loadDemo(); }, 900);
+    },
+    selectFile(path) {
+      this.openLocalFile(path);
+      if (!this.selectedIssue || this.selectedIssue.file !== path) {
+        this.selectedIssue = this.currentFile.issues[0] || null;
+      }
+    },
+    focusIssue(issue) {
+      this.selectedIssue = issue;
+      this.openLocalFile(issue.file);
+      this.selectedIssue = issue;
+      this.$nextTick(() => {
+        const line = document.getElementById('line-' + issue.line);
+        if (line) line.scrollIntoView({ block: 'center', behavior: 'smooth' });
+      });
+    },
+    openEditor(file, line) { /* hook for VS Code bridge */ },
+    lineClass(line) {
+      if (!this.currentFile) return '';
+      const issues = this.currentFile.issues.filter(i => i.line === line);
+      if (!issues.length) return '';
+      if (this.selectedIssue && issues.some(i => this.issueKey(i) === this.issueKey(this.selectedIssue))) return 'active-issue';
+      if (issues.some(i => i.severity === 'high')) return 'has-high';
+      if (issues.some(i => i.severity === 'medium')) return 'has-medium';
+      return 'has-low';
+    },
+    previewFix(issue) { if (issue.fix) this.diffIssue = issue; },
+    applyFix(issue) {
+      this.startLoading('Applying AI fix', issue.fix.description);
+      setTimeout(() => {
+        issue.ignored = true;
+        this.diffIssue = null;
+        this.loading = false;
+        this.addChat('assistant', `Fix applied to ${this.shortFile(issue.file)}:${issue.line}.`);
+        if (this.selectedIssue === issue) this.selectedIssue = this.allIssues[0] || null;
+      }, 700);
+    },
+    fixAll(path) {
+      this.startLoading('Applying fixes', this.shortFile(path));
+      setTimeout(() => {
+        this.allIssues.filter(i => i.file === path && i.fix).forEach(i => i.ignored = true);
+        this.loading = false;
+        this.selectFile(path);
+      }, 800);
+    },
+    askChat() {
+      const question = this.chatInput.trim();
+      if (!question) return;
+      this.addChat('user', question);
+      this.chatInput = '';
+      setTimeout(() => this.addChat('assistant', this.answerQuestion(question)), 250);
+      this.$nextTick(() => {
+        if (this.$refs.messages) this.$refs.messages.scrollTop = this.$refs.messages.scrollHeight;
+      });
+    },
+    answerQuestion(question) {
+      const q = question.toLowerCase();
+      if (!this.scanResult) return 'No project has been analyzed yet. Run a scan first.';
+      if (q.includes('summary') || q.includes('overview')) {
+        return `Summary: ${this.summary.total} issues across ${this.summary.files} files. Severity split — ${this.summary.high} high, ${this.summary.medium} medium, ${this.summary.low} low. ${this.summary.fixable} have automated fixes.`;
+      }
+      if (q.includes('file') || q.includes('where')) {
+        const byFile = this.allIssues.reduce((acc, issue) => {
+          const file = this.shortFile(issue.file);
+          acc[file] = (acc[file] || 0) + 1;
+          return acc;
+        }, {});
+        const top = Object.entries(byFile).sort((a,b) => b[1] - a[1]).slice(0, 3).map(([file,count]) => `${file} (${count})`).join(', ');
+        return top ? `Most affected: ${top}.` : 'No affected files found.';
+      }
+      if (q.includes('fix') || q.includes('recommend')) {
+        const issue = this.selectedIssue || this.allIssues.find(i => i.fix);
+        return issue ? `${issue.message}: ${this.recommendation(issue)}` : 'No fixable issues are currently available.';
+      }
+      if (q.includes('access')) {
+        const count = this.allIssues.filter(i => this.normalizeType(i.category) === 'accessibility').length;
+        return `Accessibility findings: ${count}. These typically involve labels, alt text, and keyboard navigation.`;
+      }
+      if (q.includes('security')) {
+        const count = this.allIssues.filter(i => this.normalizeType(i.category) === 'security').length;
+        return count ? `Security findings: ${count}. Review these before UI cleanup.` : 'No security issues in the latest scan.';
+      }
+      return `I found ${this.summary.total} issues. Ask for a summary, risky files, accessibility findings, or fixes.`;
+    },
+    recommendation(issue) {
+      if (issue.fix) return issue.fix.description;
+      const type = this.normalizeType(issue.category);
+      const defaults = {
+        accessibility: 'Add semantic labels and keyboard-friendly markup.',
+        security: 'Remove unsafe rendering paths and sanitize user input.',
+        architecture: 'Move this concern into a clearer module boundary.',
+        logic: 'Review the condition and state transition around this line.',
+        performance: 'Move repeated work into reusable styles or cached computation.',
+        ui_consistency: 'Replace one-off styling with shared design tokens.',
+        code_quality: 'Clean up debug code and make behavior explicit.'
+      };
+      return defaults[type] || 'Review this code path and align with project rules.';
+    },
+    normalizeType(category) {
+      const c = (category || 'code_quality').toLowerCase();
+      if (c.includes('a11y') || c.includes('access')) return 'accessibility';
+      if (c.includes('security') || c.includes('xss')) return 'security';
+      if (c.includes('arch')) return 'architecture';
+      if (c.includes('logic')) return 'logic';
+      if (c.includes('ui')) return 'ui_consistency';
+      if (c.includes('perf')) return 'performance';
+      return c;
+    },
+    typeLabel(category) {
+      const labels = {
+        accessibility: 'Accessibility',
+        ui_consistency: 'UI',
+        ui: 'UI',
+        logic: 'Logic',
+        security: 'Security',
+        architecture: 'Architecture',
+        performance: 'Performance',
+        code_quality: 'Code Quality'
+      };
+      return labels[this.normalizeType(category)] || String(category || 'Issue').replace(/_/g, ' ');
+    },
+    shortFile(path) {
+      if (!path) return '';
+      const clean = path.replace(/\\/g, '/');
+      const parts = clean.split('/');
+      return parts.slice(-3).join('/');
+    },
+    issueKey(issue) {
+      if (!issue) return '';
+      return `${issue.file}-${issue.line}-${issue.rule_id}-${issue.message}`;
+    },
+    startLoading(title, detail) {
+      this.loading = true;
+      this.loadingTitle = title;
+      this.loadingDetail = detail || '';
+    },
+    addChat(role, text) {
+      this.chat.push({ id: this.nextChatId++, role, text });
+    }
+  }
+}).mount('#app');
+</script>
+</body>
+</html>

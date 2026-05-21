@@ -1,0 +1,65 @@
+# ==== SECRETS & ENVIRONMENT ====
+.env
+.env.*
+*.env
+!.env.example
+
+# ==== Python ====
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+.Python
+*.egg
+*.egg-info/
+dist/
+build/
+*.so
+.venv/
+venv/
+env/
+ENV/
+.pytest_cache/
+*.log
+
+# ==== Node / Vue ====
+node_modules/
+dist/
+.nuxt/
+.output/
+*.local
+
+# ==== Database / Generated ====
+*.db
+*.sqlite
+*.sqlite3
+report_data.json
+code_report.html
+static_report.html
+DEPENDENCY_GRAPH.html
+DEPENDENCY_REPORT.txt
+CODE_AUDIT_REPORT.md
+
+# ==== Logs & Output ====
+*.log
+output.log
+run_output.log
+analysis_server.*.log
+code-analyzer/backend/
+
+# ==== VS Code / IDE ====
+.vscode/
+.idea/
+*.suo
+*.user
+
+# ==== OS ====
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# ==== Misc ====
+*.bak
+*.tmp
+*.swp
+pyrightconfig.json

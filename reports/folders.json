@@ -1,0 +1,117 @@
+[
+    {
+        "id": 1,
+        "folder_name": "src",
+        "folder_path": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src"
+    },
+    {
+        "id": 2,
+        "folder_name": "assets",
+        "folder_path": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\assets"
+    },
+    {
+        "id": 3,
+        "folder_name": "components",
+        "folder_path": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\components"
+    },
+    {
+        "id": 4,
+        "folder_name": "BL",
+        "folder_path": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\components\\BL"
+    },
+    {
+        "id": 5,
+        "folder_name": "common",
+        "folder_path": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\components\\common"
+    },
+    {
+        "id": 6,
+        "folder_name": "DaiseUIComponents",
+        "folder_path": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\components\\DaiseUIComponents"
+    },
+    {
+        "id": 7,
+        "folder_name": "download-manager",
+        "folder_path": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\components\\download-manager"
+    },
+    {
+        "id": 8,
+        "folder_name": "excel",
+        "folder_path": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\components\\excel"
+    },
+    {
+        "id": 9,
+        "folder_name": "i18Demo",
+        "folder_path": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\components\\i18Demo"
+    },
+    {
+        "id": 10,
+        "folder_name": "keymappers",
+        "folder_path": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\components\\keymappers"
+    },
+    {
+        "id": 11,
+        "folder_name": "mongodbID",
+        "folder_path": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\components\\mongodbID"
+    },
+    {
+        "id": 12,
+        "folder_name": "sessionmanager",
+        "folder_path": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\components\\sessionmanager"
+    },
+    {
+        "id": 13,
+        "folder_name": "svgs",
+        "folder_path": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\components\\svgs"
+    },
+    {
+        "id": 14,
+        "folder_name": "upload-manager",
+        "folder_path": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\components\\upload-manager"
+    },
+    {
+        "id": 15,
+        "folder_name": "lang",
+        "folder_path": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\lang"
+    },
+    {
+        "id": 16,
+        "folder_name": "plugins",
+        "folder_path": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\plugins"
+    },
+    {
+        "id": 17,
+        "folder_name": "setup",
+        "folder_path": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\setup"
+    },
+    {
+        "id": 18,
+        "folder_name": "store",
+        "folder_path": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\store"
+    },
+    {
+        "id": 19,
+        "folder_name": "modules",
+        "folder_path": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\store\\modules"
+    },
+    {
+        "id": 20,
+        "folder_name": "views",
+        "folder_path": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\views"
+    },
+    {
+        "id": 21,
+        "folder_name": "iLike",
+        "folder_path": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\views\\iLike"
+    },
+    {
+        "id": 22,
+        "folder_name": "Layout",
+        "folder_path": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\views\\Layout"
+    },
+    {
+        "id": 23,
+        "folder_name": "Result",
+        "folder_path": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\views\\Result"
+    }
+]

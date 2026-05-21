@@ -1,0 +1,58 @@
+﻿{% extends "base.html" %}
+{% block title %}Architecture - PrismAI{% endblock %}
+{% block extra_css %}
+<style>
+  .arch-container { display: grid; grid-template-columns: 1fr 320px; gap: 20px; height: calc(100vh - 300px); }
+  #archGraph { border: 1px solid var(--border); border-radius: var(--radius-lg); background: var(--bg-card); }
+  .arch-panel { background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 16px; overflow-y: auto; }
+  .arch-panel h3 { margin-bottom: 12px; font-size: 16px; }
+  .stat-item { padding: 8px 0; display: flex; justify-content: space-between; border-bottom: 1px solid var(--border); }
+  .stat-item:last-child { border-bottom: none; }
+  .file-rank { padding: 8px; margin-bottom: 4px; background: rgba(124, 58, 237, 0.05); border-radius: var(--radius-md); font-size: 13px; }
+  @media (max-width: 1024px) { .arch-container { grid-template-columns: 1fr; } .arch-panel { display: none; } }
+</style>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/cytoscape/3.23.0/cytoscape.min.js"></script>
+{% endblock %}
+{% block content %}
+<section class="hero" style="margin-bottom: 20px;">
+  <h1>Architecture Map</h1>
+  <p>Visual representation of your codebase structure with severity mapping.</p>
+</section>
+<div class="arch-container">
+  <div id="archGraph"></div>
+  <div class="arch-panel">
+    <h3>Architecture Overview</h3>
+    <div class="stat-item"><span>Files:</span><strong id="fileCount">0</strong></div>
+    <div class="stat-item"><span>Imports:</span><strong id="edgeCount">0</strong></div>
+    <h3 style="margin-top: 20px;">Critical Files</h3>
+    <div id="criticalFiles"></div>
+  </div>
+</div>
+<script>
+document.addEventListener("DOMContentLoaded", async () => {
+  try {
+    const data = await API.architecture();
+    document.getElementById("fileCount").textContent = (data.nodes || []).length;
+    document.getElementById("edgeCount").textContent = (data.edges || []).length;
+
+    const cy = cytoscape({
+      container: document.getElementById("archGraph"),
+      elements: [
+        ...(data.nodes || []).map(n => ({ data: { id: n.id, label: n.label, ...n } })),
+        ...(data.edges || []).map(e => ({ data: { source: e.source, target: e.target } }))
+      ],
+      style: [
+        { selector: "node", style: { "background-color": "#7c3aed", "label": "data(label)", "width": 25, "height": 25, "color": "white", "text-valign": "center", "text-halign": "center", "font-size": 10, "font-weight": "bold" } },
+        { selector: "edge", style: { "line-color": "#e5e0f0", "target-arrow-color": "#e5e0f0", "target-arrow-shape": "triangle" } }
+      ],
+      layout: { name: "cose" }
+    });
+    
+    const critFiles = (data.nodes || []).filter(n => n.bug_count > 0).sort((a, b) => (b.bug_count || 0) - (a.bug_count || 0)).slice(0, 5);
+    document.getElementById("criticalFiles").innerHTML = critFiles.map(f => `<div class="file-rank"><strong>${f.data?.label || f.label}</strong><br><small>${f.bug_count || 0} issues</small></div>`).join("");
+  } catch (err) {
+    console.error("Error loading architecture:", err);
+  }
+});
+</script>
+{% endblock %}

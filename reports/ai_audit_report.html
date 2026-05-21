@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>AI Audit Report</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Segoe UI',system-ui,sans-serif;background:#f0f2f5;color:#1a1a2e}
+.hdr{background:linear-gradient(135deg,#1a1a2e,#16213e 50%,#0f3460);color:#fff;padding:32px 48px}
+.hdr h1{font-size:28px;margin-bottom:4px} .hdr p{opacity:.75;font-size:13px}
+.bar{display:flex;gap:18px;padding:22px 48px;background:#fff;border-bottom:1px solid #e2e8f0;flex-wrap:wrap}
+.card{flex:1;min-width:130px;padding:16px 20px;border-radius:12px;background:#f8fafc;border:1px solid #e2e8f0;text-align:center}
+.card .v{font-size:30px;font-weight:700} .card .l{font-size:11px;color:#64748b;margin-top:3px;text-transform:uppercase;letter-spacing:.5px}
+.ring{width:86px;height:86px;border-radius:50%;border:6px solid #f59e0b;display:flex;align-items:center;justify-content:center;font-size:26px;font-weight:800;color:#f59e0b;margin:0 auto}
+.wrap{max-width:1440px;margin:0 auto;padding:24px 48px 48px}
+.sec{background:#fff;border-radius:12px;margin-bottom:22px;box-shadow:0 1px 3px rgba(0,0,0,.08);overflow:hidden}
+.sec-h{padding:14px 22px;font-size:17px;font-weight:700;border-bottom:1px solid #e2e8f0;display:flex;align-items:center;gap:10px}
+.cnt{background:#e2e8f0;color:#475569;font-size:12px;padding:2px 10px;border-radius:20px;font-weight:600}
+table{width:100%;border-collapse:collapse;font-size:13px}
+th{background:#f8fafc;text-align:left;padding:10px 14px;font-weight:600;color:#475569;border-bottom:2px solid #e2e8f0;position:sticky;top:0}
+td{padding:10px 14px;border-bottom:1px solid #f1f5f9;vertical-align:top}
+tr:hover{background:#f8fafc}
+.badge{color:#fff;padding:2px 10px;border-radius:12px;font-size:11px;font-weight:600;white-space:nowrap}
+.rec{max-width:480px;line-height:1.55;color:#334155}
+.rec code{background:#f1f5f9;padding:1px 5px;border-radius:4px;font-size:12px;color:#be185d}
+.rec pre{background:#1e293b;color:#e2e8f0;padding:10px 14px;border-radius:8px;margin:6px 0;overflow-x:auto;font-size:12px;line-height:1.4}
+.rec pre code{background:none;color:inherit;padding:0}
+.empty-row{text-align:center;padding:24px!important;color:#22c55e;font-weight:600}
+footer{text-align:center;padding:24px;color:#94a3b8;font-size:12px}
+@media(max-width:768px){.bar,.wrap,.hdr{padding:16px} table{font-size:12px} td,th{padding:6px 8px}}
+</style></head><body>
+
+<div class="hdr">
+  <h1>🛡️ AI Audit Report</h1>
+  <p>RAG-powered code audit — Google Gemini</p>
+  <p style="margin-top:4px;opacity:.55;font-size:12px">Target: C:\Users\shivanid\Desktop\ShivaniD</p>
+</div>
+
+<div class="bar">
+  <div class="card"><div class="ring">72</div><div class="l">Health Score</div></div>
+  <div class="card"><div class="v" style="color:#f59e0b">MEDIUM</div><div class="l">Risk Level</div></div>
+  <div class="card"><div class="v">35</div><div class="l">Total Issues</div></div>
+  <div class="card"><div class="v" style="color:#ef4444">2</div><div class="l">High</div></div>
+  <div class="card"><div class="v" style="color:#f59e0b">4</div><div class="l">Medium</div></div>
+  <div class="card"><div class="v">220</div><div class="l">Files</div></div>
+  <div class="card"><div class="v">111</div><div class="l">APIs</div></div>
+</div>
+
+<div class="wrap">
+
+<div class="sec"><div class="sec-h">🎨 UI Consistency Issues <span class="cnt">3</span></div>
+<div style="overflow-x:auto"><table>
+<thead><tr><th>#</th><th>File</th><th>Rule</th><th>Finding</th><th>Severity</th><th>AI Recommendation</th></tr></thead>
+<tbody><tr>
+            <td>1</td><td title="C:\Users\shivanid\Desktop\ShivaniD\StudentLogin\client\app\src\components\BL\updateDbSave.vue">updateDbSave.vue</td>
+            <td>AI Spell &amp; Grammar Check</td><td>&lt;p id='updateAndSave'&gt; issue(s): Contains multiple consecutive spaces. Original text: 'This feature updates the user age.  Server can add 5 for given age and
+          saves data in database.'</td>
+            <td><span class="badge" style="background:#f59e0b">MEDIUM</span></td><td class="rec">**Recommendation:** Remove the consecutive spaces in the <code>&lt;p&gt;</code> tag's text content. This improves readability and adheres to standard text formatting guidelines.<br>    **Code Fix:**<br>    ``<code>html<br>            &lt;p&gt;<br>              This feature updates the user age. Server can add 5 for given age and<br>              saves data in database.<br>            &lt;/p&gt;<br>    </code>``</td>
+        </tr><tr>
+            <td>2</td><td title="C:\Users\shivanid\Desktop\ShivaniD\StudentLogin\client\app\src\components\common\programBar.vue">programBar.vue</td>
+            <td>AI Spell &amp; Grammar Check</td><td>&lt;p class='text-sm font-bold text-white'&gt; issue(s): Contains multiple consecutive spaces. Original text: 'Program:   Event:'</td>
+            <td><span class="badge" style="background:#f59e0b">MEDIUM</span></td><td class="rec">To resolve the multiple consecutive spaces, reduce them to a single space between &quot;Program:&quot; and &quot;Event:&quot;. Consistent spacing improves readability and adheres to standard typographical practices.<br>    ``<code>vue<br>    &lt;p class=&quot;text-sm font-bold text-white&quot;&gt;<br>      Program: {{ fullProgramTerm || '' }} Event: {{ displayName || '' }}<br>    &lt;/p&gt;<br>    </code>``</td>
+        </tr><tr>
+            <td>3</td><td title="C:\Users\shivanid\Desktop\ShivaniD\StudentLogin\client\app\src\components\common\programBar.vue">programBar.vue</td>
+            <td>Header Presence</td><td>Header missing</td>
+            <td><span class="badge" style="background:#f59e0b">MEDIUM</span></td><td class="rec">For improved accessibility and semantic structure, wrap the &quot;Program: Event:&quot; text in an appropriate heading tag (e.g., <code>&lt;h3&gt;</code> or <code>&lt;h4&gt;</code>) instead of a paragraph tag. This clarifies its role as a section header for the displayed program and event information.<br>    ``<code>vue<br>    &lt;template&gt;<br>      &lt;div class=&quot;bg-blue-500 px-8 py-2&quot;&gt;<br>        &lt;h3 class=&quot;text-sm font-bold text-white&quot;&gt;<br>          Program: {{ fullProgramTerm || '' }} Event: {{ displayName || '' }}<br>        &lt;/h3&gt;<br>      &lt;/div&gt;<br>    &lt;/template&gt;<br>    </code>``</td>
+        </tr></tbody></table></div></div>
+
+<div class="sec"><div class="sec-h">♿ Accessibility Issues <span class="cnt">3</span></div>
+<div style="overflow-x:auto"><table>
+<thead><tr><th>#</th><th>File</th><th>Rule</th><th>Finding</th><th>Severity</th><th>AI Recommendation</th></tr></thead>
+<tbody><tr>
+            <td>1</td><td title="C:\Users\shivanid\Desktop\ShivaniD\StudentLogin\client\app\src\components\sessionmanager\deleteData.vue">deleteData.vue</td>
+            <td>Color-only error indicator</td><td>&lt;button&gt; with error styling uses color only to convey meaning</td>
+            <td><span class="badge" style="background:#ef4444">HIGH</span></td><td class="rec">**Rule: Color-only error indicator**<br>    *   **Recommendation:** The <code>btn-error</code> class likely applies a red background to signify a destructive action (&quot;Delete&quot;). To ensure users with color vision deficiencies understand this meaning, supplement the color with a non-color indicator.<br>    *   **Code fix:** Add a relevant icon within the button text to visually reinforce the &quot;delete&quot; or &quot;danger&quot; nature of the action.<br><br>    ``<code>vue<br>    &lt;button class=&quot;btn btn-error px-8 py-2 rounded-lg text-white font-semibold mt-4&quot; type=&quot;submit&quot;&gt;<br>      &lt;i class=&quot;isax isax-trash me-2&quot;&gt;&lt;/i&gt; Delete<br>    &lt;/button&gt;<br>    </code>``</td>
+        </tr><tr>
+            <td>2</td><td title="C:\Users\shivanid\Desktop\ShivaniD\StudentLogin\client\app\src\views\adminLogin.vue">adminLogin.vue</td>
+            <td>Missing focus style</td><td>No focus style defined for 'a'</td>
+            <td><span class="badge" style="background:#f59e0b">MEDIUM</span></td><td class="rec">**Recommendation:** Ensure all interactive elements, including <code>&lt;a&gt;</code> tags, have a clear visual focus indicator when navigated via keyboard. This helps keyboard users understand which element is currently active.<br>    **Code Fix (add to your CSS or style block):**<br>    ``<code>css<br>    a.resend:focus-visible {<br>      outline: 2px solid var(--primary-color, blue); /* Use your theme's primary/accent color */<br>      outline-offset: 2px;<br>      border-radius: 2px; /* Optional: for softer corners */<br>    }<br>    </code>``</td>
+        </tr><tr>
+            <td>3</td><td title="C:\Users\shivanid\Desktop\ShivaniD\StudentLogin\client\app\src\views\adminLogin.vue">adminLogin.vue</td>
+            <td>Link missing accessible text</td><td>&lt;a class='resend'&gt; has no accessible text</td>
+            <td><span class="badge" style="background:#ef4444">HIGH</span></td><td class="rec">**Recommendation:** The <code>&lt;a class='resend'&gt;</code> tag is used to trigger an action (&quot;Resend Code&quot;). For interactive elements that perform an action rather than navigate, a <code>&lt;button&gt;</code> element is semantically more appropriate and provides better accessibility out-of-the-box.<br>    **Code Fix:**<br>    ``<code>vue<br>    &lt;div class=&quot;resend-otp&quot; v-if=&quot;resendOTP&quot;&gt;<br>      &lt;p&gt;<br>        {{ $t(&quot;login.codeNotReceived&quot;) }}<br>        &lt;br /&gt;<br>        &lt;!-- Replace the &lt;a&gt; tag with a &lt;button&gt; --&gt;<br>        &lt;button type=&quot;button&quot; class=&quot;resend&quot; @click=&quot;sendOTP&quot;&gt;{{ $t(&quot;login.resendCode&quot;) }}&lt;/button&gt;<br>      &lt;/p&gt;<br>    &lt;/div&gt;<br>    </code>``</td>
+        </tr></tbody></table></div></div>
+
+<div class="sec"><div class="sec-h">⚙️ Flagged Component Complexity <span class="cnt">9</span></div>
+<div style="overflow-x:auto"><table>
+<thead><tr><th>Component</th><th>Lines</th><th>Methods</th><th>Watchers</th><th>Template Lines</th><th>Flags</th></tr></thead>
+<tbody><tr>
+        <td>Sidebar.vue</td><td>567</td>
+        <td>3</td><td>0</td>
+        <td>91</td><td>LARGE_COMPONENT</td>
+    </tr><tr>
+        <td>adminLogin.vue</td><td>977</td>
+        <td>0</td><td>0</td>
+        <td>130</td><td>VERY_LARGE_COMPONENT</td>
+    </tr><tr>
+        <td>Validator.vue</td><td>260</td>
+        <td>0</td><td>0</td>
+        <td>224</td><td>COMPLEX_TEMPLATE</td>
+    </tr><tr>
+        <td>iLikeCourses.vue</td><td>864</td>
+        <td>0</td><td>0</td>
+        <td>23</td><td>VERY_LARGE_COMPONENT</td>
+    </tr><tr>
+        <td>iLikeCoursesNew.vue</td><td>849</td>
+        <td>0</td><td>0</td>
+        <td>32</td><td>VERY_LARGE_COMPONENT</td>
+    </tr><tr>
+        <td>ApplicationServices.vue</td><td>753</td>
+        <td>0</td><td>0</td>
+        <td>246</td><td>LARGE_COMPONENT, COMPLEX_TEMPLATE</td>
+    </tr><tr>
+        <td>ExamFormSubmission.vue</td><td>1310</td>
+        <td>0</td><td>0</td>
+        <td>331</td><td>VERY_LARGE_COMPONENT, COMPLEX_TEMPLATE</td>
+    </tr><tr>
+        <td>FeeDetails.vue</td><td>1586</td>
+        <td>0</td><td>0</td>
+        <td>121</td><td>VERY_LARGE_COMPONENT</td>
+    </tr><tr>
+        <td>SelectedApplicationService.vue</td><td>543</td>
+        <td>11</td><td>0</td>
+        <td>75</td><td>LARGE_COMPONENT</td>
+    </tr></tbody></table></div></div>
+
+<div class="sec"><div class="sec-h">🚩 Flagged Files <span class="cnt">20</span></div>
+<div style="overflow-x:auto"><table>
+<thead><tr><th>File</th><th>API Count</th><th>LOC</th><th>Flags</th></tr></thead>
+<tbody><tr>
+        <td>main.js</td><td>3</td>
+        <td>417</td>
+        <td>HIGH_API_USAGE</td>
+    </tr><tr>
+        <td>Menu.vue</td><td>0</td>
+        <td>74</td>
+        <td>DEEP_NESTED_TEMPLATE</td>
+    </tr><tr>
+        <td>Sidebar.vue</td><td>0</td>
+        <td>567</td>
+        <td>LARGE_COMPONENT, DEEP_NESTED_TEMPLATE</td>
+    </tr><tr>
+        <td>SidebarNew.vue</td><td>0</td>
+        <td>236</td>
+        <td>DEEP_NESTED_TEMPLATE</td>
+    </tr><tr>
+        <td>store.js</td><td>4</td>
+        <td>173</td>
+        <td>HIGH_API_USAGE</td>
+    </tr><tr>
+        <td>adminLogin.vue</td><td>10</td>
+        <td>977</td>
+        <td>EXCESSIVE_API_USAGE, LARGE_COMPONENT</td>
+    </tr><tr>
+        <td>Login.vue</td><td>3</td>
+        <td>245</td>
+        <td>HIGH_API_USAGE</td>
+    </tr><tr>
+        <td>SessionManager.vue</td><td>3</td>
+        <td>132</td>
+        <td>HIGH_API_USAGE</td>
+    </tr><tr>
+        <td>StudentDemo.vue</td><td>4</td>
+        <td>122</td>
+        <td>HIGH_API_USAGE</td>
+    </tr><tr>
+        <td>Validator.vue</td><td>0</td>
+        <td>260</td>
+        <td>COMPLEX_TEMPLATE</td>
+    </tr><tr>
+        <td>iLikeCourses.vue</td><td>8</td>
+        <td>864</td>
+        <td>EXCESSIVE_API_USAGE, LARGE_COMPONENT</td>
+    </tr><tr>
+        <td>iLikeCoursesNew.vue</td><td>6</td>
+        <td>849</td>
+        <td>VERY_HIGH_API_USAGE, LARGE_COMPONENT</td>
+    </tr><tr>
+        <td>iLikeDashboard.vue</td><td>4</td>
+        <td>326</td>
+        <td>HIGH_API_USAGE</td>
+    </tr><tr>
+        <td>ApplicationServices.vue</td><td>4</td>
+        <td>753</td>
+        <td>HIGH_API_USAGE, LARGE_COMPONENT, HEAVY_COMPONENT, COMPLEX_HEAVY_COMPONENT, COMPLEX_TEMPLATE, DEEP_NESTED_TEMPLATE</td>
+    </tr><tr>
+        <td>ExamFormSubmission.vue</td><td>4</td>
+        <td>1310</td>
+        <td>HIGH_API_USAGE, LARGE_COMPONENT, HEAVY_COMPONENT, COMPLEX_HEAVY_COMPONENT, COMPLEX_TEMPLATE, DEEP_NESTED_TEMPLATE</td>
+    </tr><tr>
+        <td>FeeDetails.vue</td><td>11</td>
+        <td>1586</td>
+        <td>EXCESSIVE_API_USAGE, LARGE_COMPONENT</td>
+    </tr><tr>
+        <td>HallTicketPage.vue</td><td>3</td>
+        <td>265</td>
+        <td>HIGH_API_USAGE</td>
+    </tr><tr>
+        <td>ResultPage.vue</td><td>6</td>
+        <td>340</td>
+        <td>VERY_HIGH_API_USAGE</td>
+    </tr><tr>
+        <td>SelectedApplicationService.vue</td><td>4</td>
+        <td>543</td>
+        <td>HIGH_API_USAGE, LARGE_COMPONENT, HEAVY_COMPONENT</td>
+    </tr><tr>
+        <td>viewMarksheet.vue</td><td>5</td>
+        <td>269</td>
+        <td>VERY_HIGH_API_USAGE</td>
+    </tr></tbody></table></div></div>
+
+</div>
+<footer>Generated by RAG Audit Engine · Google Gemini · 2026-03-29 18:34</footer>
+</body></html>

@@ -1,0 +1,287 @@
+[
+    {
+        "id": 1,
+        "file_id": 1,
+        "component_name": "App"
+    },
+    {
+        "id": 2,
+        "file_id": 12,
+        "component_name": "date-range-pickr"
+    },
+    {
+        "id": 3,
+        "file_id": 13,
+        "component_name": "MTable"
+    },
+    {
+        "id": 4,
+        "file_id": 14,
+        "component_name": "multiselect"
+    },
+    {
+        "id": 5,
+        "file_id": 15,
+        "component_name": "updateDbSave"
+    },
+    {
+        "id": 6,
+        "file_id": 16,
+        "component_name": "updateUser"
+    },
+    {
+        "id": 7,
+        "file_id": 17,
+        "component_name": "breadCrumbs"
+    },
+    {
+        "id": 8,
+        "file_id": 18,
+        "component_name": "CourseTitleBar"
+    },
+    {
+        "id": 9,
+        "file_id": 19,
+        "component_name": "Footer"
+    },
+    {
+        "id": 10,
+        "file_id": 20,
+        "component_name": "Header"
+    },
+    {
+        "id": 11,
+        "file_id": 21,
+        "component_name": "recursive-menu"
+    },
+    {
+        "id": 12,
+        "file_id": 22,
+        "component_name": "programBar"
+    },
+    {
+        "id": 13,
+        "file_id": 23,
+        "component_name": "Sidebar"
+    },
+    {
+        "id": 14,
+        "file_id": 24,
+        "component_name": "TheSidebar"
+    },
+    {
+        "id": 15,
+        "file_id": 25,
+        "component_name": "Toast"
+    },
+    {
+        "id": 16,
+        "file_id": 26,
+        "component_name": "downloadFile"
+    },
+    {
+        "id": 17,
+        "file_id": 27,
+        "component_name": "downloadProgress"
+    },
+    {
+        "id": 18,
+        "file_id": 28,
+        "component_name": "somnath"
+    },
+    {
+        "id": 19,
+        "file_id": 29,
+        "component_name": "saveWActivity"
+    },
+    {
+        "id": 20,
+        "file_id": 30,
+        "component_name": "vikram"
+    },
+    {
+        "id": 21,
+        "file_id": 31,
+        "component_name": "Component1"
+    },
+    {
+        "id": 22,
+        "file_id": 32,
+        "component_name": "Component2"
+    },
+    {
+        "id": 23,
+        "file_id": 33,
+        "component_name": "decryptData"
+    },
+    {
+        "id": 24,
+        "file_id": 34,
+        "component_name": "encryptData"
+    },
+    {
+        "id": 25,
+        "file_id": 35,
+        "component_name": "hashData"
+    },
+    {
+        "id": 26,
+        "file_id": 36,
+        "component_name": "hashSalt"
+    },
+    {
+        "id": 27,
+        "file_id": 37,
+        "component_name": "customID"
+    },
+    {
+        "id": 28,
+        "file_id": 38,
+        "component_name": "hexID"
+    },
+    {
+        "id": 29,
+        "file_id": 39,
+        "component_name": "deleteData"
+    },
+    {
+        "id": 30,
+        "file_id": 40,
+        "component_name": "fetchData"
+    },
+    {
+        "id": 31,
+        "file_id": 41,
+        "component_name": "storeData"
+    },
+    {
+        "id": 32,
+        "file_id": 43,
+        "component_name": "uploadFile"
+    },
+    {
+        "id": 33,
+        "file_id": 44,
+        "component_name": "uploadProgessFile"
+    },
+    {
+        "id": 34,
+        "file_id": 70,
+        "component_name": "adminLogin"
+    },
+    {
+        "id": 35,
+        "file_id": 71,
+        "component_name": "autoBL"
+    },
+    {
+        "id": 36,
+        "file_id": 72,
+        "component_name": "CdnUpload"
+    },
+    {
+        "id": 37,
+        "file_id": 73,
+        "component_name": "Home"
+    },
+    {
+        "id": 38,
+        "file_id": 74,
+        "component_name": "Login"
+    },
+    {
+        "id": 39,
+        "file_id": 75,
+        "component_name": "SessionManager"
+    },
+    {
+        "id": 40,
+        "file_id": 76,
+        "component_name": "StudentData"
+    },
+    {
+        "id": 41,
+        "file_id": 77,
+        "component_name": "StudentDemo"
+    },
+    {
+        "id": 42,
+        "file_id": 78,
+        "component_name": "Validator"
+    },
+    {
+        "id": 43,
+        "file_id": 79,
+        "component_name": "iLikeCourses"
+    },
+    {
+        "id": 44,
+        "file_id": 80,
+        "component_name": "iLikeCoursesNew"
+    },
+    {
+        "id": 45,
+        "file_id": 81,
+        "component_name": "iLikeDashboard"
+    },
+    {
+        "id": 46,
+        "file_id": 82,
+        "component_name": "iLikeLanding"
+    },
+    {
+        "id": 47,
+        "file_id": 83,
+        "component_name": "description"
+    },
+    {
+        "id": 48,
+        "file_id": 84,
+        "component_name": "spLayout"
+    },
+    {
+        "id": 49,
+        "file_id": 85,
+        "component_name": "ApplicationServices"
+    },
+    {
+        "id": 50,
+        "file_id": 86,
+        "component_name": "ExamFormSubmission"
+    },
+    {
+        "id": 51,
+        "file_id": 87,
+        "component_name": "FeeDetails"
+    },
+    {
+        "id": 52,
+        "file_id": 88,
+        "component_name": "ViewHallTicket"
+    },
+    {
+        "id": 53,
+        "file_id": 89,
+        "component_name": "ResultPage"
+    },
+    {
+        "id": 54,
+        "file_id": 90,
+        "component_name": "SelectedApplicationService"
+    },
+    {
+        "id": 55,
+        "file_id": 91,
+        "component_name": "Transactions"
+    },
+    {
+        "id": 56,
+        "file_id": 92,
+        "component_name": "ExamTimetable"
+    },
+    {
+        "id": 57,
+        "file_id": 93,
+        "component_name": "viewMarksheet"
+    }
+]

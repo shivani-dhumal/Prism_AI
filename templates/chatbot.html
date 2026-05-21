@@ -1,0 +1,212 @@
+{% extends "base.html" %}
+{% block title %}Chatbot - PrismAI{% endblock %}
+{% block extra_css %}
+<style>
+  .chat-container { display: flex; flex-direction: column; height: calc(100vh - 300px); gap: 16px; }
+  .messages { flex: 1; overflow-y: auto; display: flex; flex-direction: column; gap: 12px; padding: 16px; background: var(--bg-alt); border-radius: var(--radius-lg); }
+  .message { padding: 12px 16px; border-radius: var(--radius-lg); max-width: 70%; word-wrap: break-word; }
+  .message.user { align-self: flex-end; background: var(--accent); color: white; }
+  .message.assistant { align-self: flex-start; background: var(--bg-card); border: 1px solid var(--border); color: var(--text); }
+  .compose-area { display: flex; gap: 12px; }
+  .compose-area textarea { flex: 1; padding: 12px; border: 1px solid var(--border); border-radius: var(--radius-md); background: var(--bg); color: var(--text); font-family: var(--f-body); resize: vertical; min-height: 50px; max-height: 150px; }
+  .compose-area .btn { align-self: flex-end; }
+  @keyframes bounce {
+    0%, 80%, 100% { transform: scale(0); opacity: 0.3; }
+    40% { transform: scale(1); opacity: 1; }
+  }
+</style>
+{% endblock %}
+{% block content %}
+<section class="hero" style="margin-bottom: 32px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px;">
+  <div>
+    <h1>Code Assistant</h1>
+    <p>Ask questions about your code, issues, and improvements.</p>
+  </div>
+  <div class="model-select-wrapper" style="background: var(--bg-alt); padding: 8px 16px; border-radius: var(--radius-md); border: 1px solid var(--border); display: flex; align-items: center; gap: 10px; box-shadow: var(--shadow-sm);">
+    <span style="font-size: 13px; font-weight: 600; color: var(--text-muted);"><i class="fas fa-brain" style="color: var(--accent);"></i> AI Model:</span>
+    <select id="modelSelect" onchange="changeModel()" style="background: transparent; color: var(--text); border: none; font-family: var(--f-body); font-size: 13px; font-weight: 700; cursor: pointer; outline: none;">
+      <option value="gemma" style="background: var(--bg-card); color: var(--text);">Local Gemma (Offline)</option>
+      <option value="gemini" style="background: var(--bg-card); color: var(--text);">Google Gemini (Cloud)</option>
+    </select>
+  </div>
+</section>
+<div class="chat-container">
+  <div class="messages" id="messages">
+    <div class="message assistant">
+      <strong>PrismAI:</strong> Hi! I'm your AI code assistant. Ask me anything about your code, issues, or improvements. 👋
+    </div>
+    <!-- Typing/Thinking Indicator -->
+    <div class="message assistant typing-indicator" id="typingIndicator" style="display: none; align-self: flex-start; background: var(--bg-card); border: 1px solid var(--border); padding: 12px 20px; border-radius: var(--radius-lg); align-items: center; gap: 4px;">
+      <span style="font-size: 13px; font-weight: 600; color: var(--text-muted); margin-right: 8px;">PrismAI is thinking</span>
+      <div class="dot" style="width: 6px; height: 6px; background: var(--accent); border-radius: 50%; animation: bounce 1.4s infinite ease-in-out both;"></div>
+      <div class="dot" style="width: 6px; height: 6px; background: var(--accent); border-radius: 50%; animation: bounce 1.4s infinite ease-in-out both; animation-delay: 0.2s;"></div>
+      <div class="dot" style="width: 6px; height: 6px; background: var(--accent); border-radius: 50%; animation: bounce 1.4s infinite ease-in-out both; animation-delay: 0.4s;"></div>
+    </div>
+  </div>
+  <div class="compose-area">
+    <textarea id="messageInput" placeholder="Type your message... (Shift+Enter to send)"></textarea>
+    <button class="btn btn-primary" onclick="sendMessage()">Send</button>
+  </div>
+</div>
+<script>
+let contextMessage = "";
+let currentModel = localStorage.getItem("chat_model") || "gemma";
+
+document.addEventListener("DOMContentLoaded", () => {
+  // Restore selected model from storage
+  const modelSelect = document.getElementById("modelSelect");
+  if (modelSelect) {
+    modelSelect.value = currentModel;
+  }
+
+  // Get context from URL parameter (from issues or dependency graph)
+  const params = new URLSearchParams(window.location.search);
+  contextMessage = params.get("context") || "";
+
+  if (contextMessage) {
+    const messagesDiv = document.getElementById("messages");
+    const isIssueContext = contextMessage.toLowerCase().includes("issue:") || contextMessage.toLowerCase().includes("severity:");
+
+    let contextTitle = "dependencies";
+    let contextPrompt = "How would you like me to help with this?";
+
+    if (isIssueContext) {
+      contextTitle = "code issue";
+      contextPrompt = "I can explain the root cause, why the fix works, and what risk remains.";
+    }
+
+    messagesDiv.innerHTML = `
+      <div class="message assistant">
+        <strong>PrismAI:</strong> I see you want help with a ${contextTitle}. Here's what I understand:<br><br>
+        <pre style="background: var(--bg-alt); padding: 10px; border-radius: 4px; font-size: 11px; max-height: 200px; overflow-y: auto; color: var(--text);">${escapeHtml(contextMessage)}</pre><br>
+        ${contextPrompt}
+      </div>
+    `;
+    document.getElementById("messageInput").focus();
+    document.getElementById("messageInput").placeholder = `Ask about the ${contextTitle} above...`;
+
+    // If it's an issue context, auto-send the explanation request
+    if (isIssueContext) {
+      setTimeout(() => {
+        document.getElementById("messageInput").value = "Tell me the reason for this issue, why the fixed code works, and what could happen if I do not fix it.";
+        sendMessage();
+      }, 500);
+    }
+  }
+});
+
+function changeModel() {
+  const modelSelect = document.getElementById("modelSelect");
+  if (modelSelect) {
+    currentModel = modelSelect.value;
+    localStorage.setItem("chat_model", currentModel);
+    
+    // Add visual system notice about switching models
+    const messagesDiv = document.getElementById("messages");
+    const modelName = currentModel === "gemma" ? "Local Gemma (Offline)" : "Google Gemini (Cloud)";
+    messagesDiv.innerHTML += `
+      <div style="align-self: center; background: var(--bg-alt); font-size: 11px; padding: 6px 16px; border-radius: 20px; color: var(--text-muted); margin: 12px 0; border: 1px dashed var(--border); display: flex; align-items: center; gap: 6px; box-shadow: var(--shadow-sm);">
+        <i class="fas fa-info-circle" style="color: var(--accent);"></i> Switched to <strong>${modelName}</strong>
+      </div>
+    `;
+    messagesDiv.scrollTop = messagesDiv.scrollHeight;
+  }
+}
+
+function escapeHtml(text) {
+  const map = {
+    '&': '&amp;',
+    '<': '&lt;',
+    '>': '&gt;',
+    '"': '&quot;',
+    "'": '&#039;'
+  };
+  return text.replace(/[&<>"']/g, m => map[m]);
+}
+
+document.getElementById("messageInput").addEventListener("keydown", (e) => {
+  if (e.key === "Enter" && e.shiftKey === false) {
+    e.preventDefault();
+    sendMessage();
+  }
+});
+
+async function sendMessage() {
+  const input = document.getElementById("messageInput");
+  const msg = input.value.trim();
+  if (!msg) return;
+  input.value = "";
+  const messagesDiv = document.getElementById("messages");
+
+  // Add user message
+  const userMsgDiv = document.createElement("div");
+  userMsgDiv.className = "message user";
+  userMsgDiv.textContent = msg;
+  messagesDiv.appendChild(userMsgDiv);
+  
+  // Show typing indicator at the bottom
+  const indicator = document.getElementById("typingIndicator");
+  if (indicator) {
+    messagesDiv.appendChild(indicator);
+    indicator.style.display = "flex";
+  }
+  
+  messagesDiv.scrollTop = messagesDiv.scrollHeight;
+
+  try {
+    // Prepare message with context
+    let fullMessage = msg;
+    if (contextMessage) {
+      const isIssueContext = contextMessage.toLowerCase().includes("issue:") || contextMessage.toLowerCase().includes("severity:");
+      if (isIssueContext) {
+        fullMessage = `Issue Context:\n${contextMessage}\n\nQuestion: ${msg}`;
+      } else {
+        fullMessage = `Dependency Context:\n${contextMessage}\n\nQuestion: ${msg}`;
+      }
+    }
+
+    console.log(`Sending message using ${currentModel}:`, fullMessage);
+    
+    let res;
+    if (currentModel === "gemma") {
+      res = await API.ollamaChat({ message: fullMessage });
+    } else {
+      res = await API.aiChat({ message: fullMessage });
+    }
+    
+    console.log("Got response:", res);
+    const response = res.response || res || "No response received";
+
+    // Add assistant message
+    const assistantMsgDiv = document.createElement("div");
+    assistantMsgDiv.className = "message assistant";
+    const renderedResponse = MD && MD.render ? MD.render(response) : response;
+    assistantMsgDiv.innerHTML = `<strong>PrismAI:</strong><br>${renderedResponse}`;
+    
+    // Insert before typing indicator
+    if (indicator) {
+      messagesDiv.insertBefore(assistantMsgDiv, indicator);
+    } else {
+      messagesDiv.appendChild(assistantMsgDiv);
+    }
+    console.log("Response added to UI");
+  } catch (err) {
+    console.error("Chat error:", err);
+    const errorMsgDiv = document.createElement("div");
+    errorMsgDiv.className = "message assistant";
+    errorMsgDiv.innerHTML = `<strong>Error:</strong> ${escapeHtml(err.message || "Failed to get response")}`;
+    
+    if (indicator) {
+      messagesDiv.insertBefore(errorMsgDiv, indicator);
+    } else {
+      messagesDiv.appendChild(errorMsgDiv);
+    }
+  } finally {
+    if (indicator) {
+      indicator.style.display = "none";
+    }
+  }
+  messagesDiv.scrollTop = messagesDiv.scrollHeight;
+}
+</script>
+{% endblock %}

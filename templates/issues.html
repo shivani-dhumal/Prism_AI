@@ -1,0 +1,380 @@
+{% extends "base.html" %}
+{% block title %}Issues - PrismAI{% endblock %}
+{% block extra_css %}
+<style>
+  .issues-top { display:flex; align-items:flex-end; justify-content:space-between; gap:16px; margin-bottom:24px; flex-wrap:wrap; }
+  .project-chip { color:var(--text-2); font-family:var(--f-mono); font-size:12px; background:var(--bg-alt); border:1px solid var(--border); border-radius:var(--radius-md); padding:9px 12px; max-width:720px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+  .issues-container { display:grid; grid-template-columns:1fr; gap:14px; }
+  .issue-card { background:var(--bg-card); border:1px solid var(--border); border-radius:var(--radius-lg); padding:18px; transition:border-color .2s ease, box-shadow .2s ease; }
+  .issue-card:hover { border-color:var(--accent); box-shadow:var(--shadow-sm); }
+  .issue-header { display:flex; align-items:flex-start; gap:12px; margin-bottom:10px; }
+  .issue-title { font-weight:700; color:var(--text); flex:1; line-height:1.35; }
+  .issue-desc { font-size:13px; color:var(--text-2); margin-bottom:12px; line-height:1.55; }
+  .issue-meta { display:flex; gap:10px; flex-wrap:wrap; align-items:center; font-size:12px; color:var(--text-2); margin-bottom:12px; }
+  .issue-path { font-family:var(--f-mono); max-width:720px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+  .issue-actions { display:flex; gap:8px; flex-wrap:wrap; }
+  .issue-actions .btn { padding:7px 12px; font-size:12px; }
+  .badge-critical, .badge-high { background:var(--critical-soft); color:var(--critical); }
+  .badge-medium { background:var(--medium-soft); color:var(--medium); }
+  .badge-low { background:var(--low-soft); color:var(--low); }
+  .fix-modal-overlay { position:fixed; inset:0; background:rgba(15,23,42,.68); display:none; align-items:center; justify-content:center; z-index:300; padding:22px; }
+  .fix-modal-overlay.active { display:flex; }
+  .fix-modal { background:var(--bg-card); border:1px solid var(--border); border-radius:var(--radius-lg); width:min(1180px,96vw); max-height:92vh; display:flex; flex-direction:column; box-shadow:var(--shadow-lg); }
+  .fix-modal-header { padding:18px 22px; border-bottom:1px solid var(--border); background:var(--bg-alt); display:flex; justify-content:space-between; gap:16px; }
+  .fix-modal-header h3 { margin:0; font-size:18px; }
+  .fix-subtitle { color:var(--text-2); font-size:12px; margin-top:5px; font-family:var(--f-mono); overflow:hidden; text-overflow:ellipsis; white-space:nowrap; max-width:860px; }
+  .fix-modal-close { background:none; border:0; font-size:24px; cursor:pointer; color:var(--text-2); }
+  .reason-panel { margin:18px 22px 0; padding:14px 16px; border:1px solid var(--border); border-radius:var(--radius-md); background:var(--bg-alt); color:var(--text-2); font-size:13px; line-height:1.55; }
+  .fix-modal-body { flex:1; overflow:auto; padding:18px 22px; display:grid; grid-template-columns:1fr 1fr; gap:16px; }
+  .code-section { border:1px solid var(--border); border-radius:var(--radius-md); overflow:hidden; background:var(--bg); min-width:0; }
+  .code-header { padding:10px 13px; border-bottom:1px solid var(--border); background:var(--bg-alt); font-weight:800; font-size:12px; text-transform:uppercase; letter-spacing:.05em; display:flex; justify-content:space-between; gap:10px; }
+  .code-block { margin:0; padding:0; overflow:auto; max-height:52vh; background:var(--bg); }
+  .code-line { display:grid; grid-template-columns:48px 1fr; min-width:max-content; font-family:var(--f-mono); font-size:12px; line-height:1.55; }
+  .line-num { color:var(--text-3); text-align:right; padding:0 10px; user-select:none; border-right:1px solid var(--border); background:var(--bg-alt); }
+  .line-code { padding:0 12px; white-space:pre; color:var(--text); }
+  .code-section.original .line-code.changed { background:rgba(239,68,68,.10); }
+  .code-section.fixed .line-code.changed { background:rgba(16,185,129,.12); }
+  .fix-modal-footer { padding:14px 22px; border-top:1px solid var(--border); background:var(--bg-alt); display:flex; justify-content:space-between; gap:12px; flex-wrap:wrap; }
+  .footer-left, .footer-right { display:flex; gap:8px; flex-wrap:wrap; }
+  .empty-state { text-align:center; padding:48px; color:var(--text-2); background:var(--bg-card); border:1px solid var(--border); border-radius:var(--radius-lg); }
+  @media (max-width:900px) { .fix-modal-body { grid-template-columns:1fr; } .project-chip { max-width:100%; } }
+</style>
+{% endblock %}
+{% block content %}
+<section class="issues-top">
+  <div>
+    <h1>Code Issues & Fixes</h1>
+    <p style="color:var(--text-2); margin-top:8px;">Review issues from the project you scanned, generate fixes, and compare previous code with fixed code.</p>
+  </div>
+  <div class="project-chip" id="projectChip">Loading project...</div>
+</section>
+
+<div class="issues-container" id="issuesContainer">
+  <div class="empty-state"><i class="fas fa-spinner" style="animation: spin .8s linear infinite;"></i> Loading issues...</div>
+</div>
+
+<div class="fix-modal-overlay" id="fixModalOverlay">
+  <div class="fix-modal">
+    <div class="fix-modal-header">
+      <div style="min-width:0;">
+        <h3 id="fixModalTitle">Fix Issue</h3>
+        <div class="fix-subtitle" id="fixModalSubtitle"></div>
+      </div>
+      <button class="fix-modal-close" onclick="closeFixModal()">&times;</button>
+    </div>
+    <div class="reason-panel" id="reasonPanel">Select an issue to review the reason and generate a fix.</div>
+    <div class="fix-modal-body">
+      <div class="code-section original">
+        <div class="code-header"><span><i class="fas fa-file-code"></i> Previous Code</span><span id="originalRange"></span></div>
+        <pre class="code-block" id="originalCode"></pre>
+      </div>
+      <div class="code-section fixed">
+        <div class="code-header"><span><i class="fas fa-wand-magic-sparkles"></i> Fixed Code</span><span id="fixedRange"></span></div>
+        <pre class="code-block" id="fixedCode"></pre>
+      </div>
+    </div>
+    <div class="fix-modal-footer">
+      <div class="footer-left">
+        <button class="btn btn-secondary" id="askChatBtn" onclick="askChatbotReason()"><i class="fas fa-comments"></i> Ask Chatbot Why</button>
+        <button class="btn btn-secondary" id="generateFixBtn" onclick="generateFix()"><i class="fas fa-magic"></i> Generate Fix</button>
+      </div>
+      <div class="footer-right">
+        <button class="btn btn-secondary" onclick="closeFixModal()">Close</button>
+        <button class="btn btn-primary" id="applyFixBtn" onclick="applyCurrentFix()" style="display:none;"><i class="fas fa-check"></i> Apply Fix</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+let allIssues = [];
+let currentIssue = null;
+let originalCodeCache = "";
+let fixedCodeCache = "";
+let currentLineStart = 1;
+let currentLineEnd = 1;
+
+document.addEventListener("DOMContentLoaded", async () => {
+  await loadProject();
+  await loadIssues();
+});
+
+function escapeHtml(text) {
+  return String(text ?? "").replace(/[&<>"']/g, c => ({ "&":"&amp;", "<":"&lt;", ">":"&gt;", '"':"&quot;", "'":"&#039;" }[c]));
+}
+
+function shortPath(path, max = 110) {
+  path = String(path || "");
+  return path.length > max ? "..." + path.slice(-max + 3) : path;
+}
+
+function parseLineNumber(value) {
+  const match = String(value || "1").match(/\d+/);
+  return match ? Math.max(1, parseInt(match[0], 10)) : 1;
+}
+
+function isDatabaseIssue(issue) {
+  return issue && /^\d+$/.test(String(issue.id));
+}
+
+async function loadProject() {
+  try {
+    const project = await API.currentProject();
+    document.getElementById("projectChip").textContent = `${project.project_name}: ${project.project_root}`;
+  } catch {
+    document.getElementById("projectChip").textContent = "Current scanned project";
+  }
+}
+
+async function loadIssues() {
+  const container = document.getElementById("issuesContainer");
+  try {
+    allIssues = await API.allBugs();
+    if (!allIssues || allIssues.length === 0) {
+      container.innerHTML = '<div class="empty-state">No issues found for the current scanned project.</div>';
+      return;
+    }
+    container.innerHTML = "";
+    allIssues.forEach(issue => container.appendChild(renderIssueCard(issue)));
+  } catch (err) {
+    container.innerHTML = `<div class="empty-state" style="color:var(--danger);">Failed to load issues: ${escapeHtml(err.message)}</div>`;
+  }
+}
+
+function renderIssueCard(issue) {
+  const card = document.createElement("div");
+  card.className = "issue-card";
+  const severity = String(issue.severity || "MEDIUM").toLowerCase();
+  card.innerHTML = `
+    <div class="issue-header">
+      <span class="badge badge-${severity}">${escapeHtml(issue.severity || "MEDIUM")}</span>
+      <div class="issue-title">${escapeHtml(issue.title || "Issue")}</div>
+    </div>
+    <div class="issue-desc">${escapeHtml(issue.description || "")}</div>
+    <div class="issue-meta">
+      <span class="issue-path" title="${escapeHtml(issue.file_path)}"><i class="fas fa-file"></i> ${escapeHtml(shortPath(issue.file_path || issue.file_name || ""))}</span>
+      <span><i class="fas fa-code"></i> Line ${escapeHtml(issue.line_number || 1)}</span>
+      <span><span class="badge badge-info">${escapeHtml(issue.status || "OPEN")}</span></span>
+    </div>
+    <div class="issue-actions"></div>`;
+  const actions = card.querySelector(".issue-actions");
+  const fixButton = document.createElement("button");
+  fixButton.className = "btn btn-primary";
+  fixButton.innerHTML = '<i class="fas fa-code-compare"></i> Fix';
+  fixButton.addEventListener("click", () => showFixModal(issue.id));
+  actions.appendChild(fixButton);
+
+  const reasonButton = document.createElement("button");
+  reasonButton.className = "btn btn-secondary";
+  reasonButton.innerHTML = '<i class="fas fa-lightbulb"></i> Reason';
+  reasonButton.addEventListener("click", () => {
+    currentIssue = issue;
+    fixedCodeCache = issue.fixed_code || "";
+    originalCodeCache = "";
+    askChatbotReason();
+  });
+  actions.appendChild(reasonButton);
+
+  const ignoreButton = document.createElement("button");
+  ignoreButton.className = "btn btn-danger";
+  ignoreButton.innerHTML = '<i class="fas fa-eye-slash"></i> Ignore';
+  ignoreButton.addEventListener("click", () => ignoreIssue(issue.id));
+  actions.appendChild(ignoreButton);
+  return card;
+}
+
+function renderCode(targetId, code, startLine, compareCode = "") {
+  const target = document.getElementById(targetId);
+  const lines = String(code || "").split("\n");
+  const compare = String(compareCode || "").split("\n");
+  target.innerHTML = lines.map((line, index) => {
+    const changed = compareCode && line !== (compare[index] ?? "");
+    return `<span class="code-line"><span class="line-num">${startLine + index}</span><span class="line-code${changed ? " changed" : ""}">${escapeHtml(line || " ")}</span></span>`;
+  }).join("");
+}
+
+function buildReasonText(issue) {
+  const reason = issue.fix_suggestion || "Generate a fix to get a concrete repair plan.";
+  return `<strong>Reason:</strong> ${escapeHtml(issue.description || "No description available.")}<br><strong>Suggested direction:</strong> ${escapeHtml(reason)}`;
+}
+
+async function showFixModal(issueId) {
+  currentIssue = allIssues.find(i => i.id === issueId);
+  if (!currentIssue) return;
+
+  fixedCodeCache = currentIssue.fixed_code || "";
+  originalCodeCache = "";
+  const lineNum = parseLineNumber(currentIssue.line_number);
+  currentLineStart = Math.max(1, lineNum - 8);
+  currentLineEnd = lineNum + 8;
+
+  document.getElementById("fixModalTitle").textContent = currentIssue.title || "Fix Issue";
+  document.getElementById("fixModalSubtitle").textContent = `${currentIssue.file_path || ""} | line ${currentIssue.line_number || 1}`;
+  document.getElementById("reasonPanel").innerHTML = buildReasonText(currentIssue);
+  document.getElementById("originalRange").textContent = "";
+  document.getElementById("fixedRange").textContent = "";
+  document.getElementById("applyFixBtn").style.display = "none";
+  document.getElementById("generateFixBtn").style.display = "inline-flex";
+  renderCode("originalCode", "Loading previous code...", 1);
+  renderCode("fixedCode", fixedCodeCache || "Click Generate Fix to create the fixed version.", 1);
+  document.getElementById("fixModalOverlay").classList.add("active");
+
+  try {
+    const content = await API.fileContent(currentIssue.file_path);
+    const fullContent = content.content || "";
+    const lines = fullContent.split("\n");
+    currentLineStart = Math.max(1, lineNum - 8);
+    currentLineEnd = Math.min(lines.length, lineNum + 8);
+    originalCodeCache = lines.slice(currentLineStart - 1, currentLineEnd).join("\n");
+    document.getElementById("originalRange").textContent = `Lines ${currentLineStart}-${currentLineEnd}`;
+    renderCode("originalCode", originalCodeCache, currentLineStart);
+    if (fixedCodeCache) {
+      document.getElementById("fixedRange").textContent = "Saved fix";
+      renderCode("fixedCode", fixedCodeCache, currentLineStart, originalCodeCache);
+      document.getElementById("applyFixBtn").style.display = isDatabaseIssue(currentIssue) ? "inline-flex" : "none";
+    }
+  } catch (err) {
+    originalCodeCache = "";
+    renderCode("originalCode", "Could not load source code: " + err.message, 1);
+  }
+}
+
+async function generateFix() {
+  if (!currentIssue) return;
+  const btn = document.getElementById("generateFixBtn");
+  btn.disabled = true;
+  btn.innerHTML = '<i class="fas fa-spinner" style="animation: spin .8s linear infinite;"></i> Generating...';
+  renderCode("fixedCode", "Generating fixed code...", 1);
+
+  try {
+    if (!isDatabaseIssue(currentIssue)) {
+      const prompt = [
+        "Create a focused fixed-code preview for this UI/accessibility issue.",
+        `Issue: ${currentIssue.title || ""}`,
+        `Severity: ${currentIssue.severity || ""}`,
+        `File: ${currentIssue.file_path || ""}`,
+        `Line: ${currentIssue.line_number || ""}`,
+        `Description: ${currentIssue.description || ""}`,
+        `Suggested Fix: ${currentIssue.fix_suggestion || ""}`,
+        "",
+        "Previous code:",
+        originalCodeCache || "(source code was not available)",
+        "",
+        "Return the corrected code block and briefly explain why it fixes the issue."
+      ].join("\n");
+      const res = await API.ollamaChat({ message: prompt });
+      fixedCodeCache = res.response || "No fix returned.";
+      document.getElementById("fixedRange").textContent = "Fix preview";
+      renderCode("fixedCode", fixedCodeCache, 1, originalCodeCache);
+      document.getElementById("applyFixBtn").style.display = "none";
+      document.getElementById("reasonPanel").innerHTML = buildReasonText(currentIssue) + "<br><strong>Note:</strong> This report issue is a preview fix. Apply it manually after review.";
+      return;
+    }
+
+    const fullFile = await API.fileContent(currentIssue.file_path);
+    const result = await fetch(`/api/bugs/${currentIssue.id}/ai-fix`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        file_content: fullFile.content || originalCodeCache,
+        title: currentIssue.title,
+        description: currentIssue.description,
+        fix_suggestion: currentIssue.fix_suggestion,
+        severity: currentIssue.severity,
+        line_number: currentIssue.line_number,
+        file_path: currentIssue.file_path
+      })
+    }).then(async r => {
+      const data = await r.json();
+      if (!r.ok) throw new Error(data.error || `HTTP ${r.status}`);
+      return data;
+    });
+
+    fixedCodeCache = result.fixed_code || "";
+    currentLineStart = result.line_start || currentLineStart;
+    currentLineEnd = result.line_end || currentLineEnd;
+    originalCodeCache = result.original_code || originalCodeCache;
+    document.getElementById("originalRange").textContent = `Lines ${currentLineStart}-${currentLineEnd}`;
+    document.getElementById("fixedRange").textContent = result.can_apply === false ? "Preview only" : "AI replacement";
+    renderCode("originalCode", originalCodeCache, currentLineStart, fixedCodeCache);
+    renderCode("fixedCode", fixedCodeCache, currentLineStart, originalCodeCache);
+    document.getElementById("applyFixBtn").style.display = result.can_apply === false ? "none" : "inline-flex";
+    document.getElementById("reasonPanel").innerHTML = buildReasonText(currentIssue) + "<br><strong>Fix effect:</strong> The generated code replaces only the focused block shown below.";
+  } catch (err) {
+    renderCode("fixedCode", "Fix generation failed: " + err.message, 1);
+  } finally {
+    btn.disabled = false;
+    btn.innerHTML = '<i class="fas fa-magic"></i> Generate Fix';
+  }
+}
+
+function askChatbotReason() {
+  if (!currentIssue) return;
+  const context = [
+    `Issue: ${currentIssue.title || "Issue"}`,
+    `Severity: ${currentIssue.severity || ""}`,
+    `File: ${currentIssue.file_path || ""}`,
+    `Line: ${currentIssue.line_number || ""}`,
+    `Description: ${currentIssue.description || ""}`,
+    `Suggested Fix: ${currentIssue.fix_suggestion || ""}`,
+    "",
+    "Previous Code:",
+    originalCodeCache || "(Open the fix modal to load source context.)",
+    "",
+    "Fixed Code:",
+    fixedCodeCache || "(No fixed code generated yet.)",
+    "",
+    "Question: Tell me the reason for this issue, why the fix works, and what could happen if I do not fix it."
+  ].join("\n");
+  window.location.href = `/chatbot?context=${encodeURIComponent(context)}`;
+}
+
+async function applyCurrentFix() {
+  if (!currentIssue || !fixedCodeCache) return;
+  const btn = document.getElementById("applyFixBtn");
+  btn.disabled = true;
+  btn.textContent = "Applying...";
+  try {
+    const result = await fetch(`/api/bugs/${currentIssue.id}/apply-fix`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        fixed_code: fixedCodeCache,
+        file_path: currentIssue.file_path,
+        line_start: currentLineStart,
+        line_end: currentLineEnd
+      })
+    }).then(async r => {
+      const data = await r.json();
+      if (!r.ok) throw new Error(data.error || `HTTP ${r.status}`);
+      return data;
+    });
+    closeFixModal();
+    await loadIssues();
+  } catch (err) {
+    alert("Error applying fix: " + err.message);
+  } finally {
+    btn.disabled = false;
+    btn.innerHTML = '<i class="fas fa-check"></i> Apply Fix';
+  }
+}
+
+function closeFixModal() {
+  document.getElementById("fixModalOverlay").classList.remove("active");
+}
+
+async function ignoreIssue(issueId) {
+  if (!confirm("Mark this issue as ignored?")) return;
+  try {
+    await API.updateBugStatus(issueId, "IGNORED", null);
+    await loadIssues();
+  } catch (err) {
+    alert("Error: " + err.message);
+  }
+}
+
+document.getElementById("fixModalOverlay").addEventListener("click", e => {
+  if (e.target.id === "fixModalOverlay") closeFixModal();
+});
+</script>
+{% endblock %}

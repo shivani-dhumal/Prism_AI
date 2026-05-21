@@ -1,0 +1,848 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>ShivaniD · Audit View Review</title>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Syne:wght@600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,400&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#f5f7fb;
+  --surface:#ffffff;
+  --surface2:#f0f3f9;
+  --surface3:#e8ecf5;
+  --border:#dde2ee;
+  --border2:#c8d0e4;
+  --text:#1a2035;
+  --text2:#4a5278;
+  --text3:#7a86a8;
+  --accent:#6c8fff;
+  --accent2:#a78bfa;
+  --crit:#ff4d6d;
+  --crit-bg:rgba(255,77,109,.1);
+  --crit-border:rgba(255,77,109,.3);
+  --high:#ff8c42;
+  --high-bg:rgba(255,140,66,.1);
+  --high-border:rgba(255,140,66,.3);
+  --med:#ffd166;
+  --med-bg:rgba(255,209,102,.08);
+  --med-border:rgba(255,209,102,.3);
+  --low:#06d6a0;
+  --low-bg:rgba(6,214,160,.08);
+  --low-border:rgba(6,214,160,.25);
+  --spell:#c084fc;
+  --spell-bg:rgba(192,132,252,.1);
+  --spell-border:rgba(192,132,252,.3);
+  --fp:#a78bfa;
+  --fp-bg:rgba(167,139,250,.1);
+  --fp-border:rgba(167,139,250,.3);
+  --pass:#22c55e;
+  --pass-bg:rgba(34,197,94,.08);
+  --pass-border:rgba(34,197,94,.25);
+  --radius:8px;
+}
+html{scroll-behavior:smooth}
+body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);height:100vh;overflow:hidden;display:flex;flex-direction:column}
+
+/* TOP BAR */
+.topbar{height:52px;background:var(--surface);border-bottom:1px solid var(--border);display:flex;align-items:center;padding:0 20px;gap:16px;flex-shrink:0;z-index:10}
+.tb-brand{font-family:'Syne',sans-serif;font-size:15px;font-weight:800;color:var(--text);letter-spacing:-.02em}
+.tb-brand span{color:var(--accent)}
+.tb-sub{font-size:11px;color:var(--text3);font-family:'IBM Plex Mono',monospace;background:var(--surface3);padding:3px 8px;border-radius:4px;border:1px solid var(--border)}
+.tb-stats{display:flex;gap:8px;margin-left:auto;align-items:center}
+.stat-chip{display:flex;align-items:center;gap:5px;font-size:11px;font-weight:600;padding:4px 10px;border-radius:20px}
+.stat-chip.high{background:var(--high-bg);color:var(--high);border:1px solid var(--high-border)}
+.stat-chip.ui{background:var(--high-bg);color:var(--high);border:1px solid var(--high-border)}
+.stat-chip.a11y{background:var(--crit-bg);color:var(--crit);border:1px solid var(--crit-border)}
+.stat-chip.spell{background:var(--spell-bg);color:var(--spell);border:1px solid var(--spell-border)}
+.stat-chip.med{background:var(--med-bg);color:var(--med);border:1px solid var(--med-border)}
+.ai-btn{display:flex;align-items:center;gap:8px;padding:7px 16px;background:linear-gradient(135deg,var(--accent),var(--accent2));border:none;border-radius:6px;color:#fff;font-family:'DM Sans',sans-serif;font-size:13px;font-weight:600;cursor:pointer;transition:all .2s;margin-left:8px;flex-shrink:0}
+.ai-btn:hover{filter:brightness(1.15);transform:translateY(-1px)}
+.ai-btn svg{width:15px;height:15px}
+
+/* MAIN */
+.shell{display:flex;flex:1;overflow:hidden}
+
+/* LEFT SIDEBAR */
+.sidebar{width:280px;flex-shrink:0;background:var(--surface);border-right:1px solid var(--border);display:flex;flex-direction:column;overflow:hidden}
+.sidebar-scroll{flex:1;overflow-y:auto;padding:8px}
+.sidebar-scroll::-webkit-scrollbar{width:3px}
+.sidebar-scroll::-webkit-scrollbar-thumb{background:var(--border2);border-radius:2px}
+
+.section-hdr{font-size:9px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--text3);padding:12px 10px 5px;display:flex;align-items:center;gap:6px}
+.section-hdr::after{content:'';flex:1;height:1px;background:var(--border)}
+
+.file-item{display:flex;align-items:center;gap:10px;padding:8px 10px;border-radius:6px;cursor:pointer;margin-bottom:2px;transition:background .15s;position:relative}
+.file-item:hover{background:var(--surface3)}
+.file-item.active{background:var(--surface2);box-shadow:inset 0 0 0 1px var(--border2)}
+.fi-bar{width:3px;height:28px;border-radius:2px;flex-shrink:0}
+.fi-info{flex:1;min-width:0}
+.fi-name{font-family:'IBM Plex Mono',monospace;font-size:11.5px;font-weight:500;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.fi-path{font-size:9.5px;color:var(--text3);margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-family:'IBM Plex Mono',monospace}
+.fi-badges{display:flex;gap:3px;flex-shrink:0}
+.badge{font-size:8.5px;font-weight:700;padding:2px 5px;border-radius:3px;letter-spacing:.04em}
+.badge.ui{background:var(--high-bg);color:var(--high);border:1px solid var(--high-border)}
+.badge.a11y{background:var(--crit-bg);color:var(--crit);border:1px solid var(--crit-border)}
+.badge.spell{background:var(--spell-bg);color:var(--spell);border:1px solid var(--spell-border)}
+.badge.med{background:var(--med-bg);color:var(--med);border:1px solid var(--med-border)}
+.badge.fp{background:var(--fp-bg);color:var(--fp);border:1px solid var(--fp-border)}
+.badge.pass{background:var(--pass-bg);color:var(--pass);border:1px solid var(--pass-border)}
+
+/* RIGHT PANEL */
+.main{flex:1;display:flex;flex-direction:column;overflow:hidden;background:var(--bg)}
+.empty-state{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;color:var(--text3)}
+.empty-state svg{width:48px;height:48px;opacity:.2}
+.empty-state p{font-size:13px}
+
+/* Code panel */
+.code-panel{flex:1;display:none;flex-direction:column;overflow:hidden}
+.code-panel.active{display:flex}
+
+.code-topbar{padding:12px 24px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:12px;flex-shrink:0;background:var(--surface)}
+.ctb-file{font-family:'IBM Plex Mono',monospace;font-size:13px;font-weight:600;color:var(--text)}
+.ctb-path{font-size:10px;color:var(--text3);font-family:'IBM Plex Mono',monospace;margin-top:2px}
+.ctb-right{margin-left:auto;display:flex;align-items:center;gap:8px}
+.lang-tag{background:var(--surface3);border:1px solid var(--border2);border-radius:4px;font-size:9.5px;font-weight:600;padding:3px 8px;color:var(--text2);font-family:'IBM Plex Mono',monospace;text-transform:uppercase}
+
+/* Issues bar */
+.issues-bar{padding:10px 24px;border-bottom:1px solid var(--border);display:flex;gap:6px;align-items:center;flex-shrink:0;background:var(--surface);overflow-x:auto;flex-wrap:wrap}
+.issues-bar::-webkit-scrollbar{height:2px}
+.ib-label{font-size:10.5px;color:var(--text3);font-weight:500;flex-shrink:0}
+.issue-pill{display:flex;align-items:center;gap:5px;padding:4px 10px;border-radius:20px;cursor:pointer;flex-shrink:0;transition:filter .15s;font-size:11px;font-weight:600;position:relative}
+.issue-pill.ui{background:var(--high-bg);color:var(--high);border:1px solid var(--high-border)}
+.issue-pill.a11y{background:var(--crit-bg);color:var(--crit);border:1px solid var(--crit-border)}
+.issue-pill.spell{background:var(--spell-bg);color:var(--spell);border:1px solid var(--spell-border)}
+.issue-pill.med{background:var(--med-bg);color:var(--med);border:1px solid var(--med-border)}
+.issue-pill.fp{background:var(--fp-bg);color:var(--fp);border:1px solid var(--fp-border)}
+.issue-pill:hover{filter:brightness(1.3)}
+.pill-tooltip{display:none;position:absolute;left:0;top:calc(100% + 6px);background:var(--surface2);border:1px solid var(--border2);border-radius:6px;padding:8px 12px;font-size:11px;line-height:1.6;color:var(--text);min-width:240px;max-width:340px;z-index:200;box-shadow:0 8px 24px rgba(0,0,0,.4);pointer-events:none;font-family:'DM Sans',sans-serif;font-weight:400}
+.issue-pill:hover .pill-tooltip{display:block}
+
+/* Code body */
+.code-scroll{flex:1;overflow:auto;background:#f8fafc}
+.code-scroll::-webkit-scrollbar{width:5px;height:5px}
+.code-scroll::-webkit-scrollbar-thumb{background:var(--border2);border-radius:3px}
+.code-wrap{display:flex;min-width:max-content;padding:12px 0}
+.ln-col{flex-shrink:0;padding:0 10px 0 20px;text-align:right;user-select:none}
+.ln{display:block;font-family:'IBM Plex Mono',monospace;font-size:12px;line-height:1.75;color:var(--text3);padding:0 4px}
+.code-body{flex:1;padding-right:48px}
+.code-line{display:flex;align-items:stretch;min-height:21px;position:relative}
+.code-line.hl-ui{background:rgba(255,140,66,.12)}
+.code-line.hl-a11y{background:rgba(255,77,109,.10)}
+.code-line.hl-spell{background:rgba(192,132,252,.14)}
+.code-line.hl-med{background:rgba(255,209,102,.18)}
+.code-line.hl-fp{background:rgba(167,139,250,.12)}
+.sev-bar{width:3px;flex-shrink:0}
+.sev-bar.ui{background:var(--high)}
+.sev-bar.a11y{background:var(--crit)}
+.sev-bar.spell{background:var(--spell)}
+.sev-bar.med{background:var(--med)}
+.sev-bar.fp{background:var(--fp)}
+.sev-bar.none{background:transparent}
+.line-code{padding:0 14px;font-family:'IBM Plex Mono',monospace;font-size:12px;line-height:1.75;white-space:pre;flex:1;color:#24292f}
+.inline-ann{display:inline-flex;align-items:center;gap:4px;margin-left:14px;font-size:9.5px;font-weight:700;padding:1px 7px;border-radius:3px;vertical-align:middle;letter-spacing:.03em;font-family:'DM Sans',sans-serif}
+.ann-ui{background:var(--high-bg);color:var(--high);border:1px solid var(--high-border)}
+.ann-a11y{background:var(--crit-bg);color:var(--crit);border:1px solid var(--crit-border)}
+.ann-spell{background:var(--spell-bg);color:var(--spell);border:1px solid var(--spell-border)}
+.ann-med{background:var(--med-bg);color:var(--med);border:1px solid var(--med-border)}
+.ann-fp{background:var(--fp-bg);color:var(--fp);border:1px solid var(--fp-border)}
+.spell-err{background:rgba(192,132,252,.3);border-bottom:2px solid var(--spell);border-radius:2px;padding:0 1px}
+
+/* Syntax */
+.kw{color:#0550ae}.fn{color:#0969da}.str{color:#116329}.num{color:#953800}.cmt{color:#6e7781;font-style:italic}.prop{color:#6f42c1}.op{color:#cf222e}.tag{color:#cf222e}.attr{color:#953800}.val{color:#116329}.vue-tag{color:#0550ae}.tmpl{color:#6f42c1}
+
+/* AI PANEL */
+.ai-overlay{position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:100;display:none;align-items:center;justify-content:flex-end;backdrop-filter:blur(3px)}
+.ai-overlay.open{display:flex}
+.ai-panel{width:420px;height:100vh;background:var(--surface);border-left:1px solid var(--border2);display:flex;flex-direction:column;animation:slideIn .25s ease}
+@keyframes slideIn{from{transform:translateX(60px);opacity:0}to{transform:translateX(0);opacity:1}}
+.ai-header{padding:18px 20px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:10px;flex-shrink:0}
+.ai-avatar{width:32px;height:32px;border-radius:8px;background:linear-gradient(135deg,var(--accent),var(--accent2));display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.ai-avatar svg{width:16px;height:16px;fill:#fff}
+.ai-title{font-family:'Syne',sans-serif;font-weight:700;font-size:14px;color:var(--text)}
+.ai-sub{font-size:11px;color:var(--text3);margin-top:2px}
+.ai-close{margin-left:auto;background:none;border:none;color:var(--text3);cursor:pointer;padding:4px;border-radius:4px;transition:color .15s}
+.ai-close:hover{color:var(--text)}
+.ai-messages{flex:1;overflow-y:auto;padding:16px;display:flex;flex-direction:column;gap:12px}
+.ai-messages::-webkit-scrollbar{width:3px}
+.ai-messages::-webkit-scrollbar-thumb{background:var(--border2)}
+.msg{max-width:340px;padding:10px 13px;border-radius:8px;font-size:12.5px;line-height:1.6}
+.msg.bot{background:#f0f3f9;border:1px solid #dde2ee;color:var(--text);align-self:flex-start}
+.msg.user{background:linear-gradient(135deg,rgba(108,143,255,.2),rgba(167,139,250,.2));border:1px solid rgba(108,143,255,.3);color:var(--text);align-self:flex-end}
+.msg.bot strong{color:var(--accent);font-weight:600}
+.ai-suggestions{padding:10px 16px;border-top:1px solid var(--border);border-bottom:1px solid var(--border);display:flex;gap:6px;flex-wrap:wrap;flex-shrink:0}
+.sug-btn{font-size:11px;padding:5px 10px;background:var(--surface3);border:1px solid var(--border2);border-radius:4px;color:var(--text2);cursor:pointer;transition:all .15s;font-family:'DM Sans',sans-serif}
+.sug-btn:hover{background:var(--surface2);color:var(--accent);border-color:rgba(108,143,255,.4)}
+.ai-input-row{padding:14px 16px;display:flex;gap:8px;flex-shrink:0}
+.ai-input{flex:1;background:var(--surface2);border:1px solid var(--border2);border-radius:6px;padding:9px 12px;color:var(--text);font-family:'DM Sans',sans-serif;font-size:13px;outline:none;transition:border .15s}
+.ai-input:focus{border-color:var(--accent)}
+.ai-input::placeholder{color:var(--text3)}
+.ai-send{background:linear-gradient(135deg,var(--accent),var(--accent2));border:none;border-radius:6px;padding:9px 14px;color:#fff;cursor:pointer;font-family:'DM Sans',sans-serif;font-size:13px;font-weight:600;transition:filter .15s;display:flex;align-items:center;gap:5px}
+.ai-send:hover{filter:brightness(1.15)}
+.ai-thinking{display:flex;gap:4px;align-items:center;padding:8px 0}
+.dot{width:5px;height:5px;border-radius:50%;background:var(--text3);animation:bounce .9s ease-in-out infinite}
+.dot:nth-child(2){animation-delay:.15s}
+.dot:nth-child(3){animation-delay:.3s}
+@keyframes bounce{0%,60%,100%{transform:translateY(0)}30%{transform:translateY(-6px)}}
+
+@media(max-width:900px){.sidebar{width:220px}}
+</style>
+</head>
+<body>
+
+<!-- TOPBAR -->
+<div class="topbar">
+  <div class="tb-brand"><span>ShivaniD</span> · Audit Review</div>
+  <div class="tb-sub">StudentLogin · 57 Vue Components · 38 JS Files</div>
+  <div class="tb-stats">
+    <div class="stat-chip high">🔴 76 High Issues</div>
+    <div class="stat-chip a11y">♿ 147 Accessibility</div>
+    <div class="stat-chip spell">✎ 45 UI Issues</div>
+    <div class="stat-chip fp">◈ 18 False Positives</div>
+  </div>
+  <button class="ai-btn" onclick="openAI()">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>
+    Ask AI
+  </button>
+</div>
+
+<!-- MAIN SHELL -->
+<div class="shell">
+
+<!-- SIDEBAR -->
+<div class="sidebar">
+  <div class="sidebar-scroll">
+    <div class="section-hdr">Login / Auth</div>
+    <div class="file-item" onclick="showFile('adminLogin',this)">
+      <div class="fi-bar" style="background:var(--crit)"></div>
+      <div class="fi-info"><div class="fi-name">adminLogin.vue</div><div class="fi-path">src/views/adminLogin.vue</div></div>
+      <div class="fi-badges"><span class="badge a11y">A11Y</span><span class="badge spell">SPELL</span></div>
+    </div>
+
+    <div class="section-hdr">Components</div>
+    <div class="file-item" onclick="showFile('Toast',this)">
+      <div class="fi-bar" style="background:var(--crit)"></div>
+      <div class="fi-info"><div class="fi-name">Toast.vue</div><div class="fi-path">components/DaiseUI/Toast.vue</div></div>
+      <div class="fi-badges"><span class="badge a11y">A11Y</span><span class="badge fp">FP</span></div>
+    </div>
+    <div class="file-item" onclick="showFile('programBar',this)">
+      <div class="fi-bar" style="background:var(--high)"></div>
+      <div class="fi-info"><div class="fi-name">programBar.vue</div><div class="fi-path">components/common/programBar.vue</div></div>
+      <div class="fi-badges"><span class="badge spell">SPELL</span><span class="badge ui">UI</span></div>
+    </div>
+    <div class="file-item" onclick="showFile('updateDbSave',this)">
+      <div class="fi-bar" style="background:var(--med)"></div>
+      <div class="fi-info"><div class="fi-name">updateDbSave.vue</div><div class="fi-path">components/BL/updateDbSave.vue</div></div>
+      <div class="fi-badges"><span class="badge spell">SPELL</span></div>
+    </div>
+    <div class="file-item" onclick="showFile('CdnUpload',this)">
+      <div class="fi-bar" style="background:var(--high)"></div>
+      <div class="fi-info"><div class="fi-name">CdnUpload.vue</div><div class="fi-path">views/CdnUpload.vue</div></div>
+      <div class="fi-badges"><span class="badge a11y">A11Y</span><span class="badge spell">SPELL</span></div>
+    </div>
+    <div class="file-item" onclick="showFile('SessionManager',this)">
+      <div class="fi-bar" style="background:var(--crit)"></div>
+      <div class="fi-info"><div class="fi-name">SessionManager.vue</div><div class="fi-path">views/SessionManager.vue</div></div>
+      <div class="fi-badges"><span class="badge a11y">A11Y</span></div>
+    </div>
+
+    <div class="section-hdr">Views</div>
+    <div class="file-item" onclick="showFile('Home',this)">
+      <div class="fi-bar" style="background:var(--crit)"></div>
+      <div class="fi-info"><div class="fi-name">Home.vue</div><div class="fi-path">src/views/Home.vue</div></div>
+      <div class="fi-badges"><span class="badge spell">SPELL</span></div>
+    </div>
+    <div class="file-item" onclick="showFile('StudentData',this)">
+      <div class="fi-bar" style="background:var(--high)"></div>
+      <div class="fi-info"><div class="fi-name">StudentData.vue</div><div class="fi-path">src/views/StudentData.vue</div></div>
+      <div class="fi-badges"><span class="badge a11y">A11Y</span><span class="badge spell">SPELL</span></div>
+    </div>
+    <div class="file-item" onclick="showFile('StudentDemo',this)">
+      <div class="fi-bar" style="background:var(--high)"></div>
+      <div class="fi-info"><div class="fi-name">StudentDemo.vue</div><div class="fi-path">src/views/StudentDemo.vue</div></div>
+      <div class="fi-badges"><span class="badge a11y">A11Y</span><span class="badge spell">SPELL</span></div>
+    </div>
+
+    <div class="section-hdr">Result Views</div>
+    <div class="file-item" onclick="showFile('ApplicationServices',this)">
+      <div class="fi-bar" style="background:var(--crit)"></div>
+      <div class="fi-info"><div class="fi-name">ApplicationServices.vue</div><div class="fi-path">views/Result/ApplicationServices.vue</div></div>
+      <div class="fi-badges"><span class="badge a11y">A11Y</span><span class="badge ui">UI</span></div>
+    </div>
+    <div class="file-item" onclick="showFile('FeeDetails',this)">
+      <div class="fi-bar" style="background:var(--crit)"></div>
+      <div class="fi-info"><div class="fi-name">FeeDetails.vue</div><div class="fi-path">views/Result/FeeDetails.vue</div></div>
+      <div class="fi-badges"><span class="badge a11y">A11Y</span><span class="badge spell">SPELL</span><span class="badge ui">UI</span></div>
+    </div>
+    <div class="file-item" onclick="showFile('ExamFormSubmission',this)">
+      <div class="fi-bar" style="background:var(--crit)"></div>
+      <div class="fi-info"><div class="fi-name">ExamFormSubmission.vue</div><div class="fi-path">views/Result/ExamFormSubmission.vue</div></div>
+      <div class="fi-badges"><span class="badge a11y">A11Y</span><span class="badge ui">UI</span></div>
+    </div>
+    <div class="file-item" onclick="showFile('iLikeCoursesNew',this)">
+      <div class="fi-bar" style="background:var(--high)"></div>
+      <div class="fi-info"><div class="fi-name">iLikeCoursesNew.vue</div><div class="fi-path">views/iLike/iLikeCoursesNew.vue</div></div>
+      <div class="fi-badges"><span class="badge a11y">A11Y</span><span class="badge spell">SPELL</span></div>
+    </div>
+
+    <div class="section-hdr">Upload / Storage</div>
+    <div class="file-item" onclick="showFile('saveWActivity',this)">
+      <div class="fi-bar" style="background:var(--fp)"></div>
+      <div class="fi-info"><div class="fi-name">saveWActivity.vue</div><div class="fi-path">components/excel/saveWActivity.vue</div></div>
+      <div class="fi-badges"><span class="badge fp">FP</span></div>
+    </div>
+    <div class="file-item" onclick="showFile('uploadFile',this)">
+      <div class="fi-bar" style="background:var(--fp)"></div>
+      <div class="fi-info"><div class="fi-name">uploadFile.vue</div><div class="fi-path">components/upload-manager/uploadFile.vue</div></div>
+      <div class="fi-badges"><span class="badge fp">FP</span></div>
+    </div>
+    <div class="file-item" onclick="showFile('hexID',this)">
+      <div class="fi-bar" style="background:var(--fp)"></div>
+      <div class="fi-info"><div class="fi-name">hexID.vue</div><div class="fi-path">components/mongodbID/hexID.vue</div></div>
+      <div class="fi-badges"><span class="badge fp">FP</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- RIGHT -->
+<div class="main" id="mainArea">
+  <div class="empty-state" id="emptyState">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+    <p>Select a file from the sidebar to inspect its audit issues</p>
+  </div>
+  <div id="panels"></div>
+</div>
+
+</div>
+
+<!-- AI PANEL -->
+<div class="ai-overlay" id="aiOverlay" onclick="closeAIIfBg(event)">
+  <div class="ai-panel">
+    <div class="ai-header">
+      <div class="ai-avatar"><svg viewBox="0 0 24 24"><path d="M12 2a10 10 0 100 20A10 10 0 0012 2zm0 4a1.5 1.5 0 110 3 1.5 1.5 0 010-3zm0 4.5c1.1 0 2 .9 2 2v4H10v-4c0-1.1.9-2 2-2z"/></svg></div>
+      <div><div class="ai-title">AI Code Assistant</div><div class="ai-sub">Ask anything about this audit</div></div>
+      <button class="ai-close" onclick="closeAI()">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+    </div>
+    <div class="ai-messages" id="aiMessages">
+      <div class="msg bot">👋 Hi! I'm your code review assistant for the <strong>ShivaniD/StudentLogin</strong> project.<br><br>This audit covers 57 Vue components and 38 JS files. I can explain any issue — accessibility problems, UI bugs, spelling errors, false positives, and how to fix them. What would you like to know?</div>
+    </div>
+    <div class="ai-suggestions">
+      <button class="sug-btn" onclick="askSuggestion('What are the most critical issues to fix first?')">Most critical fixes?</button>
+      <button class="sug-btn" onclick="askSuggestion('Explain all false positives in this audit')">Explain false positives</button>
+      <button class="sug-btn" onclick="askSuggestion('Which files have the worst accessibility issues?')">Worst A11Y files?</button>
+      <button class="sug-btn" onclick="askSuggestion('What are all the genuine spelling errors?')">Real spelling errors?</button>
+    </div>
+    <div class="ai-input-row">
+      <input class="ai-input" id="aiInput" placeholder="Ask about any issue…" onkeydown="if(event.key==='Enter')sendMessage()"/>
+      <button class="ai-send" onclick="sendMessage()">Send ↑</button>
+    </div>
+  </div>
+</div>
+
+<script>
+// ─────────────────────────────────────────────
+// FILE DATA — from audit_report.html
+// ─────────────────────────────────────────────
+const files = {
+
+adminLogin: {
+  name:'adminLogin.vue', path:'src/views/adminLogin.vue', lang:'Vue',
+  issues:[
+    {cls:'spell', label:'SPELL', line:8, desc:'\"prn\" flagged as misspelled — FALSE POSITIVE: PRN = Permanent Registration Number, standard Indian university student ID. Whitelist project-wide.'},
+    {cls:'spell', label:'SPELL', line:14, desc:'Consecutive spaces in <h5> university name binding — GENUINE: trailing whitespace renders literally in the browser. Clean up.'},
+    {cls:'a11y', label:'A11Y', line:20, desc:'<span class="eye-abs">, <div class="resend-otp">, <div class="language-dropdown"> have @click but are not keyboard-reachable — no tabindex, no role="button", no keydown handler.'},
+    {cls:'a11y', label:'A11Y', line:30, desc:'<a class="resend"> has no text content or aria-label — completely invisible to screen readers.'},
+    {cls:'a11y', label:'A11Y', line:36, desc:'#PRN input and #first–#fifth OTP inputs are unlabelled (×6) — screen readers cannot identify field purpose.'},
+    {cls:'a11y', label:'A11Y', line:44, desc:'Inputs rely solely on placeholder text — placeholders disappear on focus and are not reliably announced by assistive tech.'},
+    {cls:'a11y', label:'A11Y', line:50, desc:'No @media queries in component CSS — login card has fixed widths, not responsive on mobile.'},
+    {cls:'a11y', label:'A11Y', line:55, desc:'No :focus-visible style on anchor elements — keyboard focus is invisible.'},
+  ],
+  lines:[
+    {t:`<span class="vue-tag">&lt;template&gt;</span>`},
+    {t:`  <span class="vue-tag">&lt;div</span> <span class="attr">class</span>=<span class="str">"login-wrapper"</span><span class="vue-tag">&gt;</span>`},
+    {t:`    <span class="vue-tag">&lt;div</span> <span class="attr">class</span>=<span class="str">"university-card"</span><span class="vue-tag">&gt;</span>`},
+    {t:`      <span class="vue-tag">&lt;img</span> <span class="attr">:src</span>=<span class="str">"universityLogo"</span> <span class="attr">class</span>=<span class="str">"logo"</span><span class="vue-tag">/&gt;</span>`},
+    {t:`      <span class="vue-tag">&lt;h5</span> <span class="attr">class</span>=<span class="str">"Un-name"</span><span class="vue-tag">&gt;</span>{{ universityName }}  <span class="vue-tag">&lt;/h5&gt;</span>`, sev:'spell', ann:'SPELL — trailing spaces in h5 render literally'},
+    {t:`      <span class="vue-tag">&lt;div</span> <span class="attr">class</span>=<span class="str">"otp-section"</span><span class="vue-tag">&gt;</span>`},
+    {t:`        <span class="vue-tag">&lt;label&gt;</span>PRN No<span class="vue-tag">&lt;/label&gt;</span>`},
+    {t:`        <span class="vue-tag">&lt;input</span> <span class="attr">id</span>=<span class="str">"PRN"</span> <span class="attr">placeholder</span>=<span class="str">"Enter <span class="spell-err">prn</span>"</span><span class="vue-tag">/&gt;</span>`, sev:'spell', ann:'SPELL — "prn" flagged → FALSE POSITIVE: PRN = Permanent Registration Number'},
+    {t:`        <span class="vue-tag">&lt;input</span> <span class="attr">id</span>=<span class="str">"first"</span> <span class="attr">type</span>=<span class="str">"text"</span> <span class="attr">maxlength</span>=<span class="str">"1"</span><span class="vue-tag">/&gt;</span>`},
+    {t:`        <span class="vue-tag">&lt;input</span> <span class="attr">id</span>=<span class="str">"second"</span> <span class="attr">type</span>=<span class="str">"text"</span> <span class="attr">maxlength</span>=<span class="str">"1"</span><span class="vue-tag">/&gt;</span>`, sev:'a11y', ann:'A11Y — OTP inputs #first–#fifth have no label (×5)'},
+    {t:`      <span class="vue-tag">&lt;/div&gt;</span>`},
+    {t:`      <span class="vue-tag">&lt;div</span> <span class="attr">class</span>=<span class="str">"language-dropdown"</span> <span class="attr">@click</span>=<span class="str">"openLang"</span><span class="vue-tag">&gt;</span>`, sev:'a11y', ann:'A11Y — div @click not keyboard-reachable, needs role="button" + keydown'},
+    {t:`        {{ currentLang }}`},
+    {t:`      <span class="vue-tag">&lt;/div&gt;</span>`},
+    {t:`      <span class="vue-tag">&lt;span</span> <span class="attr">class</span>=<span class="str">"eye-abs"</span> <span class="attr">@click</span>=<span class="str">"togglePass"</span><span class="vue-tag">&gt;</span>👁<span class="vue-tag">&lt;/span&gt;</span>`, sev:'a11y', ann:'A11Y — span @click not keyboard-accessible'},
+    {t:`      <span class="vue-tag">&lt;div</span> <span class="attr">class</span>=<span class="str">"resend-otp"</span> <span class="attr">@click</span>=<span class="str">"sendOTP"</span><span class="vue-tag">&gt;</span>`},
+    {t:`        <span class="vue-tag">&lt;a</span> <span class="attr">class</span>=<span class="str">"resend"</span><span class="vue-tag">&gt;&lt;/a&gt;</span>`, sev:'a11y', ann:'A11Y — <a class="resend"> has no text or aria-label'},
+    {t:`      <span class="vue-tag">&lt;/div&gt;</span>`},
+    {t:`    <span class="vue-tag">&lt;/div&gt;</span>`},
+    {t:`  <span class="vue-tag">&lt;/div&gt;</span>`},
+    {t:`<span class="vue-tag">&lt;/template&gt;</span>`},
+    {t:``},
+    {t:`<span class="vue-tag">&lt;style</span> <span class="attr">scoped</span><span class="vue-tag">&gt;</span>`, sev:'a11y', ann:'A11Y — no @media queries, fixed widths not mobile-friendly'},
+    {t:`  <span class="prop">.card-wrapper</span> { <span class="attr">width</span>: <span class="num">420px</span>; }`},
+    {t:`  <span class="prop">a</span> { <span class="attr">color</span>: <span class="str">var(--primary)</span>; } <span class="cmt">/* ← no :focus-visible style */</span>`, sev:'a11y', ann:'A11Y — no :focus-visible, keyboard focus invisible on anchor'},
+    {t:`<span class="vue-tag">&lt;/style&gt;</span>`},
+  ]
+},
+
+Toast: {
+  name:'Toast.vue', path:'components/DaiseUI/Toast.vue', lang:'Vue',
+  issues:[
+    {cls:'a11y', label:'A11Y', line:4, desc:'Dynamic toast alerts (.alert-info / .alert-success) have no aria-live region — screen readers won\'t announce toast notifications when they appear.'},
+    {cls:'fp', label:'FP', line:2, desc:'Header Presence rule flagged "Header missing" — FALSE POSITIVE: Toast/notification components are transient UI elements. A heading would pollute the document outline and confuse screen readers. Correct fix is aria-live, not a heading.'},
+  ],
+  lines:[
+    {t:`<span class="vue-tag">&lt;template&gt;</span>`},
+    {t:`  <span class="vue-tag">&lt;div</span> <span class="attr">class</span>=<span class="str">"toast-container"</span><span class="vue-tag">&gt;</span>`, sev:'fp', ann:'FP — Header Presence rule flagged here; footers/toasts are exempt'},
+    {t:`    <span class="vue-tag">&lt;div</span>`, sev:'a11y', ann:'A11Y — missing role="status" aria-live="polite" aria-atomic="true"'},
+    {t:`      <span class="attr">class</span>=<span class="str">"alert alert-success"</span>`},
+    {t:`      <span class="attr">v-if</span>=<span class="str">"show"</span><span class="vue-tag">&gt;</span>`},
+    {t:`      {{ message }}`},
+    {t:`    <span class="vue-tag">&lt;/div&gt;</span>`},
+    {t:`    <span class="vue-tag">&lt;div</span>`, sev:'a11y', ann:'A11Y — errors need aria-live="assertive" for immediate announcement'},
+    {t:`      <span class="attr">class</span>=<span class="str">"alert alert-info"</span>`},
+    {t:`      <span class="attr">v-if</span>=<span class="str">"showInfo"</span><span class="vue-tag">&gt;</span>`},
+    {t:`      {{ infoMessage }}`},
+    {t:`    <span class="vue-tag">&lt;/div&gt;</span>`},
+    {t:`  <span class="vue-tag">&lt;/div&gt;</span>`},
+    {t:`<span class="vue-tag">&lt;/template&gt;</span>`},
+  ]
+},
+
+programBar: {
+  name:'programBar.vue', path:'components/common/programBar.vue', lang:'Vue',
+  issues:[
+    {cls:'spell', label:'SPELL', line:5, desc:'Template has "Program:   Event:" with double/triple spaces around dynamic values — renders literally in browser. Use a separator like &middot; instead.'},
+    {cls:'ui', label:'UI', line:9, desc:'Header missing — this bar is displayed as a context strip across multiple views. Add a visually-hidden heading for screen reader navigation: <h3 class="sr-only">Current Program Context</h3>'},
+  ],
+  lines:[
+    {t:`<span class="vue-tag">&lt;template&gt;</span>`},
+    {t:`  <span class="vue-tag">&lt;div</span> <span class="attr">class</span>=<span class="str">"program-bar"</span><span class="vue-tag">&gt;</span>`},
+    {t:`    <span class="vue-tag">&lt;p</span> <span class="attr">class</span>=<span class="str">"text-sm font-bold text-white"</span><span class="vue-tag">&gt;</span>`},
+    {t:`      Program:   {{ fullProgramTerm || '' }}   Event: {{ displayName || '' }}`, sev:'spell', ann:'SPELL — consecutive spaces render literally'},
+    {t:`    <span class="vue-tag">&lt;/p&gt;</span>`, sev:'ui', ann:'UI — no header element, screen readers can\'t navigate to this bar'},
+    {t:`  <span class="vue-tag">&lt;/div&gt;</span>`},
+    {t:`<span class="vue-tag">&lt;/template&gt;</span>`},
+  ]
+},
+
+updateDbSave: {
+  name:'updateDbSave.vue', path:'components/BL/updateDbSave.vue', lang:'Vue',
+  issues:[
+    {cls:'spell', label:'SPELL', line:5, desc:'<p id="updateAndSave"> has multiple consecutive spaces between sentences — renders literally in the browser as visible extra whitespace.'},
+  ],
+  lines:[
+    {t:`<span class="vue-tag">&lt;template&gt;</span>`},
+    {t:`  <span class="vue-tag">&lt;div</span> <span class="attr">class</span>=<span class="str">"update-section"</span><span class="vue-tag">&gt;</span>`},
+    {t:`    <span class="vue-tag">&lt;h2&gt;</span>Update &amp; Save<span class="vue-tag">&lt;/h2&gt;</span>`},
+    {t:`    <span class="vue-tag">&lt;p</span> <span class="attr">id</span>=<span class="str">"updateAndSave"</span><span class="vue-tag">&gt;</span>`, sev:'spell', ann:'SPELL — multiple consecutive spaces inside this paragraph'},
+    {t:`      This feature updates the user age.  Server can add 5 for given age and  saves data in database.`},
+    {t:`    <span class="vue-tag">&lt;/p&gt;</span>`},
+    {t:`  <span class="vue-tag">&lt;/div&gt;</span>`},
+    {t:`<span class="vue-tag">&lt;/template&gt;</span>`},
+  ]
+},
+
+CdnUpload: {
+  name:'CdnUpload.vue', path:'views/CdnUpload.vue', lang:'Vue',
+  issues:[
+    {cls:'spell', label:'SPELL', line:8, desc:'"cdnserver" used as a compound word in button labels — not a standard term. User-facing labels should read "CDN Server" for clarity.'},
+    {cls:'a11y', label:'A11Y', line:13, desc:'<img> missing alt attribute — fails WCAG 1.1.1 Non-text Content. Use alt="" for decorative images or a meaningful description for informative ones.'},
+  ],
+  lines:[
+    {t:`<span class="vue-tag">&lt;template&gt;</span>`},
+    {t:`  <span class="vue-tag">&lt;div</span> <span class="attr">class</span>=<span class="str">"cdn-upload"</span><span class="vue-tag">&gt;</span>`},
+    {t:`    <span class="vue-tag">&lt;h2&gt;</span>CDN Upload<span class="vue-tag">&lt;/h2&gt;</span>`},
+    {t:`    <span class="vue-tag">&lt;button</span> <span class="attr">@click</span>=<span class="str">"uploadToCdn"</span><span class="vue-tag">&gt;</span>`, sev:'spell', ann:'SPELL — "cdnserver" is non-standard; use "CDN Server" for display'},
+    {t:`      Upload to <span class="spell-err">cdnserver</span>`},
+    {t:`    <span class="vue-tag">&lt;/button&gt;</span>`},
+    {t:`    <span class="vue-tag">&lt;div</span> <span class="attr">class</span>=<span class="str">"preview-section"</span><span class="vue-tag">&gt;</span>`},
+    {t:`      <span class="vue-tag">&lt;img</span>`, sev:'a11y', ann:'A11Y — <img> missing alt attribute, WCAG 1.1.1 violation'},
+    {t:`        <span class="attr">:src</span>=<span class="str">"previewUrl"</span>`},
+    {t:`        <span class="attr">class</span>=<span class="str">"file-thumb"</span><span class="vue-tag">/&gt;</span>`},
+    {t:`    <span class="vue-tag">&lt;/div&gt;</span>`},
+    {t:`  <span class="vue-tag">&lt;/div&gt;</span>`},
+    {t:`<span class="vue-tag">&lt;/template&gt;</span>`},
+  ]
+},
+
+SessionManager: {
+  name:'SessionManager.vue', path:'views/SessionManager.vue', lang:'Vue',
+  issues:[
+    {cls:'a11y', label:'A11Y', line:4, desc:'<div class="card p-8"> and <div class="p-card"> are clickable but not reachable via Tab key (×12) — no tabindex, no role="button", no keyboard handlers.'},
+  ],
+  lines:[
+    {t:`<span class="vue-tag">&lt;template&gt;</span>`},
+    {t:`  <span class="vue-tag">&lt;div</span> <span class="attr">class</span>=<span class="str">"session-manager"</span><span class="vue-tag">&gt;</span>`},
+    {t:`    <span class="vue-tag">&lt;div</span>`, sev:'a11y', ann:'A11Y — clickable card not keyboard-accessible, add tabindex="0" role="button"'},
+    {t:`      <span class="attr">class</span>=<span class="str">"card p-8"</span>`},
+    {t:`      <span class="attr">@click</span>=<span class="str">"navigate(card)"</span><span class="vue-tag">&gt;</span>`},
+    {t:`      <span class="vue-tag">&lt;h3&gt;</span>{{ card.title }}<span class="vue-tag">&lt;/h3&gt;</span>`},
+    {t:`    <span class="vue-tag">&lt;/div&gt;</span>`},
+    {t:`    <span class="vue-tag">&lt;div</span>`, sev:'a11y', ann:'A11Y — .p-card also clickable but no keyboard support (×6 more instances)'},
+    {t:`      <span class="attr">class</span>=<span class="str">"p-card"</span>`},
+    {t:`      <span class="attr">@click</span>=<span class="str">"selectSession(s)"</span><span class="vue-tag">&gt;</span>`},
+    {t:`      {{ s.label }}`},
+    {t:`    <span class="vue-tag">&lt;/div&gt;</span>`},
+    {t:`  <span class="vue-tag">&lt;/div&gt;</span>`},
+    {t:`<span class="vue-tag">&lt;/template&gt;</span>`},
+  ]
+},
+
+Home: {
+  name:'Home.vue', path:'src/views/Home.vue', lang:'Vue',
+  issues:[
+    {cls:'spell', label:'SPELL', line:5, desc:'"cource" appears in both a heading and a CTA button — GENUINE TYPO visible to end users. Correct spelling is "course". Fix both occurrences.'},
+  ],
+  lines:[
+    {t:`<span class="vue-tag">&lt;template&gt;</span>`},
+    {t:`  <span class="vue-tag">&lt;div</span> <span class="attr">class</span>=<span class="str">"home-page"</span><span class="vue-tag">&gt;</span>`},
+    {t:`    <span class="vue-tag">&lt;section</span> <span class="attr">class</span>=<span class="str">"hero"</span><span class="vue-tag">&gt;</span>`},
+    {t:`      <span class="vue-tag">&lt;h1&gt;</span>iLike <span class="spell-err">Cource</span><span class="vue-tag">&lt;/h1&gt;</span>`, sev:'spell', ann:'SPELL — "Cource" → "Course" (user-visible heading)'},
+    {t:`      <span class="vue-tag">&lt;p&gt;</span>Find the perfect program for you<span class="vue-tag">&lt;/p&gt;</span>`},
+    {t:`      <span class="vue-tag">&lt;button</span> <span class="attr">@click</span>=<span class="str">"goToCourse"</span><span class="vue-tag">&gt;</span>Go To <span class="spell-err">Cource</span><span class="vue-tag">&lt;/button&gt;</span>`, sev:'spell', ann:'SPELL — "Cource" → "Course" (CTA button text)'},
+    {t:`    <span class="vue-tag">&lt;/section&gt;</span>`},
+    {t:`  <span class="vue-tag">&lt;/div&gt;</span>`},
+    {t:`<span class="vue-tag">&lt;/template&gt;</span>`},
+  ]
+},
+
+StudentData: {
+  name:'StudentData.vue', path:'src/views/StudentData.vue', lang:'Vue',
+  issues:[
+    {cls:'spell', label:'SPELL', line:6, desc:'"fullname", "passingyear", "passingmonth", "seatnumber" flagged — FALSE POSITIVE: these are camelCase field names. Spell-checker treats them as unknown words. For better UX display as "Full Name", "Passing Year" etc.'},
+    {cls:'a11y', label:'A11Y', line:14, desc:'WCAG contrast failure: .formkit-submit has #fff on #007bff = 3.98:1 ratio (minimum required is 4.5:1).'},
+    {cls:'a11y', label:'A11Y', line:20, desc:'No :hover or :focus-visible styles for button and anchor elements (×4) — keyboard users cannot determine which element is focused.'},
+    {cls:'a11y', label:'A11Y', line:26, desc:'.container has fixed width: 800px — causes horizontal scroll risk on small screens. Use max-width instead.'},
+  ],
+  lines:[
+    {t:`<span class="vue-tag">&lt;template&gt;</span>`},
+    {t:`  <span class="vue-tag">&lt;div</span> <span class="attr">class</span>=<span class="str">"container"</span><span class="vue-tag">&gt;</span>`, sev:'a11y', ann:'A11Y — fixed width:800px causes horizontal scroll on small screens'},
+    {t:`    <span class="vue-tag">&lt;label&gt;</span>Full Name<span class="vue-tag">&lt;/label&gt;</span>`},
+    {t:`    <span class="vue-tag">&lt;input</span> <span class="attr">name</span>=<span class="str">"<span class="spell-err">fullname</span>"</span> <span class="attr">v-model</span>=<span class="str">"form.fullname"</span><span class="vue-tag">/&gt;</span>`, sev:'spell', ann:'SPELL — "fullname" flagged → FALSE POSITIVE: camelCase field name'},
+    {t:`    <span class="vue-tag">&lt;label&gt;</span>Seat Number<span class="vue-tag">&lt;/label&gt;</span>`},
+    {t:`    <span class="vue-tag">&lt;input</span> <span class="attr">name</span>=<span class="str">"<span class="spell-err">seatnumber</span>"</span> <span class="attr">v-model</span>=<span class="str">"form.seatnumber"</span><span class="vue-tag">/&gt;</span>`, sev:'spell', ann:'SPELL — "seatnumber" flagged → FALSE POSITIVE: form field name'},
+    {t:`    <span class="vue-tag">&lt;button</span>`, sev:'a11y', ann:'A11Y — WCAG contrast 3.98:1 fails minimum 4.5:1'},
+    {t:`      <span class="attr">class</span>=<span class="str">"formkit-submit"</span>`},
+    {t:`      <span class="attr">style</span>=<span class="str">"background:#007bff;color:#fff;font-size:16px"</span><span class="vue-tag">&gt;</span>`},
+    {t:`      Submit`},
+    {t:`    <span class="vue-tag">&lt;/button&gt;</span>`, sev:'a11y', ann:'A11Y — no :hover or :focus-visible styles on button (×4 elements)'},
+    {t:`  <span class="vue-tag">&lt;/div&gt;</span>`},
+    {t:`<span class="vue-tag">&lt;/template&gt;</span>`},
+  ]
+},
+
+StudentDemo: {
+  name:'StudentDemo.vue', path:'src/views/StudentDemo.vue', lang:'Vue',
+  issues:[
+    {cls:'spell', label:'SPELL', line:5, desc:'"fetchallstudent" in button label — FALSE POSITIVE: mirrors the API method name. For UX, visible label should be "Fetch All Students".'},
+    {cls:'a11y', label:'A11Y', line:10, desc:'5 inputs with no associated label elements, no type attribute, and 5 required fields missing aria-required="true".'},
+  ],
+  lines:[
+    {t:`<span class="vue-tag">&lt;template&gt;</span>`},
+    {t:`  <span class="vue-tag">&lt;div</span> <span class="attr">class</span>=<span class="str">"student-demo"</span><span class="vue-tag">&gt;</span>`},
+    {t:`    <span class="vue-tag">&lt;button</span> <span class="attr">@click</span>=<span class="str">"fetchAllStudent"</span><span class="vue-tag">&gt;</span>`, sev:'spell', ann:'SPELL — "fetchallstudent" → FP: API method name; improve to "Fetch All Students"'},
+    {t:`      <span class="spell-err">fetchallstudent</span>`},
+    {t:`    <span class="vue-tag">&lt;/button&gt;</span>`},
+    {t:`    <span class="vue-tag">&lt;input</span> <span class="attr">v-model</span>=<span class="str">"name"</span> <span class="attr">type</span>=<span class="str">""</span> <span class="attr">required</span><span class="vue-tag">/&gt;</span>`, sev:'a11y', ann:'A11Y — no <label>, empty type="" invalid, missing aria-required="true" (×5)'},
+    {t:`    <span class="vue-tag">&lt;input</span> <span class="attr">v-model</span>=<span class="str">"email"</span> <span class="attr">type</span>=<span class="str">""</span> <span class="attr">required</span><span class="vue-tag">/&gt;</span>`},
+    {t:`    <span class="vue-tag">&lt;input</span> <span class="attr">v-model</span>=<span class="str">"prn"</span> <span class="attr">type</span>=<span class="str">""</span> <span class="attr">required</span><span class="vue-tag">/&gt;</span>`},
+    {t:`  <span class="vue-tag">&lt;/div&gt;</span>`},
+    {t:`<span class="vue-tag">&lt;/template&gt;</span>`},
+  ]
+},
+
+ApplicationServices: {
+  name:'ApplicationServices.vue', path:'views/Result/ApplicationServices.vue', lang:'Vue',
+  issues:[
+    {cls:'a11y', label:'A11Y', line:4, desc:'WCAG contrast failures (×3): .download-btn #fff on #10b981 = 2.54:1 (min 4.5:1); .btn-blue #fff on #3b82f6 = 3.68:1; <h1> inline red #ff0000 = 4.00:1.'},
+    {cls:'a11y', label:'A11Y', line:14, desc:'22 non-interactive divs with @click — tooltip, tab, hr-card, option-card divs not keyboard-accessible; 6 missing focus styles. Systemic pattern — create a useKeyClick composable.'},
+    {cls:'a11y', label:'A11Y', line:28, desc:'<input type="checkbox"> has no associated label — screen reader announces it as an unlabeled control.'},
+  ],
+  lines:[
+    {t:`<span class="vue-tag">&lt;template&gt;</span>`},
+    {t:`  <span class="vue-tag">&lt;div</span> <span class="attr">class</span>=<span class="str">"app-services"</span><span class="vue-tag">&gt;</span>`},
+    {t:`    <span class="vue-tag">&lt;h1</span> <span class="attr">style</span>=<span class="str">"color:#ff0000"</span><span class="vue-tag">&gt;</span>Services<span class="vue-tag">&lt;/h1&gt;</span>`, sev:'a11y', ann:'A11Y — inline red #ff0000 contrast 4.00:1 fails WCAG AA 4.5:1'},
+    {t:`    <span class="vue-tag">&lt;button</span> <span class="attr">class</span>=<span class="str">"download-btn"</span><span class="vue-tag">&gt;</span>Download<span class="vue-tag">&lt;/button&gt;</span>`, sev:'a11y', ann:'A11Y — #fff on #10b981 = 2.54:1 contrast, far below minimum'},
+    {t:`    <span class="vue-tag">&lt;button</span> <span class="attr">class</span>=<span class="str">"btn btn-blue"</span><span class="vue-tag">&gt;</span>Submit<span class="vue-tag">&lt;/button&gt;</span>`},
+    {t:`    <span class="vue-tag">&lt;div</span> <span class="attr">class</span>=<span class="str">"tab-lifted tab"</span>`, sev:'a11y', ann:'A11Y — clickable div, not keyboard-accessible (×22 across this file)'},
+    {t:`         <span class="attr">@click</span>=<span class="str">"handleTab"</span><span class="vue-tag">&gt;</span>`},
+    {t:`      {{ tab.label }}`},
+    {t:`    <span class="vue-tag">&lt;/div&gt;</span>`},
+    {t:`    <span class="vue-tag">&lt;div</span> <span class="attr">class</span>=<span class="str">"hr-card"</span> <span class="attr">@click</span>=<span class="str">"openCard"</span><span class="vue-tag">&gt;</span>`, sev:'a11y', ann:'A11Y — another non-interactive click, no tabindex or keydown handler'},
+    {t:`      <span class="vue-tag">&lt;div</span> <span class="attr">class</span>=<span class="str">"option-card"</span> <span class="attr">@click</span>=<span class="str">"selectOption"</span><span class="vue-tag">&gt;</span>...<span class="vue-tag">&lt;/div&gt;</span>`},
+    {t:`    <span class="vue-tag">&lt;/div&gt;</span>`},
+    {t:`    <span class="vue-tag">&lt;input</span> <span class="attr">type</span>=<span class="str">"checkbox"</span> <span class="attr">v-model</span>=<span class="str">"agreed"</span><span class="vue-tag">/&gt;</span>`, sev:'a11y', ann:'A11Y — checkbox has no associated <label> element'},
+    {t:`  <span class="vue-tag">&lt;/div&gt;</span>`},
+    {t:`<span class="vue-tag">&lt;/template&gt;</span>`},
+    {t:``},
+    {t:`<span class="vue-tag">&lt;style</span> <span class="attr">scoped</span><span class="vue-tag">&gt;</span>`},
+    {t:`<span class="prop">.download-btn</span> { <span class="attr">background</span>: <span class="str">#10b981</span>; <span class="attr">color</span>: <span class="str">#fff</span>; } <span class="cmt">/* 2.54:1 ✗ → use #047857 for 6.7:1 */</span>`, sev:'a11y', ann:'A11Y — .download-btn contrast 2.54:1 fails WCAG AA'},
+    {t:`<span class="prop">.btn.btn-blue</span> { <span class="attr">background</span>: <span class="str">#3b82f6</span>; <span class="attr">color</span>: <span class="str">#fff</span>; } <span class="cmt">/* 3.68:1 ✗ → use #1d4ed8 for 8.6:1 */</span>`},
+    {t:`<span class="vue-tag">&lt;/style&gt;</span>`},
+  ]
+},
+
+FeeDetails: {
+  name:'FeeDetails.vue', path:'views/Result/FeeDetails.vue', lang:'Vue',
+  issues:[
+    {cls:'spell', label:'SPELL', line:4, desc:'"totalfee" and "btn" flagged as misspelled — FALSE POSITIVE: CSS class names, not user-visible text.'},
+    {cls:'spell', label:'SPELL', line:8, desc:'Consecutive spaces in button labels displayed to users — GENUINE: fix trailing whitespace in displayed text.'},
+    {cls:'ui', label:'UI', line:14, desc:'Too many font style classes across 1586 lines — define a shared type scale (.text-label, .text-value, .text-title) via Tailwind or shared CSS.'},
+    {cls:'ui', label:'UI', line:18, desc:'Header missing — this 1586-line view has no page heading. Add <h1 class="text-xl font-bold">Fee Details</h1>.'},
+    {cls:'a11y', label:'A11Y', line:22, desc:'No :focus-visible on anchor elements; no @media queries — FeeDetails has no responsive breakpoints.'},
+  ],
+  lines:[
+    {t:`<span class="vue-tag">&lt;template&gt;</span>`},
+    {t:`  <span class="vue-tag">&lt;div</span> <span class="attr">class</span>=<span class="str">"fee-details"</span><span class="vue-tag">&gt;</span>`, sev:'ui', ann:'UI — no <h1> page heading for this 1586-line view'},
+    {t:`    <span class="vue-tag">&lt;button</span> <span class="attr">class</span>=<span class="str">"<span class="spell-err">btn</span> <span class="spell-err">totalfee</span>"</span><span class="vue-tag">&gt;</span>`, sev:'spell', ann:'SPELL — "btn", "totalfee" flagged → FALSE POSITIVE: CSS class names'},
+    {t:`      Pay Total Fee  `},
+    {t:`    <span class="vue-tag">&lt;/button&gt;</span>`, sev:'spell', ann:'SPELL — trailing spaces in button label text (genuine)'},
+    {t:`    <span class="vue-tag">&lt;p</span> <span class="attr">class</span>=<span class="str">"text-xs font-semibold"</span><span class="vue-tag">&gt;</span>Label<span class="vue-tag">&lt;/p&gt;</span>`},
+    {t:`    <span class="vue-tag">&lt;p</span> <span class="attr">class</span>=<span class="str">"text-sm font-bold text-slate-700"</span><span class="vue-tag">&gt;</span>Value<span class="vue-tag">&lt;/p&gt;</span>`},
+    {t:`    <span class="vue-tag">&lt;p</span> <span class="attr">class</span>=<span class="str">"text-lg font-extrabold tracking-tight"</span><span class="vue-tag">&gt;</span>Title<span class="vue-tag">&lt;/p&gt;</span>`, sev:'ui', ann:'UI — too many font variants, consolidate into a shared type scale'},
+    {t:`    <span class="vue-tag">&lt;a</span> <span class="attr">href</span>=<span class="str">"#"</span><span class="vue-tag">&gt;</span>View Receipt<span class="vue-tag">&lt;/a&gt;</span>`, sev:'a11y', ann:'A11Y — no :focus-visible style on anchor, no @media queries in component'},
+    {t:`  <span class="vue-tag">&lt;/div&gt;</span>`},
+    {t:`<span class="vue-tag">&lt;/template&gt;</span>`},
+  ]
+},
+
+ExamFormSubmission: {
+  name:'ExamFormSubmission.vue', path:'views/Result/ExamFormSubmission.vue', lang:'Vue',
+  issues:[
+    {cls:'spell', label:'SPELL', line:4, desc:'"prn" in <span> — FALSE POSITIVE: PRN = Permanent Registration Number. Domain acronym used throughout the student portal.'},
+    {cls:'ui', label:'UI', line:8, desc:'Too many font style classes — 1310-line component has inconsistent typography. Define a shared type scale.'},
+    {cls:'a11y', label:'A11Y', line:14, desc:'Fixed font-sizes 10px–15px throughout (×7) — acceptable inside @media print only. Separate print and screen styles.'},
+    {cls:'a11y', label:'A11Y', line:20, desc:'.receipt-container has fixed width: 800px — causes horizontal scroll on small screens. Use max-width for screen, fixed width only in @media print.'},
+    {cls:'a11y', label:'A11Y', line:26, desc:'<input type="checkbox"> has no label — screen reader announces it as an unlabeled control.'},
+  ],
+  lines:[
+    {t:`<span class="vue-tag">&lt;template&gt;</span>`},
+    {t:`  <span class="vue-tag">&lt;div</span> <span class="attr">class</span>=<span class="str">"receipt-container"</span><span class="vue-tag">&gt;</span>`, sev:'a11y', ann:'A11Y — fixed width:800px, use max-width for screen'},
+    {t:`    <span class="vue-tag">&lt;span</span> <span class="attr">class</span>=<span class="str">"prn-label"</span><span class="vue-tag">&gt;</span><span class="spell-err">prn</span>: {{ studentPrn }}<span class="vue-tag">&lt;/span&gt;</span>`, sev:'spell', ann:'SPELL — "prn" flagged → FALSE POSITIVE: PRN = Permanent Registration Number'},
+    {t:`    <span class="vue-tag">&lt;p</span> <span class="attr">class</span>=<span class="str">"text-xs font-bold"</span><span class="vue-tag">&gt;</span>Exam Details<span class="vue-tag">&lt;/p&gt;</span>`},
+    {t:`    <span class="vue-tag">&lt;p</span> <span class="attr">class</span>=<span class="str">"text-sm tracking-wide uppercase"</span><span class="vue-tag">&gt;</span>...<span class="vue-tag">&lt;/p&gt;</span>`, sev:'ui', ann:'UI — too many font classes, define shared type scale'},
+    {t:`    <span class="vue-tag">&lt;input</span> <span class="attr">type</span>=<span class="str">"checkbox"</span> <span class="attr">v-model</span>=<span class="str">"agreed"</span><span class="vue-tag">/&gt;</span>`, sev:'a11y', ann:'A11Y — checkbox has no associated label element'},
+    {t:`  <span class="vue-tag">&lt;/div&gt;</span>`},
+    {t:`<span class="vue-tag">&lt;/template&gt;</span>`},
+    {t:``},
+    {t:`<span class="vue-tag">&lt;style&gt;</span>`},
+    {t:`<span class="prop">.receipt-container</span> { <span class="attr">font-size</span>: <span class="num">11px</span>; <span class="attr">width</span>: <span class="num">800px</span>; }`, sev:'a11y', ann:'A11Y — fixed px font-size (10–15px ×7), separate print/screen styles'},
+    {t:`<span class="vue-tag">&lt;/style&gt;</span>`},
+  ]
+},
+
+iLikeCoursesNew: {
+  name:'iLikeCoursesNew.vue', path:'views/iLike/iLikeCoursesNew.vue', lang:'Vue',
+  issues:[
+    {cls:'spell', label:'SPELL', line:5, desc:'<span> elements contain consecutive spaces — GENUINE: extra whitespace renders literally. Clean up.'},
+    {cls:'ui', label:'UI', line:9, desc:'Header missing — this is a full course listing page. Add a semantic heading: <h2 class="sr-only">Available Courses</h2>'},
+    {cls:'a11y', label:'A11Y', line:14, desc:'.custom-chip and .cc-box elements have @click but no tabindex, role="button", or keyboard handlers (×4) — keyboard users cannot select courses.'},
+  ],
+  lines:[
+    {t:`<span class="vue-tag">&lt;template&gt;</span>`},
+    {t:`  <span class="vue-tag">&lt;div</span> <span class="attr">class</span>=<span class="str">"courses-page"</span><span class="vue-tag">&gt;</span>`, sev:'ui', ann:'UI — no heading element for this full course listing view'},
+    {t:`    <span class="vue-tag">&lt;span</span> <span class="attr">class</span>=<span class="str">"section-label"</span><span class="vue-tag">&gt;</span>Available   Courses<span class="vue-tag">&lt;/span&gt;</span>`, sev:'spell', ann:'SPELL — consecutive spaces render literally in browser'},
+    {t:`    <span class="vue-tag">&lt;div</span> <span class="attr">v-for</span>=<span class="str">"course in courses"</span><span class="vue-tag">&gt;</span>`},
+    {t:`      <span class="vue-tag">&lt;div</span>`, sev:'a11y', ann:'A11Y — .custom-chip @click with no tabindex or keydown (×4)'},
+    {t:`        <span class="attr">class</span>=<span class="str">"custom-chip"</span>`},
+    {t:`        <span class="attr">@click</span>=<span class="str">"selectCourse(course)"</span><span class="vue-tag">&gt;</span>`},
+    {t:`        {{ course.name }}`},
+    {t:`      <span class="vue-tag">&lt;/div&gt;</span>`},
+    {t:`      <span class="vue-tag">&lt;div</span> <span class="attr">class</span>=<span class="str">"cc-box"</span> <span class="attr">@click</span>=<span class="str">"openBox(course)"</span><span class="vue-tag">&gt;</span>`, sev:'a11y', ann:'A11Y — .cc-box also has @click with no keyboard support'},
+    {t:`        {{ course.description }}`},
+    {t:`      <span class="vue-tag">&lt;/div&gt;</span>`},
+    {t:`    <span class="vue-tag">&lt;/div&gt;</span>`},
+    {t:`  <span class="vue-tag">&lt;/div&gt;</span>`},
+    {t:`<span class="vue-tag">&lt;/template&gt;</span>`},
+  ]
+},
+
+saveWActivity: {
+  name:'saveWActivity.vue', path:'components/excel/saveWActivity.vue', lang:'Vue',
+  issues:[
+    {cls:'fp', label:'FP', line:5, desc:'"cdn" flagged as misspelled — FALSE POSITIVE: "CDN" (Content Delivery Network) is a universally-recognised technical abbreviation. Add to spell-checker whitelist. No code change required.'},
+  ],
+  lines:[
+    {t:`<span class="vue-tag">&lt;template&gt;</span>`},
+    {t:`  <span class="vue-tag">&lt;div</span> <span class="attr">class</span>=<span class="str">"save-activity"</span><span class="vue-tag">&gt;</span>`},
+    {t:`    <span class="vue-tag">&lt;h2&gt;</span>Save with Activity<span class="vue-tag">&lt;/h2&gt;</span>`},
+    {t:`    <span class="vue-tag">&lt;p&gt;</span>Upload to <span class="spell-err">cdn</span> and log activity<span class="vue-tag">&lt;/p&gt;</span>`, sev:'fp', ann:'FP — "cdn" flagged → FALSE POSITIVE: CDN = Content Delivery Network'},
+    {t:`    <span class="vue-tag">&lt;button</span> <span class="attr">@click</span>=<span class="str">"saveWithCdn"</span><span class="vue-tag">&gt;</span>Save to CDN<span class="vue-tag">&lt;/button&gt;</span>`},
+    {t:`  <span class="vue-tag">&lt;/div&gt;</span>`},
+    {t:`<span class="vue-tag">&lt;/template&gt;</span>`},
+  ]
+},
+
+uploadFile: {
+  name:'uploadFile.vue', path:'components/upload-manager/uploadFile.vue', lang:'Vue',
+  issues:[
+    {cls:'fp', label:'FP', line:5, desc:'"cdn" and "url" flagged (3 instances) — FALSE POSITIVE: CDN and URL are standard web infrastructure terms used in button labels like "CDN URL". Whitelist both.'},
+    {cls:'fp', label:'FP', line:9, desc:'"multipart" flagged as misspelled — FALSE POSITIVE: "multipart" is an official MIME type prefix defined in RFC 2046 (multipart/form-data). Standard HTTP vocabulary. Add to whitelist.'},
+  ],
+  lines:[
+    {t:`<span class="vue-tag">&lt;template&gt;</span>`},
+    {t:`  <span class="vue-tag">&lt;div</span> <span class="attr">class</span>=<span class="str">"upload-manager"</span><span class="vue-tag">&gt;</span>`},
+    {t:`    <span class="vue-tag">&lt;button</span><span class="vue-tag">&gt;</span><span class="spell-err">cdn</span> <span class="spell-err">url</span><span class="vue-tag">&lt;/button&gt;</span>`, sev:'fp', ann:'FP — "cdn", "url" flagged → FALSE POSITIVE: standard tech abbreviations'},
+    {t:`    <span class="vue-tag">&lt;button</span><span class="vue-tag">&gt;</span>Get CDN URL<span class="vue-tag">&lt;/button&gt;</span>`},
+    {t:`    <span class="vue-tag">&lt;form</span> <span class="attr">enctype</span>=<span class="str">"<span class="spell-err">multipart</span>/form-data"</span><span class="vue-tag">&gt;</span>`, sev:'fp', ann:'FP — "multipart" flagged → FALSE POSITIVE: RFC 2046 MIME type standard'},
+    {t:`      <span class="vue-tag">&lt;input</span> <span class="attr">type</span>=<span class="str">"file"</span> <span class="attr">@change</span>=<span class="str">"handleUpload"</span><span class="vue-tag">/&gt;</span>`},
+    {t:`    <span class="vue-tag">&lt;/form&gt;</span>`},
+    {t:`  <span class="vue-tag">&lt;/div&gt;</span>`},
+    {t:`<span class="vue-tag">&lt;/template&gt;</span>`},
+  ]
+},
+
+hexID: {
+  name:'hexID.vue', path:'components/mongodbID/hexID.vue', lang:'Vue',
+  issues:[
+    {cls:'fp', label:'FP', line:4, desc:'"mongodb" flagged as misspelled — FALSE POSITIVE: MongoDB is a registered trademark and the database technology used in this project. The entire components/mongodbID/ directory is named after it. Add "mongodb" and "MongoDB" to the whitelist.'},
+  ],
+  lines:[
+    {t:`<span class="vue-tag">&lt;template&gt;</span>`},
+    {t:`  <span class="vue-tag">&lt;div</span> <span class="attr">class</span>=<span class="str">"hex-id-generator"</span><span class="vue-tag">&gt;</span>`},
+    {t:`    <span class="vue-tag">&lt;h2&gt;</span>Generate <span class="spell-err">MongoDB</span> Hex ID<span class="vue-tag">&lt;/h2&gt;</span>`, sev:'fp', ann:'FP — "mongodb" flagged → FALSE POSITIVE: registered trademark / tech used in project'},
+    {t:`    <span class="vue-tag">&lt;p</span> <span class="attr">class</span>=<span class="str">"hint"</span><span class="vue-tag">&gt;</span>Creates a valid <span class="spell-err">mongodb</span> ObjectId<span class="vue-tag">&lt;/p&gt;</span>`, sev:'fp', ann:'FP — whitelist "mongodb" and "MongoDB" project-wide'},
+    {t:`    <span class="vue-tag">&lt;button</span> <span class="attr">@click</span>=<span class="str">"generateId"</span><span class="vue-tag">&gt;</span>Generate<span class="vue-tag">&lt;/button&gt;</span>`},
+    {t:`  <span class="vue-tag">&lt;/div&gt;</span>`},
+    {t:`<span class="vue-tag">&lt;/template&gt;</span>`},
+  ]
+},
+
+}; // end files
+
+// ─────────────────────────────────────────────
+// RENDER PANELS
+// ─────────────────────────────────────────────
+const clsMap  = {ui:'ui', a11y:'a11y', spell:'spell', med:'med', fp:'fp'};
+const hlMap   = {ui:'hl-ui', a11y:'hl-a11y', spell:'hl-spell', med:'hl-med', fp:'hl-fp'};
+const annMap  = {ui:'ann-ui', a11y:'ann-a11y', spell:'ann-spell', med:'ann-med', fp:'ann-fp'};
+
+function buildPanel(key, f){
+  // issues bar
+  let bar = '<span class="ib-label">Issues ·</span>';
+  f.issues.forEach(iss => {
+    bar += `<div class="issue-pill ${iss.cls}" onclick="jumpLine('${key}',${iss.line})">
+      <svg width="6" height="6" viewBox="0 0 6 6"><circle cx="3" cy="3" r="3" fill="currentColor"/></svg>
+      ${iss.label}${iss.line ? `<span style="opacity:.6;font-size:10px">L${iss.line}</span>` : ''}
+      <div class="pill-tooltip">${iss.desc}</div>
+    </div>`;
+  });
+
+  // code
+  let lns = '', code = '';
+  f.lines.forEach((ln, i) => {
+    const n = i + 1;
+    lns += `<span class="ln">${n}</span>`;
+    const hl   = ln.sev ? hlMap[ln.sev]  : '';
+    const bar2 = ln.sev ? `sev-bar ${ln.sev}` : 'sev-bar none';
+    const ann  = ln.ann ? `<span class="inline-ann ${annMap[ln.sev]}">${ln.ann}</span>` : '';
+    code += `<div class="code-line ${hl}" id="${key}-L${n}">
+      <div class="${bar2}"></div>
+      <div class="line-code">${ln.t}${ann}</div>
+    </div>`;
+  });
+
+  return `<div class="code-panel" id="panel-${key}">
+    <div class="code-topbar">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--text3)" stroke-width="2" style="flex-shrink:0"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+      <div><div class="ctb-file">${f.name}</div><div class="ctb-path">${f.path}</div></div>
+      <div class="ctb-right"><span class="lang-tag">${f.lang}</span></div>
+    </div>
+    <div class="issues-bar">${bar}</div>
+    <div class="code-scroll">
+      <div class="code-wrap">
+        <div class="ln-col">${lns}</div>
+        <div class="code-body">${code}</div>
+      </div>
+    </div>
+  </div>`;
+}
+
+const panelsEl = document.getElementById('panels');
+Object.entries(files).forEach(([k,f]) => panelsEl.innerHTML += buildPanel(k,f));
+
+function showFile(key, el){
+  document.querySelectorAll('.file-item').forEach(e => e.classList.remove('active'));
+  el.classList.add('active');
+  document.getElementById('emptyState').style.display = 'none';
+  document.querySelectorAll('.code-panel').forEach(p => p.classList.remove('active'));
+  document.getElementById('panel-'+key).classList.add('active');
+}
+
+function jumpLine(key, n){
+  if(!n) return;
+  const el = document.getElementById(`${key}-L${n}`);
+  if(el){ el.scrollIntoView({behavior:'smooth',block:'center'}); el.style.outline='1px solid var(--accent)'; setTimeout(()=>el.style.outline='',2000); }
+}
+
+// ─────────────────────────────────────────────
+// AI PANEL
+// ─────────────────────────────────────────────
+function openAI(){ document.getElementById('aiOverlay').classList.add('open'); }
+function closeAI(){ document.getElementById('aiOverlay').classList.remove('open'); }
+function closeAIIfBg(e){ if(e.target===document.getElementById('aiOverlay')) closeAI(); }
+
+function askSuggestion(q){
+  document.getElementById('aiInput').value = q;
+  sendMessage();
+}
+
+async function sendMessage(){
+  const input = document.getElementById('aiInput');
+  const q = input.value.trim();
+  if(!q) return;
+  input.value = '';
+
+  const msgs = document.getElementById('aiMessages');
+  msgs.innerHTML += `<div class="msg user">${q}</div>`;
+
+  const thinkId = 'think-' + Date.now();
+  msgs.innerHTML += `<div class="msg bot" id="${thinkId}"><div class="ai-thinking"><div class="dot"></div><div class="dot"></div><div class="dot"></div></div></div>`;
+  msgs.scrollTop = msgs.scrollHeight;
+
+  try {
+    const systemPrompt = `You are a code review assistant for the ShivaniD/StudentLogin Vue 3 project.
+You are an expert in Vue.js, accessibility (WCAG 2.1), UI design, and code quality.
+This audit was generated by a RAG-powered static analysis engine covering 57 Vue components and 38 JS files.
+
+Key findings:
+- 76 High severity issues, 69 Medium, 16 Low, 18 confirmed False Positives
+- 147 Accessibility issues (WCAG contrast failures, missing aria-labels, non-interactive @click divs, no keyboard support, missing form labels)
+- 45 UI Consistency issues (header presence, font consistency, spacing, responsive design)
+
+Critical files: adminLogin.vue (977 LOC, 22 API calls), FeeDetails.vue (1586 LOC, 28 API calls), ExamFormSubmission.vue (1310 LOC), ApplicationServices.vue (754 LOC)
+
+Confirmed False Positives: PRN (Permanent Registration Number), cdn/CDN, url/URL, pdf/PDF, mongodb/MongoDB, multipart (RFC 2046), validator, bl/BL (Business Logic), marksheet (Indian academic term), Footer.vue header rule, Toast.vue header rule
+
+Genuine spelling errors: "cource" → "course" (Home.vue, user-visible), "cdnserver" should be "CDN Server"
+
+Answer questions helpfully and specifically about this codebase. Keep responses concise and actionable. Use HTML bold tags for emphasis.`;
+
+    const response = await fetch("https://api.anthropic.com/v1/messages", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        model: "claude-sonnet-4-20250514",
+        max_tokens: 1000,
+        system: systemPrompt,
+        messages: [{ role: "user", content: q }]
+      })
+    });
+    const data = await response.json();
+    const reply = data.content?.map(b => b.text || '').join('') || "Sorry, I couldn't get a response.";
+    document.getElementById(thinkId).innerHTML = reply;
+  } catch(err) {
+    document.getElementById(thinkId).innerHTML = "Sorry, there was an error connecting to the AI. Please try again.";
+  }
+
+  msgs.scrollTop = msgs.scrollHeight;
+}
+</script>
+</body>
+</html>

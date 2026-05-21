@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gemini AI Chatbot</title>
+    <meta name="description" content="A premium AI chatbot powered by Google Gemini API with streaming responses and conversation history.">
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+    <!-- Marked.js for Markdown rendering -->
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <!-- Highlight.js for code syntax highlighting -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <div id="app" class="app-container">
+
+        <!-- ═══ Sidebar ═══ -->
+        <aside id="sidebar" class="sidebar">
+            <div class="sidebar-header">
+                <div class="logo">
+                    <div class="logo-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M12 2L2 7l10 5 10-5-10-5z"/>
+                            <path d="M2 17l10 5 10-5"/>
+                            <path d="M2 12l10 5 10-5"/>
+                        </svg>
+                    </div>
+                    <span class="logo-text">Gemini Chat</span>
+                </div>
+                <button id="new-chat-btn" class="btn-new-chat" title="New Chat">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M12 5v14M5 12h14"/>
+                    </svg>
+                </button>
+            </div>
+
+            <div class="sidebar-search">
+                <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/>
+                </svg>
+                <input type="text" id="search-input" placeholder="Search conversations..." autocomplete="off">
+            </div>
+
+            <div id="conversation-list" class="conversation-list">
+                <!-- Conversations will be populated here -->
+            </div>
+
+            <div class="sidebar-footer">
+                <div class="model-badge">
+                    <span class="model-dot"></span>
+                    Gemini 2.0 Flash
+                </div>
+            </div>
+        </aside>
+
+        <!-- ═══ Main Chat Area ═══ -->
+        <main class="main-content">
+            <!-- Top Bar -->
+            <header class="top-bar">
+                <button id="sidebar-toggle" class="btn-icon" title="Toggle Sidebar">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M3 12h18M3 6h18M3 18h18"/>
+                    </svg>
+                </button>
+                <div id="chat-title" class="chat-title">New Chat</div>
+                <div class="top-bar-actions">
+                    <button id="clear-chat-btn" class="btn-icon" title="Clear Chat">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/>
+                        </svg>
+                    </button>
+                </div>
+            </header>
+
+            <!-- Messages Area -->
+            <div id="messages-container" class="messages-container">
+                <!-- Welcome Screen -->
+                <div id="welcome-screen" class="welcome-screen">
+                    <div class="welcome-glow"></div>
+                    <div class="welcome-icon">
+                        <svg viewBox="0 0 48 48" fill="none">
+                            <defs>
+                                <linearGradient id="gem-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+                                    <stop offset="0%" style="stop-color:#6C63FF"/>
+                                    <stop offset="50%" style="stop-color:#A855F7"/>
+                                    <stop offset="100%" style="stop-color:#EC4899"/>
+                                </linearGradient>
+                            </defs>
+                            <path d="M24 4L6 14v20l18 10 18-10V14L24 4z" stroke="url(#gem-grad)" stroke-width="2" fill="none"/>
+                            <path d="M24 14l-10 5.5v11L24 36l10-5.5v-11L24 14z" fill="url(#gem-grad)" opacity="0.2"/>
+                            <circle cx="24" cy="24" r="4" fill="url(#gem-grad)"/>
+                        </svg>
+                    </div>
+                    <h1 class="welcome-title">How can I help you today?</h1>
+                    <p class="welcome-subtitle">Powered by Google Gemini AI — ask me anything about code, writing, analysis, or creative tasks.</p>
+
+                    <div class="suggestion-grid">
+                        <button class="suggestion-card" data-prompt="Explain how async/await works in JavaScript with examples">
+                            <div class="suggestion-icon">💻</div>
+                            <div class="suggestion-text">Explain async/await in JavaScript</div>
+                        </button>
+                        <button class="suggestion-card" data-prompt="Write a Python function to find the shortest path in a weighted graph using Dijkstra's algorithm">
+                            <div class="suggestion-icon">🧮</div>
+                            <div class="suggestion-text">Dijkstra's algorithm in Python</div>
+                        </button>
+                        <button class="suggestion-card" data-prompt="What are the best practices for designing a REST API? Include naming conventions, status codes, and authentication.">
+                            <div class="suggestion-icon">🏗️</div>
+                            <div class="suggestion-text">REST API best practices</div>
+                        </button>
+                        <button class="suggestion-card" data-prompt="Compare React, Vue, and Angular frameworks. Include pros, cons, and when to use each.">
+                            <div class="suggestion-icon">⚡</div>
+                            <div class="suggestion-text">Compare frontend frameworks</div>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Messages will be inserted here -->
+                <div id="messages-list" class="messages-list"></div>
+
+                <!-- Typing Indicator -->
+                <div id="typing-indicator" class="typing-indicator hidden">
+                    <div class="typing-avatar">
+                        <svg viewBox="0 0 24 24" fill="none">
+                            <path d="M12 2L2 7l10 5 10-5-10-5z" fill="url(#gem-grad-small)" opacity="0.8"/>
+                            <path d="M2 17l10 5 10-5" stroke="url(#gem-grad-small)" stroke-width="1.5" fill="none"/>
+                            <path d="M2 12l10 5 10-5" stroke="url(#gem-grad-small)" stroke-width="1.5" fill="none"/>
+                            <defs>
+                                <linearGradient id="gem-grad-small" x1="0%" y1="0%" x2="100%" y2="100%">
+                                    <stop offset="0%" style="stop-color:#6C63FF"/>
+                                    <stop offset="100%" style="stop-color:#A855F7"/>
+                                </linearGradient>
+                            </defs>
+                        </svg>
+                    </div>
+                    <div class="typing-dots">
+                        <span></span><span></span><span></span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Input Area -->
+            <div class="input-area">
+                <div class="input-wrapper">
+                    <textarea
+                        id="message-input"
+                        placeholder="Ask Gemini anything..."
+                        rows="1"
+                        autofocus
+                    ></textarea>
+                    <button id="send-btn" class="btn-send" title="Send Message" disabled>
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M22 2L11 13"/><path d="M22 2l-7 20-4-9-9-4 20-7z"/>
+                        </svg>
+                    </button>
+                </div>
+                <div class="input-footer">
+                    <span>Gemini can make mistakes. Verify important information.</span>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="/static/chat.js"></script>
+</body>
+</html>

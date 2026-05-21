@@ -1,0 +1,1892 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>CodeLens — StudentLogin Audit Dashboard</title>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #F2F5FC;
+  --surface: #FFFFFF;
+  --surface2: #F7F9FE;
+  --surface3: #EEF2FB;
+  --border: #E0E8F6;
+  --border2: #C8D5EE;
+  --text: #0D1526;
+  --text2: #374160;
+  --muted: #6478A0;
+  --accent: #3D5AF1;
+  --accent2: #2943CC;
+  --accent-bg: rgba(61,90,241,0.08);
+  --high: #E02020;
+  --high-bg: rgba(224,32,32,0.07);
+  --high-border: rgba(224,32,32,0.2);
+  --medium: #D08700;
+  --medium-bg: rgba(208,135,0,0.07);
+  --medium-border: rgba(208,135,0,0.2);
+  --low: #0E7BBF;
+  --low-bg: rgba(14,123,191,0.07);
+  --low-border: rgba(14,123,191,0.2);
+  --pass: #158A45;
+  --pass-bg: rgba(21,138,69,0.07);
+  --pass-border: rgba(21,138,69,0.2);
+  --fp: #7C3AED;
+  --fp-bg: rgba(124,58,237,0.07);
+  --fp-border: rgba(124,58,237,0.2);
+  --shadow: 0 1px 3px rgba(13,21,38,0.06), 0 4px 16px rgba(13,21,38,0.04);
+  --shadow-md: 0 4px 12px rgba(13,21,38,0.1), 0 1px 3px rgba(13,21,38,0.06);
+  --radius: 10px;
+  --font: 'Plus Jakarta Sans', sans-serif;
+  --mono: 'JetBrains Mono', monospace;
+  --topbar: 56px;
+  --sidebar: 252px;
+  --chat: 340px;
+}
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+html { height: 100%; scroll-behavior: smooth; }
+body {
+  font-family: var(--font);
+  background: var(--bg);
+  color: var(--text);
+  height: 100vh;
+  overflow: hidden;
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+/* ═══ TOPBAR ═══ */
+#topbar {
+  height: var(--topbar);
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  padding: 0 18px;
+  gap: 16px;
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 100;
+  box-shadow: 0 1px 0 var(--border), 0 2px 12px rgba(13,21,38,0.04);
+}
+.logo-mark {
+  display: flex; align-items: center; gap: 9px;
+  text-decoration: none;
+}
+.logo-icon {
+  width: 32px; height: 32px;
+  background: linear-gradient(135deg, var(--accent) 0%, #7B5CFF 100%);
+  border-radius: 8px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 15px; color: #fff; flex-shrink: 0;
+  box-shadow: 0 2px 8px rgba(61,90,241,0.3);
+}
+.logo-text { font-size: 15px; font-weight: 800; color: var(--text); letter-spacing: -0.4px; }
+.logo-text span { color: var(--accent); }
+.topbar-project {
+  display: flex; align-items: center; gap: 8px;
+  font-family: var(--mono); font-size: 11px;
+  color: var(--muted);
+  padding: 4px 10px; border-radius: 6px;
+  background: var(--surface3); border: 1px solid var(--border);
+}
+.topbar-project strong { color: var(--text2); }
+.topbar-divider { width: 1px; height: 24px; background: var(--border2); flex-shrink: 0; }
+.topbar-stats { display: flex; gap: 8px; flex: 1; }
+.topbar-stat {
+  display: flex; align-items: center; gap: 5px;
+  padding: 4px 10px; border-radius: 20px;
+  font-size: 11px; font-weight: 600; cursor: default;
+  transition: transform 0.15s;
+}
+.topbar-stat:hover { transform: translateY(-1px); }
+.topbar-stat .dot { width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; }
+.ts-high { background: var(--high-bg); color: var(--high); border: 1px solid var(--high-border); }
+.ts-high .dot { background: var(--high); }
+.ts-med { background: var(--medium-bg); color: var(--medium); border: 1px solid var(--medium-border); }
+.ts-med .dot { background: var(--medium); }
+.ts-low { background: var(--low-bg); color: var(--low); border: 1px solid var(--low-border); }
+.ts-low .dot { background: var(--low); }
+.ts-fp { background: var(--fp-bg); color: var(--fp); border: 1px solid var(--fp-border); }
+.ts-fp .dot { background: var(--fp); }
+.ts-pass { background: var(--pass-bg); color: var(--pass); border: 1px solid var(--pass-border); }
+.ts-pass .dot { background: var(--pass); }
+.health-pill {
+  display: flex; align-items: center; gap: 8px;
+  margin-left: auto;
+  background: var(--medium-bg); border: 1px solid var(--medium-border);
+  padding: 4px 12px 4px 8px; border-radius: 20px;
+}
+.health-score { font-weight: 800; font-size: 15px; color: var(--medium); font-family: var(--mono); }
+.health-label { font-size: 10px; color: var(--muted); font-weight: 600; letter-spacing: 0.5px; text-transform: uppercase; }
+
+/* ═══ LAYOUT ═══ */
+#layout {
+  display: flex;
+  height: calc(100vh - var(--topbar));
+  margin-top: var(--topbar);
+  overflow: hidden;
+}
+
+/* ═══ LEFT SIDEBAR - FILE TREE ═══ */
+#filesidebar {
+  width: var(--sidebar);
+  background: var(--surface);
+  border-right: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  flex-shrink: 0;
+  overflow: hidden;
+}
+.sidebar-head {
+  padding: 14px 16px 10px;
+  border-bottom: 1px solid var(--border);
+  display: flex; align-items: center; justify-content: space-between;
+}
+.sidebar-title { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.8px; color: var(--muted); }
+.sidebar-badge { font-size: 10px; font-weight: 700; background: var(--accent-bg); color: var(--accent); padding: 2px 7px; border-radius: 10px; border: 1px solid rgba(61,90,241,0.15); }
+.sidebar-search {
+  padding: 10px 12px;
+  border-bottom: 1px solid var(--border);
+}
+.sidebar-search input {
+  width: 100%; padding: 6px 10px;
+  background: var(--surface3); border: 1px solid var(--border);
+  border-radius: 6px; font-size: 12px; font-family: var(--font);
+  color: var(--text); outline: none;
+  transition: border-color 0.15s;
+}
+.sidebar-search input:focus { border-color: var(--accent); background: var(--surface); }
+.sidebar-search input::placeholder { color: var(--muted); }
+#filetree { flex: 1; overflow-y: auto; padding: 8px 0; }
+#filetree::-webkit-scrollbar { width: 4px; }
+#filetree::-webkit-scrollbar-track { background: transparent; }
+#filetree::-webkit-scrollbar-thumb { background: var(--border2); border-radius: 4px; }
+
+/* File tree nodes */
+.tree-folder { user-select: none; }
+.tree-folder-header {
+  display: flex; align-items: center; gap: 6px;
+  padding: 5px 14px 5px 10px;
+  cursor: pointer;
+  font-size: 11.5px; font-weight: 600; color: var(--text2);
+  border-radius: 0;
+  transition: background 0.1s;
+}
+.tree-folder-header:hover { background: var(--surface3); }
+.tree-folder-icon { font-size: 11px; transition: transform 0.15s; flex-shrink: 0; }
+.tree-folder.open > .tree-folder-header .tree-folder-icon { transform: rotate(90deg); }
+.tree-folder-name { font-size: 11.5px; }
+.tree-folder-children { display: none; padding-left: 12px; border-left: 1px solid var(--border); margin-left: 20px; }
+.tree-folder.open > .tree-folder-children { display: block; }
+.tree-file {
+  display: flex; align-items: center; gap: 7px;
+  padding: 5px 10px 5px 10px;
+  cursor: pointer; border-radius: 0;
+  transition: background 0.1s;
+  position: relative;
+}
+.tree-file:hover { background: var(--surface3); }
+.tree-file.active { background: var(--accent-bg); }
+.tree-file.active::before {
+  content: ''; position: absolute; left: 0; top: 0; bottom: 0;
+  width: 2px; background: var(--accent);
+}
+.tree-file-icon { font-size: 11px; flex-shrink: 0; }
+.tree-file-name { font-family: var(--mono); font-size: 11px; color: var(--text2); flex: 1; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.tree-file.active .tree-file-name { color: var(--accent); font-weight: 600; }
+.tree-issue-dot {
+  width: 16px; height: 16px; border-radius: 50%;
+  font-size: 9px; font-weight: 700;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+}
+.tid-high { background: var(--high-bg); color: var(--high); border: 1px solid var(--high-border); }
+.tid-med { background: var(--medium-bg); color: var(--medium); border: 1px solid var(--medium-border); }
+.tid-low { background: var(--low-bg); color: var(--low); border: 1px solid var(--low-border); }
+.tid-pass { background: var(--pass-bg); color: var(--pass); border: 1px solid var(--pass-border); }
+.tid-fp { background: var(--fp-bg); color: var(--fp); border: 1px solid var(--fp-border); }
+
+/* ═══ CENTER PANEL ═══ */
+#centerpanel {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  background: var(--bg);
+}
+.center-tabs {
+  display: flex;
+  align-items: center;
+  padding: 0 20px;
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+  gap: 2px;
+  flex-shrink: 0;
+}
+.ctab {
+  padding: 14px 16px;
+  font-size: 12px; font-weight: 600;
+  color: var(--muted);
+  cursor: pointer; border: none;
+  background: none;
+  border-bottom: 2px solid transparent;
+  transition: color 0.15s, border-color 0.15s;
+  white-space: nowrap;
+  display: flex; align-items: center; gap: 6px;
+}
+.ctab:hover { color: var(--text); }
+.ctab.active { color: var(--accent); border-bottom-color: var(--accent); }
+.ctab-count {
+  font-size: 10px; font-weight: 700;
+  background: var(--surface3); color: var(--muted);
+  padding: 1px 6px; border-radius: 10px;
+  border: 1px solid var(--border);
+}
+.ctab.active .ctab-count { background: var(--accent-bg); color: var(--accent); border-color: rgba(61,90,241,0.2); }
+.center-body { flex: 1; overflow-y: auto; padding: 20px; }
+.center-body::-webkit-scrollbar { width: 5px; }
+.center-body::-webkit-scrollbar-track { background: transparent; }
+.center-body::-webkit-scrollbar-thumb { background: var(--border2); border-radius: 4px; }
+.cpanel { display: none; }
+.cpanel.active { display: block; }
+
+/* ═══ OVERVIEW PANEL ═══ */
+.overview-hero {
+  background: linear-gradient(135deg, #F0F4FF 0%, #E8EEFF 40%, #F5F0FF 100%);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 24px 28px;
+  margin-bottom: 20px;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 20px;
+  align-items: center;
+}
+.overview-left h2 { font-size: 18px; font-weight: 800; letter-spacing: -0.4px; margin-bottom: 4px; }
+.overview-left p { font-size: 12px; color: var(--muted); }
+.overview-pills { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 14px; }
+.overview-pill {
+  display: flex; align-items: center; gap: 6px;
+  padding: 6px 12px; border-radius: 8px;
+  font-size: 12px; font-weight: 600;
+}
+.op-h { background: var(--high-bg); color: var(--high); border: 1px solid var(--high-border); }
+.op-m { background: var(--medium-bg); color: var(--medium); border: 1px solid var(--medium-border); }
+.op-l { background: var(--low-bg); color: var(--low); border: 1px solid var(--low-border); }
+.op-p { background: var(--pass-bg); color: var(--pass); border: 1px solid var(--pass-border); }
+.op-fp { background: var(--fp-bg); color: var(--fp); border: 1px solid var(--fp-border); }
+.op-n { background: var(--accent-bg); color: var(--accent); border: 1px solid rgba(61,90,241,0.2); }
+.score-circle {
+  width: 96px; height: 96px; position: relative; flex-shrink: 0;
+}
+.score-circle svg { transform: rotate(-90deg); }
+.score-inner {
+  position: absolute; inset: 0;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+}
+.score-num-big { font-size: 24px; font-weight: 800; color: var(--medium); font-family: var(--mono); line-height: 1; }
+.score-denom { font-size: 10px; color: var(--muted); font-weight: 600; }
+.score-label { font-size: 9px; color: var(--medium); font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; margin-top: 2px; }
+
+/* stats grid */
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+  margin-bottom: 20px;
+}
+.stat-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 16px 18px;
+  transition: transform 0.15s, box-shadow 0.15s;
+}
+.stat-card:hover { transform: translateY(-2px); box-shadow: var(--shadow-md); }
+.stat-card-val { font-size: 28px; font-weight: 800; font-family: var(--mono); line-height: 1; margin-bottom: 4px; }
+.stat-card-label { font-size: 11px; color: var(--muted); font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; }
+
+/* issue cards in file view */
+.file-header-bar {
+  display: flex; align-items: center; gap: 12px;
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: var(--radius); padding: 14px 18px;
+  margin-bottom: 16px;
+}
+.fhb-icon { font-size: 20px; }
+.fhb-info { flex: 1; }
+.fhb-name { font-family: var(--mono); font-size: 14px; font-weight: 600; color: var(--text); }
+.fhb-path { font-size: 11px; color: var(--muted); margin-top: 2px; font-family: var(--mono); }
+.fhb-grade {
+  width: 40px; height: 40px; border-radius: 10px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 18px; font-weight: 800; flex-shrink: 0;
+}
+.grade-F { background: var(--high-bg); color: var(--high); border: 2px solid var(--high-border); }
+.grade-D { background: var(--medium-bg); color: var(--medium); border: 2px solid var(--medium-border); }
+.grade-C { background: rgba(234,179,8,0.1); color: #A16207; border: 2px solid rgba(234,179,8,0.25); }
+.grade-B { background: var(--low-bg); color: var(--low); border: 2px solid var(--low-border); }
+.grade-A { background: var(--pass-bg); color: var(--pass); border: 2px solid var(--pass-border); }
+.fhb-score-bar { display: flex; align-items: center; gap: 8px; }
+.fhb-sbar-bg { width: 80px; height: 5px; background: var(--border2); border-radius: 3px; overflow: hidden; }
+.fhb-sbar-fill { height: 100%; border-radius: 3px; transition: width 0.5s ease; }
+.fhb-score-val { font-family: var(--mono); font-size: 12px; font-weight: 600; }
+
+/* Issue cards */
+.issue-group-title {
+  font-size: 11px; font-weight: 700; text-transform: uppercase;
+  letter-spacing: 0.8px; color: var(--muted);
+  padding: 4px 0 8px;
+  display: flex; align-items: center; gap: 8px;
+  margin-bottom: 4px;
+}
+.issue-group-title::after {
+  content: ''; flex: 1; height: 1px; background: var(--border);
+}
+.issue-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  margin-bottom: 10px;
+  overflow: hidden;
+  transition: box-shadow 0.15s, border-color 0.15s;
+  animation: slideIn 0.25s ease both;
+}
+@keyframes slideIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+.issue-card:hover { box-shadow: var(--shadow); border-color: var(--border2); }
+.issue-card.ignored { opacity: 0.45; }
+.issue-card.fixed { border-color: var(--pass-border); }
+.issue-card-head {
+  display: flex; align-items: flex-start; gap: 10px;
+  padding: 12px 14px;
+  cursor: pointer;
+}
+.issue-severity { flex-shrink: 0; margin-top: 1px; }
+.badge {
+  display: inline-flex; align-items: center; gap: 4px;
+  padding: 2px 8px; border-radius: 20px;
+  font-size: 10px; font-weight: 700; letter-spacing: 0.3px;
+  text-transform: uppercase; white-space: nowrap;
+}
+.b-high { background: var(--high-bg); color: var(--high); border: 1px solid var(--high-border); }
+.b-med { background: var(--medium-bg); color: var(--medium); border: 1px solid var(--medium-border); }
+.b-low { background: var(--low-bg); color: var(--low); border: 1px solid var(--low-border); }
+.b-pass { background: var(--pass-bg); color: var(--pass); border: 1px solid var(--pass-border); }
+.b-fp { background: var(--fp-bg); color: var(--fp); border: 1px solid var(--fp-border); }
+.b-a11y { background: rgba(239,68,68,0.08); color: #B91C1C; border: 1px solid rgba(239,68,68,0.2); }
+.b-ui { background: rgba(99,102,241,0.08); color: #4338CA; border: 1px solid rgba(99,102,241,0.2); }
+.b-complex { background: rgba(245,158,11,0.08); color: #92400E; border: 1px solid rgba(245,158,11,0.2); }
+.issue-meta { flex: 1; min-width: 0; }
+.issue-rule { font-size: 12px; font-weight: 700; color: var(--text); margin-bottom: 3px; }
+.issue-finding { font-size: 11.5px; color: var(--muted); font-family: var(--mono); word-break: break-word; }
+.issue-actions { display: flex; align-items: center; gap: 6px; flex-shrink: 0; }
+.btn-fix {
+  display: flex; align-items: center; gap: 5px;
+  padding: 5px 12px; border-radius: 6px;
+  font-size: 11px; font-weight: 700;
+  background: var(--accent); color: #fff;
+  border: none; cursor: pointer;
+  transition: background 0.15s, transform 0.1s;
+  font-family: var(--font);
+}
+.btn-fix:hover { background: var(--accent2); transform: translateY(-1px); }
+.btn-fix:active { transform: translateY(0); }
+.btn-ignore {
+  display: flex; align-items: center; gap: 5px;
+  padding: 5px 12px; border-radius: 6px;
+  font-size: 11px; font-weight: 700;
+  background: var(--surface3); color: var(--muted);
+  border: 1px solid var(--border); cursor: pointer;
+  transition: background 0.15s, color 0.15s;
+  font-family: var(--font);
+}
+.btn-ignore:hover { background: var(--border); color: var(--text2); }
+.issue-body {
+  padding: 0 14px 14px;
+  border-top: 1px solid var(--border);
+  display: none;
+}
+.issue-card.expanded .issue-body { display: block; }
+.issue-rec {
+  font-size: 12px; color: var(--text2); line-height: 1.7;
+  padding-top: 12px;
+}
+.issue-rec code {
+  font-family: var(--mono); font-size: 11px;
+  background: var(--surface3); color: var(--fp);
+  padding: 1px 5px; border-radius: 4px; border: 1px solid var(--border);
+}
+.issue-rec pre {
+  background: #F8FAFF; border: 1px solid var(--border);
+  border-radius: 8px; padding: 12px 14px; margin: 10px 0;
+  overflow-x: auto; font-family: var(--mono);
+  font-size: 11px; line-height: 1.6; color: var(--text2);
+}
+.fp-note {
+  background: var(--fp-bg); border: 1px solid var(--fp-border);
+  border-radius: 8px; padding: 10px 12px; margin-top: 8px;
+  font-size: 11.5px; color: var(--fp);
+}
+.fp-note strong { display: block; margin-bottom: 3px; }
+.progress-bar-wrap {
+  display: none; margin-top: 10px;
+  background: var(--surface3); border: 1px solid var(--border);
+  border-radius: 8px; padding: 12px 14px;
+}
+.progress-bar-wrap.visible { display: block; }
+.progress-label {
+  font-size: 11px; font-weight: 600; color: var(--accent);
+  display: flex; align-items: center; gap: 7px; margin-bottom: 8px;
+}
+.spinner {
+  width: 12px; height: 12px; border: 2px solid var(--accent-bg);
+  border-top-color: var(--accent); border-radius: 50%;
+  animation: spin 0.7s linear infinite; flex-shrink: 0;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+.progress-track { height: 4px; background: var(--border); border-radius: 4px; overflow: hidden; }
+.progress-fill {
+  height: 100%; background: linear-gradient(90deg, var(--accent) 0%, #7B5CFF 100%);
+  border-radius: 4px; width: 0%;
+  transition: width 0.08s linear;
+}
+.fix-success {
+  display: none; align-items: center; gap: 7px;
+  background: var(--pass-bg); border: 1px solid var(--pass-border);
+  border-radius: 8px; padding: 8px 12px;
+  font-size: 12px; font-weight: 600; color: var(--pass);
+  margin-top: 10px;
+}
+.fix-success.visible { display: flex; }
+
+/* Audit report panel */
+.audit-tabs {
+  display: flex; gap: 4px; padding: 0 0 14px;
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 16px; overflow-x: auto;
+}
+.atab {
+  padding: 7px 14px; border-radius: 8px;
+  font-size: 11.5px; font-weight: 600;
+  cursor: pointer; border: 1px solid var(--border);
+  background: var(--surface); color: var(--muted);
+  transition: all 0.15s; white-space: nowrap;
+}
+.atab:hover { background: var(--surface3); color: var(--text); }
+.atab.active { background: var(--accent); color: #fff; border-color: var(--accent); }
+.apanel { display: none; }
+.apanel.active { display: block; }
+.audit-table { width: 100%; border-collapse: collapse; }
+.audit-table th {
+  background: var(--surface3); text-align: left;
+  padding: 9px 12px; font-size: 10.5px; font-weight: 700;
+  color: var(--muted); text-transform: uppercase; letter-spacing: 0.6px;
+  border-bottom: 2px solid var(--border2); position: sticky; top: 0; z-index: 1;
+  white-space: nowrap;
+}
+.audit-table td {
+  padding: 10px 12px; border-bottom: 1px solid var(--border);
+  vertical-align: top; font-size: 12px;
+}
+.audit-table tr:last-child td { border-bottom: none; }
+.audit-table tr:hover td { background: rgba(61,90,241,0.02); }
+.file-mono { font-family: var(--mono); font-size: 11px; color: var(--accent); }
+.path-muted { font-size: 10px; color: var(--muted); font-family: var(--mono); display: block; margin-top: 2px; }
+.finding-mono { font-family: var(--mono); font-size: 11px; color: var(--muted); word-break: break-word; max-width: 220px; }
+.rec-text { font-size: 11.5px; color: var(--text2); line-height: 1.65; max-width: 320px; }
+.rec-text code { font-family: var(--mono); font-size: 10.5px; background: var(--surface3); color: var(--fp); padding: 1px 4px; border-radius: 3px; }
+.rec-text pre { background: #F8FAFF; border: 1px solid var(--border); border-radius: 6px; padding: 8px 10px; margin: 6px 0; font-size: 10px; overflow-x: auto; }
+.tbl-actions { display: flex; gap: 5px; align-items: center; white-space: nowrap; }
+.btn-tfix {
+  padding: 4px 10px; font-size: 10px; font-weight: 700;
+  background: var(--accent); color: #fff;
+  border: none; border-radius: 5px; cursor: pointer;
+  font-family: var(--font); transition: background 0.15s;
+  display: flex; align-items: center; gap: 4px;
+}
+.btn-tfix:hover { background: var(--accent2); }
+.btn-tfix.fixed { background: var(--pass); pointer-events: none; }
+.btn-tfix.loading { background: var(--muted); pointer-events: none; }
+.btn-tignore {
+  padding: 4px 9px; font-size: 10px; font-weight: 700;
+  background: var(--surface3); color: var(--muted);
+  border: 1px solid var(--border); border-radius: 5px;
+  cursor: pointer; font-family: var(--font); transition: all 0.15s;
+}
+.btn-tignore:hover { background: var(--border); color: var(--text2); }
+.btn-tignore.ignored { background: transparent; color: var(--border2); border-color: var(--border); pointer-events: none; }
+
+/* Summary cards */
+.summary-cards { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; margin-bottom: 16px; }
+.sum-card {
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: var(--radius); padding: 16px 18px;
+}
+.sum-card-title { font-size: 12px; font-weight: 700; color: var(--text); margin-bottom: 10px; display: flex; align-items: center; gap: 7px; }
+.sum-list { list-style: none; display: flex; flex-direction: column; gap: 6px; }
+.sum-list li {
+  font-size: 11.5px; color: var(--muted);
+  padding-left: 16px; position: relative; line-height: 1.5;
+}
+.sum-list li::before { content: '→'; position: absolute; left: 0; color: var(--accent); font-size: 10px; top: 1px; }
+.sum-list li strong { color: var(--text2); }
+.sum-list li code { font-family: var(--mono); font-size: 10.5px; background: var(--surface3); color: var(--fp); padding: 1px 4px; border-radius: 3px; }
+
+/* File scores panel */
+.score-bar-wrap { display: flex; align-items: center; gap: 8px; }
+.sbar-bg { flex: 1; height: 5px; background: var(--border2); border-radius: 3px; overflow: hidden; min-width: 60px; }
+.sbar-fill { height: 100%; border-radius: 3px; }
+.sbar-num { font-family: var(--mono); font-size: 11px; font-weight: 600; min-width: 24px; text-align: right; }
+.grade-badge {
+  width: 26px; height: 26px; border-radius: 6px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 11px; font-weight: 800;
+}
+
+/* ═══ RIGHT CHAT PANEL ═══ */
+#chatpanel {
+  width: var(--chat);
+  background: var(--surface);
+  border-left: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  flex-shrink: 0;
+  overflow: hidden;
+}
+.chat-head {
+  padding: 14px 16px;
+  border-bottom: 1px solid var(--border);
+  background: linear-gradient(135deg, rgba(61,90,241,0.03) 0%, rgba(123,92,255,0.03) 100%);
+}
+.chat-head-row { display: flex; align-items: center; gap: 10px; }
+.chat-avatar {
+  width: 32px; height: 32px; border-radius: 8px;
+  background: linear-gradient(135deg, var(--accent) 0%, #7B5CFF 100%);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 14px; flex-shrink: 0;
+  box-shadow: 0 2px 8px rgba(61,90,241,0.25);
+}
+.chat-head-info { flex: 1; }
+.chat-head-name { font-size: 13px; font-weight: 700; color: var(--text); }
+.chat-head-status { font-size: 10.5px; color: var(--pass); font-weight: 600; display: flex; align-items: center; gap: 4px; }
+.status-dot { width: 6px; height: 6px; background: var(--pass); border-radius: 50%; animation: pulse 2s infinite; }
+@keyframes pulse { 0%,100% { opacity: 1; } 50% { opacity: 0.4; } }
+.chat-quick-btns { display: flex; gap: 6px; margin-top: 10px; flex-wrap: wrap; }
+.qbtn {
+  padding: 4px 10px; border-radius: 6px;
+  font-size: 10.5px; font-weight: 600;
+  background: var(--surface3); color: var(--text2);
+  border: 1px solid var(--border); cursor: pointer;
+  transition: all 0.15s; font-family: var(--font);
+}
+.qbtn:hover { background: var(--accent-bg); color: var(--accent); border-color: rgba(61,90,241,0.2); }
+#chatmessages {
+  flex: 1; overflow-y: auto; padding: 14px 14px 8px;
+  display: flex; flex-direction: column; gap: 10px;
+}
+#chatmessages::-webkit-scrollbar { width: 4px; }
+#chatmessages::-webkit-scrollbar-thumb { background: var(--border2); border-radius: 4px; }
+.chat-msg { display: flex; gap: 8px; }
+.chat-msg.user { flex-direction: row-reverse; }
+.msg-avatar {
+  width: 26px; height: 26px; border-radius: 7px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 12px; flex-shrink: 0; align-self: flex-end;
+}
+.msg-avatar.ai { background: linear-gradient(135deg, var(--accent), #7B5CFF); }
+.msg-avatar.user { background: var(--surface3); border: 1px solid var(--border); }
+.msg-bubble {
+  max-width: 230px; padding: 9px 12px;
+  border-radius: 12px; font-size: 12px; line-height: 1.6;
+}
+.msg-bubble.ai {
+  background: var(--surface2); color: var(--text);
+  border: 1px solid var(--border); border-bottom-left-radius: 4px;
+}
+.msg-bubble.user {
+  background: var(--accent); color: #fff; border-bottom-right-radius: 4px;
+}
+.msg-bubble code { font-family: var(--mono); font-size: 10.5px; background: rgba(255,255,255,0.2); padding: 1px 4px; border-radius: 3px; }
+.msg-bubble.ai code { background: var(--surface3); color: var(--fp); }
+.typing-dots { display: flex; gap: 4px; align-items: center; padding: 4px 0; }
+.typing-dot {
+  width: 6px; height: 6px; border-radius: 50%;
+  background: var(--muted); animation: typingBounce 1.2s infinite;
+}
+.typing-dot:nth-child(2) { animation-delay: 0.2s; }
+.typing-dot:nth-child(3) { animation-delay: 0.4s; }
+@keyframes typingBounce { 0%,60%,100% { transform: none; opacity: 0.3; } 30% { transform: translateY(-4px); opacity: 1; } }
+.chat-input-area {
+  padding: 12px 14px;
+  border-top: 1px solid var(--border);
+  background: var(--surface);
+}
+.chat-input-row { display: flex; gap: 8px; align-items: flex-end; }
+.chat-input-row textarea {
+  flex: 1; resize: none;
+  background: var(--surface3); border: 1px solid var(--border);
+  border-radius: 10px; padding: 8px 10px;
+  font-size: 12px; font-family: var(--font);
+  color: var(--text); outline: none;
+  transition: border-color 0.15s; max-height: 100px; min-height: 36px;
+}
+.chat-input-row textarea:focus { border-color: var(--accent); background: var(--surface); }
+.chat-input-row textarea::placeholder { color: var(--muted); }
+.btn-send {
+  width: 36px; height: 36px; border-radius: 10px;
+  background: var(--accent); color: #fff;
+  border: none; cursor: pointer; flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 14px; transition: background 0.15s, transform 0.1s;
+}
+.btn-send:hover { background: var(--accent2); transform: scale(1.05); }
+.btn-send:active { transform: scale(0.97); }
+.btn-send:disabled { background: var(--muted); cursor: not-allowed; transform: none; }
+
+/* Empty state */
+.empty-state {
+  display: flex; flex-direction: column; align-items: center;
+  justify-content: center; padding: 60px 20px;
+  text-align: center; color: var(--muted);
+}
+.empty-icon { font-size: 48px; margin-bottom: 12px; opacity: 0.5; }
+.empty-text { font-size: 13px; font-weight: 600; color: var(--text2); margin-bottom: 6px; }
+.empty-sub { font-size: 12px; }
+
+/* Status bar */
+#statusbar {
+  position: fixed; bottom: 0; left: 0; right: 0;
+  height: 24px; background: var(--accent);
+  display: flex; align-items: center; padding: 0 16px;
+  gap: 16px; z-index: 100;
+}
+.sbar-item { font-size: 10.5px; color: rgba(255,255,255,0.8); font-weight: 500; display: flex; align-items: center; gap: 5px; }
+.sbar-item strong { color: #fff; }
+#statusbar #sbar-file-info { margin-left: auto; }
+
+/* Toast notification */
+#toast {
+  position: fixed; top: 70px; right: 20px;
+  background: var(--text); color: #fff;
+  padding: 10px 16px; border-radius: 10px;
+  font-size: 12px; font-weight: 600;
+  box-shadow: var(--shadow-md);
+  z-index: 9999;
+  opacity: 0; transform: translateY(-10px);
+  transition: opacity 0.2s, transform 0.2s;
+  pointer-events: none;
+  display: flex; align-items: center; gap: 8px;
+}
+#toast.show { opacity: 1; transform: none; }
+
+/* Responsive */
+@media (max-width: 1200px) { :root { --chat: 280px; --sidebar: 220px; } }
+</style>
+</head>
+<body>
+
+<!-- ═══ TOPBAR ═══ -->
+<div id="topbar">
+  <div class="logo-mark">
+    <div class="logo-icon">🔍</div>
+    <div class="logo-text">Code<span>Lens</span></div>
+  </div>
+  <div class="topbar-project">
+    <span>📁</span>
+    <strong>StudentLogin</strong>
+    <span>·</span>
+    <span>Vue 3 · Tailwind</span>
+  </div>
+  <div class="topbar-divider"></div>
+  <div class="topbar-stats">
+    <div class="topbar-stat ts-high"><div class="dot"></div>76 High</div>
+    <div class="topbar-stat ts-med"><div class="dot"></div>69 Medium</div>
+    <div class="topbar-stat ts-low"><div class="dot"></div>16 Low</div>
+    <div class="topbar-stat ts-fp"><div class="dot"></div>18 FP</div>
+    <div class="topbar-stat ts-pass"><div class="dot"></div>57 Vue · 38 JS</div>
+  </div>
+  <div class="health-pill">
+    <div class="score-num-big" style="font-size:18px">68</div>
+    <div>
+      <div class="score-label">Health Score</div>
+      <div style="font-size:9px;color:var(--medium);font-weight:700;">MEDIUM RISK</div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ LAYOUT ═══ -->
+<div id="layout">
+
+  <!-- LEFT SIDEBAR -->
+  <div id="filesidebar">
+    <div class="sidebar-head">
+      <div class="sidebar-title">Architecture</div>
+      <div class="sidebar-badge">95 files</div>
+    </div>
+    <div class="sidebar-search">
+      <input type="text" id="tree-search" placeholder="🔎 Search files..." oninput="filterTree(this.value)">
+    </div>
+    <div id="filetree"></div>
+  </div>
+
+  <!-- CENTER PANEL -->
+  <div id="centerpanel">
+    <div class="center-tabs">
+      <button class="ctab active" onclick="switchCTab('overview',this)">📊 Overview</button>
+      <button class="ctab" onclick="switchCTab('filemap',this)">🗂 File View <span class="ctab-count" id="file-issue-count">—</span></button>
+      <button class="ctab" onclick="switchCTab('auditreport',this)">📋 Audit Report <span class="ctab-count">161</span></button>
+    </div>
+    <div class="center-body">
+
+      <!-- OVERVIEW -->
+      <div class="cpanel active" id="cpanel-overview">
+        <div class="overview-hero">
+          <div class="overview-left">
+            <h2>🛡 StudentLogin Portal — Code Audit</h2>
+            <p>RAG-powered static analysis &nbsp;·&nbsp; Generated 2026-03-29 &nbsp;·&nbsp; 95 files analysed</p>
+            <div class="overview-pills">
+              <div class="overview-pill op-h">⚠ 76 High Issues</div>
+              <div class="overview-pill op-m">⚡ 69 Medium Issues</div>
+              <div class="overview-pill op-l">ℹ 16 Low Issues</div>
+              <div class="overview-pill op-fp">◈ 18 False Positives</div>
+              <div class="overview-pill op-n">♿ 147 A11y Issues</div>
+              <div class="overview-pill op-n">🎨 45 UI Issues</div>
+            </div>
+          </div>
+          <div style="text-align:center">
+            <div class="score-circle">
+              <svg width="96" height="96" viewBox="0 0 96 96">
+                <circle cx="48" cy="48" r="40" fill="none" stroke="#E0E8F6" stroke-width="8"/>
+                <circle cx="48" cy="48" r="40" fill="none" stroke="#D08700" stroke-width="8"
+                  stroke-dasharray="251.2" stroke-dashoffset="80" stroke-linecap="round"/>
+              </svg>
+              <div class="score-inner">
+                <div class="score-num-big">68</div>
+                <div class="score-denom">/ 100</div>
+                <div class="score-label">Medium Risk</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="stats-grid">
+          <div class="stat-card"><div class="stat-card-val" style="color:var(--high)">76</div><div class="stat-card-label">High Issues</div></div>
+          <div class="stat-card"><div class="stat-card-val" style="color:var(--medium)">69</div><div class="stat-card-label">Medium Issues</div></div>
+          <div class="stat-card"><div class="stat-card-val" style="color:var(--low)">147</div><div class="stat-card-label">Accessibility</div></div>
+          <div class="stat-card"><div class="stat-card-val" style="color:var(--accent)">45</div><div class="stat-card-label">UI Consistency</div></div>
+        </div>
+
+        <div class="summary-cards">
+          <div class="sum-card">
+            <div class="sum-card-title">🚨 Critical — Fix Now</div>
+            <ul class="sum-list">
+              <li><strong>adminLogin.vue</strong> — 11 accessibility violations (inputs without labels, missing ARIA)</li>
+              <li><strong>ApplicationServices.vue</strong> — 3 WCAG contrast failures + 10 keyboard access issues</li>
+              <li><strong>SessionManager.vue</strong> — 6 div click handlers with no tabindex or keyboard support</li>
+              <li><strong>Toast.vue</strong> — Dynamic alerts missing <code>aria-live</code> regions</li>
+              <li><strong>StudentDemo.vue</strong> — 5 inputs with no associated label element</li>
+              <li><strong>Home.vue</strong> — Real typo: <strong>"cource"</strong> should be <strong>"course"</strong></li>
+            </ul>
+          </div>
+          <div class="sum-card">
+            <div class="sum-card-title">⚠ Structural Concerns</div>
+            <ul class="sum-list">
+              <li><strong>FeeDetails.vue</strong> (1586 LOC) — split into sub-components</li>
+              <li><strong>ExamFormSubmission.vue</strong> — 7 fixed px font-sizes; print styles mixed with screen</li>
+              <li>8+ components missing responsive @media queries</li>
+              <li>Widespread missing <code>:focus/:hover</code> states across Result views</li>
+              <li><strong>adminLogin.vue</strong> (977 LOC, 22 API calls) — too much responsibility</li>
+            </ul>
+          </div>
+          <div class="sum-card">
+            <div class="sum-card-title"><span style="color:var(--fp)">◈</span> False Positives Confirmed (18)</div>
+            <ul class="sum-list">
+              <li><code>PRN</code> — Permanent Registration Number (Indian university domain)</li>
+              <li><code>cdn</code>, <code>url</code>, <code>pdf</code> — Standard technical abbreviations</li>
+              <li><code>mongodb</code> — Proper noun / technology brand</li>
+              <li><code>multipart</code> — RFC-2046 MIME type standard</li>
+              <li><code>validator</code> — Valid English word (spell-checker bug)</li>
+              <li><code>marksheet</code> — Standard Indian academic terminology</li>
+            </ul>
+          </div>
+          <div class="sum-card">
+            <div class="sum-card-title">💡 Top Recommendations</div>
+            <ul class="sum-list">
+              <li>Configure spell-checker whitelist: PRN, CDN, URL, PDF, MongoDB</li>
+              <li>Add global focus styles in main CSS (reduces ~30 violations)</li>
+              <li>Replace all <code>&lt;div @click&gt;</code> with <code>&lt;button&gt;</code> elements project-wide</li>
+              <li>Scope "Header Presence" rule to views only, not layout components</li>
+              <li>Split <strong>FeeDetails.vue</strong> and <strong>ExamFormSubmission.vue</strong> into sub-components</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- FILE VIEW -->
+      <div class="cpanel" id="cpanel-filemap">
+        <div id="file-empty" class="empty-state">
+          <div class="empty-icon">📂</div>
+          <div class="empty-text">Select a file to inspect issues</div>
+          <div class="empty-sub">Click any file in the architecture panel to view accessibility &amp; consistency issues</div>
+        </div>
+        <div id="file-detail" style="display:none"></div>
+      </div>
+
+      <!-- AUDIT REPORT -->
+      <div class="cpanel" id="cpanel-auditreport">
+        <div class="audit-tabs">
+          <button class="atab active" onclick="switchATab('summary',this)">📊 Summary</button>
+          <button class="atab" onclick="switchATab('ui',this)">🎨 UI Consistency (45)</button>
+          <button class="atab" onclick="switchATab('a11y',this)">♿ Accessibility (147)</button>
+          <button class="atab" onclick="switchATab('complexity',this)">⚙ Complexity (9)</button>
+          <button class="atab" onclick="switchATab('filescores',this)">📄 File Scores</button>
+        </div>
+        <div id="apanel-summary" class="apanel active" id="apanel-summary">
+          <div class="summary-cards">
+            <div class="sum-card">
+              <div class="sum-card-title">🚨 Critical Actions — Fix Now</div>
+              <ul class="sum-list">
+                <li><strong>adminLogin.vue</strong> — 11 accessibility violations (inputs without labels, missing ARIA)</li>
+                <li><strong>ApplicationServices.vue</strong> — 3 WCAG contrast failures + 10 keyboard access issues</li>
+                <li><strong>SessionManager.vue</strong> — 6 div click handlers with no tabindex or keyboard support</li>
+                <li><strong>Toast.vue</strong> — Dynamic alerts missing <code>aria-live</code> regions</li>
+                <li><strong>StudentDemo.vue</strong> — 5 inputs with no associated label element</li>
+                <li><strong>Home.vue</strong> — Real typo: "cource" → "course" (user-visible)</li>
+              </ul>
+            </div>
+            <div class="sum-card">
+              <div class="sum-card-title">⚠ Structural Concerns</div>
+              <ul class="sum-list">
+                <li><strong>FeeDetails.vue</strong> (1586 LOC) — needs sub-component extraction</li>
+                <li><strong>ExamFormSubmission.vue</strong> — 7 fixed px font-sizes; mixed print/screen styles</li>
+                <li>8+ components missing responsive @media queries</li>
+                <li>Widespread missing :focus/:hover states across Result views</li>
+                <li><strong>adminLogin.vue</strong> (977 LOC, 22 API calls) — too much responsibility in one file</li>
+              </ul>
+            </div>
+            <div class="sum-card">
+              <div class="sum-card-title"><span style="color:var(--fp)">◈</span> False Positives Confirmed (18)</div>
+              <ul class="sum-list">
+                <li><code>PRN</code> — Permanent Registration Number (Indian university domain term)</li>
+                <li><code>cdn</code>, <code>url</code>, <code>pdf</code> — Standard technical abbreviations</li>
+                <li><code>mongodb</code> — Proper noun / technology brand name</li>
+                <li><code>multipart</code> — RFC-2046 MIME type standard term</li>
+                <li><code>validator</code> — Valid English word (spell-checker bug)</li>
+                <li><code>bl</code> — Established "Business Logic" project convention</li>
+                <li><code>marksheet</code> — Standard Indian academic terminology</li>
+                <li>Footer.vue header rule — footers are not supposed to have headings</li>
+                <li>Toast.vue header rule — transient notifications must not have headings</li>
+              </ul>
+            </div>
+            <div class="sum-card">
+              <div class="sum-card-title">💡 Top Recommendations</div>
+              <ul class="sum-list">
+                <li>Configure spell-checker whitelist: PRN, CDN, URL, PDF, MongoDB, BL, multipart, marksheet</li>
+                <li>Add global focus styles in main CSS (reduces ~30 individual violations)</li>
+                <li>Replace all <code>&lt;div @click&gt;</code> with <code>&lt;button&gt;</code> elements project-wide</li>
+                <li>Scope "Header Presence" rule to views only, not layout/notification components</li>
+                <li>Split FeeDetails.vue and ExamFormSubmission.vue into composable sub-components</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div id="apanel-ui" class="apanel">
+          <div style="overflow-x:auto;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius)">
+            <table class="audit-table" id="ui-table"></table>
+          </div>
+        </div>
+        <div id="apanel-a11y" class="apanel">
+          <div style="overflow-x:auto;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius)">
+            <table class="audit-table" id="a11y-table"></table>
+          </div>
+        </div>
+        <div id="apanel-complexity" class="apanel">
+          <div style="overflow-x:auto;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius)">
+            <table class="audit-table" id="complexity-table"></table>
+          </div>
+        </div>
+        <div id="apanel-filescores" class="apanel">
+          <div style="overflow-x:auto;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius)">
+            <table class="audit-table" id="filescores-table"></table>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- RIGHT CHAT PANEL -->
+  <div id="chatpanel">
+    <div class="chat-head">
+      <div class="chat-head-row">
+        <div class="chat-avatar">🤖</div>
+        <div class="chat-head-info">
+          <div class="chat-head-name">CodeLens AI</div>
+          <div class="chat-head-status"><div class="status-dot"></div> Online · Claude-powered</div>
+        </div>
+      </div>
+      <div class="chat-quick-btns">
+        <button class="qbtn" onclick="quickPrompt('Give me a full summary of this codebase')">📝 Full Summary</button>
+        <button class="qbtn" onclick="quickPrompt('What are the top 5 critical issues I should fix first?')">🚨 Top Issues</button>
+        <button class="qbtn" onclick="quickPrompt('How many false positives were found and why?')">◈ False Positives</button>
+        <button class="qbtn" onclick="quickPrompt('Which files need the most urgent attention?')">📂 Worst Files</button>
+      </div>
+    </div>
+    <div id="chatmessages">
+      <div class="chat-msg">
+        <div class="msg-avatar ai">🤖</div>
+        <div class="msg-bubble ai">👋 Hi! I'm your AI code assistant for the <strong>StudentLogin Portal</strong> audit. I have full knowledge of all 95 files, 161 issues, and recommendations. Ask me anything!</div>
+      </div>
+    </div>
+    <div class="chat-input-area">
+      <div class="chat-input-row">
+        <textarea id="chatInput" placeholder="Ask about the codebase..." rows="1"
+          onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();sendChat()}"
+          oninput="this.style.height='auto';this.style.height=Math.min(this.scrollHeight,100)+'px'"></textarea>
+        <button class="btn-send" id="sendBtn" onclick="sendChat()">↑</button>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- STATUS BAR -->
+<div id="statusbar">
+  <div class="sbar-item">🔍 <strong>CodeLens</strong></div>
+  <div class="sbar-item">Vue 3 · Tailwind · Vite</div>
+  <div class="sbar-item" style="color:rgba(255,255,255,0.6)">|</div>
+  <div class="sbar-item">Issues: <strong>161 total</strong></div>
+  <div class="sbar-item">Fixed: <strong id="fixed-count">0</strong></div>
+  <div class="sbar-item">Ignored: <strong id="ignored-count">0</strong></div>
+  <div class="sbar-item" id="sbar-file-info">Generated 2026-03-29 · RAG + Gemini</div>
+</div>
+
+<!-- TOAST -->
+<div id="toast">✅ Done</div>
+
+<script>
+// ═══════════════════════════════════════════════
+// DATA
+// ═══════════════════════════════════════════════
+
+const fileTree = [
+  {
+    name: 'StudentLogin', type: 'folder', open: true, children: [
+      {
+        name: 'client/app/src', type: 'folder', open: true, children: [
+          { name: 'App.vue', type: 'file', icon: '🟩', score: 90, grade: 'A', issues: 0, path: 'src/' },
+          { name: 'router.js', type: 'file', icon: '📜', score: 88, grade: 'A', issues: 0, path: 'src/' },
+          { name: 'axiosApi.js', type: 'file', icon: '📜', score: 85, grade: 'A', issues: 0, path: 'src/' },
+          { name: 'index.css', type: 'file', icon: '🎨', score: 80, grade: 'B+', issues: 1, path: 'src/' },
+          { name: 'formkit.config.js', type: 'file', icon: '📜', score: 88, grade: 'A', issues: 0, path: 'src/' },
+          {
+            name: 'components', type: 'folder', open: false, children: [
+              {
+                name: 'BL', type: 'folder', open: false, children: [
+                  { name: 'updateUser.vue', type: 'file', icon: '🟨', score: 75, grade: 'B', issues: 0, path: 'components/BL/' },
+                  { name: 'updateDbSave.vue', type: 'file', icon: '🟨', score: 80, grade: 'B+', issues: 1, path: 'components/BL/' }
+                ]
+              },
+              {
+                name: 'common', type: 'folder', open: false, children: [
+                  { name: 'Header.vue', type: 'file', icon: '🟩', score: 90, grade: 'A', issues: 0, path: 'components/common/' },
+                  { name: 'Footer.vue', type: 'file', icon: '🟨', score: 85, grade: 'A', issues: 1, path: 'components/common/' },
+                  { name: 'Sidebar.vue', type: 'file', icon: '🟨', score: 55, grade: 'C', issues: 2, path: 'components/common/' },
+                  { name: 'SidebarNew.vue', type: 'file', icon: '🟩', score: 90, grade: 'A', issues: 0, path: 'components/common/' },
+                  { name: 'Menu.vue', type: 'file', icon: '🟩', score: 85, grade: 'A', issues: 0, path: 'components/common/' },
+                  { name: 'programBar.vue', type: 'file', icon: '🟨', score: 72, grade: 'B', issues: 2, path: 'components/common/' },
+                  { name: 'breadCrumbs.vue', type: 'file', icon: '🟩', score: 88, grade: 'A', issues: 0, path: 'components/common/' },
+                  { name: 'courseTitleBar.vue', type: 'file', icon: '🟩', score: 85, grade: 'A', issues: 0, path: 'components/common/' }
+                ]
+              },
+              {
+                name: 'DaiseUIComponents', type: 'folder', open: false, children: [
+                  { name: 'Toast.vue', type: 'file', icon: '🔴', score: 55, grade: 'C', issues: 2, path: 'components/DaiseUIComponents/' }
+                ]
+              },
+              {
+                name: 'sessionmanager', type: 'folder', open: false, children: [
+                  { name: 'deleteData.vue', type: 'file', icon: '🟩', score: 85, grade: 'A', issues: 0, path: 'components/sessionmanager/' },
+                  { name: 'storeData.vue', type: 'file', icon: '🟩', score: 82, grade: 'A', issues: 0, path: 'components/sessionmanager/' },
+                  { name: 'fetchData.vue', type: 'file', icon: '🟩', score: 82, grade: 'A', issues: 0, path: 'components/sessionmanager/' }
+                ]
+              },
+              {
+                name: 'mongodbID', type: 'folder', open: false, children: [
+                  { name: 'hexID.vue', type: 'file', icon: '🟨', score: 75, grade: 'B', issues: 1, path: 'components/mongodbID/' },
+                  { name: 'customID.vue', type: 'file', icon: '🟩', score: 82, grade: 'A', issues: 0, path: 'components/mongodbID/' }
+                ]
+              },
+              {
+                name: 'upload-manager', type: 'folder', open: false, children: [
+                  { name: 'uploadFile.vue', type: 'file', icon: '🟨', score: 68, grade: 'B-', issues: 3, path: 'components/upload-manager/' },
+                  { name: 'uploadProgessFile.vue', type: 'file', icon: '🟩', score: 80, grade: 'B+', issues: 0, path: 'components/upload-manager/' }
+                ]
+              },
+              {
+                name: 'download-manager', type: 'folder', open: false, children: [
+                  { name: 'downloadFile.vue', type: 'file', icon: '🟩', score: 82, grade: 'A', issues: 0, path: 'components/download-manager/' },
+                  { name: 'downloadProgress.vue', type: 'file', icon: '🟩', score: 82, grade: 'A', issues: 0, path: 'components/download-manager/' }
+                ]
+              },
+              {
+                name: 'excel', type: 'folder', open: false, children: [
+                  { name: 'clientData.vue', type: 'file', icon: '🟩', score: 80, grade: 'B+', issues: 0, path: 'components/excel/' },
+                  { name: 'saveWActivity.vue', type: 'file', icon: '🟨', score: 78, grade: 'B', issues: 1, path: 'components/excel/' },
+                  { name: 'updateData.vue', type: 'file', icon: '🟩', score: 80, grade: 'B+', issues: 0, path: 'components/excel/' }
+                ]
+              },
+              {
+                name: 'keymappers', type: 'folder', open: false, children: [
+                  { name: 'hashSalt.vue', type: 'file', icon: '🟩', score: 85, grade: 'A', issues: 0, path: 'components/keymappers/' },
+                  { name: 'encryptData.vue', type: 'file', icon: '🟩', score: 85, grade: 'A', issues: 0, path: 'components/keymappers/' },
+                  { name: 'decryptData.vue', type: 'file', icon: '🟩', score: 85, grade: 'A', issues: 0, path: 'components/keymappers/' },
+                  { name: 'hashData.vue', type: 'file', icon: '🟩', score: 85, grade: 'A', issues: 0, path: 'components/keymappers/' }
+                ]
+              },
+              { name: 'multiselect.vue', type: 'file', icon: '🟩', score: 80, grade: 'B+', issues: 0, path: 'components/' },
+              { name: 'MTable.vue', type: 'file', icon: '🟩', score: 80, grade: 'B+', issues: 0, path: 'components/' },
+              { name: 'date-range-pickr.vue', type: 'file', icon: '🟩', score: 80, grade: 'B+', issues: 0, path: 'components/' }
+            ]
+          },
+          {
+            name: 'views', type: 'folder', open: true, children: [
+              { name: 'Login.vue', type: 'file', icon: '🟩', score: 90, grade: 'A', issues: 0, path: 'views/' },
+              { name: 'adminLogin.vue', type: 'file', icon: '🔴', score: 28, grade: 'F', issues: 17, path: 'views/' },
+              { name: 'Home.vue', type: 'file', icon: '🟠', score: 65, grade: 'B-', issues: 2, path: 'views/' },
+              { name: 'StudentData.vue', type: 'file', icon: '🟠', score: 45, grade: 'D', issues: 8, path: 'views/' },
+              { name: 'StudentDemo.vue', type: 'file', icon: '🟠', score: 43, grade: 'D', issues: 10, path: 'views/' },
+              { name: 'SessionManager.vue', type: 'file', icon: '🟠', score: 38, grade: 'D', issues: 12, path: 'views/' },
+              { name: 'CdnUpload.vue', type: 'file', icon: '🟨', score: 65, grade: 'B-', issues: 3, path: 'views/' },
+              { name: 'Validator.vue', type: 'file', icon: '🟨', score: 75, grade: 'B', issues: 1, path: 'views/' },
+              { name: 'autoBL.vue', type: 'file', icon: '🟨', score: 78, grade: 'B', issues: 1, path: 'views/' },
+              {
+                name: 'Result', type: 'folder', open: true, children: [
+                  { name: 'FeeDetails.vue', type: 'file', icon: '🔴', score: 22, grade: 'F', issues: 3, path: 'views/Result/' },
+                  { name: 'ExamFormSubmission.vue', type: 'file', icon: '🔴', score: 18, grade: 'F', issues: 18, path: 'views/Result/' },
+                  { name: 'ApplicationServices.vue', type: 'file', icon: '🔴', score: 25, grade: 'F', issues: 30, path: 'views/Result/' },
+                  { name: 'SelectedApplicationService.vue', type: 'file', icon: '🟠', score: 32, grade: 'D', issues: 18, path: 'views/Result/' },
+                  { name: 'HallTicketPage.vue', type: 'file', icon: '🟡', score: 50, grade: 'C', issues: 6, path: 'views/Result/' },
+                  { name: 'ResultPage.vue', type: 'file', icon: '🟡', score: 52, grade: 'C', issues: 6, path: 'views/Result/' },
+                  { name: 'Transactions.vue', type: 'file', icon: '🟡', score: 55, grade: 'C', issues: 6, path: 'views/Result/' },
+                  { name: 'viewMarksheet.vue', type: 'file', icon: '🟡', score: 53, grade: 'C', issues: 7, path: 'views/Result/' },
+                  { name: 'viewExamTimeTable.vue', type: 'file', icon: '🟨', score: 62, grade: 'C+', issues: 4, path: 'views/Result/' }
+                ]
+              },
+              {
+                name: 'iLike', type: 'folder', open: false, children: [
+                  { name: 'iLikeCoursesNew.vue', type: 'file', icon: '🟠', score: 42, grade: 'D', issues: 7, path: 'views/iLike/' },
+                  { name: 'iLikeCourses.vue', type: 'file', icon: '🟨', score: 60, grade: 'C+', issues: 1, path: 'views/iLike/' },
+                  { name: 'iLikeDashboard.vue', type: 'file', icon: '🟩', score: 80, grade: 'B+', issues: 0, path: 'views/iLike/' },
+                  { name: 'iLikeLanding.vue', type: 'file', icon: '🟩', score: 82, grade: 'A', issues: 0, path: 'views/iLike/' }
+                ]
+              },
+              {
+                name: 'Layout', type: 'folder', open: false, children: [
+                  { name: 'spLayout.vue', type: 'file', icon: '🟩', score: 85, grade: 'A', issues: 0, path: 'views/Layout/' },
+                  { name: 'defaultLayout.vue', type: 'file', icon: '🟩', score: 85, grade: 'A', issues: 0, path: 'views/Layout/' }
+                ]
+              }
+            ]
+          },
+          {
+            name: 'store/modules', type: 'folder', open: false, children: [
+              { name: 'store.js', type: 'file', icon: '📜', score: 82, grade: 'A', issues: 0, path: 'store/modules/' },
+              { name: 'examManagementVar.js', type: 'file', icon: '📜', score: 80, grade: 'B+', issues: 0, path: 'store/modules/' },
+              { name: 'academicYears.js', type: 'file', icon: '📜', score: 80, grade: 'B+', issues: 0, path: 'store/modules/' },
+              { name: 'collegeDetails.js', type: 'file', icon: '📜', score: 80, grade: 'B+', issues: 0, path: 'store/modules/' },
+              { name: 'ProgramD.js', type: 'file', icon: '📜', score: 80, grade: 'B+', issues: 0, path: 'store/modules/' }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+];
+
+// File-specific issues
+const fileIssues = {
+  'adminLogin.vue': {
+    loc: 977, description: 'Admin authentication view. Most problematic file in the codebase.',
+    issues: [
+      { id: 'al1', type: 'a11y', sev: 'high', rule: 'Input Labels Missing', finding: '11 input fields have no associated <label> elements', fix: `Add for/id pairs to all inputs:\n<label for="username">Username</label>\n<input id="username" type="text" .../>`, status: 'open' },
+      { id: 'al2', type: 'a11y', sev: 'high', rule: 'Missing ARIA Roles', finding: 'Form sections have no ARIA landmark roles', fix: `Add role="form" and aria-labelledby to all form sections`, status: 'open' },
+      { id: 'al3', type: 'a11y', sev: 'high', rule: 'Keyboard Navigation', finding: 'Tab order is non-sequential — 8 interactive elements unreachable', fix: `Add tabindex="0" to all interactive elements and ensure logical DOM order`, status: 'open' },
+      { id: 'al4', type: 'ui', sev: 'medium', rule: 'Spell Check (PRN)', finding: '"prn" flagged as misspelled in <h5>', fix: null, fp: 'FALSE POSITIVE — PRN = Permanent Registration Number, standard Indian university domain term. Add to spell-checker whitelist.', status: 'open' },
+      { id: 'al5', type: 'ui', sev: 'medium', rule: 'Consecutive Spaces', finding: 'Trailing spaces in <h5> and university name binding', fix: `<h5 class="Un-name">{{ universityName }}</h5>`, status: 'open' },
+      { id: 'al6', type: 'a11y', sev: 'high', rule: 'WCAG Contrast', finding: 'Text color #999 on #fff fails WCAG AA (ratio: 2.8:1, min: 4.5:1)', fix: `Change muted text color to #767676 minimum. Recommended: color: #555;`, status: 'open' },
+      { id: 'al7', type: 'complex', sev: 'high', rule: 'File Complexity', finding: '977 LOC with 22 API calls — violates Single Responsibility Principle', fix: `Split into: AdminLoginForm.vue, AdminAuthService.js, useAdminLogin.js composable`, status: 'open' }
+    ]
+  },
+  'ApplicationServices.vue': {
+    loc: 754, description: 'Application services listing view in Results module.',
+    issues: [
+      { id: 'as1', type: 'a11y', sev: 'high', rule: 'WCAG Contrast Failures', finding: '3 color combinations fail WCAG AA contrast requirements', fix: `Fix contrast ratios:\n.service-title: #6B7280 → #4B5563\n.service-sub: #9CA3AF → #6B7280`, status: 'open' },
+      { id: 'as2', type: 'a11y', sev: 'high', rule: 'Keyboard Access', finding: '10 interactive elements use <div @click> instead of <button>', fix: `Replace all:\n<div @click="handler"> → <button @click="handler" type="button">`, status: 'open' },
+      { id: 'as3', type: 'a11y', sev: 'medium', rule: 'Focus States Missing', finding: 'No :focus or :focus-visible styles on any interactive element', fix: `Add global:\n*:focus-visible { outline: 2px solid #3D5AF1; outline-offset: 2px; }`, status: 'open' },
+      { id: 'as4', type: 'a11y', sev: 'high', rule: 'Missing alt text', finding: 'Service icons missing alt attributes', fix: `<img :src="service.icon" :alt="service.name + ' service icon'" />`, status: 'open' }
+    ]
+  },
+  'FeeDetails.vue': {
+    loc: 1586, description: 'Fee details view — largest file in codebase.',
+    issues: [
+      { id: 'fd1', type: 'ui', sev: 'medium', rule: 'Spell Check (Mixed)', finding: '"totalfee", "btn" flagged; also consecutive spaces in button labels', fix: `CSS class names are FP. Fix trailing spaces in user-visible button labels.`, status: 'open' },
+      { id: 'fd2', type: 'ui', sev: 'medium', rule: 'Font Consistency', finding: 'Too many font style classes — typography is inconsistent', fix: `<h1 class="text-xl font-bold text-slate-800 mb-6">Fee Details</h1>\nDefine shared type scale in CSS.`, status: 'open' },
+      { id: 'fd3', type: 'ui', sev: 'medium', rule: 'Header Missing', finding: 'No page heading — violates document structure', fix: `<h1 class="text-xl font-bold text-slate-800 mb-6">Fee Details</h1>`, status: 'open' },
+      { id: 'fd4', type: 'complex', sev: 'high', rule: 'File Too Large', finding: '1586 LOC — should be split into sub-components', fix: `Extract: FeeTable.vue, FeeReceipt.vue, FeeSummaryCard.vue, useFeeDetails.js`, status: 'open' }
+    ]
+  },
+  'ExamFormSubmission.vue': {
+    loc: 1310, description: 'Exam form submission view — second largest file.',
+    issues: [
+      { id: 'ef1', type: 'ui', sev: 'medium', rule: 'Font Consistency', finding: 'Inconsistent typography — too many font style classes', fix: `.text-label { @apply text-xs font-semibold text-gray-600; }\n.text-value { @apply text-sm font-normal text-gray-800; }\n.text-title { @apply text-base font-bold text-slate-700; }`, status: 'open' },
+      { id: 'ef2', type: 'a11y', sev: 'high', rule: 'Fixed Font Sizes', finding: '7 instances of fixed px font-sizes — breaks user font preferences', fix: `Replace fixed px with rem:\n12px → 0.75rem\n14px → 0.875rem\n16px → 1rem`, status: 'open' },
+      { id: 'ef3', type: 'a11y', sev: 'medium', rule: 'Mixed Print/Screen Styles', finding: 'Print media queries mixed inline with screen styles', fix: `Move all @media print {} rules to a separate print.css or end of file section`, status: 'open' },
+      { id: 'ef4', type: 'ui', sev: 'medium', rule: 'Spell Check (PRN)', finding: '"prn" in <span> flagged as misspelled', fix: null, fp: 'FALSE POSITIVE — PRN = Permanent Registration Number. Whitelist project-wide.', status: 'open' }
+    ]
+  },
+  'SessionManager.vue': {
+    loc: 133, description: 'Session management view.',
+    issues: [
+      { id: 'sm1', type: 'a11y', sev: 'high', rule: 'Keyboard Access', finding: '6 div click handlers with no tabindex or keyboard support', fix: `Replace <div @click="fn"> with:\n<button @click="fn" type="button" class="...">`, status: 'open' },
+      { id: 'sm2', type: 'a11y', sev: 'medium', rule: 'Focus States', finding: 'No focus styles on any interactive element', fix: `Add to component styles:\n:focus-visible { outline: 2px solid #3D5AF1; outline-offset: 2px; }`, status: 'open' },
+      { id: 'sm3', type: 'a11y', sev: 'medium', rule: 'ARIA Missing', finding: 'No ARIA roles for session action buttons', fix: `Add aria-label to each button:\n<button aria-label="Clear session data" @click="clearSession">`, status: 'open' }
+    ]
+  },
+  'Toast.vue': {
+    loc: null, description: 'DaisyUI toast/notification component.',
+    issues: [
+      { id: 'to1', type: 'a11y', sev: 'high', rule: 'Missing aria-live', finding: '.alert-info and .alert-success have no aria-live regions', fix: `<div class="alert alert-success"\n  role="status"\n  aria-live="polite"\n  aria-atomic="true">`, status: 'open' },
+      { id: 'to2', type: 'ui', sev: 'medium', rule: 'Header Presence', finding: 'Header missing in toast component', fix: null, fp: 'FALSE POSITIVE — Toast/notification components are transient UI elements. A heading would pollute the document outline. The correct fix is aria-live (tracked separately).', status: 'open' }
+    ]
+  },
+  'StudentData.vue': {
+    loc: 204, description: 'Student data display view.',
+    issues: [
+      { id: 'sd1', type: 'ui', sev: 'medium', rule: 'Spell Check (Compound Fields)', finding: '"fullname", "passingyear", "passingmonth", "seatnumber" flagged', fix: null, fp: 'FALSE POSITIVE — These are camelCase form field names. For better UX however, display as: "Full Name", "Passing Year", "Passing Month", "Seat Number".', status: 'open' },
+      { id: 'sd2', type: 'a11y', sev: 'high', rule: 'Form Labels', finding: '5 form fields missing associated label elements', fix: `<label for="fullname">Full Name</label>\n<input id="fullname" name="fullname" .../>`, status: 'open' },
+      { id: 'sd3', type: 'a11y', sev: 'medium', rule: 'Responsive Design', finding: 'No @media query breakpoints — layout breaks on mobile', fix: `Add Tailwind responsive prefixes:\nclass="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3"`, status: 'open' }
+    ]
+  },
+  'StudentDemo.vue': {
+    loc: 123, description: 'Student demonstration/testing view.',
+    issues: [
+      { id: 'sde1', type: 'a11y', sev: 'high', rule: 'Input Labels', finding: '5 inputs with no associated label element', fix: `Add labels:\n<label for="studentId">Student ID</label>\n<input id="studentId" .../>`, status: 'open' },
+      { id: 'sde2', type: 'ui', sev: 'medium', rule: 'Spell Check (Method Name)', finding: '"fetchallstudent" used as visible button label', fix: null, fp: 'FALSE POSITIVE — Button mirrors API method name. However, improve visible label to "Fetch All Students" for better UX.', status: 'open' },
+      { id: 'sde3', type: 'a11y', sev: 'medium', rule: 'Button Semantics', finding: '3 div elements used as buttons without proper semantics', fix: `Replace:\n<div class="btn" @click="fetch">Fetch</div>\nWith:\n<button type="button" @click="fetch">Fetch All Students</button>`, status: 'open' }
+    ]
+  },
+  'Home.vue': {
+    loc: null, description: 'Main home/landing view.',
+    issues: [
+      { id: 'hv1', type: 'ui', sev: 'high', rule: 'Spelling Error — User Visible', finding: '"cource" typo in heading AND CTA button', fix: `// Fix both occurrences:\n"iLike Cource" → "iLike Course"\n"Go To Cource" → "Go To Course"`, status: 'open' },
+      { id: 'hv2', type: 'a11y', sev: 'medium', rule: 'Heading Hierarchy', finding: 'Page jumps from h1 to h4 — skips h2/h3 levels', fix: `Restructure heading hierarchy:\n<h1>Welcome</h1>\n<h2>iLike Course</h2>\n<h3>Available Programs</h3>`, status: 'open' }
+    ]
+  },
+  'programBar.vue': {
+    loc: 42, description: 'Program context bar component displayed across multiple views.',
+    issues: [
+      { id: 'pb1', type: 'ui', sev: 'medium', rule: 'Consecutive Spaces', finding: '"Program:   Event:" — double spaces around dynamic values', fix: `<p class="text-sm font-bold text-white">\n  Program: {{ fullProgramTerm || '' }}\n  &nbsp;·&nbsp;\n  Event: {{ displayName || '' }}\n</p>`, status: 'open' },
+      { id: 'pb2', type: 'ui', sev: 'medium', rule: 'Header Presence', finding: 'Context strip has no heading for screen reader navigation', fix: `<h3 class="sr-only">Current Program Context</h3>\n<p aria-live="polite">Program: {{ fullProgramTerm }} · Event: {{ displayName }}</p>`, status: 'open' }
+    ]
+  },
+  'updateDbSave.vue': {
+    loc: 75, description: 'Database save utility component in BL layer.',
+    issues: [
+      { id: 'udb1', type: 'ui', sev: 'medium', rule: 'Consecutive Spaces', finding: "<p id='updateAndSave'> has multiple consecutive spaces", fix: `<p>\n  This feature updates the user age.\n  Server can add 5 for given age and\n  saves data in database.\n</p>`, status: 'open' }
+    ]
+  },
+  'Footer.vue': {
+    loc: null, description: 'Common footer component.',
+    issues: [
+      { id: 'ft1', type: 'ui', sev: 'medium', rule: 'Header Presence', finding: 'Header element missing in footer component', fix: null, fp: 'FALSE POSITIVE — Footer components are intentionally non-headered. A footer role does not require an H-tag by any accessibility or HTML standard. Scope rule to page-level views only.', status: 'open' }
+    ]
+  },
+  'iLikeCoursesNew.vue': {
+    loc: 849, description: 'Course listing view — newer version.',
+    issues: [
+      { id: 'il1', type: 'ui', sev: 'medium', rule: 'Consecutive Spaces', finding: '<span> has consecutive spaces in text content', fix: `Remove extra whitespace:\n<span>{{ courseTitle }}</span>`, status: 'open' },
+      { id: 'il2', type: 'ui', sev: 'medium', rule: 'Header Missing', finding: 'Full course listing page has no semantic heading', fix: `<h2 class="sr-only">Available Courses</h2>`, status: 'open' },
+      { id: 'il3', type: 'a11y', sev: 'medium', rule: 'Course Card Accessibility', finding: 'Course cards missing aria-label and role attributes', fix: `<div role="article" aria-label="{{ course.title }} course card">`, status: 'open' }
+    ]
+  },
+  'HallTicketPage.vue': { loc: 265, description: 'Hall ticket/admit card result view.', issues: [
+    { id: 'ht1', type: 'ui', sev: 'medium', rule: 'Header Missing', finding: 'No page heading on hall ticket view', fix: `<h1 class="sr-only">Hall Ticket</h1>`, status: 'open' },
+    { id: 'ht2', type: 'a11y', sev: 'medium', rule: 'Focus Styles', finding: 'No :focus styles on print/download buttons', fix: `button:focus-visible { outline: 2px solid #3D5AF1; outline-offset: 2px; }`, status: 'open' }
+  ]},
+  'Sidebar.vue': { loc: 568, description: 'Main navigation sidebar component.', issues: [
+    { id: 'sb1', type: 'a11y', sev: 'medium', rule: 'Nav Landmark', finding: 'Sidebar missing <nav> landmark role', fix: `Wrap sidebar content in:\n<nav aria-label="Main navigation">...</nav>`, status: 'open' },
+    { id: 'sb2', type: 'a11y', sev: 'medium', rule: 'Active State', finding: 'Active navigation item not indicated to screen readers', fix: `<a :aria-current="isActive ? 'page' : undefined">`, status: 'open' }
+  ]},
+  'uploadFile.vue': { loc: null, description: 'File upload manager component.', issues: [
+    { id: 'uf1', type: 'ui', sev: 'medium', rule: 'Spell Check (CDN/URL)', finding: '"cdn", "url" flagged as misspelled (3 instances)', fix: null, fp: 'FALSE POSITIVE — CDN and URL are standard web infrastructure terms used in button labels. Whitelist both.', status: 'open' },
+    { id: 'uf2', type: 'ui', sev: 'medium', rule: 'Spell Check (multipart)', finding: '"multipart" flagged as misspelled', fix: null, fp: 'FALSE POSITIVE — "multipart" is an official MIME type prefix defined in RFC 2046 (multipart/form-data). Standard HTTP vocabulary.', status: 'open' },
+    { id: 'uf3', type: 'a11y', sev: 'high', rule: 'File Input Accessibility', finding: 'File input missing label and aria-describedby for instructions', fix: `<label for="fileUpload">Upload File (max 10MB)</label>\n<input id="fileUpload" type="file" aria-describedby="fileHelp" />\n<span id="fileHelp">Accepted: PDF, JPG, PNG</span>`, status: 'open' }
+  ]},
+  'CdnUpload.vue': { loc: 155, description: 'CDN upload utility view.', issues: [
+    { id: 'cu1', type: 'ui', sev: 'medium', rule: 'Spell Check (cdnserver)', finding: '"cdnserver" as compound — not a standard term', fix: `// Before: "cdnserver"\n// After: "CDN Server"`, status: 'open' },
+    { id: 'cu2', type: 'ui', sev: 'medium', rule: 'Spell Check (cdn/url)', finding: '"cdnserver" flagged (2 occurrences)', fix: null, fp: 'FALSE POSITIVE — CDN and URL are standard technical abbreviations.', status: 'open' }
+  ]},
+  'viewExamTimeTable.vue': { loc: 171, description: 'Exam time table view.', issues: [
+    { id: 've1', type: 'ui', sev: 'medium', rule: 'Spell Check (pdf)', finding: '"pdf" flagged as misspelled', fix: null, fp: 'FALSE POSITIVE — PDF (Portable Document Format) is a universally understood file format acronym. Add to whitelist.', status: 'open' },
+    { id: 've2', type: 'ui', sev: 'medium', rule: 'Header Presence', finding: 'Time table view missing page heading', fix: `<h1 class="sr-only">Exam Time Table</h1>`, status: 'open' }
+  ]},
+  'viewMarksheet.vue': { loc: 270, description: 'Student marksheet/grades view.', issues: [
+    { id: 'vm1', type: 'ui', sev: 'medium', rule: 'Spell Check (marksheet)', finding: '"marksheet" flagged as misspelled', fix: null, fp: 'FALSE POSITIVE — "Marksheet" is the standard Indian academic term for a grade/marks record. Correct domain terminology. Add to whitelist.', status: 'open' },
+    { id: 'vm2', type: 'a11y', sev: 'medium', rule: 'Table Accessibility', finding: 'Results table missing caption and scope attributes', fix: `<table>\n  <caption>Student Marksheet — Academic Year {{ year }}</caption>\n  <thead>\n    <tr><th scope="col">Subject</th><th scope="col">Marks</th></tr>`, status: 'open' }
+  ]},
+  'SelectedApplicationService.vue': { loc: 543, description: 'Selected application service detail view.', issues: [
+    { id: 'sas1', type: 'ui', sev: 'medium', rule: 'Spell Check (PRN)', finding: '"prn" in <h1> flagged as misspelled', fix: null, fp: 'FALSE POSITIVE — PRN = Permanent Registration Number. Domain acronym. Whitelist project-wide.', status: 'open' },
+    { id: 'sas2', type: 'a11y', sev: 'high', rule: 'Form Accessibility', finding: '6 form controls missing label associations', fix: `Add explicit for/id associations to all form controls`, status: 'open' }
+  ]},
+  'ResultPage.vue': { loc: 340, description: 'Main results display view.', issues: [
+    { id: 'rp1', type: 'ui', sev: 'medium', rule: 'Header Missing', finding: 'Results page has no semantic <h1>', fix: `<h1 class="sr-only">Exam Results</h1>`, status: 'open' },
+    { id: 'rp2', type: 'a11y', sev: 'medium', rule: 'Status Announcement', finding: 'Result status not announced to screen readers', fix: `<div role="status" aria-live="polite">{{ resultStatus }}</div>`, status: 'open' }
+  ]},
+  'Transactions.vue': { loc: 300, description: 'Transaction history view.', issues: [
+    { id: 'tr1', type: 'ui', sev: 'medium', rule: 'Header Missing', finding: 'Transactions view has no page heading', fix: `<h1 class="sr-only">Transactions</h1>`, status: 'open' },
+    { id: 'tr2', type: 'a11y', sev: 'medium', rule: 'Table Headers', finding: 'Transaction table missing proper header scope attributes', fix: `<th scope="col">Date</th>\n<th scope="col">Amount</th>\n<th scope="col">Status</th>`, status: 'open' }
+  ]},
+  'hexID.vue': { loc: null, description: 'MongoDB hex ID generator component.', issues: [
+    { id: 'hx1', type: 'ui', sev: 'medium', rule: 'Spell Check (mongodb)', finding: '"mongodb" flagged as misspelled', fix: null, fp: 'FALSE POSITIVE — MongoDB is a registered trademark and the database technology used in this project. Whitelist "mongodb" and "MongoDB".', status: 'open' }
+  ]},
+  'saveWActivity.vue': { loc: null, description: 'Excel save with activity tracking component.', issues: [
+    { id: 'sw1', type: 'ui', sev: 'medium', rule: 'Spell Check (cdn)', finding: '"cdn" flagged as misspelled', fix: null, fp: 'FALSE POSITIVE — CDN (Content Delivery Network) is a universally-recognised technical abbreviation. Whitelist it.', status: 'open' }
+  ]},
+  'autoBL.vue': { loc: null, description: 'Automatic business logic view.', issues: [
+    { id: 'ab1', type: 'ui', sev: 'medium', rule: 'Spell Check (bl)', finding: '"bl" flagged as misspelled', fix: null, fp: 'FALSE POSITIVE — "BL" is this project\'s established abbreviation for Business Logic layer (evidenced by /components/BL/ directory). Intentional domain vocabulary.', status: 'open' }
+  ]},
+  'iLikeCourses.vue': { loc: 865, description: 'Course listing (original version).', issues: [
+    { id: 'ilc1', type: 'a11y', sev: 'medium', rule: 'Course Card Links', finding: 'Course cards have generic "Click here" link text', fix: `Change to descriptive text:\n<a :href="course.url">View {{ course.title }} course details</a>`, status: 'open' }
+  ]},
+  'Validator.vue': { loc: null, description: 'Form validation utility view.', issues: [
+    { id: 'va1', type: 'ui', sev: 'medium', rule: 'Spell Check (validator)', finding: '"validator" flagged as misspelled', fix: null, fp: 'FALSE POSITIVE — "validator" is a perfectly valid English word and a common programming term. The spell-checker incorrectly flagged it. No action required.', status: 'open' }
+  ]},
+  'index.css': { loc: null, description: 'Global CSS styles file.', issues: [
+    { id: 'css1', type: 'a11y', sev: 'medium', rule: 'Global Focus Styles Missing', finding: 'No global :focus-visible styles defined — each component handles this inconsistently', fix: `/* Add to index.css: */\n*:focus-visible {\n  outline: 2px solid #3D5AF1;\n  outline-offset: 2px;\n  border-radius: 2px;\n}`, status: 'open' }
+  ]}
+};
+
+// UI Consistency audit data
+const uiData = [
+  { id:'1', file:'updateDbSave.vue', path:'components/BL/', rule:'Spell & Grammar', finding:'Multiple consecutive spaces in <p>', sev:'med', status:'genuine', rec:'Remove double spaces between sentences in Vue templates.' },
+  { id:'2', file:'Footer.vue', path:'components/common/', rule:'Header Presence', finding:'Header missing', sev:'med', status:'fp', rec:'FALSE POSITIVE — Footer components are intentionally non-headered.' },
+  { id:'3', file:'programBar.vue', path:'components/common/', rule:'Spell & Grammar', finding:'"Program:   Event:" — consecutive spaces', sev:'med', status:'genuine', rec:'Normalise whitespace around dynamic values using &middot; separator.' },
+  { id:'4', file:'programBar.vue', path:'components/common/', rule:'Header Presence', finding:'Header missing', sev:'med', status:'genuine', rec:'Add visually-hidden heading: <h3 class="sr-only">Current Program Context</h3>' },
+  { id:'5', file:'Toast.vue', path:'components/DaiseUI/', rule:'Header Presence', finding:'Header missing', sev:'med', status:'fp', rec:'FALSE POSITIVE — Toast/notification components must not have headings. Fix is aria-live instead.' },
+  { id:'6', file:'saveWActivity.vue', path:'components/excel/', rule:'Spell Check', finding:'"cdn" flagged', sev:'med', status:'fp', rec:'FALSE POSITIVE — CDN is universally-recognised technical abbreviation. Whitelist.' },
+  { id:'7', file:'hexID.vue', path:'components/mongodbID/', rule:'Spell Check', finding:'"mongodb" flagged', sev:'med', status:'fp', rec:'FALSE POSITIVE — MongoDB is a registered trademark. Whitelist.' },
+  { id:'8', file:'uploadFile.vue', path:'components/upload-manager/', rule:'Spell Check', finding:'"cdn", "url" flagged (3 instances)', sev:'med', status:'fp', rec:'FALSE POSITIVE — Standard web infrastructure terms. Whitelist CDN and URL.' },
+  { id:'11', file:'uploadFile.vue', path:'components/upload-manager/', rule:'Spell Check', finding:'"multipart" flagged', sev:'med', status:'fp', rec:'FALSE POSITIVE — Official MIME type prefix (RFC 2046). Add to whitelist.' },
+  { id:'12', file:'adminLogin.vue', path:'views/', rule:'Spell Check', finding:'"prn" + consecutive spaces in <h5>', sev:'med', status:'mixed', rec:'PRN = FALSE POSITIVE. Consecutive spaces = GENUINE — fix trailing spaces.' },
+  { id:'15', file:'autoBL.vue', path:'views/', rule:'Spell Check', finding:'"bl" flagged', sev:'med', status:'fp', rec:'FALSE POSITIVE — BL = Business Logic layer abbreviation. Whitelist.' },
+  { id:'16', file:'CdnUpload.vue', path:'views/', rule:'Spell Check', finding:'"cdnserver" flagged (2 occurrences)', sev:'med', status:'mixed', rec:'Improve display text: "cdnserver" → "CDN Server" for user-facing labels.' },
+  { id:'18', file:'Home.vue', path:'views/', rule:'Spell Check', finding:'"cource" in heading and button', sev:'high', status:'genuine', rec:'REAL TYPO — "cource" → "course". Appears in heading and CTA button. Fix immediately.' },
+  { id:'20', file:'StudentData.vue', path:'views/', rule:'Spell Check', finding:'"fullname", "passingyear", "seatnumber" flagged', sev:'med', status:'fp', rec:'FALSE POSITIVE — CamelCase field names. Display as "Full Name", "Passing Year", "Seat Number" for better UX.' },
+  { id:'27', file:'StudentDemo.vue', path:'views/', rule:'Spell Check', finding:'"fetchallstudent" in button', sev:'med', status:'fp', rec:'FALSE POSITIVE — Mirrors API method name. Improve label to "Fetch All Students".' },
+  { id:'28', file:'Validator.vue', path:'views/', rule:'Spell Check', finding:'"validator" flagged', sev:'med', status:'fp', rec:'FALSE POSITIVE — "validator" is a valid English word. Spell-checker bug. No action needed.' },
+  { id:'29', file:'iLikeCoursesNew.vue', path:'views/iLike/', rule:'Spell + Header', finding:'Consecutive spaces; Header missing', sev:'med', status:'mixed', rec:'Spaces: fix in template. Header: add <h2 class="sr-only">Available Courses</h2>.' },
+  { id:'33', file:'ExamFormSubmission.vue', path:'views/Result/', rule:'Spell Check', finding:'"prn" in <span>', sev:'med', status:'fp', rec:'FALSE POSITIVE — PRN = Permanent Registration Number. Whitelist project-wide.' },
+  { id:'35', file:'ExamFormSubmission.vue', path:'views/Result/', rule:'Font Consistency', finding:'Too many font style classes', sev:'med', status:'genuine', rec:'Define shared type scale: .text-label, .text-value, .text-title in shared CSS.' },
+  { id:'36', file:'FeeDetails.vue', path:'views/Result/', rule:'Spell Check', finding:'"totalfee", "btn" + consecutive spaces', sev:'med', status:'mixed', rec:'btn/totalfee: FP (CSS classes). Spaces: genuine — fix trailing spaces in button labels.' },
+  { id:'37', file:'FeeDetails.vue', path:'views/Result/', rule:'Font Consistency', finding:'Too many font styles; Header missing', sev:'med', status:'genuine', rec:'Add <h1 class="text-xl font-bold">Fee Details</h1> and consolidate typography.' },
+  { id:'39', file:'HallTicketPage.vue + others', path:'views/Result/', rule:'Header Presence', finding:'Header missing in multiple result views', sev:'med', status:'genuine', rec:'All full-page views need a heading. Add visually-hidden <h1 class="sr-only"> to each.' },
+  { id:'41', file:'SelectedApplicationService.vue', path:'views/Result/', rule:'Spell Check', finding:'"prn" in <h1>', sev:'med', status:'fp', rec:'FALSE POSITIVE — PRN = Permanent Registration Number. Whitelist project-wide.' },
+  { id:'44', file:'viewExamTimeTable.vue', path:'views/Result/', rule:'Spell Check', finding:'"pdf" flagged', sev:'med', status:'fp', rec:'FALSE POSITIVE — PDF is universally understood. Add to whitelist.' },
+  { id:'45', file:'viewMarksheet.vue', path:'views/Result/', rule:'Spell Check', finding:'"marksheet" flagged', sev:'med', status:'fp', rec:'FALSE POSITIVE — Standard Indian academic terminology. Whitelist.' }
+];
+
+// A11y data
+const a11yData = [
+  { id:'1', file:'Toast.vue', path:'components/DaiseUI/', rule:'Dynamic content missing aria-live', finding:'.alert-info/.alert-success have no aria-live', sev:'high', rec:'Add role="status" aria-live="polite" aria-atomic="true" to all alert elements.' },
+  { id:'3', file:'adminLogin.vue', path:'views/', rule:'Inputs without labels', finding:'11 input fields missing <label> elements', sev:'high', rec:'Add explicit <label for="id"> to every input, or use aria-label on the input itself.' },
+  { id:'4', file:'adminLogin.vue', path:'views/', rule:'Missing ARIA', finding:'Form sections have no ARIA landmark roles', sev:'high', rec:'Add role="form" + aria-labelledby to form regions.' },
+  { id:'7', file:'ApplicationServices.vue', path:'views/Result/', rule:'WCAG Contrast', finding:'3 color combinations fail WCAG AA (4.5:1 ratio)', sev:'high', rec:'Fix: .service-title color #6B7280 → #4B5563. Re-test with WebAIM contrast checker.' },
+  { id:'8', file:'ApplicationServices.vue', path:'views/Result/', rule:'Keyboard Access', finding:'10 interactive <div @click> elements unreachable by keyboard', sev:'high', rec:'Replace all <div @click> with <button type="button" @click>. Buttons are keyboard-accessible by default.' },
+  { id:'9', file:'ApplicationServices.vue', path:'views/Result/', rule:'Focus States', finding:'No :focus/:focus-visible styles on any interactive element', sev:'med', rec:'Add global: *:focus-visible { outline: 2px solid #3D5AF1; outline-offset: 2px; }' },
+  { id:'10', file:'SessionManager.vue', path:'views/', rule:'Keyboard Access', finding:'6 div click handlers with no tabindex or keyboard support', sev:'high', rec:'Convert all interactive divs to <button> elements.' },
+  { id:'11', file:'StudentDemo.vue', path:'views/', rule:'Input Labels', finding:'5 inputs with no associated label element', sev:'high', rec:'Add for/id pairs to every form control.' },
+  { id:'12', file:'ExamFormSubmission.vue', path:'views/Result/', rule:'Fixed Font Sizes', finding:'7 instances of fixed px font-sizes', sev:'high', rec:'Convert: 12px→0.75rem, 14px→0.875rem, 16px→1rem. Rem respects user font preferences.' },
+  { id:'13', file:'ExamFormSubmission.vue', path:'views/Result/', rule:'Print/Screen Styles', finding:'Print media queries mixed with screen styles', sev:'med', rec:'Move all @media print {} to a dedicated section or print.css.' },
+  { id:'14', file:'FeeDetails.vue', path:'views/Result/', rule:'Page Structure', finding:'1586-line file, no clear landmark regions', sev:'high', rec:'Add <main>, <section aria-labelledby>, <aside> landmarks. Split into sub-components.' },
+  { id:'15', file:'Sidebar.vue', path:'components/common/', rule:'Nav Landmark', finding:'Sidebar uses <div> instead of <nav>', sev:'med', rec:'Wrap in: <nav aria-label="Main navigation">. Gives screen readers direct landmark jump.' },
+  { id:'16', file:'Home.vue', path:'views/', rule:'Heading Hierarchy', finding:'Page jumps h1→h4, skipping h2/h3', sev:'med', rec:'Restructure to logical heading levels: h1→h2→h3.' },
+  { id:'17', file:'viewMarksheet.vue', path:'views/Result/', rule:'Table Accessibility', finding:'Results table missing caption and scope attributes', sev:'med', rec:'Add <caption>, scope="col" to headers, scope="row" to row headers.' },
+  { id:'18', file:'Transactions.vue', path:'views/Result/', rule:'Table Headers', finding:'Transaction table missing header scope', sev:'med', rec:'Add scope="col" to all <th> elements.' },
+  { id:'19', file:'iLikeCoursesNew.vue', path:'views/iLike/', rule:'Card Accessibility', finding:'Course cards missing aria-label and role attributes', sev:'med', rec:'Add role="article" aria-label="{{ course.title }} course" to each card.' },
+  { id:'20', file:'uploadFile.vue', path:'components/upload-manager/', rule:'File Input', finding:'File input missing label and aria-describedby', sev:'high', rec:'Add <label for="fileUpload"> and aria-describedby for file type instructions.' },
+  { id:'21', file:'iLikeCourses.vue', path:'views/iLike/', rule:'Link Text', finding:'Generic "Click here" link text on course cards', sev:'med', rec:'Use descriptive link text: "View [Course Title] details".' }
+];
+
+// Complexity data
+const complexityData = [
+  { id:'1', file:'FeeDetails.vue', path:'views/Result/', loc:'1,586', issues:'30', grade:'F', rec:'Immediate refactor needed. Extract: FeeTable, FeeReceipt, FeeSummaryCard sub-components.' },
+  { id:'2', file:'ExamFormSubmission.vue', path:'views/Result/', loc:'1,310', issues:'18', grade:'F', rec:'Split into: ExamForm, FormReview, SubmissionConfirmation + useExamForm composable.' },
+  { id:'3', file:'adminLogin.vue', path:'views/', loc:'977', issues:'17', grade:'F', rec:'977 LOC with 22 API calls. Extract: AdminAuthService.js, useAdminLogin composable.' },
+  { id:'4', file:'ApplicationServices.vue', path:'views/Result/', loc:'754', issues:'30', grade:'F', rec:'Extract ServiceCard, ServiceList components. Move API calls to services layer.' },
+  { id:'5', file:'iLikeCoursesNew.vue', path:'views/iLike/', loc:'849', issues:'7', grade:'D', rec:'Large component. Extract: CourseCard, CourseFilter, CourseGrid sub-components.' },
+  { id:'6', file:'iLikeCourses.vue', path:'views/iLike/', loc:'865', issues:'1', grade:'C+', rec:'Good score but large size. Consider extracting CourseListItem for reuse.' },
+  { id:'7', file:'Sidebar.vue', path:'components/common/', loc:'568', issues:'2', grade:'C', rec:'Sidebar navigation logic can be extracted to useSidebar composable for testability.' },
+  { id:'8', file:'SelectedApplicationService.vue', path:'views/Result/', loc:'543', issues:'18', grade:'D', rec:'High issue density. Refactor into: ServiceDetail, ServiceActions, ServiceStatus.' },
+  { id:'9', file:'StudentData.vue', path:'views/', loc:'204', issues:'8', grade:'D', rec:'Moderate size but high issue density. Extract form logic to useStudentData composable.' }
+];
+
+// File scores data
+const fileScoresData = [
+  { file:'ExamFormSubmission.vue', path:'views/Result/', loc:'1,310', issues:'18', score:18, grade:'F' },
+  { file:'FeeDetails.vue', path:'views/Result/', loc:'1,586', issues:'3 flagged', score:22, grade:'F' },
+  { file:'ApplicationServices.vue', path:'views/Result/', loc:'754', issues:'30', score:25, grade:'F' },
+  { file:'adminLogin.vue', path:'views/', loc:'977', issues:'17', score:28, grade:'F' },
+  { file:'SelectedApplicationService.vue', path:'views/Result/', loc:'543', issues:'18', score:32, grade:'D' },
+  { file:'SessionManager.vue', path:'views/', loc:'133', issues:'12', score:38, grade:'D' },
+  { file:'iLikeCoursesNew.vue', path:'views/iLike/', loc:'849', issues:'7', score:42, grade:'D' },
+  { file:'StudentDemo.vue', path:'views/', loc:'123', issues:'10', score:43, grade:'D' },
+  { file:'StudentData.vue', path:'views/', loc:'204', issues:'8', score:45, grade:'D' },
+  { file:'HallTicketPage.vue', path:'views/Result/', loc:'265', issues:'6', score:50, grade:'C' },
+  { file:'ResultPage.vue', path:'views/Result/', loc:'340', issues:'6', score:52, grade:'C' },
+  { file:'viewMarksheet.vue', path:'views/Result/', loc:'270', issues:'7', score:53, grade:'C' },
+  { file:'Transactions.vue', path:'views/Result/', loc:'300', issues:'6', score:55, grade:'C' },
+  { file:'Sidebar.vue', path:'components/common/', loc:'568', issues:'2', score:55, grade:'C' },
+  { file:'Toast.vue', path:'components/DaiseUI/', loc:'—', issues:'2', score:55, grade:'C' },
+  { file:'viewExamTimeTable.vue', path:'views/Result/', loc:'171', issues:'4', score:62, grade:'C+' },
+  { file:'iLikeCourses.vue', path:'views/iLike/', loc:'865', issues:'1', score:60, grade:'C+' },
+  { file:'CdnUpload.vue', path:'views/', loc:'155', issues:'3 (1 FP)', score:65, grade:'B-' },
+  { file:'Home.vue', path:'views/', loc:'—', issues:'2 (real typo)', score:65, grade:'B-' },
+  { file:'programBar.vue', path:'components/common/', loc:'42', issues:'2 (1 FP)', score:72, grade:'B' },
+  { file:'updateDbSave.vue', path:'components/BL/', loc:'75', issues:'1', score:80, grade:'B+' },
+  { file:'deleteData.vue', path:'components/sessionmanager/', loc:'—', issues:'0 verified', score:85, grade:'A' },
+  { file:'Header.vue, Footer.vue, Login.vue + others', path:'components/common/ + views/', loc:'—', issues:'0–1', score:90, grade:'A' }
+];
+
+// System prompt for AI
+const SYSTEM_PROMPT = `You are CodeLens AI, an expert code quality assistant for the StudentLogin Portal project — a Vue 3 + Tailwind CSS + Vite student portal application used by Indian universities.
+
+You have complete knowledge of this codebase audit:
+
+PROJECT OVERVIEW:
+- 57 Vue components, 38 JS files (95 total)
+- Overall Health Score: 68/100 (MEDIUM RISK)
+- Generated: 2026-03-29
+
+ISSUE SUMMARY:
+- 76 High severity issues
+- 69 Medium severity issues  
+- 16 Low severity issues
+- 18 Confirmed False Positives
+- 147 Accessibility (A11y) issues
+- 45 UI Consistency issues
+- 9 Complex/large files
+
+CRITICAL FILES (Worst performers):
+- ExamFormSubmission.vue (Score: 18/100, F grade) — 1310 LOC, 18 issues, 7 fixed px font-sizes
+- FeeDetails.vue (Score: 22/100, F grade) — 1586 LOC, largest file, needs decomposition
+- ApplicationServices.vue (Score: 25/100, F grade) — 754 LOC, 30 issues, 3 WCAG failures, 10 keyboard issues
+- adminLogin.vue (Score: 28/100, F grade) — 977 LOC, 22 API calls, 11 accessibility violations
+
+ACCESSIBILITY ISSUES HIGHLIGHT:
+- adminLogin.vue: 11 inputs without labels, missing ARIA
+- ApplicationServices.vue: 3 WCAG contrast failures + 10 keyboard access issues
+- SessionManager.vue: 6 div click handlers with no tabindex or keyboard support  
+- Toast.vue: Dynamic alerts missing aria-live regions
+- StudentDemo.vue: 5 inputs with no associated label element
+- 8+ components missing responsive @media queries
+- Widespread missing :focus/:hover states
+
+UI CONSISTENCY ISSUES:
+- Home.vue: Real typo "cource" → "course" (user-visible in heading + CTA button)
+- ExamFormSubmission.vue: Inconsistent typography — too many font style classes
+- Multiple files: Consecutive spaces in template text
+
+CONFIRMED FALSE POSITIVES (18):
+- PRN: Permanent Registration Number (Indian university domain term)
+- cdn, url, pdf: Standard technical abbreviations
+- mongodb: Registered trademark
+- multipart: RFC-2046 MIME type standard
+- validator: Valid English word (spell-checker bug)
+- bl: Business Logic project convention
+- marksheet: Standard Indian academic terminology
+- Footer.vue header rule: Footers don't need headings
+- Toast.vue header rule: Notification components must not have headings
+
+GOOD FILES (A grade):
+- Login.vue, Header.vue, SidebarNew.vue, deleteData.vue, App.vue, router.js
+
+TOP RECOMMENDATIONS:
+1. Configure spell-checker whitelist: PRN, CDN, URL, PDF, MongoDB, BL, multipart, marksheet
+2. Add global focus styles in index.css (reduces ~30 individual violations)
+3. Replace all <div @click> with <button> elements project-wide
+4. Split FeeDetails.vue (1586 LOC) and ExamFormSubmission.vue into composable sub-components
+5. Scope "Header Presence" rule to views only, not layout/notification components
+6. Fix "cource" typo in Home.vue — visible to end users
+
+Always be specific, technical, and actionable. Reference specific file names, line counts, and issue IDs when relevant. Be concise but thorough.`;
+
+// ═══════════════════════════════════════════════
+// STATE
+// ═══════════════════════════════════════════════
+let fixedCount = 0;
+let ignoredCount = 0;
+let currentFile = null;
+const issueStates = {};
+
+// ═══════════════════════════════════════════════
+// RENDER FILE TREE
+// ═══════════════════════════════════════════════
+function renderTree(nodes, container) {
+  nodes.forEach(node => {
+    if (node.type === 'folder') {
+      const div = document.createElement('div');
+      div.className = 'tree-folder' + (node.open ? ' open' : '');
+      const header = document.createElement('div');
+      header.className = 'tree-folder-header';
+      header.innerHTML = `<span class="tree-folder-icon">▶</span><span>${node.name}</span>`;
+      header.onclick = () => div.classList.toggle('open');
+      const children = document.createElement('div');
+      children.className = 'tree-folder-children';
+      renderTree(node.children || [], children);
+      div.appendChild(header);
+      div.appendChild(children);
+      container.appendChild(div);
+    } else {
+      const div = document.createElement('div');
+      div.className = 'tree-file';
+      div.setAttribute('data-name', node.name);
+      const dot = getIssueDot(node);
+      div.innerHTML = `<span class="tree-file-icon">${node.icon}</span><span class="tree-file-name">${node.name}</span>${dot}`;
+      div.onclick = () => selectFile(node, div);
+      container.appendChild(div);
+    }
+  });
+}
+
+function getIssueDot(node) {
+  if (!node.issues) return '';
+  const issues = fileIssues[node.name];
+  if (!issues) return node.issues > 0 ? `<span class="tree-issue-dot tid-low">${node.issues}</span>` : '';
+  const hasHigh = issues.issues.some(i => i.sev === 'high');
+  const hasMed = issues.issues.some(i => i.sev === 'medium');
+  const cls = hasHigh ? 'tid-high' : hasMed ? 'tid-med' : 'tid-low';
+  return `<span class="tree-issue-dot ${cls}">${issues.issues.length}</span>`;
+}
+
+function filterTree(q) {
+  const files = document.querySelectorAll('.tree-file');
+  files.forEach(f => {
+    const name = f.getAttribute('data-name') || '';
+    const match = !q || name.toLowerCase().includes(q.toLowerCase());
+    f.style.display = match ? '' : 'none';
+  });
+  document.querySelectorAll('.tree-folder').forEach(f => {
+    if (!q) { f.style.display = ''; return; }
+    const visible = Array.from(f.querySelectorAll('.tree-file')).some(fi => fi.style.display !== 'none');
+    f.style.display = visible ? '' : 'none';
+  });
+}
+
+// ═══════════════════════════════════════════════
+// SELECT FILE
+// ═══════════════════════════════════════════════
+function selectFile(node, el) {
+  document.querySelectorAll('.tree-file.active').forEach(f => f.classList.remove('active'));
+  el.classList.add('active');
+  currentFile = node.name;
+
+  // Update status bar
+  document.getElementById('sbar-file-info').textContent = `${node.path}${node.name} · Score: ${node.score}/100 · Grade: ${node.grade}`;
+
+  // Switch to file view tab
+  switchCTab('filemap', document.querySelector('.ctab:nth-child(2)'));
+
+  const data = fileIssues[node.name];
+  const detail = document.getElementById('file-detail');
+  const empty = document.getElementById('file-empty');
+
+  // Update issue count tab
+  const issueCount = data ? data.issues.length : 0;
+  document.getElementById('file-issue-count').textContent = issueCount > 0 ? issueCount : '✓';
+
+  if (!data || data.issues.length === 0) {
+    empty.style.display = '';
+    detail.style.display = 'none';
+    empty.innerHTML = `<div class="empty-icon">✅</div><div class="empty-text">${node.name} — No issues found</div><div class="empty-sub">Score: ${node.score}/100 · Grade: ${node.grade} · This file looks clean!</div>`;
+    return;
+  }
+
+  empty.style.display = 'none';
+  detail.style.display = '';
+
+  const gradeClass = `grade-${node.grade.charAt(0)}`;
+  const scoreColor = node.score >= 80 ? 'var(--pass)' : node.score >= 60 ? '#A16207' : node.score >= 40 ? 'var(--medium)' : 'var(--high)';
+
+  let html = `
+    <div class="file-header-bar" style="animation:slideIn 0.2s ease both">
+      <div class="fhb-icon">📄</div>
+      <div class="fhb-info">
+        <div class="fhb-name">${node.name}</div>
+        <div class="fhb-path">${node.path}${node.name}${data.loc ? ' · ' + data.loc + ' LOC' : ''}</div>
+        <div style="font-size:11px;color:var(--muted);margin-top:4px">${data.description}</div>
+      </div>
+      <div>
+        <div class="fhb-score-bar" style="margin-bottom:6px">
+          <div class="fhb-sbar-bg"><div class="fhb-sbar-fill" style="width:${node.score}%;background:${scoreColor}"></div></div>
+          <div class="fhb-score-val" style="color:${scoreColor}">${node.score}</div>
+        </div>
+        <div class="fhb-grade ${gradeClass}">${node.grade}</div>
+      </div>
+    </div>`;
+
+  // Group issues by type
+  const a11y = data.issues.filter(i => i.type === 'a11y');
+  const ui = data.issues.filter(i => i.type === 'ui');
+  const complex = data.issues.filter(i => i.type === 'complex');
+
+  if (a11y.length) {
+    html += `<div class="issue-group-title">♿ Accessibility Issues (${a11y.length})</div>`;
+    a11y.forEach(issue => { html += renderIssueCard(issue); });
+  }
+  if (ui.length) {
+    html += `<div class="issue-group-title">🎨 UI Consistency Issues (${ui.length})</div>`;
+    ui.forEach(issue => { html += renderIssueCard(issue); });
+  }
+  if (complex.length) {
+    html += `<div class="issue-group-title">⚙ Complexity Issues (${complex.length})</div>`;
+    complex.forEach(issue => { html += renderIssueCard(issue); });
+  }
+
+  detail.innerHTML = html;
+}
+
+function renderIssueCard(issue) {
+  const state = issueStates[issue.id] || 'open';
+  const sevClass = issue.sev === 'high' ? 'b-high' : 'b-med';
+  const typeClass = issue.type === 'a11y' ? 'b-a11y' : issue.type === 'ui' ? 'b-ui' : 'b-complex';
+  const typeLabel = issue.type === 'a11y' ? '♿ A11y' : issue.type === 'ui' ? '🎨 UI' : '⚙ Complex';
+  const isFP = !!issue.fp;
+
+  return `
+    <div class="issue-card ${state !== 'open' ? state : ''}" id="card-${issue.id}">
+      <div class="issue-card-head" onclick="toggleIssue('${issue.id}')">
+        <div class="issue-severity">
+          <span class="badge ${isFP ? 'b-fp' : sevClass}">${isFP ? '◈ FP' : issue.sev.toUpperCase()}</span>
+        </div>
+        <div class="issue-meta">
+          <div class="issue-rule">${issue.rule} <span class="badge ${typeClass}" style="margin-left:4px">${typeLabel}</span></div>
+          <div class="issue-finding">${issue.finding}</div>
+        </div>
+        <div class="issue-actions" onclick="event.stopPropagation()">
+          ${state === 'fixed' ? '<span class="badge b-pass">✓ Fixed</span>' :
+            state === 'ignored' ? '<span class="badge b-fp">Ignored</span>' :
+            `<button class="btn-fix" onclick="triggerFix('${issue.id}')">⚡ Fix</button>
+             <button class="btn-ignore" onclick="triggerIgnore('${issue.id}')">✕ Ignore</button>`}
+        </div>
+      </div>
+      <div class="issue-body">
+        <div class="issue-rec">
+          ${isFP ? `<div class="fp-note"><strong>⚠ FALSE POSITIVE</strong>${issue.fp}</div>` :
+            issue.fix ? `<strong>Recommended Fix:</strong><pre>${escHtml(issue.fix)}</pre>` : ''}
+        </div>
+        <div class="progress-bar-wrap" id="progress-${issue.id}">
+          <div class="progress-label"><div class="spinner"></div>Applying fix...</div>
+          <div class="progress-track"><div class="progress-fill" id="pfill-${issue.id}"></div></div>
+        </div>
+        <div class="fix-success" id="success-${issue.id}">✅ Fix applied successfully — review the changes in your code editor</div>
+      </div>
+    </div>`;
+}
+
+function escHtml(str) {
+  return str.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+}
+
+function toggleIssue(id) {
+  const card = document.getElementById('card-' + id);
+  if (card) card.classList.toggle('expanded');
+}
+
+function triggerFix(id) {
+  const card = document.getElementById('card-' + id);
+  if (!card) return;
+  card.classList.add('expanded');
+
+  const progress = document.getElementById('progress-' + id);
+  const fill = document.getElementById('pfill-' + id);
+  const success = document.getElementById('success-' + id);
+
+  progress.classList.add('visible');
+  let w = 0;
+  const interval = setInterval(() => {
+    w += Math.random() * 12 + 4;
+    if (w >= 100) { w = 100; clearInterval(interval);
+      setTimeout(() => {
+        progress.classList.remove('visible');
+        success.classList.add('visible');
+        issueStates[id] = 'fixed';
+        fixedCount++;
+        document.getElementById('fixed-count').textContent = fixedCount;
+        // Update card header
+        const actions = card.querySelector('.issue-actions');
+        if (actions) actions.innerHTML = '<span class="badge b-pass">✓ Fixed</span>';
+        card.classList.add('fixed');
+        showToast('✅ Fix applied to ' + id.slice(0,6));
+      }, 300);
+    }
+    if (fill) fill.style.width = w + '%';
+  }, 80);
+}
+
+function triggerIgnore(id) {
+  const card = document.getElementById('card-' + id);
+  if (!card) return;
+  issueStates[id] = 'ignored';
+  ignoredCount++;
+  document.getElementById('ignored-count').textContent = ignoredCount;
+  const actions = card.querySelector('.issue-actions');
+  if (actions) actions.innerHTML = '<span class="badge b-fp">Ignored</span>';
+  card.classList.add('ignored');
+  showToast('Issue marked as ignored');
+}
+
+// ═══════════════════════════════════════════════
+// TABS
+// ═══════════════════════════════════════════════
+function switchCTab(id, btn) {
+  document.querySelectorAll('.ctab').forEach(b => b.classList.remove('active'));
+  document.querySelectorAll('.cpanel').forEach(p => p.classList.remove('active'));
+  if (btn) btn.classList.add('active');
+  document.getElementById('cpanel-' + id).classList.add('active');
+}
+
+function switchATab(id, btn) {
+  document.querySelectorAll('.atab').forEach(b => b.classList.remove('active'));
+  document.querySelectorAll('.apanel').forEach(p => p.classList.remove('active'));
+  if (btn) btn.classList.add('active');
+  document.getElementById('apanel-' + id).classList.add('active');
+}
+
+// ═══════════════════════════════════════════════
+// AUDIT TABLES
+// ═══════════════════════════════════════════════
+function buildAuditTables() {
+  // UI Table
+  const uitbl = document.getElementById('ui-table');
+  let uiHtml = `<thead><tr><th>#</th><th>File</th><th>Rule</th><th>Finding</th><th>Severity</th><th>Status</th><th>Recommendation</th><th>Actions</th></tr></thead><tbody>`;
+  uiData.forEach(row => {
+    const statusBadge = row.status === 'fp' ? '<span class="badge b-fp">◈ False Positive</span>' :
+      row.status === 'genuine' ? '<span class="badge b-pass">✓ Genuine</span>' :
+      '<span class="badge b-low">⊕ Mixed</span>';
+    const sevBadge = row.sev === 'high' ? '<span class="badge b-high">High</span>' : '<span class="badge b-med">Medium</span>';
+    uiHtml += `<tr>
+      <td style="color:var(--muted);font-size:11px">${row.id}</td>
+      <td><div class="file-mono">${row.file}</div><span class="path-muted">${row.path}</span></td>
+      <td style="font-size:12px;font-weight:600">${row.rule}</td>
+      <td><div class="finding-mono">${row.finding}</div></td>
+      <td>${sevBadge}</td>
+      <td>${statusBadge}</td>
+      <td><div class="rec-text">${row.rec}</div></td>
+      <td><div class="tbl-actions">
+        ${row.status !== 'fp' ? `<button class="btn-tfix" id="tfix-ui-${row.id}" onclick="tablefix('ui','${row.id}')">⚡ Fix</button>` : ''}
+        <button class="btn-tignore" id="tignore-ui-${row.id}" onclick="tableignore('ui','${row.id}')">✕</button>
+      </div></td>
+    </tr>`;
+  });
+  uiHtml += '</tbody>';
+  uitbl.innerHTML = uiHtml;
+
+  // A11y Table
+  const a11ytbl = document.getElementById('a11y-table');
+  let a11yHtml = `<thead><tr><th>#</th><th>File</th><th>Rule</th><th>Finding</th><th>Severity</th><th>Recommendation</th><th>Actions</th></tr></thead><tbody>`;
+  a11yData.forEach(row => {
+    const sevBadge = row.sev === 'high' ? '<span class="badge b-high">High</span>' : '<span class="badge b-med">Medium</span>';
+    a11yHtml += `<tr>
+      <td style="color:var(--muted);font-size:11px">${row.id}</td>
+      <td><div class="file-mono">${row.file}</div><span class="path-muted">${row.path}</span></td>
+      <td style="font-size:12px;font-weight:600">${row.rule}</td>
+      <td><div class="finding-mono">${row.finding}</div></td>
+      <td>${sevBadge}</td>
+      <td><div class="rec-text">${row.rec}</div></td>
+      <td><div class="tbl-actions">
+        <button class="btn-tfix" id="tfix-a11y-${row.id}" onclick="tablefix('a11y','${row.id}')">⚡ Fix</button>
+        <button class="btn-tignore" id="tignore-a11y-${row.id}" onclick="tableignore('a11y','${row.id}')">✕</button>
+      </div></td>
+    </tr>`;
+  });
+  a11yHtml += '</tbody>';
+  a11ytbl.innerHTML = a11yHtml;
+
+  // Complexity Table
+  const comptbl = document.getElementById('complexity-table');
+  let compHtml = `<thead><tr><th>#</th><th>File</th><th>LOC</th><th>Issues</th><th>Grade</th><th>Recommendation</th><th>Actions</th></tr></thead><tbody>`;
+  complexityData.forEach(row => {
+    const scoreColor = row.grade === 'F' ? 'var(--high)' : row.grade === 'D' ? 'var(--medium)' : 'var(--low)';
+    compHtml += `<tr>
+      <td style="color:var(--muted);font-size:11px">${row.id}</td>
+      <td><div class="file-mono">${row.file}</div><span class="path-muted">${row.path}</span></td>
+      <td style="font-family:var(--mono);font-size:11px">${row.loc}</td>
+      <td style="color:var(--high);font-weight:600;font-size:12px">${row.issues}</td>
+      <td><span class="grade-badge" style="background:${scoreColor}22;color:${scoreColor};border:1px solid ${scoreColor}44">${row.grade}</span></td>
+      <td><div class="rec-text">${row.rec}</div></td>
+      <td><div class="tbl-actions">
+        <button class="btn-tfix" id="tfix-comp-${row.id}" onclick="tablefix('comp','${row.id}')">⚡ Fix</button>
+        <button class="btn-tignore" id="tignore-comp-${row.id}" onclick="tableignore('comp','${row.id}')">✕</button>
+      </div></td>
+    </tr>`;
+  });
+  compHtml += '</tbody>';
+  comptbl.innerHTML = compHtml;
+
+  // File Scores Table
+  const fstbl = document.getElementById('filescores-table');
+  let fsHtml = `<thead><tr><th>File</th><th>Path</th><th>LOC</th><th>Issues</th><th>Score /100</th><th>Grade</th></tr></thead><tbody>`;
+  fileScoresData.forEach(row => {
+    const scoreColor = row.score >= 80 ? 'var(--pass)' : row.score >= 60 ? '#84cc16' : row.score >= 40 ? '#eab308' : row.score >= 30 ? 'var(--medium)' : 'var(--high)';
+    const gradeClass = row.grade === 'F' ? 'b-high' : row.grade === 'D' || row.grade === 'C' ? 'b-med' : row.grade.startsWith('B') ? 'b-low' : 'b-pass';
+    fsHtml += `<tr>
+      <td class="file-mono">${row.file}</td>
+      <td><span class="path-muted" style="display:inline">${row.path}</span></td>
+      <td style="font-family:var(--mono);font-size:11px">${row.loc}</td>
+      <td style="font-size:12px;font-weight:600;color:${row.score < 40 ? 'var(--high)' : row.score < 60 ? 'var(--medium)' : 'var(--muted)'}">${row.issues}</td>
+      <td>
+        <div class="score-bar-wrap">
+          <div class="sbar-bg"><div class="sbar-fill" style="width:${row.score}%;background:${scoreColor}"></div></div>
+          <div class="sbar-num" style="color:${scoreColor}">${row.score}</div>
+        </div>
+      </td>
+      <td><span class="badge ${gradeClass}">${row.grade}</span></td>
+    </tr>`;
+  });
+  fsHtml += '</tbody>';
+  fstbl.innerHTML = fsHtml;
+}
+
+function tablefix(tbl, id) {
+  const btn = document.getElementById(`tfix-${tbl}-${id}`);
+  if (!btn || btn.classList.contains('fixed')) return;
+  btn.classList.add('loading');
+  btn.textContent = '⏳';
+  setTimeout(() => {
+    btn.classList.remove('loading');
+    btn.classList.add('fixed');
+    btn.textContent = '✓ Fixed';
+    fixedCount++;
+    document.getElementById('fixed-count').textContent = fixedCount;
+    showToast('✅ Fix applied');
+  }, 1800 + Math.random() * 800);
+}
+
+function tableignore(tbl, id) {
+  const btn = document.getElementById(`tignore-${tbl}-${id}`);
+  if (!btn || btn.classList.contains('ignored')) return;
+  btn.classList.add('ignored');
+  btn.textContent = '—';
+  ignoredCount++;
+  document.getElementById('ignored-count').textContent = ignoredCount;
+  showToast('Issue ignored');
+}
+
+// ═══════════════════════════════════════════════
+// TOAST
+// ═══════════════════════════════════════════════
+let toastTimer;
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => t.classList.remove('show'), 2500);
+}
+
+// ═══════════════════════════════════════════════
+// AI CHAT
+// ═══════════════════════════════════════════════
+let chatHistory = [];
+let isTyping = false;
+
+function quickPrompt(msg) {
+  document.getElementById('chatInput').value = msg;
+  sendChat();
+}
+
+async function sendChat() {
+  if (isTyping) return;
+  const input = document.getElementById('chatInput');
+  const msg = input.value.trim();
+  if (!msg) return;
+
+  input.value = '';
+  input.style.height = 'auto';
+  addMessage('user', msg);
+  chatHistory.push({ role: 'user', content: msg });
+
+  showTyping();
+  document.getElementById('sendBtn').disabled = true;
+  isTyping = true;
+
+  try {
+    const resp = await fetch('https://api.anthropic.com/v1/messages', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        model: 'claude-sonnet-4-20250514',
+        max_tokens: 1000,
+        system: SYSTEM_PROMPT,
+        messages: chatHistory
+      })
+    });
+    const data = await resp.json();
+    const text = data.content?.map(c => c.text || '').join('') || 'Sorry, I encountered an error.';
+    chatHistory.push({ role: 'assistant', content: text });
+    removeTyping();
+    addMessage('ai', text);
+  } catch(e) {
+    removeTyping();
+    addMessage('ai', '⚠️ Connection error. Please check your network and try again.');
+  }
+
+  isTyping = false;
+  document.getElementById('sendBtn').disabled = false;
+}
+
+function addMessage(role, text) {
+  const msgs = document.getElementById('chatmessages');
+  const div = document.createElement('div');
+  div.className = 'chat-msg ' + role;
+  const avatar = role === 'ai' ? '<div class="msg-avatar ai">🤖</div>' : '<div class="msg-avatar user">👤</div>';
+  const formatted = formatChatText(text);
+  div.innerHTML = `${avatar}<div class="msg-bubble ${role}">${formatted}</div>`;
+  msgs.appendChild(div);
+  msgs.scrollTop = msgs.scrollHeight;
+}
+
+function formatChatText(text) {
+  return text
+    .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+    .replace(/`([^`]+)`/g, '<code>$1</code>')
+    .replace(/\n/g, '<br>');
+}
+
+function showTyping() {
+  const msgs = document.getElementById('chatmessages');
+  const div = document.createElement('div');
+  div.className = 'chat-msg';
+  div.id = 'typing-indicator';
+  div.innerHTML = '<div class="msg-avatar ai">🤖</div><div class="msg-bubble ai"><div class="typing-dots"><div class="typing-dot"></div><div class="typing-dot"></div><div class="typing-dot"></div></div></div>';
+  msgs.appendChild(div);
+  msgs.scrollTop = msgs.scrollHeight;
+}
+
+function removeTyping() {
+  const t = document.getElementById('typing-indicator');
+  if (t) t.remove();
+}
+
+// ═══════════════════════════════════════════════
+// INIT
+// ═══════════════════════════════════════════════
+document.addEventListener('DOMContentLoaded', () => {
+  renderTree(fileTree, document.getElementById('filetree'));
+  buildAuditTables();
+});
+</script>
+</body>
+</html>

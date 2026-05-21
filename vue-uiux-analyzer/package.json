@@ -1,0 +1,205 @@
+{
+  "name": "vue-uiux-analyzer",
+  "displayName": "Vue UI/UX Analyzer",
+  "description": "Analyze Vue.js projects for UI/UX and accessibility issues with actionable fixes",
+  "version": "1.0.0",
+  "publisher": "vue-uiux-analyzer",
+  "license": "MIT",
+  "engines": {
+    "vscode": "^1.67.0"
+  },
+  "categories": [
+    "Linters",
+    "Other"
+  ],
+  "keywords": [
+    "vue",
+    "vuejs",
+    "ui",
+    "ux",
+    "accessibility",
+    "a11y",
+    "lint",
+    "analyzer"
+  ],
+  "activationEvents": [
+    "onLanguage:vue",
+    "onLanguage:html",
+    "workspaceContains:**/*.vue"
+  ],
+  "main": "./dist/extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "vueUiUxAnalyzer.scanProject",
+        "title": "Vue Analyzer: Scan Entire Project",
+        "icon": "$(search)"
+      },
+      {
+        "command": "vueUiUxAnalyzer.scanCurrentFile",
+        "title": "Vue Analyzer: Scan Current File",
+        "icon": "$(file-code)"
+      },
+      {
+        "command": "vueUiUxAnalyzer.openDashboard",
+        "title": "Vue Analyzer: Open Dashboard",
+        "icon": "$(dashboard)"
+      },
+      {
+        "command": "vueUiUxAnalyzer.fixAll",
+        "title": "Vue Analyzer: Fix All Issues in File",
+        "icon": "$(wrench)"
+      },
+      {
+        "command": "vueUiUxAnalyzer.clearCache",
+        "title": "Vue Analyzer: Clear Cache"
+      },
+      {
+        "command": "vueUiUxAnalyzer.exportReport",
+        "title": "Vue Analyzer: Export Report",
+        "icon": "$(export)"
+      },
+      {
+        "command": "vueUiUxAnalyzer.viewHistory",
+        "title": "Vue Analyzer: View Scan History",
+        "icon": "$(history)"
+      },
+      {
+        "command": "vueUiUxAnalyzer.rescan",
+        "title": "Vue Analyzer: Rescan Project",
+        "icon": "$(refresh)"
+      }
+    ],
+    "viewsContainers": {
+      "activitybar": [
+        {
+          "id": "vueUiUxAnalyzer",
+          "title": "Vue UI/UX Analyzer",
+          "icon": "resources/icon.svg"
+        }
+      ]
+    },
+    "views": {
+      "vueUiUxAnalyzer": [
+        {
+          "type": "webview",
+          "id": "vueUiUxAnalyzer.dashboard",
+          "name": "Dashboard"
+        }
+      ]
+    },
+    "menus": {
+      "editor/title": [
+        {
+          "command": "vueUiUxAnalyzer.scanCurrentFile",
+          "when": "resourceLangId == vue || resourceLangId == html",
+          "group": "navigation"
+        }
+      ],
+      "editor/context": [
+        {
+          "command": "vueUiUxAnalyzer.scanCurrentFile",
+          "when": "resourceLangId == vue || resourceLangId == html",
+          "group": "vueAnalyzer"
+        },
+        {
+          "command": "vueUiUxAnalyzer.fixAll",
+          "when": "resourceLangId == vue || resourceLangId == html",
+          "group": "vueAnalyzer"
+        }
+      ],
+      "explorer/context": [
+        {
+          "command": "vueUiUxAnalyzer.scanProject",
+          "when": "explorerResourceIsFolder",
+          "group": "vueAnalyzer"
+        }
+      ]
+    },
+    "configuration": {
+      "title": "Vue UI/UX Analyzer",
+      "properties": {
+        "vueUiUxAnalyzer.enableAutoScan": {
+          "type": "boolean",
+          "default": true,
+          "description": "Automatically scan files on save"
+        },
+        "vueUiUxAnalyzer.minimumSeverity": {
+          "type": "string",
+          "default": "low",
+          "enum": [
+            "low",
+            "medium",
+            "high"
+          ],
+          "description": "Minimum severity level to display"
+        },
+        "vueUiUxAnalyzer.ignoredRules": {
+          "type": "array",
+          "default": [],
+          "items": {
+            "type": "string"
+          },
+          "description": "List of rule IDs to ignore"
+        },
+        "vueUiUxAnalyzer.scanOnOpen": {
+          "type": "boolean",
+          "default": false,
+          "description": "Scan files when opened"
+        },
+        "vueUiUxAnalyzer.maxFileSizeKB": {
+          "type": "number",
+          "default": 500,
+          "description": "Maximum file size in KB to scan"
+        },
+        "vueUiUxAnalyzer.pythonPath": {
+          "type": "string",
+          "default": "python",
+          "description": "Path to Python interpreter for the analysis engine"
+        },
+        "vueUiUxAnalyzer.excludePatterns": {
+          "type": "array",
+          "default": [
+            "**/node_modules/**",
+            "**/dist/**",
+            "**/build/**",
+            "**/.nuxt/**",
+            "**/.output/**"
+          ],
+          "items": {
+            "type": "string"
+          },
+          "description": "Glob patterns to exclude from scanning"
+        }
+      }
+    }
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run package",
+    "compile": "webpack",
+    "watch": "webpack --watch",
+    "package": "webpack --mode production --devtool hidden-source-map",
+    "compile-tests": "tsc -p . --outDir out",
+    "watch-tests": "tsc -p . -w --outDir out",
+    "pretest": "npm run compile-tests && npm run compile",
+    "test": "node ./out/test/runTest.js",
+    "lint": "eslint src --ext ts"
+  },
+  "devDependencies": {
+    "@types/mocha": "^10.0.6",
+    "@types/node": "^20.11.0",
+    "@types/vscode": "^1.67.0",
+    "@typescript-eslint/eslint-plugin": "^6.15.0",
+    "@typescript-eslint/parser": "^6.15.0",
+    "@vscode/test-electron": "^2.3.8",
+    "eslint": "^8.56.0",
+    "mocha": "^10.2.0",
+    "ts-loader": "^9.5.1",
+    "typescript": "^5.3.3",
+    "webpack": "^5.89.0",
+    "webpack-cli": "^5.1.4"
+  },
+  "dependencies": {
+    "crypto-js": "^4.2.0"
+  }
+}

@@ -1,0 +1,66 @@
+﻿{% extends "base.html" %}
+{% block title %}Audit Report - PrismAI{% endblock %}
+{% block extra_css %}
+<style>
+  .audit-filters { display: flex; gap: 12px; margin-bottom: 24px; flex-wrap: wrap; }
+  .audit-filters input, .audit-filters select { padding: 10px 12px; border: 1px solid var(--border); border-radius: var(--radius-md); background: var(--bg); color: var(--text); }
+  .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 16px; margin-bottom: 32px; }
+  .stat-box { background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 16px; text-align: center; }
+  .stat-value { font-size: 32px; font-weight: 700; color: var(--accent); }
+  .stat-label { font-size: 12px; color: var(--text-2); margin-top: 4px; }
+</style>
+{% endblock %}
+{% block content %}
+<section class="hero" style="margin-bottom: 32px;">
+  <h1>Audit Report</h1>
+  <p>Comprehensive analysis of your codebase health and security.</p>
+</section>
+<div class="stats-grid">
+  <div class="stat-box"><div class="stat-value" id="totalIssues">0</div><div class="stat-label">Total Issues</div></div>
+  <div class="stat-box"><div class="stat-value" id="criticalCount">0</div><div class="stat-label">Critical</div></div>
+  <div class="stat-box"><div class="stat-value" id="highCount">0</div><div class="stat-label">High</div></div>
+  <div class="stat-box"><div class="stat-value" id="mediumCount">0</div><div class="stat-label">Medium</div></div>
+</div>
+<div class="audit-filters">
+  <input type="text" id="searchInput" placeholder="Search issues..." style="flex: 1;">
+  <select id="severityFilter"><option value="">All Severities</option><option value="CRITICAL">Critical</option><option value="HIGH">High</option><option value="MEDIUM">Medium</option><option value="LOW">Low</option></select>
+</div>
+<div class="table-container">
+  <table>
+    <thead><tr><th>File</th><th>Severity</th><th>Issue</th><th>Line</th><th>Status</th></tr></thead>
+    <tbody id="issuesTableBody">
+      <tr><td colspan="5" style="text-align: center; padding: 24px; color: var(--text-2);"><i class="fas fa-spinner" style="animation: spin 0.8s linear infinite;"></i> Loading...</td></tr>
+    </tbody>
+  </table>
+</div>
+<script>
+let allIssues = [];
+document.addEventListener("DOMContentLoaded", async () => {
+  allIssues = await API.allBugs();
+  updateStats();
+  renderTable();
+  document.getElementById("searchInput").addEventListener("input", renderTable);
+  document.getElementById("severityFilter").addEventListener("change", renderTable);
+});
+function updateStats() {
+  document.getElementById("totalIssues").textContent = allIssues.length;
+  document.getElementById("criticalCount").textContent = allIssues.filter(i => i.severity === "CRITICAL").length;
+  document.getElementById("highCount").textContent = allIssues.filter(i => i.severity === "HIGH").length;
+  document.getElementById("mediumCount").textContent = allIssues.filter(i => i.severity === "MEDIUM").length;
+}
+function renderTable() {
+  let filtered = allIssues;
+  const search = document.getElementById("searchInput").value.toLowerCase();
+  const severity = document.getElementById("severityFilter").value;
+  if (search) filtered = filtered.filter(i => (i.title || "").toLowerCase().includes(search) || (i.file_name || "").toLowerCase().includes(search));
+  if (severity) filtered = filtered.filter(i => i.severity === severity);
+  document.getElementById("issuesTableBody").innerHTML = filtered.map(issue => `<tr>
+    <td><small>${issue.file_name || issue.file_path}</small></td>
+    <td><span class="badge badge-${issue.severity.toLowerCase()}">${issue.severity}</span></td>
+    <td>${issue.title || "Issue"}</td>
+    <td>Line ${issue.line_number}</td>
+    <td><span class="badge badge-info">${issue.status || "OPEN"}</span></td>
+  </tr>`).join("") || '<tr><td colspan="5" style="text-align: center; padding: 24px; color: var(--text-2);">No issues found</td></tr>';
+}
+</script>
+{% endblock %}

@@ -1,0 +1,130 @@
+{
+  "name": "prismia-analyzer",
+  "displayName": "PrismAI Code Analyzer",
+  "description": "Forensic code analysis and visualization for VS Code",
+  "version": "0.1.0",
+  "publisher": "prismia",
+  "engines": {
+    "vscode": "^1.75.0"
+  },
+  "categories": [
+    "Programming Languages",
+    "Linters",
+    "Visualization"
+  ],
+  "keywords": [
+    "code analysis",
+    "bug detection",
+    "architecture",
+    "dependencies"
+  ],
+  "activationEvents": [
+    "onCommand:prismia.openDashboard",
+    "onCommand:prismia.analyzeFile",
+    "onCommand:prismia.showArchitecture",
+    "onCommand:prismia.showDependencies"
+  ],
+  "main": "./out/extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "prismia.openDashboard",
+        "title": "PrismAI: Open Dashboard",
+        "category": "PrismAI"
+      },
+      {
+        "command": "prismia.analyzeFile",
+        "title": "PrismAI: Analyze This File",
+        "category": "PrismAI"
+      },
+      {
+        "command": "prismia.showArchitecture",
+        "title": "PrismAI: Show Architecture Map",
+        "category": "PrismAI"
+      },
+      {
+        "command": "prismia.showDependencies",
+        "title": "PrismAI: Show Dependency Graph",
+        "category": "PrismAI"
+      },
+      {
+        "command": "prismia.showAudit",
+        "title": "PrismAI: Show Audit Report",
+        "category": "PrismAI"
+      }
+    ],
+    "menus": {
+      "editor/context": [
+        {
+          "command": "prismia.analyzeFile",
+          "group": "1_modification",
+          "when": "resourceScheme == file"
+        }
+      ],
+      "explorer/context": [
+        {
+          "command": "prismia.analyzeFile",
+          "group": "2_workspace",
+          "when": "resourceScheme == file"
+        }
+      ]
+    },
+    "viewsContainers": {
+      "activitybar": [
+        {
+          "id": "prismia",
+          "title": "PrismAI",
+          "icon": "media/prismia.svg"
+        }
+      ]
+    },
+    "views": {
+      "prismia": [
+        {
+          "id": "prismia.findings",
+          "name": "Findings",
+          "contextualTitle": "PrismAI Findings"
+        },
+        {
+          "id": "prismia.stats",
+          "name": "Statistics",
+          "contextualTitle": "Analysis Statistics"
+        }
+      ]
+    },
+    "configuration": {
+      "title": "PrismAI",
+      "properties": {
+        "prismia.serverUrl": {
+          "type": "string",
+          "default": "http://localhost:5000",
+          "description": "PrismAI server URL"
+        },
+        "prismia.autoAnalyze": {
+          "type": "boolean",
+          "default": false,
+          "description": "Automatically analyze files on save"
+        }
+      }
+    }
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run compile",
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./",
+    "pretest": "npm run compile && npm run lint",
+    "lint": "eslint src --ext ts",
+    "test": "node ./out/test/runTest.js"
+  },
+  "devDependencies": {
+    "@types/node": "^16.11.6",
+    "@types/vscode": "^1.75.0",
+    "@typescript-eslint/eslint-plugin": "^5.2.0",
+    "@typescript-eslint/parser": "^5.2.0",
+    "eslint": "^8.1.0",
+    "typescript": "^4.4.3"
+  },
+  "dependencies": {
+    "axios": "^1.6.0"
+  }
+}

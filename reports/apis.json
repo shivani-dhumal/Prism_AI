@@ -1,0 +1,890 @@
+[
+    {
+        "id": 1,
+        "file_id": 2,
+        "method": "POST",
+        "url": "",
+        "payload": "learnerData",
+        "created_at": "2026-05-07 10:10:12"
+    },
+    {
+        "id": 2,
+        "file_id": 5,
+        "method": "POST",
+        "url": "o.[query_2YkzxctlNebUpalIDXwCecirPqb]",
+        "payload": "{",
+        "created_at": "2026-05-07 10:10:14"
+    },
+    {
+        "id": 3,
+        "file_id": 5,
+        "method": "POST",
+        "url": "o.[query_2ON5GMHaE4jBorWtQVUPLHWZV23]",
+        "payload": "{ notificationId: id, clientId: clientId }",
+        "created_at": "2026-05-07 10:10:14"
+    },
+    {
+        "id": 4,
+        "file_id": 5,
+        "method": "POST",
+        "url": "o.[query_2ON4vGgUlRWHux6xIKCyDiXNRYQ]",
+        "payload": "{ notificationId: id, clientId: clientId }",
+        "created_at": "2026-05-07 10:10:14"
+    },
+    {
+        "id": 5,
+        "file_id": 13,
+        "method": "POST",
+        "url": "UNKNOWN_ACTIVITY",
+        "payload": "N/A",
+        "created_at": "2026-05-07 10:10:17"
+    },
+    {
+        "id": 6,
+        "file_id": 15,
+        "method": "POST",
+        "url": "o.[UpdateObjectUsingBLAndSave]",
+        "payload": "this.sobj",
+        "created_at": "2026-05-07 10:10:19"
+    },
+    {
+        "id": 7,
+        "file_id": 16,
+        "method": "POST",
+        "url": "o.[UpdateObjectUsingBL]",
+        "payload": "this.obj",
+        "created_at": "2026-05-07 10:10:20"
+    },
+    {
+        "id": 8,
+        "file_id": 26,
+        "method": "POST",
+        "url": "o.[DownloadFileUsingDM]",
+        "payload": "this.download",
+        "created_at": "2026-05-07 10:10:29"
+    },
+    {
+        "id": 9,
+        "file_id": 27,
+        "method": "POST",
+        "url": "o.[CheckDownloadedFileProgress]",
+        "payload": "{downloadFileId: this.downloadId}",
+        "created_at": "2026-05-07 10:10:30"
+    },
+    {
+        "id": 10,
+        "file_id": 28,
+        "method": "POST",
+        "url": "o.[SaveClientDataUsingExcel]",
+        "payload": "this.empList",
+        "created_at": "2026-05-07 10:10:32"
+    },
+    {
+        "id": 11,
+        "file_id": 29,
+        "method": "POST",
+        "url": "o.[SaveActivityDataUsingExcel]",
+        "payload": "{excelURL: this.url}",
+        "created_at": "2026-05-07 10:10:33"
+    },
+    {
+        "id": 12,
+        "file_id": 30,
+        "method": "POST",
+        "url": "o.[UpdateDataUsingExcel]",
+        "payload": "N/A",
+        "created_at": "2026-05-07 10:10:34"
+    },
+    {
+        "id": 13,
+        "file_id": 33,
+        "method": "POST",
+        "url": "o.[DecryptData]",
+        "payload": "{name: this.dname}",
+        "created_at": "2026-05-07 10:10:39"
+    },
+    {
+        "id": 14,
+        "file_id": 34,
+        "method": "POST",
+        "url": "o.[EncryptData]",
+        "payload": "{name: this.ename}",
+        "created_at": "2026-05-07 10:10:40"
+    },
+    {
+        "id": 15,
+        "file_id": 35,
+        "method": "POST",
+        "url": "o.[GenerateHash]",
+        "payload": "{name: this.name}",
+        "created_at": "2026-05-07 10:10:41"
+    },
+    {
+        "id": 16,
+        "file_id": 36,
+        "method": "POST",
+        "url": "o.[GenerateSalt]",
+        "payload": "{name: this.sname, saltKey: this.saltKey}",
+        "created_at": "2026-05-07 10:10:42"
+    },
+    {
+        "id": 17,
+        "file_id": 37,
+        "method": "POST",
+        "url": "o.[SaveCustomObjectID]",
+        "payload": "this.obj",
+        "created_at": "2026-05-07 10:10:44"
+    },
+    {
+        "id": 18,
+        "file_id": 38,
+        "method": "POST",
+        "url": "o.[SaveCustomHexObjectID]",
+        "payload": "this.hobj",
+        "created_at": "2026-05-07 10:10:45"
+    },
+    {
+        "id": 19,
+        "file_id": 39,
+        "method": "POST",
+        "url": "o.[DeleteDataFromSession]",
+        "payload": "{name: this.deleteKey}",
+        "created_at": "2026-05-07 10:10:46"
+    },
+    {
+        "id": 20,
+        "file_id": 40,
+        "method": "POST",
+        "url": "o.[FetchDataFromSession]",
+        "payload": "{name: this.fetchKey}",
+        "created_at": "2026-05-07 10:10:48"
+    },
+    {
+        "id": 21,
+        "file_id": 41,
+        "method": "POST",
+        "url": "o.[StoreDataInSession]",
+        "payload": "this.session",
+        "created_at": "2026-05-07 10:10:49"
+    },
+    {
+        "id": 22,
+        "file_id": 43,
+        "method": "POST",
+        "url": "o.[UploadFileUsingUM]",
+        "payload": "{cdnBaseUrl: N/A, uploadFileUrl: N/A, destinationFileUrl: N/A}",
+        "created_at": "2026-05-07 10:10:50"
+    },
+    {
+        "id": 23,
+        "file_id": 44,
+        "method": "POST",
+        "url": "o.[CheckUploadedFileProgress]",
+        "payload": "{uploadFileId: this.uploadId}",
+        "created_at": "2026-05-07 10:10:52"
+    },
+    {
+        "id": 24,
+        "file_id": 68,
+        "method": "POST",
+        "url": "o.[query_2PJmeQtlBsiSVjNLlv3Tai6To0F]",
+        "payload": "N/A",
+        "created_at": "2026-05-07 10:11:03"
+    },
+    {
+        "id": 25,
+        "file_id": 68,
+        "method": "POST",
+        "url": "o.[query_2PJoxChqsDwFkXZ0lNRuz7L2AFT]",
+        "payload": "N/A",
+        "created_at": "2026-05-07 10:11:03"
+    },
+    {
+        "id": 26,
+        "file_id": 68,
+        "method": "POST",
+        "url": "o.[query_2PJqEKAn0R7ODfsXIE69lxB2NAP]",
+        "payload": "N/A",
+        "created_at": "2026-05-07 10:11:03"
+    },
+    {
+        "id": 27,
+        "file_id": 68,
+        "method": "POST",
+        "url": "r.[getMenu]",
+        "payload": "{None: Decryption(...).clientId, None: roles.split(...), None: Decryption(...).userId}",
+        "created_at": "2026-05-07 10:11:04"
+    },
+    {
+        "id": 28,
+        "file_id": 70,
+        "method": "POST",
+        "url": "o.[query_2Yn4NEfT6VccNq5ryhY5fH8zYan]",
+        "payload": "{ clientName: fullPathVar }",
+        "created_at": "2026-05-07 10:11:05"
+    },
+    {
+        "id": 29,
+        "file_id": 70,
+        "method": "POST",
+        "url": "o.[studentLogin]",
+        "payload": "{ // SENumber: formattedSENumber, SENumber: formattedSENumber, birthDate: this.dob, }",
+        "created_at": "2026-05-07 10:11:05"
+    },
+    {
+        "id": 30,
+        "file_id": 70,
+        "method": "POST",
+        "url": "o.[GenerateOTP]",
+        "payload": "{",
+        "created_at": "2026-05-07 10:11:05"
+    },
+    {
+        "id": 31,
+        "file_id": 70,
+        "method": "POST",
+        "url": "o.[updateOtpDetails]",
+        "payload": "{",
+        "created_at": "2026-05-07 10:11:05"
+    },
+    {
+        "id": 32,
+        "file_id": 70,
+        "method": "POST",
+        "url": "o.[query_2Pp3qbLC3S7ngGzzTy8LMCpxVAm]",
+        "payload": "{",
+        "created_at": "2026-05-07 10:11:05"
+    },
+    {
+        "id": 33,
+        "file_id": 70,
+        "method": "POST",
+        "url": "o.[ValidateOTP]",
+        "payload": "{",
+        "created_at": "2026-05-07 10:11:05"
+    },
+    {
+        "id": 34,
+        "file_id": 70,
+        "method": "POST",
+        "url": "r.[getMenu]",
+        "payload": "{",
+        "created_at": "2026-05-07 10:11:05"
+    },
+    {
+        "id": 35,
+        "file_id": 70,
+        "method": "POST",
+        "url": "o.[query_2PJoxChqsDwFkXZ0lNRuz7L2AFT]",
+        "payload": "{ clientName: fullPathVar }",
+        "created_at": "2026-05-07 10:11:05"
+    },
+    {
+        "id": 36,
+        "file_id": 70,
+        "method": "POST",
+        "url": "o.[query_2PJqEKAn0R7ODfsXIE69lxB2NAP]",
+        "payload": "{ clientName: fullPathVar }",
+        "created_at": "2026-05-07 10:11:06"
+    },
+    {
+        "id": 37,
+        "file_id": 70,
+        "method": "POST",
+        "url": "o.[query_2PJmeQtlBsiSVjNLlv3Tai6To0F]",
+        "payload": "{ clientName: fullPathVar }",
+        "created_at": "2026-05-07 10:11:06"
+    },
+    {
+        "id": 38,
+        "file_id": 71,
+        "method": "POST",
+        "url": "o.[AutoBLDemo]",
+        "payload": "this.autobl",
+        "created_at": "2026-05-07 10:11:08"
+    },
+    {
+        "id": 39,
+        "file_id": 73,
+        "method": "POST",
+        "url": "r.[TempGetCollegeId]",
+        "payload": "{clientId: this.userObj.clientId, studentId: this.userObj.studentId}",
+        "created_at": "2026-05-07 10:11:11"
+    },
+    {
+        "id": 40,
+        "file_id": 73,
+        "method": "POST",
+        "url": "r.[isCollegeActive]",
+        "payload": "{collegeId: this.collegeId, clientId: this.userObj.clientId}",
+        "created_at": "2026-05-07 10:11:12"
+    },
+    {
+        "id": 41,
+        "file_id": 74,
+        "method": "POST",
+        "url": "o.[Login]",
+        "payload": "{clientId: Decryption(...).clientId, password: md5(...), userName: this.username}",
+        "created_at": "2026-05-07 10:11:13"
+    },
+    {
+        "id": 42,
+        "file_id": 74,
+        "method": "POST",
+        "url": "o.[query_2Yn4NEfT6VccNq5ryhY5fH8zYan]",
+        "payload": "{clientName: srtmu}",
+        "created_at": "2026-05-07 10:11:13"
+    },
+    {
+        "id": 43,
+        "file_id": 74,
+        "method": "POST",
+        "url": "r.[getMenu]",
+        "payload": "{None: Decryption(...).clientId, None: roles.split(...), None: Decryption(...).userId}",
+        "created_at": "2026-05-07 10:11:13"
+    },
+    {
+        "id": 44,
+        "file_id": 75,
+        "method": "POST",
+        "url": "o.[StoreDataInSession]",
+        "payload": "this.session",
+        "created_at": "2026-05-07 10:11:14"
+    },
+    {
+        "id": 45,
+        "file_id": 75,
+        "method": "POST",
+        "url": "o.[FetchDataFromSession]",
+        "payload": "{name: this.fetchKey}",
+        "created_at": "2026-05-07 10:11:14"
+    },
+    {
+        "id": 46,
+        "file_id": 75,
+        "method": "POST",
+        "url": "o.[DeleteDataFromSession]",
+        "payload": "{name: this.deleteKey}",
+        "created_at": "2026-05-07 10:11:14"
+    },
+    {
+        "id": 47,
+        "file_id": 76,
+        "method": "POST",
+        "url": "o.[studentProfile]",
+        "payload": "{SENumber: this.student.SENumber}",
+        "created_at": "2026-05-07 10:11:16"
+    },
+    {
+        "id": 48,
+        "file_id": 77,
+        "method": "POST",
+        "url": "o.[SaveStudentData]",
+        "payload": "this.student",
+        "created_at": "2026-05-07 10:11:18"
+    },
+    {
+        "id": 49,
+        "file_id": 77,
+        "method": "POST",
+        "url": "o.[UpdateStudentData]",
+        "payload": "{name: this.uname}",
+        "created_at": "2026-05-07 10:11:18"
+    },
+    {
+        "id": 50,
+        "file_id": 77,
+        "method": "POST",
+        "url": "o.[DeleteStudentData]",
+        "payload": "{name: this.dstudent}",
+        "created_at": "2026-05-07 10:11:19"
+    },
+    {
+        "id": 51,
+        "file_id": 77,
+        "method": "POST",
+        "url": "o.[query_1tvgHmekn2RX1jUoViq5E0vDPh9]",
+        "payload": "N/A",
+        "created_at": "2026-05-07 10:11:19"
+    },
+    {
+        "id": 52,
+        "file_id": 79,
+        "method": "POST",
+        "url": "r.[FetchiLikeCourses]",
+        "payload": "{ programTermUId, studentId, clientId }",
+        "created_at": "2026-05-07 10:11:23"
+    },
+    {
+        "id": 53,
+        "file_id": 79,
+        "method": "POST",
+        "url": "r.[getAllIlikeCourse]",
+        "payload": "{ clientId: this.userObj.clientId }",
+        "created_at": "2026-05-07 10:11:23"
+    },
+    {
+        "id": 54,
+        "file_id": 79,
+        "method": "POST",
+        "url": "r.[FetchStudentCourseGroupWIse]",
+        "payload": "{ programTermUId, studentId, clientId, groupId }",
+        "created_at": "2026-05-07 10:11:23"
+    },
+    {
+        "id": 55,
+        "file_id": 79,
+        "method": "POST",
+        "url": "r.[getTrackAndCredit]",
+        "payload": "",
+        "created_at": "2026-05-07 10:11:23"
+    },
+    {
+        "id": 56,
+        "file_id": 79,
+        "method": "POST",
+        "url": "r.[InsertStudentLikeCoursesBL]",
+        "payload": "{ abcId: this.userObj.abcId, studentId: this.userObj.studentId, collegeId: parseInt(this.getcollege), clientId: this.userObj.clientId, programTermUId: this.selectedTab.programTermUId, // Assuming this is the relevant ID createdBy: this.userObj.studentId, courseSelections: Object.keys(this.selectedCoursesByGroup).map(groupId => ({ termCourseGroupUId: parseInt(groupId), selectedCourses: this.selectedCoursesByGroup[groupId].map(course => parseInt(course.key)), isDataTransferToSolar: isDataTransferToSolar, status: status, dataTransferType: dataTransferType })), }",
+        "created_at": "2026-05-07 10:11:23"
+    },
+    {
+        "id": 57,
+        "file_id": 79,
+        "method": "POST",
+        "url": "r.[FetchStudentCourseCreditsBL]",
+        "payload": "{ groupId: parseInt(groupId), programTermUId: parseInt(programTermUId), studentId: this.userObj.studentId, trackId: parseInt(this.selectedCategory), creditScore: this.selectedCredits.map(Number) }",
+        "created_at": "2026-05-07 10:11:23"
+    },
+    {
+        "id": 58,
+        "file_id": 79,
+        "method": "POST",
+        "url": "r.[RetrieveStudentCourseSelectionsBL]",
+        "payload": "{",
+        "created_at": "2026-05-07 10:11:23"
+    },
+    {
+        "id": 59,
+        "file_id": 79,
+        "method": "POST",
+        "url": "r.[FetchStudentData]",
+        "payload": "{ studentId: studentId }",
+        "created_at": "2026-05-07 10:11:24"
+    },
+    {
+        "id": 60,
+        "file_id": 80,
+        "method": "POST",
+        "url": "r.[FetchiLikeCourses]",
+        "payload": "{ programTermUId: ID, studentId: this.userObj.studentId, clientId: this.userObj.clientId }",
+        "created_at": "2026-05-07 10:11:25"
+    },
+    {
+        "id": 61,
+        "file_id": 80,
+        "method": "POST",
+        "url": "r.[getTrackAndCredit]",
+        "payload": "",
+        "created_at": "2026-05-07 10:11:25"
+    },
+    {
+        "id": 62,
+        "file_id": 80,
+        "method": "POST",
+        "url": "r.[InsertStudentLikeCoursesBL]",
+        "payload": "{ studentId: this.userObj.studentId, // or dynamically get from your application state collegeId: parseInt(this.getcollege), // or dynamically get from your application state clientId: this.userObj.clientId, // or dynamically get from your application state programTermUId: this.selectedTab.programTermUId, // Assuming this is the relevant ID createdBy: this.userObj.studentId, courseSelections: Object.keys(this.selectedCoursesByGroup).map(groupId => ({ termCourseGroupUId: parseInt(groupId), selectedCourses: this.selectedCoursesByGroup[groupId].map(course => parseInt(course.key)) })) }",
+        "created_at": "2026-05-07 10:11:25"
+    },
+    {
+        "id": 63,
+        "file_id": 80,
+        "method": "POST",
+        "url": "r.[FetchStudentCourseCreditsBL]",
+        "payload": "{ groupId: parseInt(groupId), programTermUId: parseInt(programTermUId), studentId: this.userObj.studentId, trackId: parseInt(this.selectedCategory), creditScore: this.selectedCredits.map(Number) }",
+        "created_at": "2026-05-07 10:11:25"
+    },
+    {
+        "id": 64,
+        "file_id": 80,
+        "method": "POST",
+        "url": "r.[RetrieveStudentCourseSelectionsBL]",
+        "payload": "{",
+        "created_at": "2026-05-07 10:11:25"
+    },
+    {
+        "id": 65,
+        "file_id": 80,
+        "method": "POST",
+        "url": "r.[FetchStudentData]",
+        "payload": "{ studentId: 999 }",
+        "created_at": "2026-05-07 10:11:25"
+    },
+    {
+        "id": 66,
+        "file_id": 81,
+        "method": "POST",
+        "url": "r.[FetchBaseUrlForJson]",
+        "payload": "{ clientId: this.userObj.clientId, studentId: this.userObj.studentId, }",
+        "created_at": "2026-05-07 10:11:26"
+    },
+    {
+        "id": 67,
+        "file_id": 81,
+        "method": "POST",
+        "url": "r.[TempGetCollegeId]",
+        "payload": "{ clientId: this.userObj.clientId, studentId: this.userObj.studentId, }",
+        "created_at": "2026-05-07 10:11:26"
+    },
+    {
+        "id": 68,
+        "file_id": 81,
+        "method": "POST",
+        "url": "r.[isCollegeActive]",
+        "payload": "{",
+        "created_at": "2026-05-07 10:11:27"
+    },
+    {
+        "id": 69,
+        "file_id": 81,
+        "method": "GET",
+        "url": "N/A",
+        "payload": "N/A",
+        "created_at": "2026-05-07 10:11:27"
+    },
+    {
+        "id": 70,
+        "file_id": 82,
+        "method": "POST",
+        "url": "r.[GetStudentProgramName]",
+        "payload": "{clientId: this.userObj.clientId, studentId: this.userObj.studentId}",
+        "created_at": "2026-05-07 10:11:28"
+    },
+    {
+        "id": 71,
+        "file_id": 82,
+        "method": "POST",
+        "url": "r.[IsGroupCourseIlikeOrNot]",
+        "payload": "{programTermUId: programTermUId.programTermUId, clientId: this.userObj.clientId, studentId: this.userObj.studentId}",
+        "created_at": "2026-05-07 10:11:28"
+    },
+    {
+        "id": 72,
+        "file_id": 85,
+        "method": "POST",
+        "url": "r.[getStudentApplication'sHistory]",
+        "payload": "{ applicationTypeId: id, clientId: this.userObj.clientId, programpartuid: this.selectedProgram.programPartUId, programtermuid: this.selectedProgram.programTermUId, programuid: this.selectedProgram.programUId, studentId: this.selectedProgram.studentId, }",
+        "created_at": "2026-05-07 10:11:30"
+    },
+    {
+        "id": 73,
+        "file_id": 85,
+        "method": "POST",
+        "url": "r.[PaperWiseResult]",
+        "payload": "{ applicationTypeId: id, clientId: this.userObj.clientId, programpartuid: this.selectedProgram.programPartUId, programtermuid: this.selectedProgram.programTermUId, programuid: this.selectedProgram.programUId, studentId: this.selectedProgram.studentId, }",
+        "created_at": "2026-05-07 10:11:30"
+    },
+    {
+        "id": 74,
+        "file_id": 85,
+        "method": "POST",
+        "url": "r.[StudentwisePrograms]",
+        "payload": "{ applicationTypeId: id, clientId: this.userObj.clientId, programpartuid: this.selectedProgram.programPartUId, programtermuid: this.selectedProgram.programTermUId, programuid: this.selectedProgram.programUId, studentId: this.selectedProgram.studentId, }",
+        "created_at": "2026-05-07 10:11:30"
+    },
+    {
+        "id": 75,
+        "file_id": 85,
+        "method": "POST",
+        "url": "r.[ProgramTermValidation]",
+        "payload": "{ applicationTypeId: id, clientId: this.userObj.clientId, programpartuid: this.selectedProgram.programPartUId, programtermuid: this.selectedProgram.programTermUId, programuid: this.selectedProgram.programUId, studentId: this.selectedProgram.studentId, }",
+        "created_at": "2026-05-07 10:11:31"
+    },
+    {
+        "id": 76,
+        "file_id": 86,
+        "method": "POST",
+        "url": "o.[checkExamFormApplicationExists]",
+        "payload": "{ clientId: this.userObj.clientId, SENumber: this.userObj.SENumber, }",
+        "created_at": "2026-05-07 10:11:33"
+    },
+    {
+        "id": 77,
+        "file_id": 86,
+        "method": "POST",
+        "url": "o.[studentWiseProgramTerm]",
+        "payload": "{ clientId: this.userObj.clientId, SENumber: this.userObj.SENumber, }",
+        "created_at": "2026-05-07 10:11:33"
+    },
+    {
+        "id": 78,
+        "file_id": 86,
+        "method": "POST",
+        "url": "r.[resetAppearedFlag]",
+        "payload": "{ clientId: this.userObj.clientId, examEventId: program.examEventId, programTermUId: program.programTermUId, studentId: program.studentId, }",
+        "created_at": "2026-05-07 10:11:33"
+    },
+    {
+        "id": 79,
+        "file_id": 86,
+        "method": "POST",
+        "url": "o.[studentTermWiseSubjects]",
+        "payload": "{ clientId: this.userObj.clientId, examEventId: program.examEventId, programTermUId: program.programTermUId, studentId: program.studentId, }",
+        "created_at": "2026-05-07 10:11:33"
+    },
+    {
+        "id": 80,
+        "file_id": 87,
+        "method": "POST",
+        "url": "r.[FetchStudentExamFeeDetails1]",
+        "payload": "{ clientId: this.userObj.clientId, examEventId: this.selectedProgram.examEventId, programTermUId: this.selectedProgram.programTermUId, studentId: this.selectedProgram.studentId, deSelectedTermCourseGroupAMATUIds : deSelectedSubjects.map(s => s.termCourseGroupAMATUId).join(\",\"), }",
+        "created_at": "2026-05-07 10:11:37"
+    },
+    {
+        "id": 81,
+        "file_id": 87,
+        "method": "POST",
+        "url": "o.[submitFormForZeroFees]",
+        "payload": "{ clientId: this.userObj.clientId, examEventId: this.selectedProgram.examEventId, programTermUId: this.selectedProgram.programTermUId, studentId: this.selectedProgram.studentId, deSelectedTermCourseGroupAMATUIds : deSelectedSubjects.map(s => s.termCourseGroupAMATUId).join(\",\"), }",
+        "created_at": "2026-05-07 10:11:37"
+    },
+    {
+        "id": 82,
+        "file_id": 87,
+        "method": "POST",
+        "url": "o.[checkExistingTransaction]",
+        "payload": "{ clientId: this.userObj.clientId, examEventId: this.selectedProgram.examEventId, programTermUId: this.selectedProgram.programTermUId, studentId: this.selectedProgram.studentId, deSelectedTermCourseGroupAMATUIds : deSelectedSubjects.map(s => s.termCourseGroupAMATUId).join(\",\"), }",
+        "created_at": "2026-05-07 10:11:38"
+    },
+    {
+        "id": 83,
+        "file_id": 87,
+        "method": "POST",
+        "url": "o.[getUPSEncryptedStringForUOC]",
+        "payload": "{ clientId: this.userObj.clientId, examEventId: this.selectedProgram.examEventId, programTermUId: this.selectedProgram.programTermUId, studentId: this.selectedProgram.studentId, deSelectedTermCourseGroupAMATUIds : deSelectedSubjects.map(s => s.termCourseGroupAMATUId).join(\",\"), }",
+        "created_at": "2026-05-07 10:11:38"
+    },
+    {
+        "id": 84,
+        "file_id": 87,
+        "method": "POST",
+        "url": "o.[getUPSEncryptedStringForUOC]",
+        "payload": "{ clientId: this.userObj.clientId, examEventId: this.selectedProgram.examEventId, programTermUId: this.selectedProgram.programTermUId, studentId: this.selectedProgram.studentId, deSelectedTermCourseGroupAMATUIds : deSelectedSubjects.map(s => s.termCourseGroupAMATUId).join(\",\"), }",
+        "created_at": "2026-05-07 10:11:38"
+    },
+    {
+        "id": 85,
+        "file_id": 87,
+        "method": "POST",
+        "url": "o.[getUPSEncryptedString]",
+        "payload": "{ clientId: this.userObj.clientId, examEventId: this.selectedProgram.examEventId, programTermUId: this.selectedProgram.programTermUId, studentId: this.selectedProgram.studentId, deSelectedTermCourseGroupAMATUIds : deSelectedSubjects.map(s => s.termCourseGroupAMATUId).join(\",\"), }",
+        "created_at": "2026-05-07 10:11:38"
+    },
+    {
+        "id": 86,
+        "file_id": 87,
+        "method": "POST",
+        "url": "o.[insertTransactionDetails]",
+        "payload": "{ clientId: this.userObj.clientId, examEventId: this.selectedProgram.examEventId, programTermUId: this.selectedProgram.programTermUId, studentId: this.selectedProgram.studentId, deSelectedTermCourseGroupAMATUIds : deSelectedSubjects.map(s => s.termCourseGroupAMATUId).join(\",\"), }",
+        "created_at": "2026-05-07 10:11:38"
+    },
+    {
+        "id": 87,
+        "file_id": 87,
+        "method": "POST",
+        "url": "o.[insertExamFormFeeDetails]",
+        "payload": "{ clientId: this.userObj.clientId, examEventId: this.selectedProgram.examEventId, programTermUId: this.selectedProgram.programTermUId, studentId: this.selectedProgram.studentId, deSelectedTermCourseGroupAMATUIds : deSelectedSubjects.map(s => s.termCourseGroupAMATUId).join(\",\"), }",
+        "created_at": "2026-05-07 10:11:38"
+    },
+    {
+        "id": 88,
+        "file_id": 87,
+        "method": "POST",
+        "url": "r.[InsertConfigurationWiseOutStandingFeeHeads]",
+        "payload": "{ clientId: this.userObj.clientId, examEventId: this.selectedProgram.examEventId, programTermUId: this.selectedProgram.programTermUId, studentId: this.selectedProgram.studentId, deSelectedTermCourseGroupAMATUIds : deSelectedSubjects.map(s => s.termCourseGroupAMATUId).join(\",\"), }",
+        "created_at": "2026-05-07 10:11:38"
+    },
+    {
+        "id": 89,
+        "file_id": 87,
+        "method": "POST",
+        "url": "o.[insertTermCourseGroupAMATUID]",
+        "payload": "{ clientId: this.userObj.clientId, examEventId: this.selectedProgram.examEventId, programTermUId: this.selectedProgram.programTermUId, studentId: this.selectedProgram.studentId, deSelectedTermCourseGroupAMATUIds : deSelectedSubjects.map(s => s.termCourseGroupAMATUId).join(\",\"), }",
+        "created_at": "2026-05-07 10:11:38"
+    },
+    {
+        "id": 90,
+        "file_id": 87,
+        "method": "POST",
+        "url": "r.[setAppearedForDeSelectedCourses]",
+        "payload": "{ clientId: this.userObj.clientId, examEventId: this.selectedProgram.examEventId, programTermUId: this.selectedProgram.programTermUId, studentId: this.selectedProgram.studentId, deSelectedTermCourseGroupAMATUIds : deSelectedSubjects.map(s => s.termCourseGroupAMATUId).join(\",\"), }",
+        "created_at": "2026-05-07 10:11:39"
+    },
+    {
+        "id": 91,
+        "file_id": 88,
+        "method": "POST",
+        "url": "o.[studentWiseHallTicketParam]",
+        "payload": "{clientId: this.userObj.clientId, examEventId: program.examEventId, programTermUId: program.programTermUId, studentId: this.userObj.studentId}",
+        "created_at": "2026-05-07 10:11:43"
+    },
+    {
+        "id": 92,
+        "file_id": 88,
+        "method": "POST",
+        "url": "o.[studentWiseHallTicket]",
+        "payload": "{clientId: this.userObj.clientId, examEventId: program.examEventId, programTermUId: program.programTermUId, studentId: this.userObj.studentId}",
+        "created_at": "2026-05-07 10:11:43"
+    },
+    {
+        "id": 93,
+        "file_id": 88,
+        "method": "GET",
+        "url": "",
+        "payload": "N/A",
+        "created_at": "2026-05-07 10:11:43"
+    },
+    {
+        "id": 94,
+        "file_id": 89,
+        "method": "POST",
+        "url": "r.[FetchBucketAndCdnPath]",
+        "payload": "{ academicYearId: program.academicYearId, clientId: this.userObj.clientId, collegeId: program.collegeId, programTermUId: program.programTermUId, studentId: this.userObj.studentId, }",
+        "created_at": "2026-05-07 10:11:44"
+    },
+    {
+        "id": 95,
+        "file_id": 89,
+        "method": "POST",
+        "url": "r.[GetDetailsToGenerateMarksheet]",
+        "payload": "{ academicYearId: program.academicYearId, clientId: this.userObj.clientId, collegeId: program.collegeId, programTermUId: program.programTermUId, studentId: this.userObj.studentId, }",
+        "created_at": "2026-05-07 10:11:44"
+    },
+    {
+        "id": 96,
+        "file_id": 89,
+        "method": "POST",
+        "url": "r.[GetStudentProgramName]",
+        "payload": "{ academicYearId: program.academicYearId, clientId: this.userObj.clientId, collegeId: program.collegeId, programTermUId: program.programTermUId, studentId: this.userObj.studentId, }",
+        "created_at": "2026-05-07 10:11:44"
+    },
+    {
+        "id": 97,
+        "file_id": 89,
+        "method": "POST",
+        "url": "o.[resultReportPathWithAllEvents]",
+        "payload": "{ academicYearId: program.academicYearId, clientId: this.userObj.clientId, collegeId: program.collegeId, programTermUId: program.programTermUId, studentId: this.userObj.studentId, }",
+        "created_at": "2026-05-07 10:11:45"
+    },
+    {
+        "id": 98,
+        "file_id": 89,
+        "method": "POST",
+        "url": "r.[GetFilePathFromDB]",
+        "payload": "{ academicYearId: program.academicYearId, clientId: this.userObj.clientId, collegeId: program.collegeId, programTermUId: program.programTermUId, studentId: this.userObj.studentId, }",
+        "created_at": "2026-05-07 10:11:45"
+    },
+    {
+        "id": 99,
+        "file_id": 89,
+        "method": "GET",
+        "url": "${this.baseUrl}${this.resultCdnBucket}/${reportPath}",
+        "payload": "N/A",
+        "created_at": "2026-05-07 10:11:45"
+    },
+    {
+        "id": 100,
+        "file_id": 90,
+        "method": "POST",
+        "url": "r.[feeCategoryDetails]",
+        "payload": "{clientId: this.userObj.clientId, amount: this.finalFee, applicationId: this.appRequest.applicationId, createdBy: this.userObj.studentId, UPSstring: this.UpsStringAndInsertData.encryptedData, accounts: NULL, clientApplicationId: N/A, clienttransactionRefNumber: N/A, description: N/A, isReconciled: NULL, loginId: N/A, multipleTransaction: N/A, otherParameters: goLang, paymentModeId: this.UpsStringAndInsertData.UPSParameters.paymentModeId, paymentModeName: this.UpsStringAndInsertData.UPSParameters.paymentModeName, reconciledDate: NULL, ref1: N/A, ref2: N/A, ref3: N/A, ref4: W, ref5: N/A, status: , transactionPurposeId: N/A, transactionReferenceNumber: N/A}",
+        "created_at": "2026-05-07 10:11:46"
+    },
+    {
+        "id": 101,
+        "file_id": 90,
+        "method": "POST",
+        "url": "r.[getStudentApplication'sHistory]",
+        "payload": "{clientId: this.userObj.clientId, amount: this.finalFee, applicationId: this.appRequest.applicationId, createdBy: this.userObj.studentId, UPSstring: this.UpsStringAndInsertData.encryptedData, accounts: NULL, clientApplicationId: N/A, clienttransactionRefNumber: N/A, description: N/A, isReconciled: NULL, loginId: N/A, multipleTransaction: N/A, otherParameters: goLang, paymentModeId: this.UpsStringAndInsertData.UPSParameters.paymentModeId, paymentModeName: this.UpsStringAndInsertData.UPSParameters.paymentModeName, reconciledDate: NULL, ref1: N/A, ref2: N/A, ref3: N/A, ref4: W, ref5: N/A, status: , transactionPurposeId: N/A, transactionReferenceNumber: N/A}",
+        "created_at": "2026-05-07 10:11:46"
+    },
+    {
+        "id": 102,
+        "file_id": 90,
+        "method": "POST",
+        "url": "r.[StudentApplicationRequests]",
+        "payload": "{clientId: this.userObj.clientId, amount: this.finalFee, applicationId: this.appRequest.applicationId, createdBy: this.userObj.studentId, UPSstring: this.UpsStringAndInsertData.encryptedData, accounts: NULL, clientApplicationId: N/A, clienttransactionRefNumber: N/A, description: N/A, isReconciled: NULL, loginId: N/A, multipleTransaction: N/A, otherParameters: goLang, paymentModeId: this.UpsStringAndInsertData.UPSParameters.paymentModeId, paymentModeName: this.UpsStringAndInsertData.UPSParameters.paymentModeName, reconciledDate: NULL, ref1: N/A, ref2: N/A, ref3: N/A, ref4: W, ref5: N/A, status: , transactionPurposeId: N/A, transactionReferenceNumber: N/A}",
+        "created_at": "2026-05-07 10:11:46"
+    },
+    {
+        "id": 103,
+        "file_id": 90,
+        "method": "POST",
+        "url": "r.[saveTransactionData]",
+        "payload": "{clientId: this.userObj.clientId, amount: this.finalFee, applicationId: this.appRequest.applicationId, createdBy: this.userObj.studentId, UPSstring: this.UpsStringAndInsertData.encryptedData, accounts: NULL, clientApplicationId: N/A, clienttransactionRefNumber: N/A, description: N/A, isReconciled: NULL, loginId: N/A, multipleTransaction: N/A, otherParameters: goLang, paymentModeId: this.UpsStringAndInsertData.UPSParameters.paymentModeId, paymentModeName: this.UpsStringAndInsertData.UPSParameters.paymentModeName, reconciledDate: NULL, ref1: N/A, ref2: N/A, ref3: N/A, ref4: W, ref5: N/A, status: , transactionPurposeId: N/A, transactionReferenceNumber: N/A}",
+        "created_at": "2026-05-07 10:11:46"
+    },
+    {
+        "id": 104,
+        "file_id": 91,
+        "method": "POST",
+        "url": "o.[paymentHistory]",
+        "payload": "{ clientId: this.userObj.clientId, clienttransactionRefNumber: data.transactionNumber, }",
+        "created_at": "2026-05-07 10:11:49"
+    },
+    {
+        "id": 105,
+        "file_id": 91,
+        "method": "POST",
+        "url": "o.[transactionVerificationAPI]",
+        "payload": "{ clientId: this.userObj.clientId, clienttransactionRefNumber: data.transactionNumber, }",
+        "created_at": "2026-05-07 10:11:49"
+    },
+    {
+        "id": 106,
+        "file_id": 92,
+        "method": "GET",
+        "url": "https://staging2-srtmuops.dulive.ac/package/toysto.html",
+        "payload": "N/A",
+        "created_at": "2026-05-07 10:11:50"
+    },
+    {
+        "id": 107,
+        "file_id": 93,
+        "method": "POST",
+        "url": "r.[FetchBaseUrlForJson]",
+        "payload": "{ academicYearId: academicYearId, clientId: this.userObj.clientId, collegeId: collegeId, programTermUId: programTermUId, studentId: this.userObj.studentId, }",
+        "created_at": "2026-05-07 10:11:51"
+    },
+    {
+        "id": 108,
+        "file_id": 93,
+        "method": "POST",
+        "url": "r.[GetStudentProgramName]",
+        "payload": "{ academicYearId: academicYearId, clientId: this.userObj.clientId, collegeId: collegeId, programTermUId: programTermUId, studentId: this.userObj.studentId, }",
+        "created_at": "2026-05-07 10:11:51"
+    },
+    {
+        "id": 109,
+        "file_id": 93,
+        "method": "POST",
+        "url": "r.[GetDetailsToGenerateMarksheet]",
+        "payload": "{ academicYearId: academicYearId, clientId: this.userObj.clientId, collegeId: collegeId, programTermUId: programTermUId, studentId: this.userObj.studentId, }",
+        "created_at": "2026-05-07 10:11:52"
+    },
+    {
+        "id": 110,
+        "file_id": 93,
+        "method": "POST",
+        "url": "r.[GetFilePathFromDB]",
+        "payload": "{ academicYearId: academicYearId, clientId: this.userObj.clientId, collegeId: collegeId, programTermUId: programTermUId, studentId: this.userObj.studentId, }",
+        "created_at": "2026-05-07 10:11:52"
+    },
+    {
+        "id": 111,
+        "file_id": 93,
+        "method": "GET",
+        "url": "${this.baseUrl}S62FDECD1608437AA61ECF8F2B39A961/${reportPath}",
+        "payload": "N/A",
+        "created_at": "2026-05-07 10:11:52"
+    }
+]

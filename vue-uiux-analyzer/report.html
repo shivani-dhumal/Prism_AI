@@ -1,0 +1,1048 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Vue UI/UX Analyzer - Scan Report</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  
+  body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    background: #0f0f1a;
+    color: #e0e0e8;
+    min-height: 100vh;
+  }
+  
+  .header {
+    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+    padding: 40px 0 60px;
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .header::before {
+    content: '';
+    position: absolute;
+    top: -80px; right: -80px;
+    width: 300px; height: 300px;
+    background: radial-gradient(circle, rgba(66,184,131,0.15) 0%, transparent 70%);
+    border-radius: 50%;
+  }
+  
+  .header::after {
+    content: '';
+    position: absolute;
+    bottom: -60px; left: 20%;
+    width: 200px; height: 200px;
+    background: radial-gradient(circle, rgba(84,160,255,0.1) 0%, transparent 70%);
+    border-radius: 50%;
+  }
+  
+  .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 24px;
+    position: relative;
+    z-index: 1;
+  }
+  
+  .brand {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 32px;
+  }
+  
+  .brand svg { width: 44px; height: 44px; }
+  
+  .brand-text h1 {
+    font-size: 28px;
+    font-weight: 700;
+    letter-spacing: -0.5px;
+    background: linear-gradient(135deg, #42b883, #64d8a4);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  
+  .brand-text p {
+    font-size: 14px;
+    opacity: 0.5;
+    margin-top: 2px;
+  }
+  
+  .stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 16px;
+  }
+  
+  .stat-card {
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.06);
+    border-radius: 12px;
+    padding: 20px;
+    text-align: center;
+    backdrop-filter: blur(10px);
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  
+  .stat-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(0,0,0,0.3);
+  }
+  
+  .stat-num {
+    font-size: 36px;
+    font-weight: 800;
+    line-height: 1.1;
+  }
+  
+  .stat-num.total { color: #feca57; }
+  .stat-num.high { color: #ff6b6b; }
+  .stat-num.medium { color: #ffa94d; }
+  .stat-num.low { color: #54a0ff; }
+  .stat-num.files { color: #42b883; }
+  
+  .stat-label {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    opacity: 0.5;
+    margin-top: 8px;
+    font-weight: 600;
+  }
+  
+  .body-content {
+    padding: 40px 0 80px;
+  }
+  
+  .section-title {
+    font-size: 20px;
+    font-weight: 700;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  
+  .section-title::before {
+    content: '';
+    display: block;
+    width: 4px;
+    height: 24px;
+    background: linear-gradient(180deg, #42b883, #54a0ff);
+    border-radius: 2px;
+  }
+  
+  /* Category breakdown */
+  .cat-breakdown {
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(255,255,255,0.06);
+    border-radius: 12px;
+    padding: 24px;
+    margin-bottom: 40px;
+  }
+  
+  .cat-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 12px;
+  }
+  
+  .cat-label {
+    width: 120px;
+    font-size: 13px;
+    font-weight: 500;
+    text-align: right;
+  }
+  
+  .cat-bar-bg {
+    flex: 1;
+    height: 8px;
+    background: rgba(255,255,255,0.06);
+    border-radius: 4px;
+    overflow: hidden;
+  }
+  
+  .cat-bar-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #42b883, #54a0ff);
+    border-radius: 4px;
+    transition: width 1s ease;
+  }
+  
+  .cat-count {
+    width: 40px;
+    font-size: 14px;
+    font-weight: 700;
+    color: #42b883;
+  }
+  
+  /* File sections */
+  .file-section {
+    background: rgba(255,255,255,0.02);
+    border: 1px solid rgba(255,255,255,0.06);
+    border-radius: 12px;
+    margin-bottom: 16px;
+    overflow: hidden;
+    transition: box-shadow 0.2s;
+  }
+  
+  .file-section:hover {
+    box-shadow: 0 4px 16px rgba(0,0,0,0.2);
+  }
+  
+  .file-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px 20px;
+    cursor: pointer;
+    background: rgba(255,255,255,0.03);
+    border-bottom: 1px solid rgba(255,255,255,0.04);
+    transition: background 0.2s;
+  }
+  
+  .file-header:hover {
+    background: rgba(255,255,255,0.06);
+  }
+  
+  .file-name {
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-family: 'JetBrains Mono', 'Fira Code', monospace;
+  }
+  
+  .chevron {
+    transition: transform 0.3s;
+    font-size: 12px;
+    opacity: 0.5;
+  }
+  
+  .collapsed .chevron { transform: rotate(-90deg); }
+  .collapsed .file-body { display: none; }
+  
+  .file-badges { display: flex; gap: 8px; }
+  
+  .badge {
+    padding: 3px 10px;
+    border-radius: 20px;
+    font-size: 11px;
+    font-weight: 600;
+    display: inline-flex;
+    align-items: center;
+  }
+  
+  .badge-high { background: rgba(255,107,107,0.15); color: #ff6b6b; }
+  .badge-medium { background: rgba(255,169,77,0.15); color: #ffa94d; }
+  .badge-low { background: rgba(84,160,255,0.15); color: #54a0ff; }
+  .badge-cat { background: rgba(255,255,255,0.06); color: #aaa; }
+  
+  .issue-card {
+    padding: 20px 24px;
+    border-bottom: 1px solid rgba(255,255,255,0.04);
+    transition: background 0.2s;
+  }
+  
+  .issue-card:hover {
+    background: rgba(255,255,255,0.02);
+  }
+  
+  .issue-card:last-child { border-bottom: none; }
+  
+  .issue-header-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+  
+  .issue-msg {
+    font-weight: 600;
+    font-size: 14px;
+    flex: 1;
+    min-width: 200px;
+  }
+  
+  .line-num {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    opacity: 0.4;
+    padding: 2px 8px;
+    background: rgba(255,255,255,0.04);
+    border-radius: 4px;
+  }
+  
+  .issue-desc {
+    font-size: 13px;
+    opacity: 0.6;
+    margin-top: 8px;
+    line-height: 1.6;
+    padding-left: 4px;
+  }
+  
+  .issue-rule {
+    font-size: 11px;
+    opacity: 0.35;
+    margin-top: 6px;
+    padding-left: 4px;
+  }
+  
+  .issue-rule code {
+    background: rgba(255,255,255,0.06);
+    padding: 1px 6px;
+    border-radius: 3px;
+    font-family: 'JetBrains Mono', monospace;
+  }
+  
+  .fix-block {
+    margin-top: 12px;
+    background: rgba(0,0,0,0.3);
+    border-radius: 8px;
+    padding: 14px 16px;
+    border-left: 3px solid #42b883;
+    font-family: 'JetBrains Mono', 'Fira Code', monospace;
+    font-size: 12px;
+    overflow-x: auto;
+  }
+  
+  .fix-title {
+    font-family: 'Inter', sans-serif;
+    font-size: 11px;
+    opacity: 0.5;
+    margin-bottom: 8px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+  
+  .diff-line {
+    padding: 3px 6px;
+    border-radius: 3px;
+    margin-bottom: 2px;
+    white-space: pre-wrap;
+    word-break: break-all;
+  }
+  
+  .diff-line.removed {
+    background: rgba(255,107,107,0.1);
+    color: #ff8a8a;
+  }
+  
+  .diff-line.added {
+    background: rgba(66,184,131,0.1);
+    color: #6ee7a8;
+  }
+  
+  .footer-bar {
+    text-align: center;
+    padding: 32px;
+    font-size: 12px;
+    opacity: 0.3;
+    border-top: 1px solid rgba(255,255,255,0.04);
+  }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="container">
+    <div class="brand">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+        <defs>
+          <linearGradient id="g" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" style="stop-color:#42b883"/>
+            <stop offset="100%" style="stop-color:#35495e"/>
+          </linearGradient>
+        </defs>
+        <path fill="url(#g)" d="M12 2L2 19h4l6-10.5L18 19h4L12 2z"/>
+      </svg>
+      <div class="brand-text">
+        <h1>Vue UI/UX Analyzer</h1>
+        <p>Scan Report &mdash; 1 file(s) analyzed in 0.06s</p>
+      </div>
+    </div>
+    
+    <div class="stats-grid">
+      <div class="stat-card">
+        <div class="stat-num total">42</div>
+        <div class="stat-label">Total Issues</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num high">13</div>
+        <div class="stat-label">High Severity</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num medium">21</div>
+        <div class="stat-label">Medium Severity</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num low">8</div>
+        <div class="stat-label">Low Severity</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num files">1</div>
+        <div class="stat-label">Files Scanned</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="body-content">
+  <div class="container">
+    <div class="section-title">Issues by Category</div>
+    <div class="cat-breakdown">
+      
+        <div class="cat-row">
+            <span class="cat-label">Accessibility</span>
+            <div class="cat-bar-bg">
+                <div class="cat-bar-fill" style="width: 100.0%"></div>
+            </div>
+            <span class="cat-count">18</span>
+        </div>
+        <div class="cat-row">
+            <span class="cat-label">Style</span>
+            <div class="cat-bar-bg">
+                <div class="cat-bar-fill" style="width: 66.66666666666666%"></div>
+            </div>
+            <span class="cat-count">12</span>
+        </div>
+        <div class="cat-row">
+            <span class="cat-label">Semantics</span>
+            <div class="cat-bar-bg">
+                <div class="cat-bar-fill" style="width: 44.44444444444444%"></div>
+            </div>
+            <span class="cat-count">8</span>
+        </div>
+        <div class="cat-row">
+            <span class="cat-label">Responsive</span>
+            <div class="cat-bar-bg">
+                <div class="cat-bar-fill" style="width: 11.11111111111111%"></div>
+            </div>
+            <span class="cat-count">2</span>
+        </div>
+        <div class="cat-row">
+            <span class="cat-label">Vue</span>
+            <div class="cat-bar-bg">
+                <div class="cat-bar-fill" style="width: 11.11111111111111%"></div>
+            </div>
+            <span class="cat-count">2</span>
+        </div>
+    </div>
+    
+    <div class="section-title">Detected Issues</div>
+    
+        <div class="file-section">
+            <div class="file-header" onclick="this.parentElement.classList.toggle('collapsed')">
+                <div class="file-name">
+                    <span class="chevron">&#x25BC;</span>
+                    <strong>BadComponent.vue</strong>
+                </div>
+                <div class="file-badges">
+                    <span class="badge badge-high">13 High</span>
+                    <span class="badge badge-medium">21 Medium</span>
+                    <span class="badge badge-low">8 Low</span>
+                </div>
+            </div>
+            <div class="file-body">
+                
+            <div class="issue-card">
+                <div class="issue-header-row">
+                    <span class="badge badge-high">HIGH</span>
+                    <span class="badge badge-cat">accessibility</span>
+                    <span class="issue-msg">Low contrast ratio: 1.2:1 (need 4.5:1 for WCAG AA)</span>
+                    <span class="line-num">Line 1</span>
+                </div>
+                <div class="issue-desc">Color #ccc on background #ddd has a contrast ratio of 1.2:1. WCAG AA requires at least 4.5:1 for normal text and 3:1 for large text.</div>
+                <div class="issue-rule">Rule: <code>low-contrast</code></div>
+                
+            </div>
+            <div class="issue-card">
+                <div class="issue-header-row">
+                    <span class="badge badge-high">HIGH</span>
+                    <span class="badge badge-cat">accessibility</span>
+                    <span class="issue-msg">Low contrast in inline style: 1.6:1</span>
+                    <span class="line-num">Line 2</span>
+                </div>
+                <div class="issue-desc">Inline color #ccc on #ffffff has contrast ratio 1.6:1 (minimum 4.5:1).</div>
+                <div class="issue-rule">Rule: <code>low-contrast</code></div>
+                
+            </div>
+            <div class="issue-card">
+                <div class="issue-header-row">
+                    <span class="badge badge-high">HIGH</span>
+                    <span class="badge badge-cat">accessibility</span>
+                    <span class="issue-msg">&lt;img&gt; tag is missing alt attribute</span>
+                    <span class="line-num">Line 5</span>
+                </div>
+                <div class="issue-desc">Every image must have an alt attribute. Use alt=&quot;&quot; for decorative images or provide descriptive text for meaningful images.</div>
+                <div class="issue-rule">Rule: <code>missing-alt-tag</code></div>
+                
+                <div class="fix-block">
+                    <div class="fix-title">Suggested Fix: Add empty alt attribute</div>
+                    <div class="diff-line removed">- &lt;img src=&quot;/logo.png&quot;&gt;</div>
+                    <div class="diff-line added">+ &lt;img src=&quot;/logo.png&quot; alt=&quot;&quot;&gt;</div>
+                </div>
+            </div>
+            <div class="issue-card">
+                <div class="issue-header-row">
+                    <span class="badge badge-high">HIGH</span>
+                    <span class="badge badge-cat">accessibility</span>
+                    <span class="issue-msg">&lt;img&gt; tag is missing alt attribute</span>
+                    <span class="line-num">Line 6</span>
+                </div>
+                <div class="issue-desc">Every image must have an alt attribute. Use alt=&quot;&quot; for decorative images or provide descriptive text for meaningful images.</div>
+                <div class="issue-rule">Rule: <code>missing-alt-tag</code></div>
+                
+                <div class="fix-block">
+                    <div class="fix-title">Suggested Fix: Add empty alt attribute</div>
+                    <div class="diff-line removed">- &lt;img src=&quot;/banner.jpg&quot; width=&quot;800&quot;&gt;</div>
+                    <div class="diff-line added">+ &lt;img src=&quot;/banner.jpg&quot; width=&quot;800&quot; alt=&quot;&quot;&gt;</div>
+                </div>
+            </div>
+            <div class="issue-card">
+                <div class="issue-header-row">
+                    <span class="badge badge-high">HIGH</span>
+                    <span class="badge badge-cat">accessibility</span>
+                    <span class="issue-msg">&lt;img&gt; tag is missing alt attribute</span>
+                    <span class="line-num">Line 12</span>
+                </div>
+                <div class="issue-desc">Every image must have an alt attribute. Use alt=&quot;&quot; for decorative images or provide descriptive text for meaningful images.</div>
+                <div class="issue-rule">Rule: <code>missing-alt-tag</code></div>
+                
+                <div class="fix-block">
+                    <div class="fix-title">Suggested Fix: Add empty alt attribute</div>
+                    <div class="diff-line removed">- &lt;img src=&quot;/home-icon.svg&quot;&gt;</div>
+                    <div class="diff-line added">+ &lt;img src=&quot;/home-icon.svg&quot; alt=&quot;&quot;&gt;</div>
+                </div>
+            </div>
+            <div class="issue-card">
+                <div class="issue-header-row">
+                    <span class="badge badge-high">HIGH</span>
+                    <span class="badge badge-cat">accessibility</span>
+                    <span class="issue-msg">Link has no accessible text</span>
+                    <span class="line-num">Line 12</span>
+                </div>
+                <div class="issue-desc">Links must have descriptive text or aria-label for accessibility.</div>
+                <div class="issue-rule">Rule: <code>missing-aria-label</code></div>
+                
+                <div class="fix-block">
+                    <div class="fix-title">Suggested Fix: Add aria-label to link</div>
+                    <div class="diff-line removed">- &lt;a href=&quot;/&quot;&gt;&lt;img src=&quot;/home-icon.svg&quot;&gt;&lt;/a&gt;</div>
+                    <div class="diff-line added">+ &lt;a aria-label=&quot;Link description&quot; href=&quot;/&quot;&gt;&lt;img src=&quot;/home-icon.svg&quot;&gt;&lt;/a&gt;</div>
+                </div>
+            </div>
+            <div class="issue-card">
+                <div class="issue-header-row">
+                    <span class="badge badge-high">HIGH</span>
+                    <span class="badge badge-cat">accessibility</span>
+                    <span class="issue-msg">Link has no accessible text</span>
+                    <span class="line-num">Line 13</span>
+                </div>
+                <div class="issue-desc">Links must have descriptive text or aria-label for accessibility.</div>
+                <div class="issue-rule">Rule: <code>missing-aria-label</code></div>
+                
+                <div class="fix-block">
+                    <div class="fix-title">Suggested Fix: Add aria-label to link</div>
+                    <div class="diff-line removed">- &lt;a href=&quot;/about&quot;&gt;&lt;/a&gt;</div>
+                    <div class="diff-line added">+ &lt;a aria-label=&quot;Link description&quot; href=&quot;/about&quot;&gt;&lt;/a&gt;</div>
+                </div>
+            </div>
+            <div class="issue-card">
+                <div class="issue-header-row">
+                    <span class="badge badge-high">HIGH</span>
+                    <span class="badge badge-cat">accessibility</span>
+                    <span class="issue-msg">Link has no accessible text</span>
+                    <span class="line-num">Line 14</span>
+                </div>
+                <div class="issue-desc">Links must have descriptive text or aria-label for accessibility.</div>
+                <div class="issue-rule">Rule: <code>missing-aria-label</code></div>
+                
+                <div class="fix-block">
+                    <div class="fix-title">Suggested Fix: Add aria-label to link</div>
+                    <div class="diff-line removed">- &lt;a href=&quot;/contact&quot;&gt;&lt;/a&gt;</div>
+                    <div class="diff-line added">+ &lt;a aria-label=&quot;Link description&quot; href=&quot;/contact&quot;&gt;&lt;/a&gt;</div>
+                </div>
+            </div>
+            <div class="issue-card">
+                <div class="issue-header-row">
+                    <span class="badge badge-high">HIGH</span>
+                    <span class="badge badge-cat">accessibility</span>
+                    <span class="issue-msg">Button has no accessible label</span>
+                    <span class="line-num">Line 23</span>
+                </div>
+                <div class="issue-desc">Buttons with only icon content need aria-label for screen reader users.</div>
+                <div class="issue-rule">Rule: <code>missing-aria-label</code></div>
+                
+                <div class="fix-block">
+                    <div class="fix-title">Suggested Fix: Add aria-label attribute</div>
+                    <div class="diff-line removed">- &lt;button @click=&quot;doSomething&quot;&gt;&lt;i class=&quot;icon-search&quot;&gt;&lt;/i&gt;&lt;/button&gt;</div>
+                    <div class="diff-line added">+ &lt;button aria-label=&quot;Button action&quot; @click=&quot;doSomething&quot;&gt;&lt;i class=&quot;icon-search&quot;&gt;&lt;/i&gt;&lt;/button&gt;</div>
+                </div>
+            </div>
+            <div class="issue-card">
+                <div class="issue-header-row">
+                    <span class="badge badge-high">HIGH</span>
+                    <span class="badge badge-cat">accessibility</span>
+                    <span class="issue-msg">Button has no accessible label</span>
+                    <span class="line-num">Line 24</span>
+                </div>
+                <div class="issue-desc">Buttons with only icon content need aria-label for screen reader users.</div>
+                <div class="issue-rule">Rule: <code>missing-aria-label</code></div>
+                
+                <div class="fix-block">
+                    <div class="fix-title">Suggested Fix: Add aria-label attribute</div>
+                    <div class="diff-line removed">- &lt;button @click=&quot;save&quot; style=&quot;width: 20px; height: 20px;&quot;&gt;&lt;i class=&quot;fa fa-save&quot;&gt;&lt;/i&gt;&lt;/button&gt;</div>
+                    <div class="diff-line added">+ &lt;button aria-label=&quot;Button action&quot; @click=&quot;save&quot; style=&quot;width: 20px; height: 20px;&quot;&gt;&lt;i class=&quot;fa fa-save&quot;&gt;&lt;/i&gt;&lt;/button&gt;</div>
+                </div>
+            </div>
+            <div class="issue-card">
+                <div class="issue-header-row">
+                    <span class="badge badge-high">HIGH</span>
+                    <span class="badge badge-cat">accessibility</span>
+                    <span class="issue-msg">Input field has no accessible label</span>
+                    <span class="line-num">Line 27</span>
+                </div>
+                <div class="issue-desc">Input fields need an associated &lt;label&gt;, aria-label, or aria-labelledby attribute.</div>
+                <div class="issue-rule">Rule: <code>missing-aria-label</code></div>
+                
+                <div class="fix-block">
+                    <div class="fix-title">Suggested Fix: Add aria-label to input</div>
+                    <div class="diff-line removed">- &lt;input type=&quot;text&quot; placeholder=&quot;Search...&quot;&gt;</div>
+                    <div class="diff-line added">+ &lt;input aria-label=&quot;Input field&quot; type=&quot;text&quot; placeholder=&quot;Search...&quot;&gt;</div>
+                </div>
+            </div>
+            <div class="issue-card">
+                <div class="issue-header-row">
+                    <span class="badge badge-high">HIGH</span>
+                    <span class="badge badge-cat">accessibility</span>
+                    <span class="issue-msg">Input field has no accessible label</span>
+                    <span class="line-num">Line 28</span>
+                </div>
+                <div class="issue-desc">Input fields need an associated &lt;label&gt;, aria-label, or aria-labelledby attribute.</div>
+                <div class="issue-rule">Rule: <code>missing-aria-label</code></div>
+                
+                <div class="fix-block">
+                    <div class="fix-title">Suggested Fix: Add aria-label to input</div>
+                    <div class="diff-line removed">- &lt;input type=&quot;email&quot;&gt;</div>
+                    <div class="diff-line added">+ &lt;input aria-label=&quot;Input field&quot; type=&quot;email&quot;&gt;</div>
+                </div>
+            </div>
+            <div class="issue-card">
+                <div class="issue-header-row">
+                    <span class="badge badge-high">HIGH</span>
+                    <span class="badge badge-cat">accessibility</span>
+                    <span class="issue-msg">Low contrast in inline style: 2.1:1</span>
+                    <span class="line-num">Line 31</span>
+                </div>
+                <div class="issue-desc">Inline color #ff0000 on #0000ff has contrast ratio 2.1:1 (minimum 4.5:1).</div>
+                <div class="issue-rule">Rule: <code>low-contrast</code></div>
+                
+            </div>
+            <div class="issue-card">
+                <div class="issue-header-row">
+                    <span class="badge badge-medium">MEDIUM</span>
+                    <span class="badge badge-cat">style</span>
+                    <span class="issue-msg">Inline style detected (7 total inline styles in file)</span>
+                    <span class="line-num">Line 2</span>
+                </div>
+                <div class="issue-desc">Found style=&quot;width: 1200px; padding: 10px; margin: 0; backgroun...&quot;. Extract inline styles to CSS classes for better maintainability.</div>
+                <div class="issue-rule">Rule: <code>inline-style-overuse</code></div>
+                
+            </div>
+            <div class="issue-card">
+                <div class="issue-header-row">
+                    <span class="badge badge-medium">MEDIUM</span>
+                    <span class="badge badge-cat">responsive</span>
+                    <span class="issue-msg">Fixed width of 1200px may break on smaller screens</span>
+                    <span class="line-num">Line 2</span>
+                </div>
+                <div class="issue-desc">width: 1200px creates a rigid layout. Use max-width instead to allow responsive shrinking.</div>
+                <div class="issue-rule">Rule: <code>non-responsive-layout</code></div>
+                
+                <div class="fix-block">
+                    <div class="fix-title">Suggested Fix: Replace with max-width and width: 100%</div>
+                    <div class="diff-line removed">- width: 1200px</div>
+                    <div class="diff-line added">+ max-width: 1200px; width: 100%</div>
+                </div>
+            </div>
+            <div class="issue-card">
+                <div class="issue-header-row">
+                    <span class="badge badge-medium">MEDIUM</span>
+                    <span class="badge badge-cat">semantics</span>
+                    <span class="issue-msg">Consider using &lt;header&gt; instead of &lt;div&gt;</span>
+                    <span class="line-num">Line 9</span>
+                </div>
+                <div class="issue-desc">The class name suggests this element serves as a header. Using &lt;header&gt; improves accessibility and SEO.</div>
+                <div class="issue-rule">Rule: <code>non-semantic-tag</code></div>
+                
+                <div class="fix-block">
+                    <div class="fix-title">Suggested Fix: Replace &lt;div&gt; with &lt;header&gt;</div>
+                    <div class="diff-line removed">- &lt;div class=&quot;header&quot;&gt;</div>
+                    <div class="diff-line added">+ &lt;header class=&quot;header&quot;&gt;</div>
+                </div>
+            </div>
+            <div class="issue-card">
+                <div class="issue-header-row">
+                    <span class="badge badge-medium">MEDIUM</span>
+                    <span class="badge badge-cat">semantics</span>
+                    <span class="issue-msg">Consider using &lt;nav&gt; instead of &lt;div&gt;</span>
+                    <span class="line-num">Line 11</span>
+                </div>
+                <div class="issue-desc">The class name suggests this element serves as a nav. Using &lt;nav&gt; improves accessibility and SEO.</div>
+                <div class="issue-rule">Rule: <code>non-semantic-tag</code></div>
+                
+                <div class="fix-block">
+                    <div class="fix-title">Suggested Fix: Replace &lt;div&gt; with &lt;nav&gt;</div>
+                    <div class="diff-line removed">- &lt;div class=&quot;navigation&quot;&gt;</div>
+                    <div class="diff-line added">+ &lt;nav class=&quot;navigation&quot;&gt;</div>
+                </div>
+            </div>
+            <div class="issue-card">
+                <div class="issue-header-row">
+                    <span class="badge badge-medium">MEDIUM</span>
+                    <span class="badge badge-cat">semantics</span>
+                    <span class="issue-msg">Consider using &lt;main&gt; instead of &lt;div&gt;</span>
+                    <span class="line-num">Line 18</span>
+                </div>
+                <div class="issue-desc">The class name suggests this element serves as a main. Using &lt;main&gt; improves accessibility and SEO.</div>
+                <div class="issue-rule">Rule: <code>non-semantic-tag</code></div>
+                
+                <div class="fix-block">
+                    <div class="fix-title">Suggested Fix: Replace &lt;div&gt; with &lt;main&gt;</div>
+                    <div class="diff-line removed">- &lt;div class=&quot;main-content&quot;&gt;</div>
+                    <div class="diff-line added">+ &lt;main class=&quot;main-content&quot;&gt;</div>
+                </div>
+            </div>
+            <div class="issue-card">
+                <div class="issue-header-row">
+                    <span class="badge badge-medium">MEDIUM</span>
+                    <span class="badge badge-cat">semantics</span>
+                    <span class="issue-msg">Heading level skipped: &lt;h3&gt; after &lt;h1&gt;</span>
+                    <span class="line-num">Line 20</span>
+                </div>
+                <div class="issue-desc">Expected &lt;h2&gt; after &lt;h1&gt;. Skipping heading levels confuses screen readers.</div>
+                <div class="issue-rule">Rule: <code>heading-hierarchy</code></div>
+                
+                <div class="fix-block">
+                    <div class="fix-title">Suggested Fix: Change &lt;h3&gt; to &lt;h2&gt;</div>
+                    <div class="diff-line removed">- &lt;h3&gt;</div>
+                    <div class="diff-line added">+ &lt;h2&gt;</div>
+                </div>
+            </div>
+            <div class="issue-card">
+                <div class="issue-header-row">
+                    <span class="badge badge-medium">MEDIUM</span>
+                    <span class="badge badge-cat">style</span>
+                    <span class="issue-msg">Inline style detected (7 total inline styles in file)</span>
+                    <span class="line-num">Line 24</span>
+                </div>
+                <div class="issue-desc">Found style=&quot;width: 20px; height: 20px;&quot;. Extract inline styles to CSS classes for better maintainability.</div>
+                <div class="issue-rule">Rule: <code>inline-style-overuse</code></div>
+                
+            </div>
+            <div class="issue-card">
+                <div class="issue-header-row">
+                    <span class="badge badge-medium">MEDIUM</span>
+                    <span class="badge badge-cat">accessibility</span>
+                    <span class="issue-msg">Small clickable element: width: 20px, height: 20px</span>
+                    <span class="line-num">Line 24</span>
+                </div>
+                <div class="issue-desc">Inline-styled interactive element has dimensions below the 44px minimum touch target.</div>
+                <div class="issue-rule">Rule: <code>small-clickable-area</code></div>
+                
+            </div>
+            <div class="issue-card">
+                <div class="issue-header-row">
+                    <span class="badge badge-medium">MEDIUM</span>
+                    <span class="badge badge-cat">style</span>
+                    <span class="issue-msg">Inline style detected (7 total inline styles in file)</span>
+                    <span class="line-num">Line 31</span>
+                </div>
+                <div class="issue-desc">Found style=&quot;color: red; font-size: 14px; margin: 10px; padding...&quot;. Extract inline styles to CSS classes for better maintainability.</div>
+                <div class="issue-rule">Rule: <code>inline-style-overuse</code></div>
+                
+            </div>
+            <div class="issue-card">
+                <div class="issue-header-row">
+                    <span class="badge badge-medium">MEDIUM</span>
+                    <span class="badge badge-cat">style</span>
+                    <span class="issue-msg">Inline style detected (7 total inline styles in file)</span>
+                    <span class="line-num">Line 34</span>
+                </div>
+                <div class="issue-desc">Found style=&quot;display: flex; justify-content: center; align-item...&quot;. Extract inline styles to CSS classes for better maintainability.</div>
+                <div class="issue-rule">Rule: <code>inline-style-overuse</code></div>
+                
+            </div>
+            <div class="issue-card">
+                <div class="issue-header-row">
+                    <span class="badge badge-medium">MEDIUM</span>
+                    <span class="badge badge-cat">style</span>
+                    <span class="issue-msg">Inline style detected (7 total inline styles in file)</span>
+                    <span class="line-num">Line 37</span>
+                </div>
+                <div class="issue-desc">Found style=&quot;position: absolute; top: 0; left: 0; right: 0; bot...&quot;. Extract inline styles to CSS classes for better maintainability.</div>
+                <div class="issue-rule">Rule: <code>inline-style-overuse</code></div>
+                
+            </div>
+            <div class="issue-card">
+                <div class="issue-header-row">
+                    <span class="badge badge-medium">MEDIUM</span>
+                    <span class="badge badge-cat">style</span>
+                    <span class="issue-msg">Inline style detected (7 total inline styles in file)</span>
+                    <span class="line-num">Line 40</span>
+                </div>
+                <div class="issue-desc">Found style=&quot;margin-top: 20px; padding: 15px; border-bottom: 2p...&quot;. Extract inline styles to CSS classes for better maintainability.</div>
+                <div class="issue-rule">Rule: <code>inline-style-overuse</code></div>
+                
+            </div>
+            <div class="issue-card">
+                <div class="issue-header-row">
+                    <span class="badge badge-medium">MEDIUM</span>
+                    <span class="badge badge-cat">semantics</span>
+                    <span class="issue-msg">Consider using &lt;nav&gt; instead of &lt;div&gt;</span>
+                    <span class="line-num">Line 45</span>
+                </div>
+                <div class="issue-desc">The class name suggests this element serves as a nav. Using &lt;nav&gt; improves accessibility and SEO.</div>
+                <div class="issue-rule">Rule: <code>non-semantic-tag</code></div>
+                
+                <div class="fix-block">
+                    <div class="fix-title">Suggested Fix: Replace &lt;div&gt; with &lt;nav&gt;</div>
+                    <div class="diff-line removed">- &lt;div class=&quot;sidebar&quot;&gt;</div>
+                    <div class="diff-line added">+ &lt;nav class=&quot;sidebar&quot;&gt;</div>
+                </div>
+            </div>
+            <div class="issue-card">
+                <div class="issue-header-row">
+                    <span class="badge badge-medium">MEDIUM</span>
+                    <span class="badge badge-cat">semantics</span>
+                    <span class="issue-msg">Consider using &lt;aside&gt; instead of &lt;div&gt;</span>
+                    <span class="line-num">Line 45</span>
+                </div>
+                <div class="issue-desc">The class name suggests this element serves as a aside. Using &lt;aside&gt; improves accessibility and SEO.</div>
+                <div class="issue-rule">Rule: <code>non-semantic-tag</code></div>
+                
+                <div class="fix-block">
+                    <div class="fix-title">Suggested Fix: Replace &lt;div&gt; with &lt;aside&gt;</div>
+                    <div class="diff-line removed">- &lt;div class=&quot;sidebar&quot;&gt;</div>
+                    <div class="diff-line added">+ &lt;aside class=&quot;sidebar&quot;&gt;</div>
+                </div>
+            </div>
+            <div class="issue-card">
+                <div class="issue-header-row">
+                    <span class="badge badge-medium">MEDIUM</span>
+                    <span class="badge badge-cat">style</span>
+                    <span class="issue-msg">Inline style detected (7 total inline styles in file)</span>
+                    <span class="line-num">Line 47</span>
+                </div>
+                <div class="issue-desc">Found style=&quot;font-family: &quot;. Extract inline styles to CSS classes for better maintainability.</div>
+                <div class="issue-rule">Rule: <code>inline-style-overuse</code></div>
+                
+            </div>
+            <div class="issue-card">
+                <div class="issue-header-row">
+                    <span class="badge badge-medium">MEDIUM</span>
+                    <span class="badge badge-cat">semantics</span>
+                    <span class="issue-msg">Consider using &lt;footer&gt; instead of &lt;div&gt;</span>
+                    <span class="line-num">Line 50</span>
+                </div>
+                <div class="issue-desc">The class name suggests this element serves as a footer. Using &lt;footer&gt; improves accessibility and SEO.</div>
+                <div class="issue-rule">Rule: <code>non-semantic-tag</code></div>
+                
+                <div class="fix-block">
+                    <div class="fix-title">Suggested Fix: Replace &lt;div&gt; with &lt;footer&gt;</div>
+                    <div class="diff-line removed">- &lt;div class=&quot;footer&quot;&gt;</div>
+                    <div class="diff-line added">+ &lt;footer class=&quot;footer&quot;&gt;</div>
+                </div>
+            </div>
+            <div class="issue-card">
+                <div class="issue-header-row">
+                    <span class="badge badge-medium">MEDIUM</span>
+                    <span class="badge badge-cat">vue</span>
+                    <span class="issue-msg">Style block is not scoped</span>
+                    <span class="line-num">Line 74</span>
+                </div>
+                <div class="issue-desc">Unscoped styles can leak to other components. Use &lt;style scoped&gt; or &lt;style module&gt;.</div>
+                <div class="issue-rule">Rule: <code>missing-scoped-style</code></div>
+                
+                <div class="fix-block">
+                    <div class="fix-title">Suggested Fix: Add scoped attribute to style tag</div>
+                    <div class="diff-line removed">- &lt;style&gt;</div>
+                    <div class="diff-line added">+ &lt;style scoped&gt;</div>
+                </div>
+            </div>
+            <div class="issue-card">
+                <div class="issue-header-row">
+                    <span class="badge badge-medium">MEDIUM</span>
+                    <span class="badge badge-cat">accessibility</span>
+                    <span class="issue-msg">Clickable element width (16px) is below 44px minimum</span>
+                    <span class="line-num">Line 92</span>
+                </div>
+                <div class="issue-desc">The selector &quot;.navigation a&quot; has width: 16px. WCAG 2.5.5 recommends a minimum target size of 44x44px for touch accessibility.</div>
+                <div class="issue-rule">Rule: <code>small-clickable-area</code></div>
+                
+                <div class="fix-block">
+                    <div class="fix-title">Suggested Fix: Set minimum width to 44px</div>
+                    <div class="diff-line removed">- width: 16px</div>
+                    <div class="diff-line added">+ width: 44px</div>
+                </div>
+            </div>
+            <div class="issue-card">
+                <div class="issue-header-row">
+                    <span class="badge badge-medium">MEDIUM</span>
+                    <span class="badge badge-cat">accessibility</span>
+                    <span class="issue-msg">Clickable element height (16px) is below 44px minimum</span>
+                    <span class="line-num">Line 93</span>
+                </div>
+                <div class="issue-desc">The selector &quot;.navigation a&quot; has height: 16px. Minimum touch target height should be 44px.</div>
+                <div class="issue-rule">Rule: <code>small-clickable-area</code></div>
+                
+                <div class="fix-block">
+                    <div class="fix-title">Suggested Fix: Set minimum height to 44px</div>
+                    <div class="diff-line removed">- height: 16px</div>
+                    <div class="diff-line added">+ height: 44px</div>
+                </div>
+            </div>
+            <div class="issue-card">
+                <div class="issue-header-row">
+                    <span class="badge badge-medium">MEDIUM</span>
+                    <span class="badge badge-cat">accessibility</span>
+                    <span class="issue-msg">Clickable element width (24px) is below 44px minimum</span>
+                    <span class="line-num">Line 97</span>
+                </div>
+                <div class="issue-desc">The selector &quot;button&quot; has width: 24px. WCAG 2.5.5 recommends a minimum target size of 44x44px for touch accessibility.</div>
+                <div class="issue-rule">Rule: <code>small-clickable-area</code></div>
+                
+                <div class="fix-block">
+                    <div class="fix-title">Suggested Fix: Set minimum width to 44px</div>
+                    <div class="diff-line removed">- width: 24px</div>
+                    <div class="diff-line added">+ width: 44px</div>
+                </div>
+            </div>
+            <div class="issue-card">
+                <div class="issue-header-row">
+                    <span class="badge badge-medium">MEDIUM</span>
+                    <span class="badge badge-cat">accessibility</span>
+                    <span class="issue-msg">Clickable element height (24px) is below 44px minimum</span>
+                    <span class="line-num">Line 98</span>
+                </div>
+                <div class="issue-desc">The selector &quot;button&quot; has height: 24px. Minimum touch target height should be 44px.</div>
+                <div class="issue-rule">Rule: <code>small-clickable-area</code></div>
+                
+                <div class="fix-block">
+                    <div class="fix-title">Suggested Fix: Set minimum height to 44px</div>
+                    <div class="diff-line removed">- height: 24px</div>
+                    <div class="diff-line added">+ height: 44px</div>
+                </div>
+            </div>
+            <div class="issue-card">
+                <div class="issue-header-row">
+                    <span class="badge badge-low">LOW</span>
+                    <span class="badge badge-cat">responsive</span>
+                    <span class="issue-msg">HTML width attribute of 800 may not be responsive</span>
+                    <span class="line-num">Line 6</span>
+                </div>
+                <div class="issue-desc">Use CSS with relative units instead of HTML width attributes for responsive design.</div>
+                <div class="issue-rule">Rule: <code>non-responsive-layout</code></div>
+                
+            </div>
+            <div class="issue-card">
+                <div class="issue-header-row">
+                    <span class="badge badge-low">LOW</span>
+                    <span class="badge badge-cat">semantics</span>
+                    <span class="issue-msg">Multiple &lt;h1&gt; tags found</span>
+                    <span class="line-num">Line 46</span>
+                </div>
+                <div class="issue-desc">A page should typically have only one &lt;h1&gt; tag for proper document structure.</div>
+                <div class="issue-rule">Rule: <code>heading-hierarchy</code></div>
+                
+            </div>
+            <div class="issue-card">
+                <div class="issue-header-row">
+                    <span class="badge badge-low">LOW</span>
+                    <span class="badge badge-cat">style</span>
+                    <span class="issue-msg">5 different font families used (max recommended: 3)</span>
+                    <span class="line-num">Line 47</span>
+                </div>
+                <div class="issue-desc">Font &quot;comic sans ms&quot; is one of 5 different fonts. Standardize on 2-3 font families for visual consistency.</div>
+                <div class="issue-rule">Rule: <code>font-inconsistency</code></div>
+                
+            </div>
+            <div class="issue-card">
+                <div class="issue-header-row">
+                    <span class="badge badge-low">LOW</span>
+                    <span class="badge badge-cat">vue</span>
+                    <span class="issue-msg">Component is missing explicit name option</span>
+                    <span class="line-num">Line 57</span>
+                </div>
+                <div class="issue-desc">Adding a name property helps with debugging in Vue DevTools and recursive components.</div>
+                <div class="issue-rule">Rule: <code>missing-component-name</code></div>
+                
+                <div class="fix-block">
+                    <div class="fix-title">Suggested Fix: Add name: &#x27;BadComponent&#x27;</div>
+                    <div class="diff-line removed">- export default {</div>
+                    <div class="diff-line added">+ export default {
+  name: &#x27;BadComponent&#x27;,</div>
+                </div>
+            </div>
+            <div class="issue-card">
+                <div class="issue-header-row">
+                    <span class="badge badge-low">LOW</span>
+                    <span class="badge badge-cat">style</span>
+                    <span class="issue-msg">5 different font families used (max recommended: 3)</span>
+                    <span class="line-num">Line 76</span>
+                </div>
+                <div class="issue-desc">Font &quot;arial&quot; is one of 5 different fonts. Standardize on 2-3 font families for visual consistency.</div>
+                <div class="issue-rule">Rule: <code>font-inconsistency</code></div>
+                
+            </div>
+            <div class="issue-card">
+                <div class="issue-header-row">
+                    <span class="badge badge-low">LOW</span>
+                    <span class="badge badge-cat">style</span>
+                    <span class="issue-msg">5 different font families used (max recommended: 3)</span>
+                    <span class="line-num">Line 80</span>
+                </div>
+                <div class="issue-desc">Font &quot;helvetica&quot; is one of 5 different fonts. Standardize on 2-3 font families for visual consistency.</div>
+                <div class="issue-rule">Rule: <code>font-inconsistency</code></div>
+                
+            </div>
+            <div class="issue-card">
+                <div class="issue-header-row">
+                    <span class="badge badge-low">LOW</span>
+                    <span class="badge badge-cat">style</span>
+                    <span class="issue-msg">5 different font families used (max recommended: 3)</span>
+                    <span class="line-num">Line 84</span>
+                </div>
+                <div class="issue-desc">Font &quot;georgia&quot; is one of 5 different fonts. Standardize on 2-3 font families for visual consistency.</div>
+                <div class="issue-rule">Rule: <code>font-inconsistency</code></div>
+                
+            </div>
+            <div class="issue-card">
+                <div class="issue-header-row">
+                    <span class="badge badge-low">LOW</span>
+                    <span class="badge badge-cat">style</span>
+                    <span class="issue-msg">5 different font families used (max recommended: 3)</span>
+                    <span class="line-num">Line 88</span>
+                </div>
+                <div class="issue-desc">Font &quot;verdana&quot; is one of 5 different fonts. Standardize on 2-3 font families for visual consistency.</div>
+                <div class="issue-rule">Rule: <code>font-inconsistency</code></div>
+                
+            </div>
+            </div>
+        </div>
+  </div>
+</div>
+
+<div class="footer-bar">
+  Vue UI/UX Analyzer &bull; Powered by Python + Vue.js
+</div>
+
+</body>
+</html>

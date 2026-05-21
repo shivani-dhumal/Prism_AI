@@ -1,0 +1,8 @@
+{
+  "permissions": {
+    "allow": [
+      "PowerShell(Get-NetTCPConnection -LocalPort 5000 -ErrorAction SilentlyContinue)",
+      "Bash(curl -s http://localhost:5000/file-explorer)"
+    ]
+  }
+}
