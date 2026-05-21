@@ -90,13 +90,33 @@ python database_setup.py
 python run.py
 ```
 
-Or directly from the backend folder:
-```bash
-cd backend
-python app.py
-```
+### 5. Run the app
 
+#### Option A: Running Production Build (Served via Flask)
+First compile the client SPA assets:
+```bash
+cd vue-frontend
+npm install
+npm run build
+cd ..
+```
+Then start the Flask server:
+```bash
+python backend/app.py
+```
 Open your browser at **http://localhost:5000**
+
+#### Option B: Running Development Server (Vite Hot-Reload)
+Start the Flask backend (to handle API endpoints):
+```bash
+python backend/app.py
+```
+In a new terminal, start the Vite server:
+```bash
+cd vue-frontend
+npm run dev
+```
+Open your browser at **http://localhost:5173**
 
 ---
 
@@ -105,48 +125,32 @@ Open your browser at **http://localhost:5000**
 ```
 Prism_AI/
 ├── backend/                        # 🐍 Python / Flask server
-│   ├── app.py                      # Flask main application & all API routes
-│   ├── config.py                   # Configuration & environment loader
-│   ├── main.py                     # Analysis pipeline entry point
-│   ├── database_ops.py             # MySQL DB operations
-│   ├── database_setup.py           # DB schema initialization
-│   ├── ai_reasoning_engine.py      # AI chain-of-thought reasoning
-│   ├── risk_model.py               # File risk scoring model
-│   ├── generate_report.py          # HTML audit report generator
-│   ├── dependency_visualizer.py    # Standalone dependency graph HTML
-│   ├── scanners/                   # Modular scanner pipeline
-│   │   ├── gemini_bug_detector.py  # Gemini AI bug detection
-│   │   ├── ollama_bug_detector.py  # Local LLM bug detection
-│   │   ├── ui_consistency_rules.py # UI/UX rule checking
-│   │   ├── accessibility_checker.py
-│   │   ├── code_metrics_scanner.py
-│   │   └── ...
-│   ├── code-analyzer/              # MCP-compatible analyzer module
-│   ├── reports/                    # Generated scan reports (HTML/JSON)
-│   └── requirements.txt
+│   ├── app.py                      # Flask app, APIs & SPA routes
+│   ├── config.py                   # Configuration & env variables
+│   ├── main.py                     # Analysis pipeline execution
+│   ├── database_ops.py             # DB operations
+│   ├── scanners/                   # Core scanner scripts
+│   └── ...
 │
-├── frontend/                       # 🎨 Web UI assets
-│   ├── templates/                  # Flask Jinja2 HTML templates
-│   │   ├── base.html               # Shared layout & navigation
-│   │   ├── index.html              # Dashboard home
-│   │   ├── dependency_graph.html   # Interactive graph + 🧠 Mind Map
-│   │   ├── chatbot.html            # AI chat interface
-│   │   ├── issues.html             # Issues browser
-│   │   └── audit_report.html
-│   └── static/                     # Static assets
-│       ├── css/                    # Stylesheets
-│       └── js/                     # JavaScript & API client
+├── vue-frontend/                   # 🟢 Modern Vue 3 SPA + Vite source
+│   ├── src/
+│   │   ├── views/                  # Dashboard, Issues, Chatbot, Graphs
+│   │   ├── api.js                  # Axios client module
+│   │   ├── main.js                 # App mounting & router config
+│   │   └── App.vue                 # Base layouts & theme toggling
+│   ├── vite.config.js              # Vite server & proxy configurations
+│   └── package.json
 │
-├── extensions/                     # 🔌 Standalone tools & extensions
-│   ├── vscode-extension/           # VSCode extension
-│   └── gemini-chatbot/             # Standalone Gemini chatbot
+├── frontend/
+│   └── dist/                       # 📦 Production compiled Vue assets (served by Flask)
 │
-├── vue-uiux-analyzer/              # 🟢 Vue.js UI/UX Analyzer (VSCode ext.)
-│
-├── run.py                          # ▶ Start app from project root
-├── .env.example                    # Environment template (copy to .env)
+├── extensions/                     # 🔌 Standalone extensions
+├── vue-uiux-analyzer/              # 🟢 VS Code UI/UX Scanning Tool
+├── run.py                          # ▶ Root entry utility
+├── .env.example                    # Env config template
 ├── .gitignore
 └── README.md
+```
 ```
 
 ---
