@@ -20,7 +20,7 @@ from functools import lru_cache
 
 sys.path.append(os.path.dirname(os.path.abspath(__file__)))
 
-from flask import Flask, request, jsonify, render_template, Response, send_file, stream_with_context
+from flask import Flask, request, jsonify, render_template, Response, send_file, stream_with_context, send_from_directory
 from jinja2 import TemplateNotFound
 
 # Project root is one level above backend/
@@ -154,35 +154,23 @@ PROJECT_PROMPT = (
 # WEB PAGES
 # ──────────────────────────────────────────────────────────────────
 
+@app.route("/assets/<path:path>")
+def serve_assets(path):
+    return send_from_directory(os.path.join(ROOT_DIR, 'frontend', 'dist', 'assets'), path)
+
+
 @app.route("/")
+@app.route("/audit-report")
+@app.route("/issues")
+@app.route("/chatbot")
+@app.route("/architecture")
+@app.route("/dependency-graph")
 def index():
+    dist_index = os.path.join(ROOT_DIR, 'frontend', 'dist', 'index.html')
+    if os.path.exists(dist_index):
+        return send_file(dist_index)
     return render_template("index.html")
 
-
-@app.route("/audit-report")
-def audit_report():
-    return render_template_or_file("audit_report.html", "reports", "audit_report.html")
-
-
-@app.route("/issues")
-def issues_page():
-    return render_template("issues.html")
-
-
-@app.route("/chatbot")
-def chatbot_page():
-    return render_template("chatbot.html")
-
-
-@app.route("/architecture")
-def architecture():
-    return render_template("architecture.html")
-
-
-@app.route("/dependency-graph")
-def dependency_graph():
-    """Interactive dependency visualization with dark/light theme"""
-    return render_template("dependency_graph.html")
 
 
 # ──────────────────────────────────────────────────────────────────

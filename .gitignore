@@ -25,6 +25,7 @@ ENV/
 # ==== Node / Vue ====
 node_modules/
 dist/
+!frontend/dist/
 .nuxt/
 .output/
 *.local
