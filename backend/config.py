@@ -4,7 +4,9 @@ import os
 # Load .env file if python-dotenv is installed
 try:
     from dotenv import load_dotenv
-    load_dotenv(os.path.join(os.path.dirname(os.path.abspath(__file__)), '.env'))
+    # .env lives in the project root (one level above backend/)
+    _root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+    load_dotenv(os.path.join(_root, '.env'))
 except ImportError:
     pass
 

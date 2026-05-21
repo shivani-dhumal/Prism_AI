@@ -23,8 +23,15 @@ sys.path.append(os.path.dirname(os.path.abspath(__file__)))
 from flask import Flask, request, jsonify, render_template, Response, send_file, stream_with_context
 from jinja2 import TemplateNotFound
 
-app = Flask(__name__)
-BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+# Project root is one level above backend/
+ROOT_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+app = Flask(
+    __name__,
+    template_folder=os.path.join(ROOT_DIR, 'frontend', 'templates'),
+    static_folder=os.path.join(ROOT_DIR, 'frontend', 'static'),
+    static_url_path='/static'
+)
+BASE_DIR = ROOT_DIR  # reports/, etc. are relative to project root
 DEFAULT_PROJECT_DIR = os.path.join(os.path.expanduser("~"), "Desktop", "ShivaniD")
 CURRENT_PROJECT_DIR = DEFAULT_PROJECT_DIR
 

@@ -1,0 +1,252 @@
+{
+  "file_map": {
+    "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\.eslintrc.js": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\.eslintrc.js",
+    "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\babel.config.js": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\babel.config.js",
+    "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\gulpfile.js": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\gulpfile.js",
+    "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\index.html": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\index.html",
+    "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\jest.config.js": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\jest.config.js",
+    "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\postcss.config.js": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\postcss.config.js",
+    "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\tailwind.config.js": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\tailwind.config.js",
+    "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\vite.config.js": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\vite.config.js",
+    "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\assets\\icons\\fontawesome.min.css": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\assets\\icons\\fontawesome.min.css",
+    "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\assets\\icons\\light.min.css": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\assets\\icons\\light.min.css",
+    "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\assets\\styles\\template.scss": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\assets\\styles\\template.scss",
+    "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\assets\\styles\\_variables.scss": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\assets\\styles\\_variables.scss",
+    "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\assets\\styles\\common\\_header.scss": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\assets\\styles\\common\\_header.scss",
+    "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\assets\\styles\\common\\_menu.scss": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\assets\\styles\\common\\_menu.scss",
+    "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\assets\\styles\\components\\_buttons.scss": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\assets\\styles\\components\\_buttons.scss",
+    "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\assets\\styles\\components\\_cards.scss": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\assets\\styles\\components\\_cards.scss",
+    "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\assets\\styles\\components\\_forms.scss": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\assets\\styles\\components\\_forms.scss",
+    "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\assets\\styles\\components\\_modal.scss": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\assets\\styles\\components\\_modal.scss",
+    "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\assets\\styles\\components\\_ui.scss": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\assets\\styles\\components\\_ui.scss",
+    "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\assets\\styles\\pages\\_eventSelection.scss": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\assets\\styles\\pages\\_eventSelection.scss",
+    "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\assets\\styles\\pages\\_login.scss": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\assets\\styles\\pages\\_login.scss",
+    "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\assets\\styles\\pages\\_page.scss": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\assets\\styles\\pages\\_page.scss",
+    "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\assets\\styles\\plugins\\_autocomplete.scss": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\assets\\styles\\plugins\\_autocomplete.scss",
+    "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\assets\\styles\\plugins\\_calendar.scss": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\assets\\styles\\plugins\\_calendar.scss",
+    "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\assets\\styles\\plugins\\_carousel.scss": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\assets\\styles\\plugins\\_carousel.scss",
+    "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\assets\\styles\\plugins\\_datatable.scss": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\assets\\styles\\plugins\\_datatable.scss",
+    "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\assets\\styles\\plugins\\_dialog.scss": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\assets\\styles\\plugins\\_dialog.scss",
+    "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\assets\\styles\\plugins\\_overlayPanel.scss": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\assets\\styles\\plugins\\_overlayPanel.scss",
+    "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\assets\\styles\\plugins\\_primeTabs.scss": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\assets\\styles\\plugins\\_primeTabs.scss",
+    "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\assets\\styles\\plugins\\_tree.scss": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\assets\\styles\\plugins\\_tree.scss",
+    "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\App.vue": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\App.vue",
+    "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\axiosApi.js": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\axiosApi.js",
+    "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\formkit.config.js": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\formkit.config.js",
+    "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\index.css": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\index.css",
+    "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\main.js": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\main.js",
+    "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\registerServiceWorker.js": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\registerServiceWorker.js",
+    "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\router.js": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\router.js",
+    "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\components\\date-range-pickr.vue": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\components\\date-range-pickr.vue",
+    "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\components\\MTable.vue": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\components\\MTable.vue",
+    "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\components\\multiselect.vue": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\components\\multiselect.vue",
+    "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\components\\BL\\updateDbSave.vue": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\components\\BL\\updateDbSave.vue",
+    "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\components\\BL\\updateUser.vue": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\components\\BL\\updateUser.vue",
+    "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\components\\common\\breadCrumbs.vue": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\components\\common\\breadCrumbs.vue",
+    "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\components\\common\\courseTitleBar.vue": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\components\\common\\courseTitleBar.vue",
+    "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\components\\common\\Footer.vue": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\components\\common\\Footer.vue",
+    "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\components\\common\\Header.vue": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\components\\common\\Header.vue",
+    "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\components\\common\\Menu.vue": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\components\\common\\Menu.vue",
+    "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\components\\common\\programBar.vue": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\components\\common\\programBar.vue",
+    "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\components\\common\\Sidebar.vue": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\components\\common\\Sidebar.vue",
+    "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\components\\common\\SidebarNew.vue": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\components\\common\\SidebarNew.vue",
+    "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\components\\DaiseUIComponents\\Toast.vue": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\components\\DaiseUIComponents\\Toast.vue",
+    "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\components\\download-manager\\downloadFile.vue": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\components\\download-manager\\downloadFile.vue",
+    "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\components\\download-manager\\downloadProgress.vue": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\components\\download-manager\\downloadProgress.vue",
+    "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\components\\excel\\clientData.vue": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\components\\excel\\clientData.vue",
+    "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\components\\excel\\saveWActivity.vue": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\components\\excel\\saveWActivity.vue",
+    "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\components\\excel\\updateData.vue": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\components\\excel\\updateData.vue",
+    "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\components\\i18Demo\\Component1.vue": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\components\\i18Demo\\Component1.vue",
+    "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\components\\i18Demo\\Component2.vue": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\components\\i18Demo\\Component2.vue",
+    "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\components\\keymappers\\decryptData.vue": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\components\\keymappers\\decryptData.vue",
+    "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\components\\keymappers\\encryptData.vue": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\components\\keymappers\\encryptData.vue",
+    "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\components\\keymappers\\hashData.vue": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\components\\keymappers\\hashData.vue",
+    "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\components\\keymappers\\hashSalt.vue": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\components\\keymappers\\hashSalt.vue",
+    "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\components\\mongodbID\\customID.vue": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\components\\mongodbID\\customID.vue",
+    "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\components\\mongodbID\\hexID.vue": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\components\\mongodbID\\hexID.vue",
+    "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\components\\sessionmanager\\deleteData.vue": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\components\\sessionmanager\\deleteData.vue",
+    "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\components\\sessionmanager\\fetchData.vue": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\components\\sessionmanager\\fetchData.vue",
+    "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\components\\sessionmanager\\storeData.vue": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\components\\sessionmanager\\storeData.vue",
+    "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\components\\upload-manager\\uploadFile.vue": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\components\\upload-manager\\uploadFile.vue",
+    "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\components\\upload-manager\\uploadProgessFile.vue": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\components\\upload-manager\\uploadProgessFile.vue",
+    "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\plugins\\Encryption.js": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\plugins\\Encryption.js",
+    "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\plugins\\mql.js": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\plugins\\mql.js",
+    "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\plugins\\mqlAssetFDB.js": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\plugins\\mqlAssetFDB.js",
+    "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\plugins\\mqlCdn.js": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\plugins\\mqlCdn.js",
+    "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\plugins\\mqlOptions.js": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\plugins\\mqlOptions.js",
+    "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\plugins\\response.js": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\plugins\\response.js",
+    "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\plugins\\SearchProgram.js": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\plugins\\SearchProgram.js",
+    "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\setup\\i18n-setup.js": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\setup\\i18n-setup.js",
+    "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\setup\\init.js": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\setup\\init.js",
+    "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\store\\index.js": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\store\\index.js",
+    "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\store\\types.js": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\store\\types.js",
+    "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\store\\modules\\academicYears.js": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\store\\modules\\academicYears.js",
+    "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\store\\modules\\clientDetails.js": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\store\\modules\\clientDetails.js",
+    "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\store\\modules\\collegeDetails.js": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\store\\modules\\collegeDetails.js",
+    "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\store\\modules\\examManagementVar.js": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\store\\modules\\examManagementVar.js",
+    "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\store\\modules\\login.js": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\store\\modules\\login.js",
+    "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\store\\modules\\loginPn.js": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\store\\modules\\loginPn.js",
+    "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\store\\modules\\ProgramD.js": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\store\\modules\\ProgramD.js",
+    "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\store\\modules\\store.js": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\store\\modules\\store.js",
+    "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\store\\modules\\types.js": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\store\\modules\\types.js",
+    "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\views\\adminLogin.vue": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\views\\adminLogin.vue",
+    "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\views\\autoBL.vue": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\views\\autoBL.vue",
+    "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\views\\CdnUpload.vue": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\views\\CdnUpload.vue",
+    "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\views\\Home.vue": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\views\\Home.vue",
+    "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\views\\Login.vue": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\views\\Login.vue",
+    "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\views\\SessionManager.vue": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\views\\SessionManager.vue",
+    "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\views\\StudentData.vue": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\views\\StudentData.vue",
+    "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\views\\StudentDemo.vue": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\views\\StudentDemo.vue",
+    "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\views\\Validator.vue": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\views\\Validator.vue",
+    "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\views\\iLike\\iLikeCourses.vue": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\views\\iLike\\iLikeCourses.vue",
+    "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\views\\iLike\\iLikeCoursesNew.vue": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\views\\iLike\\iLikeCoursesNew.vue",
+    "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\views\\iLike\\iLikeDashboard.vue": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\views\\iLike\\iLikeDashboard.vue",
+    "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\views\\iLike\\iLikeLanding.vue": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\views\\iLike\\iLikeLanding.vue",
+    "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\views\\Layout\\defaultLayout.vue": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\views\\Layout\\defaultLayout.vue",
+    "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\views\\Layout\\spLayout.vue": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\views\\Layout\\spLayout.vue",
+    "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\views\\Result\\ApplicationServices.vue": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\views\\Result\\ApplicationServices.vue",
+    "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\views\\Result\\ExamFormSubmission.vue": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\views\\Result\\ExamFormSubmission.vue",
+    "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\views\\Result\\FeeDetails.vue": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\views\\Result\\FeeDetails.vue",
+    "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\views\\Result\\HallTicketPage.vue": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\views\\Result\\HallTicketPage.vue",
+    "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\views\\Result\\ResultPage.vue": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\views\\Result\\ResultPage.vue",
+    "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\views\\Result\\SelectedApplicationService.vue": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\views\\Result\\SelectedApplicationService.vue",
+    "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\views\\Result\\Transactions.vue": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\views\\Result\\Transactions.vue",
+    "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\views\\Result\\viewExamTimeTable.vue": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\views\\Result\\viewExamTimeTable.vue",
+    "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\views\\Result\\viewMarksheet.vue": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\views\\Result\\viewMarksheet.vue",
+    "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\tests\\e2e\\custom-assertions\\elementCount.js": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\tests\\e2e\\custom-assertions\\elementCount.js",
+    "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\tests\\e2e\\specs\\login.specs.js": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\tests\\e2e\\specs\\login.specs.js",
+    "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\tests\\e2e\\specs\\test.js": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\tests\\e2e\\specs\\test.js",
+    "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\tests\\unit\\.eslintrc.js": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\tests\\unit\\.eslintrc.js",
+    "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\tests\\unit\\HelloWorld.spec.js": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\tests\\unit\\HelloWorld.spec.js",
+    "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\tests\\unit\\login.spec.js": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\tests\\unit\\login.spec.js"
+  },
+  "connections": [
+    {
+      "from": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\main.js",
+      "to": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\assets\\icons\\fontawesome.min.css",
+      "import_specifier": "../assets/icons/fontawesome.min.css"
+    },
+    {
+      "from": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\main.js",
+      "to": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\assets\\icons\\light.min.css",
+      "import_specifier": "../assets/icons/light.min.css"
+    },
+    {
+      "from": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\main.js",
+      "to": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\assets\\styles\\template.scss",
+      "import_specifier": "../assets/styles/template.scss"
+    },
+    {
+      "from": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\main.js",
+      "to": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\App.vue",
+      "import_specifier": "./App.vue"
+    },
+    {
+      "from": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\main.js",
+      "to": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\formkit.config.js",
+      "import_specifier": "./formkit.config"
+    },
+    {
+      "from": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\main.js",
+      "to": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\index.css",
+      "import_specifier": "./index.css"
+    },
+    {
+      "from": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\main.js",
+      "to": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\plugins\\mqlOptions.js",
+      "import_specifier": "./plugins/mqlOptions.js"
+    },
+    {
+      "from": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\main.js",
+      "to": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\router.js",
+      "import_specifier": "./router"
+    },
+    {
+      "from": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\main.js",
+      "to": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\setup\\i18n-setup.js",
+      "import_specifier": "./setup/i18n-setup.js"
+    },
+    {
+      "from": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\components\\common\\Header.vue",
+      "to": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\store\\modules\\login.js",
+      "import_specifier": "../../store/modules/login.js"
+    },
+    {
+      "from": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\components\\common\\Sidebar.vue",
+      "to": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\store\\modules\\login.js",
+      "import_specifier": "../../store/modules/login.js"
+    },
+    {
+      "from": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\plugins\\mql.js",
+      "to": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\store\\index.js",
+      "import_specifier": "../store/index"
+    },
+    {
+      "from": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\plugins\\mqlAssetFDB.js",
+      "to": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\store\\index.js",
+      "import_specifier": "../store/index"
+    },
+    {
+      "from": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\plugins\\mqlCdn.js",
+      "to": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\store\\index.js",
+      "import_specifier": "../store/index"
+    },
+    {
+      "from": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\store\\modules\\login.js",
+      "to": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\router.js",
+      "import_specifier": "../../router"
+    },
+    {
+      "from": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\store\\modules\\loginPn.js",
+      "to": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\router.js",
+      "import_specifier": "../../router"
+    },
+    {
+      "from": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\store\\modules\\store.js",
+      "to": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\store\\types.js",
+      "import_specifier": "../types"
+    },
+    {
+      "from": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\views\\adminLogin.vue",
+      "to": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\setup\\i18n-setup.js",
+      "import_specifier": "../setup/i18n-setup"
+    },
+    {
+      "from": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\views\\adminLogin.vue",
+      "to": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\store\\modules\\academicYears.js",
+      "import_specifier": "../store/modules/academicYears.js"
+    },
+    {
+      "from": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\views\\adminLogin.vue",
+      "to": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\store\\modules\\clientDetails.js",
+      "import_specifier": "../store/modules/clientDetails.js"
+    },
+    {
+      "from": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\views\\adminLogin.vue",
+      "to": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\store\\modules\\login.js",
+      "import_specifier": "../store/modules/login.js"
+    },
+    {
+      "from": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\views\\adminLogin.vue",
+      "to": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\store\\modules\\loginPn.js",
+      "import_specifier": "../store/modules/loginPn.js"
+    },
+    {
+      "from": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\views\\Login.vue",
+      "to": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\store\\modules\\login.js",
+      "import_specifier": "../store/modules/login.js"
+    },
+    {
+      "from": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\views\\iLike\\iLikeCourses.vue",
+      "to": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\axiosApi.js",
+      "import_specifier": "../../axiosApi"
+    },
+    {
+      "from": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\views\\Layout\\defaultLayout.vue",
+      "to": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\store\\index.js",
+      "import_specifier": "../../store/index"
+    }
+  ],
+  "semantic_error": "Missing OpenWebUI config. Set OPENWEBUI_BASE_URL and OPENWEBUI_API_KEY in code-analyzer/.env",
+  "semantic_connections": []
+}

@@ -1,0 +1,807 @@
+{
+  "generated_at": 1779339664.8415563,
+  "elapsed_seconds": 0.015015840530395508,
+  "files": [
+    {
+      "file_path": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\.eslintrc.js",
+      "status": "CLEAN",
+      "logic_defects": [],
+      "ui_accessibility_defects": []
+    },
+    {
+      "file_path": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\assets\\icons\\fontawesome.min.css",
+      "status": "FLAGGED",
+      "logic_defects": [],
+      "ui_accessibility_defects": [],
+      "ai_error": "Missing OpenWebUI config. Set OPENWEBUI_BASE_URL and OPENWEBUI_API_KEY in code-analyzer/.env"
+    },
+    {
+      "file_path": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\assets\\icons\\light.min.css",
+      "status": "CLEAN",
+      "logic_defects": [],
+      "ui_accessibility_defects": []
+    },
+    {
+      "file_path": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\assets\\styles\\_variables.scss",
+      "status": "FLAGGED",
+      "logic_defects": [],
+      "ui_accessibility_defects": [],
+      "ai_error": "Missing OpenWebUI config. Set OPENWEBUI_BASE_URL and OPENWEBUI_API_KEY in code-analyzer/.env"
+    },
+    {
+      "file_path": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\assets\\styles\\common\\_header.scss",
+      "status": "FLAGGED",
+      "logic_defects": [],
+      "ui_accessibility_defects": [],
+      "ai_error": "Missing OpenWebUI config. Set OPENWEBUI_BASE_URL and OPENWEBUI_API_KEY in code-analyzer/.env"
+    },
+    {
+      "file_path": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\assets\\styles\\common\\_menu.scss",
+      "status": "FLAGGED",
+      "logic_defects": [],
+      "ui_accessibility_defects": [],
+      "ai_error": "Missing OpenWebUI config. Set OPENWEBUI_BASE_URL and OPENWEBUI_API_KEY in code-analyzer/.env"
+    },
+    {
+      "file_path": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\assets\\styles\\components\\_buttons.scss",
+      "status": "CLEAN",
+      "logic_defects": [],
+      "ui_accessibility_defects": []
+    },
+    {
+      "file_path": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\assets\\styles\\components\\_cards.scss",
+      "status": "FLAGGED",
+      "logic_defects": [],
+      "ui_accessibility_defects": [],
+      "ai_error": "Missing OpenWebUI config. Set OPENWEBUI_BASE_URL and OPENWEBUI_API_KEY in code-analyzer/.env"
+    },
+    {
+      "file_path": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\assets\\styles\\components\\_forms.scss",
+      "status": "FLAGGED",
+      "logic_defects": [],
+      "ui_accessibility_defects": [],
+      "ai_error": "Missing OpenWebUI config. Set OPENWEBUI_BASE_URL and OPENWEBUI_API_KEY in code-analyzer/.env"
+    },
+    {
+      "file_path": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\assets\\styles\\components\\_modal.scss",
+      "status": "CLEAN",
+      "logic_defects": [],
+      "ui_accessibility_defects": []
+    },
+    {
+      "file_path": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\assets\\styles\\components\\_ui.scss",
+      "status": "FLAGGED",
+      "logic_defects": [],
+      "ui_accessibility_defects": [],
+      "ai_error": "Missing OpenWebUI config. Set OPENWEBUI_BASE_URL and OPENWEBUI_API_KEY in code-analyzer/.env"
+    },
+    {
+      "file_path": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\assets\\styles\\pages\\_eventSelection.scss",
+      "status": "FLAGGED",
+      "logic_defects": [],
+      "ui_accessibility_defects": [],
+      "ai_error": "Missing OpenWebUI config. Set OPENWEBUI_BASE_URL and OPENWEBUI_API_KEY in code-analyzer/.env"
+    },
+    {
+      "file_path": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\assets\\styles\\pages\\_login.scss",
+      "status": "FLAGGED",
+      "logic_defects": [],
+      "ui_accessibility_defects": [],
+      "ai_error": "Missing OpenWebUI config. Set OPENWEBUI_BASE_URL and OPENWEBUI_API_KEY in code-analyzer/.env"
+    },
+    {
+      "file_path": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\assets\\styles\\pages\\_page.scss",
+      "status": "FLAGGED",
+      "logic_defects": [],
+      "ui_accessibility_defects": [],
+      "ai_error": "Missing OpenWebUI config. Set OPENWEBUI_BASE_URL and OPENWEBUI_API_KEY in code-analyzer/.env"
+    },
+    {
+      "file_path": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\assets\\styles\\plugins\\_autocomplete.scss",
+      "status": "FLAGGED",
+      "logic_defects": [],
+      "ui_accessibility_defects": [],
+      "ai_error": "Missing OpenWebUI config. Set OPENWEBUI_BASE_URL and OPENWEBUI_API_KEY in code-analyzer/.env"
+    },
+    {
+      "file_path": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\assets\\styles\\plugins\\_calendar.scss",
+      "status": "FLAGGED",
+      "logic_defects": [],
+      "ui_accessibility_defects": [],
+      "ai_error": "Missing OpenWebUI config. Set OPENWEBUI_BASE_URL and OPENWEBUI_API_KEY in code-analyzer/.env"
+    },
+    {
+      "file_path": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\assets\\styles\\plugins\\_carousel.scss",
+      "status": "FLAGGED",
+      "logic_defects": [],
+      "ui_accessibility_defects": [],
+      "ai_error": "Missing OpenWebUI config. Set OPENWEBUI_BASE_URL and OPENWEBUI_API_KEY in code-analyzer/.env"
+    },
+    {
+      "file_path": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\assets\\styles\\plugins\\_datatable.scss",
+      "status": "FLAGGED",
+      "logic_defects": [],
+      "ui_accessibility_defects": [],
+      "ai_error": "Missing OpenWebUI config. Set OPENWEBUI_BASE_URL and OPENWEBUI_API_KEY in code-analyzer/.env"
+    },
+    {
+      "file_path": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\assets\\styles\\plugins\\_dialog.scss",
+      "status": "FLAGGED",
+      "logic_defects": [],
+      "ui_accessibility_defects": [],
+      "ai_error": "Missing OpenWebUI config. Set OPENWEBUI_BASE_URL and OPENWEBUI_API_KEY in code-analyzer/.env"
+    },
+    {
+      "file_path": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\assets\\styles\\plugins\\_overlayPanel.scss",
+      "status": "FLAGGED",
+      "logic_defects": [],
+      "ui_accessibility_defects": [],
+      "ai_error": "Missing OpenWebUI config. Set OPENWEBUI_BASE_URL and OPENWEBUI_API_KEY in code-analyzer/.env"
+    },
+    {
+      "file_path": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\assets\\styles\\plugins\\_primeTabs.scss",
+      "status": "FLAGGED",
+      "logic_defects": [],
+      "ui_accessibility_defects": [],
+      "ai_error": "Missing OpenWebUI config. Set OPENWEBUI_BASE_URL and OPENWEBUI_API_KEY in code-analyzer/.env"
+    },
+    {
+      "file_path": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\assets\\styles\\plugins\\_tree.scss",
+      "status": "FLAGGED",
+      "logic_defects": [],
+      "ui_accessibility_defects": [],
+      "ai_error": "Missing OpenWebUI config. Set OPENWEBUI_BASE_URL and OPENWEBUI_API_KEY in code-analyzer/.env"
+    },
+    {
+      "file_path": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\assets\\styles\\template.scss",
+      "status": "FLAGGED",
+      "logic_defects": [],
+      "ui_accessibility_defects": [],
+      "ai_error": "Missing OpenWebUI config. Set OPENWEBUI_BASE_URL and OPENWEBUI_API_KEY in code-analyzer/.env"
+    },
+    {
+      "file_path": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\babel.config.js",
+      "status": "CLEAN",
+      "logic_defects": [],
+      "ui_accessibility_defects": []
+    },
+    {
+      "file_path": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\gulpfile.js",
+      "status": "FLAGGED",
+      "logic_defects": [],
+      "ui_accessibility_defects": [],
+      "ai_error": "Missing OpenWebUI config. Set OPENWEBUI_BASE_URL and OPENWEBUI_API_KEY in code-analyzer/.env"
+    },
+    {
+      "file_path": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\index.html",
+      "status": "CLEAN",
+      "logic_defects": [],
+      "ui_accessibility_defects": []
+    },
+    {
+      "file_path": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\jest.config.js",
+      "status": "CLEAN",
+      "logic_defects": [],
+      "ui_accessibility_defects": []
+    },
+    {
+      "file_path": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\postcss.config.js",
+      "status": "CLEAN",
+      "logic_defects": [],
+      "ui_accessibility_defects": []
+    },
+    {
+      "file_path": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\App.vue",
+      "status": "FLAGGED",
+      "logic_defects": [],
+      "ui_accessibility_defects": [],
+      "ai_error": "Missing OpenWebUI config. Set OPENWEBUI_BASE_URL and OPENWEBUI_API_KEY in code-analyzer/.env"
+    },
+    {
+      "file_path": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\axiosApi.js",
+      "status": "CLEAN",
+      "logic_defects": [],
+      "ui_accessibility_defects": []
+    },
+    {
+      "file_path": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\components\\BL\\updateDbSave.vue",
+      "status": "FLAGGED",
+      "logic_defects": [],
+      "ui_accessibility_defects": [],
+      "ai_error": "Missing OpenWebUI config. Set OPENWEBUI_BASE_URL and OPENWEBUI_API_KEY in code-analyzer/.env"
+    },
+    {
+      "file_path": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\components\\BL\\updateUser.vue",
+      "status": "FLAGGED",
+      "logic_defects": [],
+      "ui_accessibility_defects": [],
+      "ai_error": "Missing OpenWebUI config. Set OPENWEBUI_BASE_URL and OPENWEBUI_API_KEY in code-analyzer/.env"
+    },
+    {
+      "file_path": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\components\\DaiseUIComponents\\Toast.vue",
+      "status": "CLEAN",
+      "logic_defects": [],
+      "ui_accessibility_defects": []
+    },
+    {
+      "file_path": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\components\\MTable.vue",
+      "status": "FLAGGED",
+      "logic_defects": [],
+      "ui_accessibility_defects": [],
+      "ai_error": "Missing OpenWebUI config. Set OPENWEBUI_BASE_URL and OPENWEBUI_API_KEY in code-analyzer/.env"
+    },
+    {
+      "file_path": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\components\\common\\Footer.vue",
+      "status": "CLEAN",
+      "logic_defects": [],
+      "ui_accessibility_defects": []
+    },
+    {
+      "file_path": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\components\\common\\Header.vue",
+      "status": "FLAGGED",
+      "logic_defects": [],
+      "ui_accessibility_defects": [],
+      "ai_error": "Missing OpenWebUI config. Set OPENWEBUI_BASE_URL and OPENWEBUI_API_KEY in code-analyzer/.env"
+    },
+    {
+      "file_path": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\components\\common\\Menu.vue",
+      "status": "FLAGGED",
+      "logic_defects": [],
+      "ui_accessibility_defects": [],
+      "ai_error": "Missing OpenWebUI config. Set OPENWEBUI_BASE_URL and OPENWEBUI_API_KEY in code-analyzer/.env"
+    },
+    {
+      "file_path": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\components\\common\\Sidebar.vue",
+      "status": "FLAGGED",
+      "logic_defects": [],
+      "ui_accessibility_defects": [],
+      "ai_error": "Missing OpenWebUI config. Set OPENWEBUI_BASE_URL and OPENWEBUI_API_KEY in code-analyzer/.env"
+    },
+    {
+      "file_path": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\components\\common\\SidebarNew.vue",
+      "status": "FLAGGED",
+      "logic_defects": [],
+      "ui_accessibility_defects": [],
+      "ai_error": "Missing OpenWebUI config. Set OPENWEBUI_BASE_URL and OPENWEBUI_API_KEY in code-analyzer/.env"
+    },
+    {
+      "file_path": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\components\\common\\breadCrumbs.vue",
+      "status": "FLAGGED",
+      "logic_defects": [],
+      "ui_accessibility_defects": [],
+      "ai_error": "Missing OpenWebUI config. Set OPENWEBUI_BASE_URL and OPENWEBUI_API_KEY in code-analyzer/.env"
+    },
+    {
+      "file_path": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\components\\common\\courseTitleBar.vue",
+      "status": "CLEAN",
+      "logic_defects": [],
+      "ui_accessibility_defects": []
+    },
+    {
+      "file_path": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\components\\common\\programBar.vue",
+      "status": "CLEAN",
+      "logic_defects": [],
+      "ui_accessibility_defects": []
+    },
+    {
+      "file_path": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\components\\date-range-pickr.vue",
+      "status": "CLEAN",
+      "logic_defects": [],
+      "ui_accessibility_defects": []
+    },
+    {
+      "file_path": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\components\\download-manager\\downloadFile.vue",
+      "status": "FLAGGED",
+      "logic_defects": [],
+      "ui_accessibility_defects": [],
+      "ai_error": "Missing OpenWebUI config. Set OPENWEBUI_BASE_URL and OPENWEBUI_API_KEY in code-analyzer/.env"
+    },
+    {
+      "file_path": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\components\\download-manager\\downloadProgress.vue",
+      "status": "FLAGGED",
+      "logic_defects": [],
+      "ui_accessibility_defects": [],
+      "ai_error": "Missing OpenWebUI config. Set OPENWEBUI_BASE_URL and OPENWEBUI_API_KEY in code-analyzer/.env"
+    },
+    {
+      "file_path": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\components\\excel\\clientData.vue",
+      "status": "FLAGGED",
+      "logic_defects": [],
+      "ui_accessibility_defects": [],
+      "ai_error": "Missing OpenWebUI config. Set OPENWEBUI_BASE_URL and OPENWEBUI_API_KEY in code-analyzer/.env"
+    },
+    {
+      "file_path": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\components\\excel\\saveWActivity.vue",
+      "status": "FLAGGED",
+      "logic_defects": [],
+      "ui_accessibility_defects": [],
+      "ai_error": "Missing OpenWebUI config. Set OPENWEBUI_BASE_URL and OPENWEBUI_API_KEY in code-analyzer/.env"
+    },
+    {
+      "file_path": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\components\\excel\\updateData.vue",
+      "status": "FLAGGED",
+      "logic_defects": [],
+      "ui_accessibility_defects": [],
+      "ai_error": "Missing OpenWebUI config. Set OPENWEBUI_BASE_URL and OPENWEBUI_API_KEY in code-analyzer/.env"
+    },
+    {
+      "file_path": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\components\\i18Demo\\Component1.vue",
+      "status": "FLAGGED",
+      "logic_defects": [],
+      "ui_accessibility_defects": [],
+      "ai_error": "Missing OpenWebUI config. Set OPENWEBUI_BASE_URL and OPENWEBUI_API_KEY in code-analyzer/.env"
+    },
+    {
+      "file_path": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\components\\i18Demo\\Component2.vue",
+      "status": "FLAGGED",
+      "logic_defects": [],
+      "ui_accessibility_defects": [],
+      "ai_error": "Missing OpenWebUI config. Set OPENWEBUI_BASE_URL and OPENWEBUI_API_KEY in code-analyzer/.env"
+    },
+    {
+      "file_path": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\components\\keymappers\\decryptData.vue",
+      "status": "FLAGGED",
+      "logic_defects": [],
+      "ui_accessibility_defects": [],
+      "ai_error": "Missing OpenWebUI config. Set OPENWEBUI_BASE_URL and OPENWEBUI_API_KEY in code-analyzer/.env"
+    },
+    {
+      "file_path": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\components\\keymappers\\encryptData.vue",
+      "status": "FLAGGED",
+      "logic_defects": [],
+      "ui_accessibility_defects": [],
+      "ai_error": "Missing OpenWebUI config. Set OPENWEBUI_BASE_URL and OPENWEBUI_API_KEY in code-analyzer/.env"
+    },
+    {
+      "file_path": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\components\\keymappers\\hashData.vue",
+      "status": "FLAGGED",
+      "logic_defects": [],
+      "ui_accessibility_defects": [],
+      "ai_error": "Missing OpenWebUI config. Set OPENWEBUI_BASE_URL and OPENWEBUI_API_KEY in code-analyzer/.env"
+    },
+    {
+      "file_path": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\components\\keymappers\\hashSalt.vue",
+      "status": "FLAGGED",
+      "logic_defects": [],
+      "ui_accessibility_defects": [],
+      "ai_error": "Missing OpenWebUI config. Set OPENWEBUI_BASE_URL and OPENWEBUI_API_KEY in code-analyzer/.env"
+    },
+    {
+      "file_path": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\components\\mongodbID\\customID.vue",
+      "status": "FLAGGED",
+      "logic_defects": [],
+      "ui_accessibility_defects": [],
+      "ai_error": "Missing OpenWebUI config. Set OPENWEBUI_BASE_URL and OPENWEBUI_API_KEY in code-analyzer/.env"
+    },
+    {
+      "file_path": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\components\\mongodbID\\hexID.vue",
+      "status": "FLAGGED",
+      "logic_defects": [],
+      "ui_accessibility_defects": [],
+      "ai_error": "Missing OpenWebUI config. Set OPENWEBUI_BASE_URL and OPENWEBUI_API_KEY in code-analyzer/.env"
+    },
+    {
+      "file_path": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\components\\multiselect.vue",
+      "status": "CLEAN",
+      "logic_defects": [],
+      "ui_accessibility_defects": []
+    },
+    {
+      "file_path": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\components\\sessionmanager\\deleteData.vue",
+      "status": "FLAGGED",
+      "logic_defects": [],
+      "ui_accessibility_defects": [],
+      "ai_error": "Missing OpenWebUI config. Set OPENWEBUI_BASE_URL and OPENWEBUI_API_KEY in code-analyzer/.env"
+    },
+    {
+      "file_path": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\components\\sessionmanager\\fetchData.vue",
+      "status": "FLAGGED",
+      "logic_defects": [],
+      "ui_accessibility_defects": [],
+      "ai_error": "Missing OpenWebUI config. Set OPENWEBUI_BASE_URL and OPENWEBUI_API_KEY in code-analyzer/.env"
+    },
+    {
+      "file_path": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\components\\sessionmanager\\storeData.vue",
+      "status": "FLAGGED",
+      "logic_defects": [],
+      "ui_accessibility_defects": [],
+      "ai_error": "Missing OpenWebUI config. Set OPENWEBUI_BASE_URL and OPENWEBUI_API_KEY in code-analyzer/.env"
+    },
+    {
+      "file_path": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\components\\upload-manager\\uploadFile.vue",
+      "status": "FLAGGED",
+      "logic_defects": [],
+      "ui_accessibility_defects": [],
+      "ai_error": "Missing OpenWebUI config. Set OPENWEBUI_BASE_URL and OPENWEBUI_API_KEY in code-analyzer/.env"
+    },
+    {
+      "file_path": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\components\\upload-manager\\uploadProgessFile.vue",
+      "status": "FLAGGED",
+      "logic_defects": [],
+      "ui_accessibility_defects": [],
+      "ai_error": "Missing OpenWebUI config. Set OPENWEBUI_BASE_URL and OPENWEBUI_API_KEY in code-analyzer/.env"
+    },
+    {
+      "file_path": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\formkit.config.js",
+      "status": "CLEAN",
+      "logic_defects": [],
+      "ui_accessibility_defects": []
+    },
+    {
+      "file_path": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\index.css",
+      "status": "FLAGGED",
+      "logic_defects": [],
+      "ui_accessibility_defects": [],
+      "ai_error": "Missing OpenWebUI config. Set OPENWEBUI_BASE_URL and OPENWEBUI_API_KEY in code-analyzer/.env"
+    },
+    {
+      "file_path": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\main.js",
+      "status": "FLAGGED",
+      "logic_defects": [],
+      "ui_accessibility_defects": [],
+      "ai_error": "Missing OpenWebUI config. Set OPENWEBUI_BASE_URL and OPENWEBUI_API_KEY in code-analyzer/.env"
+    },
+    {
+      "file_path": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\plugins\\Encryption.js",
+      "status": "CLEAN",
+      "logic_defects": [],
+      "ui_accessibility_defects": []
+    },
+    {
+      "file_path": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\plugins\\SearchProgram.js",
+      "status": "CLEAN",
+      "logic_defects": [],
+      "ui_accessibility_defects": []
+    },
+    {
+      "file_path": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\plugins\\mql.js",
+      "status": "FLAGGED",
+      "logic_defects": [],
+      "ui_accessibility_defects": [],
+      "ai_error": "Missing OpenWebUI config. Set OPENWEBUI_BASE_URL and OPENWEBUI_API_KEY in code-analyzer/.env"
+    },
+    {
+      "file_path": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\plugins\\mqlAssetFDB.js",
+      "status": "FLAGGED",
+      "logic_defects": [],
+      "ui_accessibility_defects": [],
+      "ai_error": "Missing OpenWebUI config. Set OPENWEBUI_BASE_URL and OPENWEBUI_API_KEY in code-analyzer/.env"
+    },
+    {
+      "file_path": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\plugins\\mqlCdn.js",
+      "status": "FLAGGED",
+      "logic_defects": [],
+      "ui_accessibility_defects": [],
+      "ai_error": "Missing OpenWebUI config. Set OPENWEBUI_BASE_URL and OPENWEBUI_API_KEY in code-analyzer/.env"
+    },
+    {
+      "file_path": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\plugins\\mqlOptions.js",
+      "status": "CLEAN",
+      "logic_defects": [],
+      "ui_accessibility_defects": []
+    },
+    {
+      "file_path": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\plugins\\response.js",
+      "status": "FLAGGED",
+      "logic_defects": [],
+      "ui_accessibility_defects": [],
+      "ai_error": "Missing OpenWebUI config. Set OPENWEBUI_BASE_URL and OPENWEBUI_API_KEY in code-analyzer/.env"
+    },
+    {
+      "file_path": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\registerServiceWorker.js",
+      "status": "CLEAN",
+      "logic_defects": [],
+      "ui_accessibility_defects": []
+    },
+    {
+      "file_path": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\router.js",
+      "status": "FLAGGED",
+      "logic_defects": [],
+      "ui_accessibility_defects": [],
+      "ai_error": "Missing OpenWebUI config. Set OPENWEBUI_BASE_URL and OPENWEBUI_API_KEY in code-analyzer/.env"
+    },
+    {
+      "file_path": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\setup\\i18n-setup.js",
+      "status": "FLAGGED",
+      "logic_defects": [],
+      "ui_accessibility_defects": [],
+      "ai_error": "Missing OpenWebUI config. Set OPENWEBUI_BASE_URL and OPENWEBUI_API_KEY in code-analyzer/.env"
+    },
+    {
+      "file_path": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\setup\\init.js",
+      "status": "CLEAN",
+      "logic_defects": [],
+      "ui_accessibility_defects": []
+    },
+    {
+      "file_path": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\store\\index.js",
+      "status": "CLEAN",
+      "logic_defects": [],
+      "ui_accessibility_defects": []
+    },
+    {
+      "file_path": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\store\\modules\\ProgramD.js",
+      "status": "FLAGGED",
+      "logic_defects": [],
+      "ui_accessibility_defects": [],
+      "ai_error": "Missing OpenWebUI config. Set OPENWEBUI_BASE_URL and OPENWEBUI_API_KEY in code-analyzer/.env"
+    },
+    {
+      "file_path": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\store\\modules\\academicYears.js",
+      "status": "FLAGGED",
+      "logic_defects": [],
+      "ui_accessibility_defects": [],
+      "ai_error": "Missing OpenWebUI config. Set OPENWEBUI_BASE_URL and OPENWEBUI_API_KEY in code-analyzer/.env"
+    },
+    {
+      "file_path": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\store\\modules\\clientDetails.js",
+      "status": "CLEAN",
+      "logic_defects": [],
+      "ui_accessibility_defects": []
+    },
+    {
+      "file_path": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\store\\modules\\collegeDetails.js",
+      "status": "FLAGGED",
+      "logic_defects": [],
+      "ui_accessibility_defects": [],
+      "ai_error": "Missing OpenWebUI config. Set OPENWEBUI_BASE_URL and OPENWEBUI_API_KEY in code-analyzer/.env"
+    },
+    {
+      "file_path": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\store\\modules\\examManagementVar.js",
+      "status": "FLAGGED",
+      "logic_defects": [],
+      "ui_accessibility_defects": [],
+      "ai_error": "Missing OpenWebUI config. Set OPENWEBUI_BASE_URL and OPENWEBUI_API_KEY in code-analyzer/.env"
+    },
+    {
+      "file_path": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\store\\modules\\login.js",
+      "status": "FLAGGED",
+      "logic_defects": [],
+      "ui_accessibility_defects": [],
+      "ai_error": "Missing OpenWebUI config. Set OPENWEBUI_BASE_URL and OPENWEBUI_API_KEY in code-analyzer/.env"
+    },
+    {
+      "file_path": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\store\\modules\\loginPn.js",
+      "status": "FLAGGED",
+      "logic_defects": [],
+      "ui_accessibility_defects": [],
+      "ai_error": "Missing OpenWebUI config. Set OPENWEBUI_BASE_URL and OPENWEBUI_API_KEY in code-analyzer/.env"
+    },
+    {
+      "file_path": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\store\\modules\\store.js",
+      "status": "FLAGGED",
+      "logic_defects": [],
+      "ui_accessibility_defects": [],
+      "ai_error": "Missing OpenWebUI config. Set OPENWEBUI_BASE_URL and OPENWEBUI_API_KEY in code-analyzer/.env"
+    },
+    {
+      "file_path": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\store\\modules\\types.js",
+      "status": "CLEAN",
+      "logic_defects": [],
+      "ui_accessibility_defects": []
+    },
+    {
+      "file_path": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\store\\types.js",
+      "status": "CLEAN",
+      "logic_defects": [],
+      "ui_accessibility_defects": []
+    },
+    {
+      "file_path": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\views\\CdnUpload.vue",
+      "status": "FLAGGED",
+      "logic_defects": [],
+      "ui_accessibility_defects": [],
+      "ai_error": "Missing OpenWebUI config. Set OPENWEBUI_BASE_URL and OPENWEBUI_API_KEY in code-analyzer/.env"
+    },
+    {
+      "file_path": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\views\\Home.vue",
+      "status": "FLAGGED",
+      "logic_defects": [],
+      "ui_accessibility_defects": [],
+      "ai_error": "Missing OpenWebUI config. Set OPENWEBUI_BASE_URL and OPENWEBUI_API_KEY in code-analyzer/.env"
+    },
+    {
+      "file_path": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\views\\Layout\\defaultLayout.vue",
+      "status": "FLAGGED",
+      "logic_defects": [],
+      "ui_accessibility_defects": [],
+      "ai_error": "Missing OpenWebUI config. Set OPENWEBUI_BASE_URL and OPENWEBUI_API_KEY in code-analyzer/.env"
+    },
+    {
+      "file_path": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\views\\Layout\\spLayout.vue",
+      "status": "CLEAN",
+      "logic_defects": [],
+      "ui_accessibility_defects": []
+    },
+    {
+      "file_path": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\views\\Login.vue",
+      "status": "FLAGGED",
+      "logic_defects": [],
+      "ui_accessibility_defects": [],
+      "ai_error": "Missing OpenWebUI config. Set OPENWEBUI_BASE_URL and OPENWEBUI_API_KEY in code-analyzer/.env"
+    },
+    {
+      "file_path": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\views\\Result\\ApplicationServices.vue",
+      "status": "FLAGGED",
+      "logic_defects": [],
+      "ui_accessibility_defects": [],
+      "ai_error": "Missing OpenWebUI config. Set OPENWEBUI_BASE_URL and OPENWEBUI_API_KEY in code-analyzer/.env"
+    },
+    {
+      "file_path": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\views\\Result\\ExamFormSubmission.vue",
+      "status": "FLAGGED",
+      "logic_defects": [],
+      "ui_accessibility_defects": [],
+      "ai_error": "Missing OpenWebUI config. Set OPENWEBUI_BASE_URL and OPENWEBUI_API_KEY in code-analyzer/.env"
+    },
+    {
+      "file_path": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\views\\Result\\FeeDetails.vue",
+      "status": "FLAGGED",
+      "logic_defects": [],
+      "ui_accessibility_defects": [],
+      "ai_error": "Missing OpenWebUI config. Set OPENWEBUI_BASE_URL and OPENWEBUI_API_KEY in code-analyzer/.env"
+    },
+    {
+      "file_path": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\views\\Result\\HallTicketPage.vue",
+      "status": "FLAGGED",
+      "logic_defects": [],
+      "ui_accessibility_defects": [],
+      "ai_error": "Missing OpenWebUI config. Set OPENWEBUI_BASE_URL and OPENWEBUI_API_KEY in code-analyzer/.env"
+    },
+    {
+      "file_path": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\views\\Result\\ResultPage.vue",
+      "status": "FLAGGED",
+      "logic_defects": [],
+      "ui_accessibility_defects": [],
+      "ai_error": "Missing OpenWebUI config. Set OPENWEBUI_BASE_URL and OPENWEBUI_API_KEY in code-analyzer/.env"
+    },
+    {
+      "file_path": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\views\\Result\\SelectedApplicationService.vue",
+      "status": "FLAGGED",
+      "logic_defects": [],
+      "ui_accessibility_defects": [],
+      "ai_error": "Missing OpenWebUI config. Set OPENWEBUI_BASE_URL and OPENWEBUI_API_KEY in code-analyzer/.env"
+    },
+    {
+      "file_path": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\views\\Result\\Transactions.vue",
+      "status": "FLAGGED",
+      "logic_defects": [],
+      "ui_accessibility_defects": [],
+      "ai_error": "Missing OpenWebUI config. Set OPENWEBUI_BASE_URL and OPENWEBUI_API_KEY in code-analyzer/.env"
+    },
+    {
+      "file_path": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\views\\Result\\viewExamTimeTable.vue",
+      "status": "FLAGGED",
+      "logic_defects": [],
+      "ui_accessibility_defects": [],
+      "ai_error": "Missing OpenWebUI config. Set OPENWEBUI_BASE_URL and OPENWEBUI_API_KEY in code-analyzer/.env"
+    },
+    {
+      "file_path": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\views\\Result\\viewMarksheet.vue",
+      "status": "FLAGGED",
+      "logic_defects": [],
+      "ui_accessibility_defects": [],
+      "ai_error": "Missing OpenWebUI config. Set OPENWEBUI_BASE_URL and OPENWEBUI_API_KEY in code-analyzer/.env"
+    },
+    {
+      "file_path": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\views\\SessionManager.vue",
+      "status": "FLAGGED",
+      "logic_defects": [],
+      "ui_accessibility_defects": [],
+      "ai_error": "Missing OpenWebUI config. Set OPENWEBUI_BASE_URL and OPENWEBUI_API_KEY in code-analyzer/.env"
+    },
+    {
+      "file_path": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\views\\StudentData.vue",
+      "status": "FLAGGED",
+      "logic_defects": [],
+      "ui_accessibility_defects": [],
+      "ai_error": "Missing OpenWebUI config. Set OPENWEBUI_BASE_URL and OPENWEBUI_API_KEY in code-analyzer/.env"
+    },
+    {
+      "file_path": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\views\\StudentDemo.vue",
+      "status": "FLAGGED",
+      "logic_defects": [],
+      "ui_accessibility_defects": [],
+      "ai_error": "Missing OpenWebUI config. Set OPENWEBUI_BASE_URL and OPENWEBUI_API_KEY in code-analyzer/.env"
+    },
+    {
+      "file_path": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\views\\Validator.vue",
+      "status": "FLAGGED",
+      "logic_defects": [],
+      "ui_accessibility_defects": [],
+      "ai_error": "Missing OpenWebUI config. Set OPENWEBUI_BASE_URL and OPENWEBUI_API_KEY in code-analyzer/.env"
+    },
+    {
+      "file_path": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\views\\adminLogin.vue",
+      "status": "FLAGGED",
+      "logic_defects": [],
+      "ui_accessibility_defects": [],
+      "ai_error": "Missing OpenWebUI config. Set OPENWEBUI_BASE_URL and OPENWEBUI_API_KEY in code-analyzer/.env"
+    },
+    {
+      "file_path": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\views\\autoBL.vue",
+      "status": "FLAGGED",
+      "logic_defects": [],
+      "ui_accessibility_defects": [],
+      "ai_error": "Missing OpenWebUI config. Set OPENWEBUI_BASE_URL and OPENWEBUI_API_KEY in code-analyzer/.env"
+    },
+    {
+      "file_path": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\views\\iLike\\iLikeCourses.vue",
+      "status": "FLAGGED",
+      "logic_defects": [],
+      "ui_accessibility_defects": [],
+      "ai_error": "Missing OpenWebUI config. Set OPENWEBUI_BASE_URL and OPENWEBUI_API_KEY in code-analyzer/.env"
+    },
+    {
+      "file_path": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\views\\iLike\\iLikeCoursesNew.vue",
+      "status": "FLAGGED",
+      "logic_defects": [],
+      "ui_accessibility_defects": [],
+      "ai_error": "Missing OpenWebUI config. Set OPENWEBUI_BASE_URL and OPENWEBUI_API_KEY in code-analyzer/.env"
+    },
+    {
+      "file_path": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\views\\iLike\\iLikeDashboard.vue",
+      "status": "FLAGGED",
+      "logic_defects": [],
+      "ui_accessibility_defects": [],
+      "ai_error": "Missing OpenWebUI config. Set OPENWEBUI_BASE_URL and OPENWEBUI_API_KEY in code-analyzer/.env"
+    },
+    {
+      "file_path": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\views\\iLike\\iLikeLanding.vue",
+      "status": "FLAGGED",
+      "logic_defects": [],
+      "ui_accessibility_defects": [],
+      "ai_error": "Missing OpenWebUI config. Set OPENWEBUI_BASE_URL and OPENWEBUI_API_KEY in code-analyzer/.env"
+    },
+    {
+      "file_path": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\tailwind.config.js",
+      "status": "FLAGGED",
+      "logic_defects": [],
+      "ui_accessibility_defects": [],
+      "ai_error": "Missing OpenWebUI config. Set OPENWEBUI_BASE_URL and OPENWEBUI_API_KEY in code-analyzer/.env"
+    },
+    {
+      "file_path": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\tests\\e2e\\custom-assertions\\elementCount.js",
+      "status": "CLEAN",
+      "logic_defects": [],
+      "ui_accessibility_defects": []
+    },
+    {
+      "file_path": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\tests\\e2e\\specs\\login.specs.js",
+      "status": "CLEAN",
+      "logic_defects": [],
+      "ui_accessibility_defects": []
+    },
+    {
+      "file_path": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\tests\\e2e\\specs\\test.js",
+      "status": "CLEAN",
+      "logic_defects": [],
+      "ui_accessibility_defects": []
+    },
+    {
+      "file_path": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\tests\\unit\\.eslintrc.js",
+      "status": "CLEAN",
+      "logic_defects": [],
+      "ui_accessibility_defects": []
+    },
+    {
+      "file_path": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\tests\\unit\\HelloWorld.spec.js",
+      "status": "CLEAN",
+      "logic_defects": [],
+      "ui_accessibility_defects": []
+    },
+    {
+      "file_path": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\tests\\unit\\login.spec.js",
+      "status": "CLEAN",
+      "logic_defects": [],
+      "ui_accessibility_defects": []
+    },
+    {
+      "file_path": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\vite.config.js",
+      "status": "FLAGGED",
+      "logic_defects": [],
+      "ui_accessibility_defects": [],
+      "ai_error": "Missing OpenWebUI config. Set OPENWEBUI_BASE_URL and OPENWEBUI_API_KEY in code-analyzer/.env"
+    }
+  ]
+}

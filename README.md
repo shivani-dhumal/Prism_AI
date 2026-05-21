@@ -87,6 +87,12 @@ python database_setup.py
 ### 5. Run the app
 
 ```bash
+python run.py
+```
+
+Or directly from the backend folder:
+```bash
+cd backend
 python app.py
 ```
 
@@ -98,35 +104,49 @@ Open your browser at **http://localhost:5000**
 
 ```
 Prism_AI/
-├── app.py                      # Flask main application
-├── config.py                   # Configuration loader
-├── main.py                     # Analysis pipeline entry point
-├── dependency_visualizer.py    # Standalone HTML graph generator
+├── backend/                        # 🐍 Python / Flask server
+│   ├── app.py                      # Flask main application & all API routes
+│   ├── config.py                   # Configuration & environment loader
+│   ├── main.py                     # Analysis pipeline entry point
+│   ├── database_ops.py             # MySQL DB operations
+│   ├── database_setup.py           # DB schema initialization
+│   ├── ai_reasoning_engine.py      # AI chain-of-thought reasoning
+│   ├── risk_model.py               # File risk scoring model
+│   ├── generate_report.py          # HTML audit report generator
+│   ├── dependency_visualizer.py    # Standalone dependency graph HTML
+│   ├── scanners/                   # Modular scanner pipeline
+│   │   ├── gemini_bug_detector.py  # Gemini AI bug detection
+│   │   ├── ollama_bug_detector.py  # Local LLM bug detection
+│   │   ├── ui_consistency_rules.py # UI/UX rule checking
+│   │   ├── accessibility_checker.py
+│   │   ├── code_metrics_scanner.py
+│   │   └── ...
+│   ├── code-analyzer/              # MCP-compatible analyzer module
+│   ├── reports/                    # Generated scan reports (HTML/JSON)
+│   └── requirements.txt
 │
-├── scanners/                   # Modular scanner pipeline
-│   ├── gemini_bug_detector.py  # AI-powered bug detection
-│   ├── ui_consistency_rules.py # UI/UX rule checking
-│   ├── accessibility_checker.py
-│   ├── code_metrics_scanner.py
-│   ├── api_scanner.py
-│   └── ...
+├── frontend/                       # 🎨 Web UI assets
+│   ├── templates/                  # Flask Jinja2 HTML templates
+│   │   ├── base.html               # Shared layout & navigation
+│   │   ├── index.html              # Dashboard home
+│   │   ├── dependency_graph.html   # Interactive graph + 🧠 Mind Map
+│   │   ├── chatbot.html            # AI chat interface
+│   │   ├── issues.html             # Issues browser
+│   │   └── audit_report.html
+│   └── static/                     # Static assets
+│       ├── css/                    # Stylesheets
+│       └── js/                     # JavaScript & API client
 │
-├── templates/                  # Flask HTML templates
-│   ├── dependency_graph.html   # Interactive graph + Mind Map
-│   ├── index.html
-│   ├── chatbot.html
-│   └── ...
+├── extensions/                     # 🔌 Standalone tools & extensions
+│   ├── vscode-extension/           # VSCode extension
+│   └── gemini-chatbot/             # Standalone Gemini chatbot
 │
-├── static/                     # CSS & JS assets
+├── vue-uiux-analyzer/              # 🟢 Vue.js UI/UX Analyzer (VSCode ext.)
 │
-├── code-analyzer/              # MCP-compatible analyzer module
-│   └── analyzer/
-│
-├── vue-uiux-analyzer/          # Vue.js component scanner (VSCode extension)
-│
-├── gemini-chatbot/             # Standalone Gemini chatbot
-│
-└── vscode-extension/           # VSCode extension source
+├── run.py                          # ▶ Start app from project root
+├── .env.example                    # Environment template (copy to .env)
+├── .gitignore
+└── README.md
 ```
 
 ---

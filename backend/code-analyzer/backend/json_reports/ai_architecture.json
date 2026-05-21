@@ -1,0 +1,728 @@
+{
+  "project_overview": "Heuristic architecture summary generated without LLM.",
+  "architectural_health_score": 0,
+  "layer_classification": [
+    {
+      "file_path": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\.eslintrc.js",
+      "layer": "Data/API",
+      "method_count": 0,
+      "api_coupling_count": 0
+    },
+    {
+      "file_path": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\babel.config.js",
+      "layer": "Data/API",
+      "method_count": 0,
+      "api_coupling_count": 0
+    },
+    {
+      "file_path": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\gulpfile.js",
+      "layer": "Data/API",
+      "method_count": 17,
+      "api_coupling_count": 0
+    },
+    {
+      "file_path": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\index.html",
+      "layer": "Data/API",
+      "method_count": 0,
+      "api_coupling_count": 0
+    },
+    {
+      "file_path": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\jest.config.js",
+      "layer": "Data/API",
+      "method_count": 0,
+      "api_coupling_count": 0
+    },
+    {
+      "file_path": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\postcss.config.js",
+      "layer": "Data/API",
+      "method_count": 0,
+      "api_coupling_count": 0
+    },
+    {
+      "file_path": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\tailwind.config.js",
+      "layer": "Data/API",
+      "method_count": 0,
+      "api_coupling_count": 0
+    },
+    {
+      "file_path": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\vite.config.js",
+      "layer": "Data/API",
+      "method_count": 0,
+      "api_coupling_count": 0
+    },
+    {
+      "file_path": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\assets\\icons\\fontawesome.min.css",
+      "layer": "Data/API",
+      "method_count": 1,
+      "api_coupling_count": 0
+    },
+    {
+      "file_path": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\assets\\icons\\light.min.css",
+      "layer": "Data/API",
+      "method_count": 0,
+      "api_coupling_count": 0
+    },
+    {
+      "file_path": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\assets\\styles\\template.scss",
+      "layer": "Data/API",
+      "method_count": 1,
+      "api_coupling_count": 0
+    },
+    {
+      "file_path": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\assets\\styles\\_variables.scss",
+      "layer": "Data/API",
+      "method_count": 0,
+      "api_coupling_count": 0
+    },
+    {
+      "file_path": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\assets\\styles\\common\\_header.scss",
+      "layer": "Data/API",
+      "method_count": 0,
+      "api_coupling_count": 0
+    },
+    {
+      "file_path": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\assets\\styles\\common\\_menu.scss",
+      "layer": "Data/API",
+      "method_count": 1,
+      "api_coupling_count": 0
+    },
+    {
+      "file_path": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\assets\\styles\\components\\_buttons.scss",
+      "layer": "Presentation",
+      "method_count": 0,
+      "api_coupling_count": 0
+    },
+    {
+      "file_path": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\assets\\styles\\components\\_cards.scss",
+      "layer": "Presentation",
+      "method_count": 1,
+      "api_coupling_count": 0
+    },
+    {
+      "file_path": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\assets\\styles\\components\\_forms.scss",
+      "layer": "Presentation",
+      "method_count": 0,
+      "api_coupling_count": 0
+    },
+    {
+      "file_path": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\assets\\styles\\components\\_modal.scss",
+      "layer": "Presentation",
+      "method_count": 0,
+      "api_coupling_count": 0
+    },
+    {
+      "file_path": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\assets\\styles\\components\\_ui.scss",
+      "layer": "Presentation",
+      "method_count": 1,
+      "api_coupling_count": 0
+    },
+    {
+      "file_path": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\assets\\styles\\pages\\_eventSelection.scss",
+      "layer": "Presentation",
+      "method_count": 0,
+      "api_coupling_count": 0
+    },
+    {
+      "file_path": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\assets\\styles\\pages\\_login.scss",
+      "layer": "Presentation",
+      "method_count": 1,
+      "api_coupling_count": 0
+    },
+    {
+      "file_path": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\assets\\styles\\pages\\_page.scss",
+      "layer": "Presentation",
+      "method_count": 0,
+      "api_coupling_count": 0
+    },
+    {
+      "file_path": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\assets\\styles\\plugins\\_autocomplete.scss",
+      "layer": "Data/API",
+      "method_count": 0,
+      "api_coupling_count": 0
+    },
+    {
+      "file_path": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\assets\\styles\\plugins\\_calendar.scss",
+      "layer": "Data/API",
+      "method_count": 2,
+      "api_coupling_count": 0
+    },
+    {
+      "file_path": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\assets\\styles\\plugins\\_carousel.scss",
+      "layer": "Data/API",
+      "method_count": 0,
+      "api_coupling_count": 0
+    },
+    {
+      "file_path": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\assets\\styles\\plugins\\_datatable.scss",
+      "layer": "Data/API",
+      "method_count": 1,
+      "api_coupling_count": 0
+    },
+    {
+      "file_path": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\assets\\styles\\plugins\\_dialog.scss",
+      "layer": "Data/API",
+      "method_count": 1,
+      "api_coupling_count": 0
+    },
+    {
+      "file_path": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\assets\\styles\\plugins\\_overlayPanel.scss",
+      "layer": "Data/API",
+      "method_count": 0,
+      "api_coupling_count": 0
+    },
+    {
+      "file_path": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\assets\\styles\\plugins\\_primeTabs.scss",
+      "layer": "Data/API",
+      "method_count": 0,
+      "api_coupling_count": 0
+    },
+    {
+      "file_path": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\assets\\styles\\plugins\\_tree.scss",
+      "layer": "Data/API",
+      "method_count": 1,
+      "api_coupling_count": 0
+    },
+    {
+      "file_path": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\App.vue",
+      "layer": "Presentation",
+      "method_count": 0,
+      "api_coupling_count": 0
+    },
+    {
+      "file_path": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\axiosApi.js",
+      "layer": "Data/API",
+      "method_count": 1,
+      "api_coupling_count": 0
+    },
+    {
+      "file_path": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\formkit.config.js",
+      "layer": "Data/API",
+      "method_count": 0,
+      "api_coupling_count": 0
+    },
+    {
+      "file_path": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\index.css",
+      "layer": "Data/API",
+      "method_count": 1,
+      "api_coupling_count": 0
+    },
+    {
+      "file_path": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\main.js",
+      "layer": "Data/API",
+      "method_count": 5,
+      "api_coupling_count": 0
+    },
+    {
+      "file_path": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\registerServiceWorker.js",
+      "layer": "Data/API",
+      "method_count": 3,
+      "api_coupling_count": 0
+    },
+    {
+      "file_path": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\router.js",
+      "layer": "Data/API",
+      "method_count": 12,
+      "api_coupling_count": 0
+    },
+    {
+      "file_path": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\components\\date-range-pickr.vue",
+      "layer": "Presentation",
+      "method_count": 3,
+      "api_coupling_count": 0
+    },
+    {
+      "file_path": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\components\\MTable.vue",
+      "layer": "Presentation",
+      "method_count": 4,
+      "api_coupling_count": 0
+    },
+    {
+      "file_path": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\components\\multiselect.vue",
+      "layer": "Presentation",
+      "method_count": 2,
+      "api_coupling_count": 0
+    },
+    {
+      "file_path": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\components\\BL\\updateDbSave.vue",
+      "layer": "Presentation",
+      "method_count": 2,
+      "api_coupling_count": 0
+    },
+    {
+      "file_path": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\components\\BL\\updateUser.vue",
+      "layer": "Presentation",
+      "method_count": 3,
+      "api_coupling_count": 0
+    },
+    {
+      "file_path": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\components\\common\\breadCrumbs.vue",
+      "layer": "Presentation",
+      "method_count": 12,
+      "api_coupling_count": 0
+    },
+    {
+      "file_path": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\components\\common\\courseTitleBar.vue",
+      "layer": "Presentation",
+      "method_count": 2,
+      "api_coupling_count": 0
+    },
+    {
+      "file_path": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\components\\common\\Footer.vue",
+      "layer": "Presentation",
+      "method_count": 0,
+      "api_coupling_count": 0
+    },
+    {
+      "file_path": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\components\\common\\Header.vue",
+      "layer": "Presentation",
+      "method_count": 13,
+      "api_coupling_count": 0
+    },
+    {
+      "file_path": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\components\\common\\Menu.vue",
+      "layer": "Presentation",
+      "method_count": 1,
+      "api_coupling_count": 0
+    },
+    {
+      "file_path": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\components\\common\\programBar.vue",
+      "layer": "Presentation",
+      "method_count": 3,
+      "api_coupling_count": 0
+    },
+    {
+      "file_path": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\components\\common\\Sidebar.vue",
+      "layer": "Presentation",
+      "method_count": 21,
+      "api_coupling_count": 0
+    },
+    {
+      "file_path": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\components\\common\\SidebarNew.vue",
+      "layer": "Presentation",
+      "method_count": 9,
+      "api_coupling_count": 0
+    },
+    {
+      "file_path": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\components\\DaiseUIComponents\\Toast.vue",
+      "layer": "Presentation",
+      "method_count": 1,
+      "api_coupling_count": 0
+    },
+    {
+      "file_path": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\components\\download-manager\\downloadFile.vue",
+      "layer": "Presentation",
+      "method_count": 2,
+      "api_coupling_count": 0
+    },
+    {
+      "file_path": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\components\\download-manager\\downloadProgress.vue",
+      "layer": "Presentation",
+      "method_count": 2,
+      "api_coupling_count": 0
+    },
+    {
+      "file_path": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\components\\excel\\clientData.vue",
+      "layer": "Presentation",
+      "method_count": 2,
+      "api_coupling_count": 0
+    },
+    {
+      "file_path": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\components\\excel\\saveWActivity.vue",
+      "layer": "Presentation",
+      "method_count": 2,
+      "api_coupling_count": 0
+    },
+    {
+      "file_path": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\components\\excel\\updateData.vue",
+      "layer": "Presentation",
+      "method_count": 2,
+      "api_coupling_count": 0
+    },
+    {
+      "file_path": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\components\\i18Demo\\Component1.vue",
+      "layer": "Presentation",
+      "method_count": 2,
+      "api_coupling_count": 0
+    },
+    {
+      "file_path": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\components\\i18Demo\\Component2.vue",
+      "layer": "Presentation",
+      "method_count": 2,
+      "api_coupling_count": 0
+    },
+    {
+      "file_path": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\components\\keymappers\\decryptData.vue",
+      "layer": "Presentation",
+      "method_count": 2,
+      "api_coupling_count": 0
+    },
+    {
+      "file_path": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\components\\keymappers\\encryptData.vue",
+      "layer": "Presentation",
+      "method_count": 3,
+      "api_coupling_count": 0
+    },
+    {
+      "file_path": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\components\\keymappers\\hashData.vue",
+      "layer": "Presentation",
+      "method_count": 2,
+      "api_coupling_count": 0
+    },
+    {
+      "file_path": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\components\\keymappers\\hashSalt.vue",
+      "layer": "Presentation",
+      "method_count": 2,
+      "api_coupling_count": 0
+    },
+    {
+      "file_path": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\components\\mongodbID\\customID.vue",
+      "layer": "Presentation",
+      "method_count": 2,
+      "api_coupling_count": 0
+    },
+    {
+      "file_path": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\components\\mongodbID\\hexID.vue",
+      "layer": "Presentation",
+      "method_count": 2,
+      "api_coupling_count": 0
+    },
+    {
+      "file_path": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\components\\sessionmanager\\deleteData.vue",
+      "layer": "Presentation",
+      "method_count": 3,
+      "api_coupling_count": 0
+    },
+    {
+      "file_path": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\components\\sessionmanager\\fetchData.vue",
+      "layer": "Presentation",
+      "method_count": 2,
+      "api_coupling_count": 0
+    },
+    {
+      "file_path": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\components\\sessionmanager\\storeData.vue",
+      "layer": "Presentation",
+      "method_count": 2,
+      "api_coupling_count": 0
+    },
+    {
+      "file_path": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\components\\upload-manager\\uploadFile.vue",
+      "layer": "Presentation",
+      "method_count": 3,
+      "api_coupling_count": 0
+    },
+    {
+      "file_path": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\components\\upload-manager\\uploadProgessFile.vue",
+      "layer": "Presentation",
+      "method_count": 2,
+      "api_coupling_count": 0
+    },
+    {
+      "file_path": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\plugins\\Encryption.js",
+      "layer": "Data/API",
+      "method_count": 4,
+      "api_coupling_count": 0
+    },
+    {
+      "file_path": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\plugins\\mql.js",
+      "layer": "Data/API",
+      "method_count": 26,
+      "api_coupling_count": 0
+    },
+    {
+      "file_path": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\plugins\\mqlAssetFDB.js",
+      "layer": "Data/API",
+      "method_count": 25,
+      "api_coupling_count": 0
+    },
+    {
+      "file_path": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\plugins\\mqlCdn.js",
+      "layer": "Data/API",
+      "method_count": 24,
+      "api_coupling_count": 0
+    },
+    {
+      "file_path": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\plugins\\mqlOptions.js",
+      "layer": "Data/API",
+      "method_count": 7,
+      "api_coupling_count": 0
+    },
+    {
+      "file_path": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\plugins\\response.js",
+      "layer": "Data/API",
+      "method_count": 10,
+      "api_coupling_count": 0
+    },
+    {
+      "file_path": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\plugins\\SearchProgram.js",
+      "layer": "Data/API",
+      "method_count": 2,
+      "api_coupling_count": 0
+    },
+    {
+      "file_path": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\setup\\i18n-setup.js",
+      "layer": "Data/API",
+      "method_count": 4,
+      "api_coupling_count": 0
+    },
+    {
+      "file_path": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\setup\\init.js",
+      "layer": "Data/API",
+      "method_count": 0,
+      "api_coupling_count": 0
+    },
+    {
+      "file_path": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\store\\index.js",
+      "layer": "Data/API",
+      "method_count": 3,
+      "api_coupling_count": 0
+    },
+    {
+      "file_path": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\store\\types.js",
+      "layer": "Data/API",
+      "method_count": 0,
+      "api_coupling_count": 0
+    },
+    {
+      "file_path": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\store\\modules\\academicYears.js",
+      "layer": "Data/API",
+      "method_count": 3,
+      "api_coupling_count": 0
+    },
+    {
+      "file_path": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\store\\modules\\clientDetails.js",
+      "layer": "Data/API",
+      "method_count": 1,
+      "api_coupling_count": 0
+    },
+    {
+      "file_path": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\store\\modules\\collegeDetails.js",
+      "layer": "Data/API",
+      "method_count": 1,
+      "api_coupling_count": 0
+    },
+    {
+      "file_path": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\store\\modules\\examManagementVar.js",
+      "layer": "Data/API",
+      "method_count": 7,
+      "api_coupling_count": 0
+    },
+    {
+      "file_path": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\store\\modules\\login.js",
+      "layer": "Data/API",
+      "method_count": 7,
+      "api_coupling_count": 0
+    },
+    {
+      "file_path": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\store\\modules\\loginPn.js",
+      "layer": "Data/API",
+      "method_count": 10,
+      "api_coupling_count": 0
+    },
+    {
+      "file_path": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\store\\modules\\ProgramD.js",
+      "layer": "Data/API",
+      "method_count": 1,
+      "api_coupling_count": 0
+    },
+    {
+      "file_path": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\store\\modules\\store.js",
+      "layer": "Data/API",
+      "method_count": 2,
+      "api_coupling_count": 0
+    },
+    {
+      "file_path": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\store\\modules\\types.js",
+      "layer": "Data/API",
+      "method_count": 0,
+      "api_coupling_count": 0
+    },
+    {
+      "file_path": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\views\\adminLogin.vue",
+      "layer": "Presentation",
+      "method_count": 36,
+      "api_coupling_count": 0
+    },
+    {
+      "file_path": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\views\\autoBL.vue",
+      "layer": "Presentation",
+      "method_count": 3,
+      "api_coupling_count": 0
+    },
+    {
+      "file_path": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\views\\CdnUpload.vue",
+      "layer": "Presentation",
+      "method_count": 4,
+      "api_coupling_count": 0
+    },
+    {
+      "file_path": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\views\\Home.vue",
+      "layer": "Presentation",
+      "method_count": 5,
+      "api_coupling_count": 0
+    },
+    {
+      "file_path": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\views\\Login.vue",
+      "layer": "Presentation",
+      "method_count": 9,
+      "api_coupling_count": 0
+    },
+    {
+      "file_path": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\views\\SessionManager.vue",
+      "layer": "Presentation",
+      "method_count": 7,
+      "api_coupling_count": 0
+    },
+    {
+      "file_path": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\views\\StudentData.vue",
+      "layer": "Presentation",
+      "method_count": 5,
+      "api_coupling_count": 0
+    },
+    {
+      "file_path": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\views\\StudentDemo.vue",
+      "layer": "Presentation",
+      "method_count": 5,
+      "api_coupling_count": 0
+    },
+    {
+      "file_path": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\views\\Validator.vue",
+      "layer": "Presentation",
+      "method_count": 1,
+      "api_coupling_count": 0
+    },
+    {
+      "file_path": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\views\\iLike\\iLikeCourses.vue",
+      "layer": "Presentation",
+      "method_count": 44,
+      "api_coupling_count": 0
+    },
+    {
+      "file_path": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\views\\iLike\\iLikeCoursesNew.vue",
+      "layer": "Presentation",
+      "method_count": 38,
+      "api_coupling_count": 0
+    },
+    {
+      "file_path": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\views\\iLike\\iLikeDashboard.vue",
+      "layer": "Presentation",
+      "method_count": 9,
+      "api_coupling_count": 0
+    },
+    {
+      "file_path": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\views\\iLike\\iLikeLanding.vue",
+      "layer": "Presentation",
+      "method_count": 5,
+      "api_coupling_count": 0
+    },
+    {
+      "file_path": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\views\\Layout\\defaultLayout.vue",
+      "layer": "Presentation",
+      "method_count": 4,
+      "api_coupling_count": 0
+    },
+    {
+      "file_path": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\views\\Layout\\spLayout.vue",
+      "layer": "Presentation",
+      "method_count": 0,
+      "api_coupling_count": 0
+    },
+    {
+      "file_path": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\views\\Result\\ApplicationServices.vue",
+      "layer": "Presentation",
+      "method_count": 18,
+      "api_coupling_count": 0
+    },
+    {
+      "file_path": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\views\\Result\\ExamFormSubmission.vue",
+      "layer": "Presentation",
+      "method_count": 36,
+      "api_coupling_count": 0
+    },
+    {
+      "file_path": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\views\\Result\\FeeDetails.vue",
+      "layer": "Presentation",
+      "method_count": 27,
+      "api_coupling_count": 0
+    },
+    {
+      "file_path": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\views\\Result\\HallTicketPage.vue",
+      "layer": "Presentation",
+      "method_count": 8,
+      "api_coupling_count": 0
+    },
+    {
+      "file_path": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\views\\Result\\ResultPage.vue",
+      "layer": "Presentation",
+      "method_count": 9,
+      "api_coupling_count": 0
+    },
+    {
+      "file_path": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\views\\Result\\SelectedApplicationService.vue",
+      "layer": "Presentation",
+      "method_count": 16,
+      "api_coupling_count": 0
+    },
+    {
+      "file_path": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\views\\Result\\Transactions.vue",
+      "layer": "Presentation",
+      "method_count": 8,
+      "api_coupling_count": 0
+    },
+    {
+      "file_path": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\views\\Result\\viewExamTimeTable.vue",
+      "layer": "Presentation",
+      "method_count": 4,
+      "api_coupling_count": 1
+    },
+    {
+      "file_path": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\src\\views\\Result\\viewMarksheet.vue",
+      "layer": "Presentation",
+      "method_count": 11,
+      "api_coupling_count": 0
+    },
+    {
+      "file_path": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\tests\\e2e\\custom-assertions\\elementCount.js",
+      "layer": "Data/API",
+      "method_count": 7,
+      "api_coupling_count": 0
+    },
+    {
+      "file_path": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\tests\\e2e\\specs\\login.specs.js",
+      "layer": "Data/API",
+      "method_count": 0,
+      "api_coupling_count": 0
+    },
+    {
+      "file_path": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\tests\\e2e\\specs\\test.js",
+      "layer": "Data/API",
+      "method_count": 0,
+      "api_coupling_count": 0
+    },
+    {
+      "file_path": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\tests\\unit\\.eslintrc.js",
+      "layer": "Data/API",
+      "method_count": 0,
+      "api_coupling_count": 0
+    },
+    {
+      "file_path": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\tests\\unit\\HelloWorld.spec.js",
+      "layer": "Data/API",
+      "method_count": 0,
+      "api_coupling_count": 0
+    },
+    {
+      "file_path": "C:\\Users\\shivanid\\Desktop\\ShivaniD\\StudentLogin\\client\\app\\tests\\unit\\login.spec.js",
+      "layer": "Data/API",
+      "method_count": 0,
+      "api_coupling_count": 0
+    }
+  ],
+  "macro_trends": {
+    "dependency_edges": 25,
+    "god_file_candidates": []
+  },
+  "key_workflows": [],
+  "risks": [],
+  "ai_error": "Missing OpenWebUI config. Set OPENWEBUI_BASE_URL and OPENWEBUI_API_KEY in code-analyzer/.env",
+  "generated_at": 1779339664.8739815
+}
